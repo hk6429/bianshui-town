@@ -1,3 +1,4 @@
+import {applyTraffic} from './traffic.js';
 import {key,point,pathfind} from './simulation.js';
 export const DOCK=[12,8], BERTH=[16,8], GATE=[33,-16], MARKET=[26,-8];
 export const riverX=z=>19+Math.sin(z*.045)*3;
@@ -25,8 +26,8 @@ export function send(t,a,target,action){
  a.route=path;if(Math.hypot(a.x-path[0][0],a.z-path[0][1])<.02)a.route.shift();
  a.goal=[...target];a.walking=a.route.length>0;a.action=action;return true;
 }
-export function advance(a,dt){
- let budget=a.speed*dt;
+export function advance(a,dt,t){
+ let budget=a.speed*dt*(t?applyTraffic(t,a):1);
  while(a.route.length&&budget>0){const [x,z]=a.route[0],dx=x-a.x,dz=z-a.z,d=Math.hypot(dx,dz);a.angle=Math.atan2(dx,dz);if(d<=budget){a.x=x;a.z=z;a.route.shift();budget-=d;}else{a.x+=dx/d*budget;a.z+=dz/d*budget;budget=0;}}
  a.walking=a.route.length>0;
 }
@@ -52,7 +53,7 @@ function tickPorters(t,dt){
  const l=t.life;
  if(!l.porters.length)for(let i=0;i<2;i++)l.porters.push({...actor(3001+i,'porter',12,8),wait:i*2,phase:'fetch'});
  for(const p of l.porters){
-  if(p.walking){advance(p,dt);if(p.walking)continue;}
+  if(p.walking){advance(p,dt,t);if(p.walking)continue;}
   p.wait-=dt;if(p.wait>0)continue;
   if(p.phase==='fetch'){
    if(l.boat.state==='unloading'&&l.boat.cargo>0){send(t,p,BERTH,'走向船邊接貨');p.phase='load';}
@@ -66,7 +67,7 @@ function tickOxen(t,dt){
  const l=t.life,shops=t.buildings.filter(b=>b.type==='shop'&&b.stage>=3);
  if(shops.length&&!l.oxen.length)l.oxen.push({...actor(4001,'ox',...DOCK),name:'牛車腳行',phase:'load'});
  for(const a of l.oxen){
-  if(a.walking){advance(a,dt);if(a.walking)continue;}
+  if(a.walking){advance(a,dt,t);if(a.walking)continue;}
   a.wait-=dt;if(a.wait>0)continue;
   if(a.phase==='load'){
    if(l.dock.stock>0&&shops.length){const shop=[...shops].sort((a,b)=>(a.stock||0)-(b.stock||0)||a.id-b.id)[0];if(send(t,a,shop.entrance,`運貨前往${shop.name}`)){a.carrying=Math.min(3,l.dock.stock);l.dock.stock-=a.carrying;a.target=shop.id;a.phase='deliver';}}else a.action='牛車在岸邊等候裝貨';
@@ -81,7 +82,7 @@ function tickVisitors(t,dt){
  const shops=t.buildings.filter(b=>b.type==='shop'&&b.stage>=3);
  for(const a of l.visitors){
   if(!day&&a.phase!=='night'&&a.phase!=='home'){send(t,a,GATE,'沿虹橋返回城門');a.phase='home';}
-  if(a.walking){advance(a,dt);if(a.walking)continue;}
+  if(a.walking){advance(a,dt,t);if(a.walking)continue;}
   a.wait-=dt;if(a.wait>0)continue;
   if(a.phase==='night'){a.visible=false;if(day){a.phase='choose';a.wait=a.id%5;}continue;}
   if(a.phase==='home'){a.visible=false;a.phase=day?'choose':'night';a.wait=10+a.id%6;continue;}
@@ -100,7 +101,7 @@ function tickVisitors(t,dt){
 }
 function conversations(t){
  const h=t.time%24;if(h<6||h>=20||t.elapsed<30)return;
- const active=t.people.filter(p=>p.outside&&p.route.length&&(p.chatCooldown||0)<=t.elapsed);
+ const active=t.people.filter(p=>p.outside&&!p.streetEvent&&p.route.length&&(p.chatCooldown||0)<=t.elapsed);
  for(let i=0;i<active.length;i++){const a=active[i];if((a.chatCooldown||0)>t.elapsed)continue;
   const b=active.slice(i+1).find(p=>(p.chatCooldown||0)<=t.elapsed&&Math.hypot(p.x-a.x,p.z-a.z)<1.35);if(!b)continue;
   for(const [p,other] of [[a,b],[b,a]]){p.socialUntil=t.elapsed+4;p.chatCooldown=t.elapsed+70;p.chatPartner=other.id;p.action=`和${other.name}聊聊街坊近況`;p.angle=Math.atan2(other.x-p.x,other.z-p.z);}

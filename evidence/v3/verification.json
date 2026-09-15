@@ -1,0 +1,33 @@
+{
+  "version": "0.3.0",
+  "unitTests": 23,
+  "unitPassed": 23,
+  "build": "passed with existing 500 kB warning",
+  "simulation": {
+    "seconds": 1200,
+    "eventTypes": [
+      "story",
+      "market",
+      "tea"
+    ],
+    "completed": 8,
+    "cargoImported": 72,
+    "cargoAccounted": 72
+  },
+  "browser": "existing Chrome via CUA",
+  "verified": [
+    "load demo",
+    "building resident selection",
+    "follow button and camera",
+    "Escape stops following",
+    "390x844 layout",
+    "event start and end journal"
+  ],
+  "partial": [
+    "street event focus button end-to-end (CUA timeouts)"
+  ],
+  "screenshots": [
+    "01-follow.png",
+    "02-mobile.png"
+  ]
+}

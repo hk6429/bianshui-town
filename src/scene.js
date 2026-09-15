@@ -1,3 +1,4 @@
+import {streetPosition} from './traffic.js';
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
@@ -117,12 +118,19 @@ export class TownScene {
   this.sync(town);const hour=town.time%24;
   const day=THREE.MathUtils.smoothstep(Math.sin((hour-6)/24*Math.PI*2),-.18,.35);this.scene.background.set(0x354b61).lerp(new THREE.Color(0xcbd1b4),day);this.scene.fog.color.copy(this.scene.background);this.ambient.intensity=1.2+day*1.3;this.ambient.color.set(0xa7c6ed).lerp(new THREE.Color(0xfff5d7),day);this.sun.intensity=.5+day*2.5;this.sun.color.set(0xadc5ed).lerp(new THREE.Color(0xffe8c0),day);this.water.color.set(0x405e72).lerp(new THREE.Color(0x79a8a3),day);
   for(const b of town.buildings){const model=this.buildingModels.get(b.id);if(model.userData.warm){const occupied=town.occupants(b).length>0;model.userData.warm.emissiveIntensity=(1-day)*(occupied?2.2:.5);model.userData.glow.material.opacity=(1-day)*(occupied?.5:.16);}}
-  for(const p of town.people){const m=this.personModels.get(p.id),b=town.building(p.current),yard=!p.outside&&b&&hour>=6&&hour<20;m.visible=p.outside||yard;if(p.outside){m.position.set(p.x,streetHeight(p.x,p.z)+Math.abs(Math.sin(town.elapsed*8+p.id))*.025,p.z);m.rotation.y=p.angle||0;}else if(yard){const side=(p.id%2?-.5:.5);m.position.set(b.entrance[0]+Math.cos(b.facing)*side-Math.sin(b.facing)*.55,.16,b.entrance[1]-Math.sin(b.facing)*side-Math.cos(b.facing)*.55);m.rotation.y=b.facing;}this.lifeScene.animateHuman(m,town.elapsed,p.outside&&!(p.socialUntil>town.elapsed),p.socialUntil>town.elapsed||yard);}
+  for(const p of town.people){const m=this.personModels.get(p.id),b=town.building(p.current),yard=!p.outside&&b&&hour>=6&&hour<20;m.visible=p.outside||yard;if(p.outside){const [px,pz]=streetPosition(p);m.position.set(px,streetHeight(p.x,p.z)+(p.traffic?.startsWith('讓')?0:Math.abs(Math.sin(town.elapsed*8+p.id))*.025),pz);m.rotation.y=p.angle||0;}else if(yard){const side=(p.id%2?-.5:.5);m.position.set(b.entrance[0]+Math.cos(b.facing)*side-Math.sin(b.facing)*.55,.16,b.entrance[1]-Math.sin(b.facing)*side-Math.cos(b.facing)*.55);m.rotation.y=b.facing;}this.lifeScene.animateHuman(m,town.elapsed,p.outside&&p.route.length>0&&!p.traffic?.startsWith('讓')&&p.traffic!=='等前方行人走開'&&!(p.socialUntil>town.elapsed),p.socialUntil>town.elapsed||yard||!!p.streetEvent&&!p.route.length);}
   for(const c of town.carts){const m=this.cartModels.get(c.id);m.visible=c.outside;m.position.set(c.x,streetHeight(c.x,c.z),c.z);m.rotation.y=c.angle||0;}
   this.lifeScene.update(town,day);
-  this.controls.update();this.controls.target.x=THREE.MathUtils.clamp(this.controls.target.x,-45,40);this.controls.target.z=THREE.MathUtils.clamp(this.controls.target.z,-45,45);this.renderer.render(this.scene,this.camera);return day;
+  this.controls.update();this.updateFollow(town,dt);this.controls.target.x=THREE.MathUtils.clamp(this.controls.target.x,-45,40);this.controls.target.z=THREE.MathUtils.clamp(this.controls.target.z,-45,45);this.renderer.render(this.scene,this.camera);return day;
  }
  reset(){this.lifeScene.reset();for(const map of [this.buildingModels,this.personModels,this.cartModels]){for(const model of map.values()){this.scene.remove(model);this.clearGroup(model);}map.clear();}this.clearGroup(this.selection);this.clearGroup(this.preview);this.lastRevision=-1;}
+ follow(id){this.followId=id;}
+ updateFollow(town,dt){
+  if(this.followId==null)return;const p=town.people.find(p=>p.id===this.followId);if(!p){this.followId=null;return;}
+  const model=this.personModels.get(p.id),b=town.building(p.current)||town.building(p.home);
+  const target=model?.visible?model.position.clone():new THREE.Vector3(b?b.x*4:p.x,0,b?b.z*4:p.z);target.y=0;
+  const delta=target.sub(this.controls.target).multiplyScalar(1-Math.exp(-dt*7));this.controls.target.add(delta);this.camera.position.add(delta);
+ }
  resetView(){this.controls.target.set(-7,0,0);this.camera.position.set(41,53,65);this.camera.zoom=1;this.camera.updateProjectionMatrix();}
  rotate(angle){const offset=this.camera.position.clone().sub(this.controls.target);offset.applyAxisAngle(new THREE.Vector3(0,1,0),angle);this.camera.position.copy(this.controls.target).add(offset);}
 }
@@ -194,11 +202,17 @@ class LivingScene {
   if(this.sharedRevision!==t.revision){for(const obj of this.shared){this.root.remove(obj);obj.traverse(o=>{if(o.geometry)o.geometry.dispose();});}this.shared=[];for(const block of t.blocks){const deco=new THREE.Group();for(const c of block.cells){const next=block.cells.find(n=>n.x===c.x+1&&n.z===c.z);if(next){box(deco,.3,.12,1.1,0x9b8258,c.x*4+2,.35,c.z*4-.7);pot(deco,c.x*4+2,c.z*4+.4,0xaf9264,.2);}const below=block.cells.find(n=>n.z===c.z+1&&n.x===c.x);if(below)pot(deco,c.x*4+.6,c.z*4+2,0xaf9264,.22);}this.root.add(deco);this.shared.push(deco);}this.sharedRevision=t.revision;}
  }
  update(t,day){
-  this.syncDetails(t);const time=t.elapsed,daytime=t.time%24>=6&&t.time%24<20;
+  this.syncDetails(t);
+  const event=t.stories.active;
+  if(event){
+   if(!this.storyHost){this.storyHost=new THREE.Group();this.storySpeaker=this.owner.person(7010);this.storyHost.add(this.storySpeaker);box(this.storyHost,.6,.5,.45,0x8d7049,0,.25,.55);sign(this.storyHost,'聚',0,1.5,0,.45,.6);this.root.add(this.storyHost);}
+   this.storyHost.visible=true;this.storyHost.position.set(event.center[0],streetHeight(...event.center),event.center[1]);this.animateHuman(this.storySpeaker,t.elapsed,false,true);
+  }else if(this.storyHost)this.storyHost.visible=false;
+  const time=t.elapsed,daytime=t.time%24>=6&&t.time%24<20;
   for(const a of [...t.life.visitors,...t.life.porters,...t.life.oxen]){
-   let g=this.actors.get(a.id);if(!g){g=this.actorModel(a);this.actors.set(a.id,g);this.root.add(g);}g.visible=a.visible;g.position.set(a.x,streetHeight(a.x,a.z),a.z);g.rotation.y=a.angle||0;
+   let g=this.actors.get(a.id);if(!g){g=this.actorModel(a);this.actors.set(a.id,g);this.root.add(g);}g.visible=a.visible;const [ax,az]=streetPosition(a);g.position.set(ax,streetHeight(a.x,a.z),az);g.rotation.y=a.angle||0;
    if(g.userData.cargo)g.userData.cargo.visible=a.carrying>0;
-   if(g.userData.human)this.animateHuman(g.userData.human,time,a.walking,a.action.includes('談'));
+   if(g.userData.human)this.animateHuman(g.userData.human,time,a.walking&&!a.traffic?.startsWith('讓')&&a.traffic!=='等前方行人走開',a.action.includes('談'));
    if(g.userData.driver)this.animateHuman(g.userData.driver,time,a.walking);
    if(g.userData.ox){const ox=g.userData.ox;ox.position.y=streetHeight(a.x+Math.sin(a.angle||0)*1.7,a.z+Math.cos(a.angle||0)*1.7)-streetHeight(a.x,a.z);for(let i=0;i<ox.userData.legs.length;i++)ox.userData.legs[i].rotation.x=a.walking?Math.sin(time*4+i*Math.PI)*.32:0;}
   }
