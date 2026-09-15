@@ -13,3 +13,11 @@ test('follow camera tracks a moving resident and holds the actual house when ind
  for(let i=0;i<120;i++)s.updateFollow(t,1/60);assert(s.controls.target.length()<.01);
  const before=s.camera.position.clone();s.follow(null);model.position.x=22;s.updateFollow(t,1);assert(s.camera.position.equals(before));
 });
+test('street focus cancels following and centers the exact event venue while preserving view angle',()=>{
+ const s=Object.create(TownScene.prototype);s.camera=new THREE.OrthographicCamera();s.camera.position.set(10,20,30);s.controls={target:new THREE.Vector3(-2,0,4)};s.follow(9);
+ const offset=s.camera.position.clone().sub(s.controls.target);s.focusAt([0,-16]);assert.equal(s.followId,null);assert.deepEqual(s.controls.target.toArray(),[0,0,-16]);assert(s.camera.position.clone().sub(s.controls.target).equals(offset));assert.equal(s.camera.zoom,2.2);
+});
+test('courtyard view looks down without moving the camera into the far fog',()=>{
+ const s=Object.create(TownScene.prototype);s.camera=new THREE.OrthographicCamera();s.camera.position.set(41,53,65);s.controls={target:new THREE.Vector3(-7,0,0)};const distance=s.camera.position.distanceTo(s.controls.target);
+ s.focusAt([-14,0],3,true);assert(Math.abs(s.camera.position.distanceTo(s.controls.target)-distance)<1e-8);assert.equal(s.camera.zoom,3);
+});

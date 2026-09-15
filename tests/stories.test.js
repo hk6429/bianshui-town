@@ -16,7 +16,7 @@ test('resident diary follows actual work, meals and return home; rolls over by d
  t.time=24.1;t.tick(.1);assert(p.diary.length>0);assert(p.diary.every(e=>Math.floor(e.time/24)===1));assert(p.diary.length<=12);
 });
 test('v1/v2 saves migrate diaries and v3 survives active events without stranded residents',()=>{
- const t=new Town();t.demo();run(t,50);const data=JSON.parse(JSON.stringify(t));assert.equal(data.version,3);
+ const t=new Town();t.demo();run(t,50);const data=JSON.parse(JSON.stringify(t));assert.equal(data.version,4);
  const r=Town.restore(data);assert.deepEqual(r.people[0].diary,t.people[0].diary);run(r,100);r.time=22;run(r,90);assert(r.people.every(p=>p.current===p.home));
  for(const v of [1,2]){const old=structuredClone(data);old.version=v;delete old.stories;old.people.forEach(p=>{delete p.diary;delete p.streetEvent;});const migrated=Town.restore(old);migrated.tick(.1);assert(migrated.people.every(p=>Array.isArray(p.diary)));}
 });

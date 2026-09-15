@@ -1,3 +1,7 @@
+import {WeatherScene} from './weather-scene.js';
+import {displayGoods} from './goods-scene.js';
+import {at} from './production.js';
+import {courtyards,courtyardFor,courtyardPosition} from './courtyards.js';
 import {streetPosition} from './traffic.js';
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
@@ -41,7 +45,7 @@ export class TownScene {
   this.ambient=new THREE.HemisphereLight(0xfff5d7,0x6f8060,2.5);this.scene.add(this.ambient);
   this.sun=new THREE.DirectionalLight(0xffe8c0,3);this.sun.position.set(-30,45,10);this.sun.castShadow=true;this.sun.shadow.mapSize.set(2048,2048);Object.assign(this.sun.shadow.camera,{left:-48,right:48,top:42,bottom:-42,near:1,far:130});this.sun.shadow.normalBias=.055;this.sun.shadow.bias=-.0002;this.scene.add(this.sun);
   this.land=new THREE.Group();this.scene.add(this.land);this.meadow=new THREE.Group();this.scene.add(this.meadow);this.decorations=[];this.buildingModels=new Map();this.personModels=new Map();this.cartModels=new Map();this.glows=[];this.roads=new THREE.Group();this.scene.add(this.roads);this.preview=new THREE.Group();this.scene.add(this.preview);this.selection=new THREE.Group();this.scene.add(this.selection);this.raycaster=new THREE.Raycaster();this.groundPlane=new THREE.Plane(new THREE.Vector3(0,1,0),0);this.pointer=new THREE.Vector2();
-  this.buildLandscape();this.lifeScene=new LivingScene(this);this.lastRevision=-1;this.resize();
+  this.buildLandscape();this.lifeScene=new LivingScene(this);this.weatherScene=new WeatherScene(this);this.lastRevision=-1;this.resize();
  }
  resize(){const w=window.innerWidth,h=window.innerHeight;this.renderer.setSize(w,h);const aspect=w/h;this.camera.left=-31*aspect;this.camera.right=31*aspect;this.camera.top=31;this.camera.bottom=-31;this.camera.updateProjectionMatrix();}
  buildLandscape(){
@@ -68,7 +72,7 @@ export class TownScene {
  clearGroup(group){group.traverse(o=>{if(o.isMesh)o.geometry.dispose();});group.clear();}
  sync(town){
   if(town.revision!==this.lastRevision){
-   for(const b of town.buildings){const existing=this.buildingModels.get(b.id);if(existing&&existing.userData.stage===b.stage)continue;if(existing){this.scene.remove(existing);this.clearGroup(existing);}const model=this.buildHouse(b);model.userData={...model.userData,buildingId:b.id,stage:b.stage};model.traverse(o=>{o.userData.buildingId=b.id;});this.buildingModels.set(b.id,model);this.scene.add(model);}
+   for(const b of town.buildings){const existing=this.buildingModels.get(b.id);if(existing&&existing.userData.stage===b.stage)continue;if(existing){this.scene.remove(existing);this.clearGroup(existing);}const model=this.buildHouse(b,town);model.userData={...model.userData,buildingId:b.id,stage:b.stage};model.traverse(o=>{o.userData.buildingId=b.id;});this.buildingModels.set(b.id,model);this.scene.add(model);}
    this.clearGroup(this.roads);const raw=new THREE.Group();
    for(const k of town.roads){const [x,z]=point(k);if((z===-16&&x>=12&&x<=24)||(z===8&&x>=12&&x<=16))continue;box(raw,.76,.025,.76,palette.road,x,streetHeight(x,z)-.025,z);for(const [dx,dz] of [[1,0],[0,1]])if(town.roads.has(key(x+dx,z+dz)))box(raw,dx?1:.76,.025,dz?1:.76,palette.road,x+dx*.5,streetHeight(x+dx*.5,z+dz*.5)-.025,z+dz*.5);}
    this.roads.add(batch(raw));
@@ -76,10 +80,10 @@ export class TownScene {
    this.clearGroup(this.meadow);const flowers=new THREE.Group();for(const d of this.decorations){if(d.group.visible){const copy=d.group.clone(true);copy.traverse(o=>{if(o.isMesh)o.geometry=o.geometry.clone();});flowers.add(copy);}d.group.visible=false;}this.meadow.add(batch(flowers));this.lastRevision=town.revision;
   }
   for(const p of town.people){if(!this.personModels.has(p.id)){const g=this.person(p.id);g.traverse(o=>o.userData.personId=p.id);this.personModels.set(p.id,g);this.scene.add(g);}}
-  for(const c of town.carts){if(!this.cartModels.has(c.id)){const g=new THREE.Group();box(g,.7,.12,.95,0x94724b,0,.43,0);for(const x of [-.38,.38]){box(g,.08,.34,1,0x896945,x,.61,0);const wheel=cyl(g,.24,.24,.07,0x4e4635,x,.25,0,10);wheel.rotation.z=Math.PI/2;}box(g,.65,.35,.08,0x896945,0,.61,-.45);for(const x of [-.25,.25])box(g,.04,.04,.8,0x745b3e,x,.48,.7);pot(g,0,0,0xb89e72,.23);const porter=this.person(c.id);porter.position.z=1.1;g.add(porter);this.cartModels.set(c.id,g);this.scene.add(g);}}
+  for(const c of town.carts){if(!this.cartModels.has(c.id)){const g=new THREE.Group();box(g,.7,.12,.95,0x94724b,0,.43,0);for(const x of [-.38,.38]){box(g,.08,.34,1,0x896945,x,.61,0);const wheel=cyl(g,.24,.24,.07,0x4e4635,x,.25,0,10);wheel.rotation.z=Math.PI/2;}box(g,.65,.35,.08,0x896945,0,.61,-.45);for(const x of [-.25,.25])box(g,.04,.04,.8,0x745b3e,x,.48,.7);const cargo=new THREE.Group();cargo.position.set(0,.55,-.2);cargo.position.y=.65;g.add(cargo);g.userData.cargo=cargo;const porter=this.person(c.id);porter.position.z=1.1;g.add(porter);this.cartModels.set(c.id,g);this.scene.add(g);}}
  }
- buildHouse(b){
-  const g=new THREE.Group(),stage=b.stage,w=3.15,d=2.6,h=1.72+(b.variant===1?.22:0);g.position.set(b.x*4,0,b.z*4);g.rotation.y=b.facing;
+ buildHouse(b,town={blocks:[]}){
+  const g=new THREE.Group(),stage=b.stage,w=3.15,d=2.6,h=1.72+(b.variant===1?.22:0);g.position.set(b.x*4,0,b.z*4);g.rotation.y=b.facing;if(courtyardFor(town,b))g.scale.set(.72,.8,.72);
   box(g,3.8,.16,3.8,0xc4b58f,0,.03,0);box(g,w,.2,d,palette.stone,0,.16,-.2);
   if(stage===0){for(const x of [-1.3,1.3])for(const z of [-1.2,1.2])box(g,.22,.22,.22,0x9e9377,x,.3,z);for(let i=0;i<5;i++)box(g,1.2,.07,.1,palette.wood,-.5,.32+i*.08,.4);return batch(g);}
   for(const x of [-1.4,0,1.4])for(const z of [-1.35,1.0])box(g,.12,h,.12,palette.wood,x,h/2+.25,z);
@@ -118,12 +122,15 @@ export class TownScene {
   this.sync(town);const hour=town.time%24;
   const day=THREE.MathUtils.smoothstep(Math.sin((hour-6)/24*Math.PI*2),-.18,.35);this.scene.background.set(0x354b61).lerp(new THREE.Color(0xcbd1b4),day);this.scene.fog.color.copy(this.scene.background);this.ambient.intensity=1.2+day*1.3;this.ambient.color.set(0xa7c6ed).lerp(new THREE.Color(0xfff5d7),day);this.sun.intensity=.5+day*2.5;this.sun.color.set(0xadc5ed).lerp(new THREE.Color(0xffe8c0),day);this.water.color.set(0x405e72).lerp(new THREE.Color(0x79a8a3),day);
   for(const b of town.buildings){const model=this.buildingModels.get(b.id);if(model.userData.warm){const occupied=town.occupants(b).length>0;model.userData.warm.emissiveIntensity=(1-day)*(occupied?2.2:.5);model.userData.glow.material.opacity=(1-day)*(occupied?.5:.16);}}
-  for(const p of town.people){const m=this.personModels.get(p.id),b=town.building(p.current),yard=!p.outside&&b&&hour>=6&&hour<20;m.visible=p.outside||yard;if(p.outside){const [px,pz]=streetPosition(p);m.position.set(px,streetHeight(p.x,p.z)+(p.traffic?.startsWith('讓')?0:Math.abs(Math.sin(town.elapsed*8+p.id))*.025),pz);m.rotation.y=p.angle||0;}else if(yard){const side=(p.id%2?-.5:.5);m.position.set(b.entrance[0]+Math.cos(b.facing)*side-Math.sin(b.facing)*.55,.16,b.entrance[1]-Math.sin(b.facing)*side-Math.cos(b.facing)*.55);m.rotation.y=b.facing;}this.lifeScene.animateHuman(m,town.elapsed,p.outside&&p.route.length>0&&!p.traffic?.startsWith('讓')&&p.traffic!=='等前方行人走開'&&!(p.socialUntil>town.elapsed),p.socialUntil>town.elapsed||yard||!!p.streetEvent&&!p.route.length);}
-  for(const c of town.carts){const m=this.cartModels.get(c.id);m.visible=c.outside;m.position.set(c.x,streetHeight(c.x,c.z),c.z);m.rotation.y=c.angle||0;}
-  this.lifeScene.update(town,day);
+  for(const p of town.people){const m=this.personModels.get(p.id),b=town.building(p.current),yard=!p.outside&&b&&hour>=6&&hour<20;m.visible=p.outside||yard;if(p.outside){const [px,pz]=streetPosition(p);m.position.set(px,streetHeight(p.x,p.z)+(p.traffic?.startsWith('讓')?0:Math.abs(Math.sin(town.elapsed*8+p.id))*.025),pz);m.rotation.y=p.angle||0;}else if(yard){const court=courtyardPosition(town,p),side=(p.id%2?-.4:.4),inset=courtyardFor(town,b)?1:.65;m.position.set(court?court[0]:b.entrance[0]+Math.cos(b.facing)*side-Math.sin(b.facing)*inset,.16,court?court[1]:b.entrance[1]-Math.sin(b.facing)*side-Math.cos(b.facing)*inset);m.rotation.y=b.facing;}this.lifeScene.animateHuman(m,town.elapsed,p.outside&&p.route.length>0&&!p.traffic?.startsWith('讓')&&p.traffic!=='等前方行人走開'&&!(p.socialUntil>town.elapsed),p.socialUntil>town.elapsed||yard||!!p.streetEvent&&!p.route.length);}
+  for(const c of town.carts){const m=this.cartModels.get(c.id);m.visible=c.outside;m.position.set(c.x,streetHeight(c.x,c.z),c.z);m.rotation.y=c.angle||0;displayGoods(m.userData.cargo,at(town,`cart:${c.id}`));}
+  this.lifeScene.update(town,day);this.weatherScene.update(town);if(town.weather.raining){this.sun.intensity*=.45;this.ambient.intensity*=.8;this.scene.background.lerp(new THREE.Color(0x7c9699),.4);this.scene.fog.color.copy(this.scene.background);}
   this.controls.update();this.updateFollow(town,dt);this.controls.target.x=THREE.MathUtils.clamp(this.controls.target.x,-45,40);this.controls.target.z=THREE.MathUtils.clamp(this.controls.target.z,-45,45);this.renderer.render(this.scene,this.camera);return day;
  }
  reset(){this.lifeScene.reset();for(const map of [this.buildingModels,this.personModels,this.cartModels]){for(const model of map.values()){this.scene.remove(model);this.clearGroup(model);}map.clear();}this.clearGroup(this.selection);this.clearGroup(this.preview);this.lastRevision=-1;}
+ focusAt(point,zoom=2.2,overhead=false){
+  this.follow(null);const target=new THREE.Vector3(point[0],0,point[1]);this.camera.position.add(target.clone().sub(this.controls.target));this.controls.target.copy(target);if(overhead){const offset=this.camera.position.clone().sub(this.controls.target),horizontal=Math.hypot(offset.x,offset.z),radius=offset.length()/Math.sqrt(2.44);offset.x*=radius/horizontal;offset.z*=radius/horizontal;offset.y=radius*1.2;this.camera.position.copy(this.controls.target).add(offset);}this.camera.zoom=zoom;this.camera.updateProjectionMatrix();
+ }
  follow(id){this.followId=id;}
  updateFollow(town,dt){
   if(this.followId==null)return;const p=town.people.find(p=>p.id===this.followId);if(!p){this.followId=null;return;}
@@ -178,7 +185,7 @@ class LivingScene {
   if(a.kind==='ox'){
    box(g,.85,.13,1.2,0x977347,0,.53,-.35);for(const x of [-.46,.46]){box(g,.09,.4,1.2,0x947246,x,.74,-.35);const wheel=cyl(g,.31,.31,.1,0x62563e,x,.34,-.35,10);wheel.rotation.z=Math.PI/2;beam(g,[x,.55,.1],[x,1,1.9],.035,0x80613c);}const ox=animal(g,0x8d7956);ox.position.z=1.7;g.userData.ox=ox;
    const driver=this.owner.person(4061);driver.position.set(-.7,0,.5);g.add(driver);g.userData.driver=driver;
-   const cargo=new THREE.Group();for(let i=0;i<3;i++)box(cargo,.33,.38,.4,0xb59b6c,(i%2-.5)*.4,.8,-.5+Math.floor(i/2)*.4);g.add(cargo);g.userData.cargo=cargo;
+   const cargo=new THREE.Group();for(let i=0;i<3;i++)box(cargo,.33,.38,.4,0xb59b6c,(i%2-.5)*.4,.8,-.5+Math.floor(i/2)*.4);cargo.position.y=.65;g.add(cargo);g.userData.cargo=cargo;
   }else{
    const human=this.owner.person(a.id);g.add(human);g.userData.human=human;
    if(a.kind==='peddler'){beam(g,[-.65,.75,0],[.65,.75,0],.025,0x81683d);for(const x of [-.6,.6]){beam(g,[x,.75,0],[x,.35,0],.015,0x8a7753);cyl(g,.2,.16,.27,0xad9364,x,.23,0,6);}}
@@ -192,14 +199,28 @@ class LivingScene {
  }
  syncDetails(t){
   for(const b of t.buildings){if(b.stage<3||this.details.has(b.id))continue;
-   const group=new THREE.Group();group.position.set(b.x*4,0,b.z*4);group.rotation.y=b.facing;this.root.add(group);
+   const group=new THREE.Group();group.position.set(b.x*4,0,b.z*4);group.rotation.y=b.facing;if(courtyardFor(t,b))group.scale.set(.72,.8,.72);this.root.add(group);
    if(b.type!=='home'){const flag=sign(group,b.type==='shop'?['茶','食','布'][b.variant]:['瓷','木','織'][b.variant],1.15,1.9,1.65,.42,.68);this.flags.push(flag);}
    const sheets=[];if(b.type==='home'){beam(group,[-1.2,1.25,-1.58],[1.2,1.25,-1.58],.015,0x776d4d);for(let i=0;i<3;i++){const sheet=box(group,.35,.6,.018,[0xd8c59d,0x9caa92,0xc7b59b][i],-.65+i*.55,.95,-1.57);sheets.push(sheet);}}
    const steam=[];if(b.type!=='home')for(let i=0;i<3;i++){const m=ball(group,.12,new THREE.MeshBasicMaterial({color:0xe4decc,transparent:true,opacity:.19,depthWrite:false}),.6,2.8,-.4,1);steam.push(m);}
-   this.details.set(b.id,{group,sheets,steam});
+   const cargo=new THREE.Group();cargo.position.set(-.6,.2,1.65);group.add(cargo);this.details.set(b.id,{group,sheets,steam,cargo});
   }
   for(const b of t.buildings){if(b.stage>=3){const m=this.workers.get(b.id);if(m)m.visible=false;continue;}if(!this.workers.has(b.id)){const m=this.owner.person(6000+b.id);this.root.add(m);this.workers.set(b.id,m);}}
-  if(this.sharedRevision!==t.revision){for(const obj of this.shared){this.root.remove(obj);obj.traverse(o=>{if(o.geometry)o.geometry.dispose();});}this.shared=[];for(const block of t.blocks){const deco=new THREE.Group();for(const c of block.cells){const next=block.cells.find(n=>n.x===c.x+1&&n.z===c.z);if(next){box(deco,.3,.12,1.1,0x9b8258,c.x*4+2,.35,c.z*4-.7);pot(deco,c.x*4+2,c.z*4+.4,0xaf9264,.2);}const below=block.cells.find(n=>n.z===c.z+1&&n.x===c.x);if(below)pot(deco,c.x*4+.6,c.z*4+2,0xaf9264,.22);}this.root.add(deco);this.shared.push(deco);}this.sharedRevision=t.revision;}
+  if(this.sharedRevision!==t.revision){
+   for(const obj of this.shared){this.root.remove(obj);obj.traverse(o=>{if(o.geometry)o.geometry.dispose();});}this.shared=[];
+   for(const block of t.blocks)for(const c of courtyards(block)){
+    if(!t.buildings.filter(b=>b.blockId===block.id).every(b=>b.stage>=3))continue;
+    const g=new THREE.Group();g.position.set(c.x,0,c.z);if(!c.acrossX)g.rotation.y=Math.PI/2;
+    box(g,1.2,.045,3.2,0xbab59a,0,.12,0);box(g,.3,.28,.72,0x8c7956,-.38,.27,-.7);pot(g,.38,-.9,0xa18864,.17);
+    // Side gate and drying line open into the shared court, never into a new road.
+    for(const x of [-.53,.53])box(g,.065,1.05,.065,0x8c7450,x,.55,1.45);beam(g,[-.53,1.1,1.45],[.53,1.1,1.45],.035,0x8c7450);
+    const sheets=new THREE.Group();for(let i=0;i<2;i++)box(sheets,.28,.4,.025,[0xc8b78d,0x9aaa94][i],-.24+i*.48,.88,1.43);g.add(sheets);g.userData.sheets=sheets;
+    // A visible side door on each facing wall connects the houses to the courtyard.
+    for(const x of [-.99,.99])box(g,.03,.72,.45,0x80684d,x,.58,.25);
+    g.traverse(o=>{const b=t.buildings.find(b=>b.blockId===block.id);o.userData.buildingId=b.id;});this.root.add(g);this.shared.push(g);
+   }
+   this.sharedRevision=t.revision;
+  }
  }
  update(t,day){
   this.syncDetails(t);
@@ -211,19 +232,20 @@ class LivingScene {
   const time=t.elapsed,daytime=t.time%24>=6&&t.time%24<20;
   for(const a of [...t.life.visitors,...t.life.porters,...t.life.oxen]){
    let g=this.actors.get(a.id);if(!g){g=this.actorModel(a);this.actors.set(a.id,g);this.root.add(g);}g.visible=a.visible;const [ax,az]=streetPosition(a);g.position.set(ax,streetHeight(a.x,a.z),az);g.rotation.y=a.angle||0;
-   if(g.userData.cargo)g.userData.cargo.visible=a.carrying>0;
+   if(g.userData.cargo){const cargo=g.userData.cargo;if(!cargo.isGroup){g.remove(cargo);cargo.geometry.dispose();g.userData.cargo=new THREE.Group();g.userData.cargo.position.set(0,.95,-.2);g.add(g.userData.cargo);}displayGoods(g.userData.cargo,at(t,`${a.kind==='ox'?'ox':'porter'}:${a.id}`),{lifeId:a.id});g.userData.cargo.visible=a.carrying>0;}
    if(g.userData.human)this.animateHuman(g.userData.human,time,a.walking&&!a.traffic?.startsWith('讓')&&a.traffic!=='等前方行人走開',a.action.includes('談'));
    if(g.userData.driver)this.animateHuman(g.userData.driver,time,a.walking);
    if(g.userData.ox){const ox=g.userData.ox;ox.position.y=streetHeight(a.x+Math.sin(a.angle||0)*1.7,a.z+Math.cos(a.angle||0)*1.7)-streetHeight(a.x,a.z);for(let i=0;i<ox.userData.legs.length;i++)ox.userData.legs[i].rotation.x=a.walking?Math.sin(time*4+i*Math.PI)*.32:0;}
   }
-  for(const [id,d] of this.details){const b=t.building(id);for(let i=0;i<d.sheets.length;i++)d.sheets[i].rotation.x=Math.sin(time*1.1+i)*.09;for(let i=0;i<d.steam.length;i++){const m=d.steam[i],phase=(time*.32+i/3)%1;m.visible=daytime&&t.occupants(b).length>0;m.position.y=2.5+phase*1.7;m.position.x=.5+Math.sin(phase*4)*.15;m.scale.setScalar(.7+phase*1.5);m.material.opacity=(1-phase)*.2;}}
+  for(const g of this.shared)g.userData.sheets.visible=!t.weather.raining;
+  for(const [id,d] of this.details){const b=t.building(id);displayGoods(d.cargo,at(t,`${b.type==='shop'?'shop':'output'}:${id}`),{buildingId:id});for(const sheet of d.sheets)sheet.visible=!t.weather.raining&&!courtyardFor(t,b);for(let i=0;i<d.sheets.length;i++)d.sheets[i].rotation.x=Math.sin(time*1.1+i)*.09;for(let i=0;i<d.steam.length;i++){const m=d.steam[i],phase=(time*.32+i/3)%1;m.visible=daytime&&t.occupants(b).length>0;m.position.y=2.5+phase*1.7;m.position.x=.5+Math.sin(phase*4)*.15;m.scale.setScalar(.7+phase*1.5);m.material.opacity=(1-phase)*.2;}}
   for(const [id,g] of this.workers){const b=t.building(id);g.visible=b.stage<3;if(g.visible){g.position.set(b.entrance[0],streetHeight(...b.entrance),b.entrance[1]);g.rotation.y=b.facing+Math.PI;this.animateHuman(g,time,false,true);}}
   for(const flag of this.flags)flag.rotation.z=Math.sin(time*.9+flag.id)*.055;for(const material of this.lamps)material.emissiveIntensity=(1-day)*1.8;
-  this.fisher.visible=this.washer.visible=daytime;this.fisher.userData.pole.rotation.x=Math.sin(time*.8)*.07;this.animateHuman(this.washer,time,false,true);this.washer.userData.cloth.position.y=.15+Math.sin(time*2)*.04;
+  this.fisher.visible=this.washer.visible=daytime&&!t.weather.raining;this.fisher.userData.pole.rotation.x=Math.sin(time*.8)*.07;this.animateHuman(this.washer,time,false,true);this.washer.userData.cloth.position.y=.15+Math.sin(time*2)*.04;
   this.dog.position.set(12,0,13+Math.sin(time*.15)*3);this.dog.rotation.y=Math.cos(time*.15)>0?0:Math.PI;for(let i=0;i<4;i++)this.dog.userData.legs[i].rotation.x=Math.sin(time*7+i*Math.PI)*.3;
   this.ducks.forEach((g,i)=>{g.position.set(riverX(20)-2+i*.42+Math.sin(time*.18+i)*.5,0,19+Math.sin(time*.12+i*.4)*1.5);g.rotation.y=Math.cos(time*.12+i*.4)>0?0:Math.PI;});
   this.birds.forEach((g,i)=>{g.visible=daytime;g.position.set(-10+Math.sin(time*.04+i*.06)*22,9+i*.25,Math.cos(time*.04)*18+i);g.rotation.y=time*.04;g.children.forEach((wing,n)=>wing.rotation.z=Math.sin(time*6+i)*(n?-.45:.45));});
-  const b=t.life.boat;this.owner.boat.visible=t.buildings.length>0&&b.state!=='away';this.owner.boat.position.set(b.x,Math.sin(time*.8)*.025,b.z);this.owner.boat.rotation.y=0;this.owner.boat.userData.mast.rotation.x=(b.state==='approach'?Math.PI*.49*THREE.MathUtils.smoothstep(6-Math.abs(b.z+16),0,2):0);this.owner.boat.userData.sail.visible=b.mast===1;this.boatCargo.visible=b.cargo>0;this.boatCargo.scale.y=.3+b.cargo/12*.7;this.rope.visible=b.state==='unloading';
+  const b=t.life.boat;this.owner.boat.visible=t.buildings.length>0&&b.state!=='away';this.owner.boat.position.set(b.x,Math.sin(time*.8)*.025,b.z);this.owner.boat.rotation.y=0;this.owner.boat.userData.mast.rotation.x=(b.state==='approach'?Math.PI*.49*THREE.MathUtils.smoothstep(6-Math.abs(b.z+16),0,2):0);this.owner.boat.userData.sail.visible=b.mast===1;displayGoods(this.boatCargo,at(t,'boat'),{boat:true});this.boatCargo.position.set(0,.45,.9);this.boatCargo.visible=b.cargo>0;this.rope.visible=b.state==='unloading';
  }
  reset(){for(const group of [...this.actors.values(),...this.workers.values(),...this.shared,...[...this.details.values()].map(d=>d.group)]){this.root.remove(group);group.traverse(o=>{if(o.geometry)o.geometry.dispose();});}this.flags=this.flags.filter(f=>f.parent===this.root);this.actors.clear();this.workers.clear();this.details.clear();this.shared=[];this.sharedRevision=-1;}
 }

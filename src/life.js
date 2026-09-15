@@ -1,3 +1,4 @@
+import {at,transfer,deliveryPlan,importCargo,GOODS,goodsBalance} from './production.js';
 import {applyTraffic} from './traffic.js';
 import {key,point,pathfind} from './simulation.js';
 export const DOCK=[12,8], BERTH=[16,8], GATE=[33,-16], MARKET=[26,-8];
@@ -46,7 +47,7 @@ function tickBoat(t,dt){
   b.x=Math.min(riverX(b.z),b.x+dt*.4);b.z+=dt*.85;
   if(b.z>44){b.state='away';b.wait=35;}
  }else{
-  b.wait-=dt;if(b.wait<=0){Object.assign(b,{x:riverX(-44),z:-44,state:'approach',cargo:12,mast:1,announced:false});b.imported+=12;}
+  b.wait-=dt;if(b.wait<=0&&importCargo(t)){Object.assign(b,{x:riverX(-44),z:-44,state:'approach',mast:1,announced:false});}
  }
 }
 function tickPorters(t,dt){
@@ -59,20 +60,21 @@ function tickPorters(t,dt){
    if(l.boat.state==='unloading'&&l.boat.cargo>0){send(t,p,BERTH,'走向船邊接貨');p.phase='load';}
    else p.action='在碼頭候船';
   }else if(p.phase==='load'){
-   if(l.boat.cargo>0){l.boat.cargo--;p.carrying=1;send(t,p,DOCK,'扛貨送往岸邊貨棧');p.phase='store';}else {send(t,p,DOCK,'返回岸邊');p.phase='fetch';}
-  }else{l.dock.stock+=p.carrying;l.dock.received+=p.carrying;p.carrying=0;p.wait=2;p.phase='fetch';p.action='把貨物放入貨棧';}
+   if(l.boat.cargo>0){transfer(t,'boat',`porter:${p.id}`,1);send(t,p,DOCK,'扛貨送往岸邊貨棧');p.phase='store';}else {send(t,p,DOCK,'返回岸邊');p.phase='fetch';}
+  }else{const n=transfer(t,`porter:${p.id}`,'dock',1);l.dock.received+=n;p.wait=2;p.phase='fetch';p.action='把貨物放入貨棧';}
  }
 }
 function tickOxen(t,dt){
- const l=t.life,shops=t.buildings.filter(b=>b.type==='shop'&&b.stage>=3);
- if(shops.length&&!l.oxen.length)l.oxen.push({...actor(4001,'ox',...DOCK),name:'牛車腳行',phase:'load'});
+ const l=t.life;
+ if(t.buildings.some(b=>b.stage>=3&&b.type!=='home')&&!l.oxen.length)l.oxen.push({...actor(4001,'ox',...DOCK),name:'牛車腳行',phase:'load'});
  for(const a of l.oxen){
   if(a.walking){advance(a,dt,t);if(a.walking)continue;}
   a.wait-=dt;if(a.wait>0)continue;
   if(a.phase==='load'){
-   if(l.dock.stock>0&&shops.length){const shop=[...shops].sort((a,b)=>(a.stock||0)-(b.stock||0)||a.id-b.id)[0];if(send(t,a,shop.entrance,`運貨前往${shop.name}`)){a.carrying=Math.min(3,l.dock.stock);l.dock.stock-=a.carrying;a.target=shop.id;a.phase='deliver';}}else a.action='牛車在岸邊等候裝貨';
+   const plan=deliveryPlan(t);
+   if(plan&&send(t,a,plan.building.entrance,`運送${GOODS[plan.good]}前往${plan.building.name}`)){transfer(t,'dock',`ox:${a.id}`,3,plan.good);a.target=plan.building.id;a.deliveryAt=plan.to;a.phase='deliver';}else a.action='牛車等候原料與作坊接貨';
   }else if(a.phase==='deliver'){
-   const shop=t.building(a.target);if(shop){shop.stock=(shop.stock||0)+a.carrying;l.dock.delivered+=a.carrying;t.log(`牛車送抵${shop.name}，補入 ${a.carrying} 件貨物`);a.carrying=0;}a.phase='return';a.wait=5;a.action='卸貨，讓牛歇歇腳';
+   const target=t.building(a.target);if(target){const lots=at(t,`ox:${a.id}`),label=GOODS[lots[0]?.good]||'貨物';const n=transfer(t,`ox:${a.id}`,a.deliveryAt||`shop:${target.id}`,3);if(target.type==='shop')l.dock.delivered+=n;else target.lastSupply=t.elapsed;t.log(`牛車送抵${target.name}，補入 ${n} 件${label}`);}a.phase='return';a.wait=5;a.action='卸貨，讓牛歇歇腳';
   }else if(send(t,a,DOCK,'空車返回碼頭'))a.phase='load';
  }
 }
@@ -91,7 +93,7 @@ function tickVisitors(t,dt){
    const target=shop?shop.entrance:MARKET;a.target=shop?.id||null;send(t,a,target,shop?`趕集，前往${shop.name}`:'前往橋頭市集');a.phase='browse';
   }else if(a.phase==='browse'){
    a.action=a.kind==='peddler'?'放下擔子，與店家談買賣':'在攤前看貨、喝茶';a.wait=7+a.id%5;a.phase='watch';
-   const shop=t.building(a.target);if(shop?.stock>0){shop.stock--;l.dock.sold++;}
+   const shop=t.building(a.target);if(shop?.stock>0){l.dock.sold+=transfer(t,`shop:${shop.id}`,'sold',1);}
   }else if(a.phase==='watch'){
    send(t,a,[18+(a.id%3),-16],'走到虹橋看船');a.phase='bridge';
   }else if(a.phase==='bridge'){
@@ -100,7 +102,7 @@ function tickVisitors(t,dt){
  }
 }
 function conversations(t){
- const h=t.time%24;if(h<6||h>=20||t.elapsed<30)return;
+ const h=t.time%24;if(h<6||h>=20||t.elapsed<30||t.weather.raining)return;
  const active=t.people.filter(p=>p.outside&&!p.streetEvent&&p.route.length&&(p.chatCooldown||0)<=t.elapsed);
  for(let i=0;i<active.length;i++){const a=active[i];if((a.chatCooldown||0)>t.elapsed)continue;
   const b=active.slice(i+1).find(p=>(p.chatCooldown||0)<=t.elapsed&&Math.hypot(p.x-a.x,p.z-a.z)<1.35);if(!b)continue;
@@ -112,4 +114,4 @@ export function tickLife(t,dt){
  if(!t.buildings.length)return;
  tickBoat(t,dt);tickPorters(t,dt);tickOxen(t,dt);tickVisitors(t,dt);conversations(t);
 }
-export function cargoBalance(t){const l=t.life;return {imported:l.boat.imported,accounted:l.boat.cargo+l.dock.stock+l.dock.sold+l.porters.reduce((n,p)=>n+p.carrying,0)+l.oxen.reduce((n,p)=>n+p.carrying,0)+t.buildings.reduce((n,b)=>n+(b.stock||0),0)};}
+export function cargoBalance(t){return goodsBalance(t);}

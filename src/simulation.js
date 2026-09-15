@@ -1,3 +1,5 @@
+import {createEconomy,importCargo,migrateEconomy,tickProduction,tickCraftCarts,syncCargo} from './production.js';
+import {createWeather,tickWeather,shelterResident} from './weather.js';
 import {prepareTraffic,applyTraffic} from './traffic.js';
 import {createStories,tickStories,eventAction,remember,rerouteStories} from './stories.js';
 import {createLife,publicRoads,rerouteLife,tickLife} from './life.js';
@@ -34,7 +36,7 @@ export function pathfind(nodes,start,goal){
  return [];
 }
 export class Town {
- constructor(){this.buildings=[];this.blocks=[];this.people=[];this.carts=[];this.roads=new Set();this.time=8;this.elapsed=0;this.nextId=1;this.revision=0;this.events=[];this.life=createLife();this.stories=createStories();}
+ constructor(){this.buildings=[];this.blocks=[];this.people=[];this.carts=[];this.roads=new Set();this.time=8;this.elapsed=0;this.nextId=1;this.revision=0;this.events=[];this.life=createLife();this.stories=createStories();this.weather=createWeather();this.economy=createEconomy();importCargo(this);}
  canPlace(cells){
   if(!cells.length||cells.length>3||new Set(cells.map(c=>key(c.x,c.z))).size!==cells.length)return false;
   const connected=new Set([key(cells[0].x,cells[0].z)]);
@@ -100,10 +102,11 @@ export class Town {
    }this.log(`${b.name}迎來兩位新住戶`);
   }
   for(const a of [...this.people,...this.life.visitors,...this.life.porters])a.traffic='';
-  tickStories(this);prepareTraffic(this);
+  tickWeather(this);tickStories(this);prepareTraffic(this);
   const workplaces=this.buildings.filter(b=>b.type!=='home'&&b.stage>=3);
   for(const p of this.people){
    if(!p.work){const job=workplaces.find(b=>this.workers(b).length<(b.type==='work'?4:2));if(job)p.work=job.id;}
+   if(shelterResident(this,p,dt))continue;
    if(eventAction(this,p)){this.move(p,dt);eventAction(this,p);continue;}
    const h=this.time%24;if((p.socialUntil||0)>this.elapsed&&h>=6&&h<20)continue;const shops=this.buildings.filter(b=>b.type==='shop'&&b.stage>=3);
    let target=p.home;
@@ -118,9 +121,9 @@ export class Town {
   for(const b of this.buildings.filter(b=>b.type==='work'&&b.stage>=3)){
    if(shops.length&&!this.carts.some(c=>c.home===b.id))this.carts.push({id:this.nextId++,home:b.id,current:b.id,destination:b.id,x:b.entrance[0],z:b.entrance[1],outside:false,route:[],speed:.7,wait:0,action:'整理貨物'});
   }
-  for(const c of this.carts){if(!c.outside){c.wait-=dt;if(c.wait<=0){const shop=shops[c.id%shops.length];if(shop)this.travel(c,c.current===c.home?shop.id:c.home);c.wait=8;}}this.move(c,dt);}
+  tickProduction(this,dt);tickCraftCarts(this,dt);
   tickLife(this,dt);
-  for(const p of this.people)remember(this,p,p.action);
+  for(const p of this.people){if(this.weather.raining&&p.outside&&!p.shelter&&!p.action.startsWith('撐傘'))p.action='撐傘 · '+p.action;remember(this,p,p.action);}
  }
  move(p,dt){
   if(!p.outside)return;
@@ -143,10 +146,10 @@ export class Town {
   this.place('shop',[{x:1,z:2},{x:2,z:2}],true);
   this.tick(.01);this.log('一城煙火，等你慢慢看');
  }
- toJSON(){return {version:3,stories:this.stories,life:this.life,time:this.time,elapsed:this.elapsed,nextId:this.nextId,buildings:this.buildings,blocks:this.blocks,people:this.people,carts:this.carts,events:this.events};}
+ toJSON(){return {version:4,economy:this.economy,weather:this.weather,stories:this.stories,life:this.life,time:this.time,elapsed:this.elapsed,nextId:this.nextId,buildings:this.buildings,blocks:this.blocks,people:this.people,carts:this.carts,events:this.events};}
  static restore(data){
-  if(![1,2,3].includes(data?.version)||!Array.isArray(data.blocks)||!Array.isArray(data.buildings)||!Array.isArray(data.people)||!Array.isArray(data.carts))throw new Error('存檔格式不相容');
+  if(![1,2,3,4].includes(data?.version)||!Array.isArray(data.blocks)||!Array.isArray(data.buildings)||!Array.isArray(data.people)||!Array.isArray(data.carts))throw new Error('存檔格式不相容');
   if(data.buildings.length>143||!Number.isFinite(data.time)||!Number.isFinite(data.elapsed))throw new Error('存檔內容無效');
-  const town=new Town();Object.assign(town,data);town.life=data.version>=2&&data.life?data.life:createLife();town.stories=data.version===3&&data.stories?data.stories:createStories();town.rebuildRoads();town.revision++;return town;
+  const town=new Town();Object.assign(town,data);town.life=data.version>=2&&data.life?data.life:createLife();town.stories=data.version>=3&&data.stories?data.stories:createStories();town.weather=data.version===4&&data.weather?data.weather:createWeather();if(data.version!==4||!data.economy)migrateEconomy(town);else syncCargo(town);town.rebuildRoads();town.revision++;return town;
  }
 }

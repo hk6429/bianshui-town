@@ -1,0 +1,42 @@
+
+> bianshui-town@0.4.0 test
+> node --test tests/*.test.js
+
+✔ follow camera tracks a moving resident and holds the actual house when indoors (47.21725ms)
+✔ street focus cancels following and centers the exact event venue while preserving view angle (0.561125ms)
+✔ courtyard view looks down without moving the camera into the far fog (0.116292ms)
+✔ bridge and dock connect to town without crossing building interiors (50.200166ms)
+✔ boat lowers mast at bridge and porters unload actual cargo (128.699875ms)
+✔ ox cart delivers cargo to shops with conservation over several voyages (255.328083ms)
+✔ visitors cross bridge, browse a shop and depart at night (128.67275ms)
+✔ chat has a bounded pause then residents resume their schedule (121.3075ms)
+✔ pause freezes people, freight, boat and dialogue timers (30.5185ms)
+✔ version one progress migrates and version two preserves cargo (95.180417ms)
+✔ roof surfaces survive merging with indexed tile ribs (13.502958ms)
+✔ drag limits to three orthogonally connected cells (0.547708ms)
+✔ three cells share only an exterior road perimeter (0.190666ms)
+✔ invalid, overlapping, out-of-bounds and disconnected placements are atomic (1.994ms)
+✔ auto roads connect distant blocks without entering any building (6.488667ms)
+✔ construction, population, work assignment and real arrival occur over time (8.133666ms)
+✔ paused simulation does not advance and night returns residents home (55.382542ms)
+✔ save restores connected roads, shared blocks and residents (49.658625ms)
+✔ street events gather real residents, finish and release everyone (250.521667ms)
+✔ resident diary follows actual work, meals and return home; rolls over by day (12.877916ms)
+✔ v1/v2 saves migrate diaries and v3 survives active events without stranded residents (207.657ms)
+✔ pedestrian yields to oncoming ox, resumes after passing and uses side of road (0.2115ms)
+✔ same-direction followers maintain headway; opposite lanes and bridge crowding make progress (0.1375ms)
+✔ three event types cycle over multiple days while freight remains conserved (630.514125ms)
+✔ stationary residents are not described as yielding or blocked (0.386125ms)
+✔ rain cancels outdoor events, shelters residents, and clear weather releases them (121.737584ms)
+✔ two and three connected cells have private courtyards, without internal roads (0.685083ms)
+✔ all raw materials are physically processed, delivered and sold with provenance and conservation (994.847709ms)
+✔ a workshop without a present worker or raw input produces nothing (8.456959ms)
+✔ v3 freight migrates without loss; v4 restores weather, lots and manufacturing progress (56.738542ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1251.024791

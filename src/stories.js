@@ -22,10 +22,11 @@ function finish(t){
  const e=t.stories.active;if(!e)return;
  for(const id of e.participants){const p=t.people.find(p=>p.id===id);if(!p)continue;p.streetEvent=null;p.eventSlot=null;p.route=[];p.outside=true;p.destination=null;p.chatCooldown=t.elapsed+25;remember(t,p,e.phase==='active'?'街頭相聚散場，繼續今日行程':'街坊散去，繼續今日行程');}
  if(e.phase==='active'){t.stories.completed++;t.log(e.end);}else t.log(`${e.title}暫歇，街坊回到各自行程`);
+ t.stories.last={id:e.id,title:e.title,venue:e.venue,center:[...e.center]};
  t.stories.active=null;t.stories.nextAt=t.elapsed+35;
 }
 export function tickStories(t){
- const s=t.stories,h=t.time%24,day=h>=8&&h<19;
+ const s=t.stories,h=t.time%24,day=h>=8&&h<19&&!t.weather.raining;
  if(s.active){
   const e=s.active;if(!day){finish(t);return;}
   const arrived=e.participants.filter(id=>{const p=t.people.find(p=>p.id===id);return p&&Math.hypot(p.x-p.eventSlot[0],p.z-p.eventSlot[1])<.1;});
