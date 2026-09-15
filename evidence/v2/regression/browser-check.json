@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "errors": [],
+  "images": [
+    {
+      "src": "/concepts/01-settlement.png",
+      "loaded": true
+    },
+    {
+      "src": "/concepts/02-daytime.png",
+      "loaded": true
+    },
+    {
+      "src": "/concepts/03-nighttime.png",
+      "loaded": true
+    },
+    {
+      "src": "/concepts/04-block.png",
+      "loaded": true
+    }
+  ],
+  "drawCalls": 670,
+  "triangles": 94672,
+  "checks": [
+    "three-cell drag",
+    "explore does not build",
+    "construction and population",
+    "building inspection",
+    "reset confirmation",
+    "demo resident movement",
+    "night switch",
+    "mobile toolbar"
+  ]
+}

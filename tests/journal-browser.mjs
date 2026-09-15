@@ -1,0 +1,4 @@
+import {chromium} from '@playwright/test';
+import assert from 'node:assert/strict';
+const browser=await chromium.launch({headless:true,executablePath:process.env.TEST_CHROMIUM_PATH});
+try{const page=await browser.newPage({viewport:{width:1440,height:1000}});await page.goto('http://127.0.0.1:5173');await page.waitForFunction(()=>window.__townDebug);await page.locator('#demo-btn').click();await page.locator('#life-btn').click();const handle=await page.locator('[data-focus="bridge"]').elementHandle();await page.waitForFunction(()=>window.__townDebug.snapshot().elapsed>2);assert(await handle.evaluate(e=>e.isConnected));await page.locator('[data-focus="bridge"]').click();await page.locator('[data-focus="dock"]').click();await page.locator('[data-focus="town"]').click();console.log('PASS: journal buttons survive updates; all three focus actions click successfully');}finally{await browser.close();}

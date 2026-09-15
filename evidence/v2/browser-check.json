@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "errors": [],
+  "checks": [
+    "audio opt-in",
+    "audio mutes on pause",
+    "bridge lowering mast",
+    "porters carry cargo",
+    "ox cargo delivered",
+    "dialogue occurs",
+    "ox inspectable",
+    "residents and visitors return at night",
+    "mobile controls fit"
+  ],
+  "bridge": {
+    "mast": 0,
+    "z": -18.970764999999897
+  },
+  "dock": {
+    "cargo": 10,
+    "carrying": [
+      1,
+      1
+    ]
+  },
+  "trade": {
+    "delivered": 2,
+    "chats": 11
+  },
+  "render": {
+    "frame": 658,
+    "calls": 641,
+    "triangles": 94120,
+    "points": 0,
+    "lines": 0
+  }
+}

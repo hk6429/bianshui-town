@@ -1,0 +1,12 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {Town,key,pathfind} from '../src/simulation.js';
+import {GATE,DOCK,cargoBalance,streetHeight} from '../src/life.js';
+function run(t,seconds){for(let i=0;i<seconds*4;i++)t.tick(.25);}
+test('bridge and dock connect to town without crossing building interiors',()=>{const t=new Town();t.demo();const p=pathfind(t.roads,key(...GATE),key(...t.buildings[0].entrance));assert(p.some(([x,z])=>x===18&&z===-16));assert(pathfind(t.roads,key(...DOCK),key(...t.buildings[0].entrance)).length);for(const k of t.roads){const [x,z]=k.split(',').map(Number);assert(!t.isInterior(x,z));}assert(streetHeight(18,-16)>1.8);});
+test('boat lowers mast at bridge and porters unload actual cargo',()=>{const t=new Town();t.demo();run(t,10);assert.equal(t.life.boat.mast,0);assert.equal(t.life.bridgePasses,1);run(t,95);assert(t.life.dock.received>0);assert(t.life.porters.length===2);assert.deepEqual(cargoBalance(t).imported,cargoBalance(t).accounted);});
+test('ox cart delivers cargo to shops with conservation over several voyages',()=>{const t=new Town();t.demo();run(t,460);assert(t.life.dock.delivered>0);assert(t.life.dock.sold>0);assert(t.life.boat.trips>0);const {imported,accounted}=cargoBalance(t);assert.equal(imported,accounted);assert(t.life.oxen.length===1);});
+test('visitors cross bridge, browse a shop and depart at night',()=>{const t=new Town();t.demo();run(t,80);assert(t.life.visitors.some(a=>a.x<12));assert(t.life.visitors.every(a=>a.goal));t.time=22;run(t,110);assert(t.life.visitors.every(a=>!a.visible));});
+test('chat has a bounded pause then residents resume their schedule',()=>{const t=new Town();t.demo();run(t,90);assert(t.life.socialCount>0);t.time=22;run(t,80);assert(t.people.every(p=>p.current===p.home));});
+test('pause freezes people, freight, boat and dialogue timers',()=>{const t=new Town();t.demo();run(t,12);const before=JSON.stringify(t);t.tick(0);assert.equal(JSON.stringify(t),before);});
+test('version one progress migrates and version two preserves cargo',()=>{const t=new Town();t.demo();run(t,90);const data=JSON.parse(JSON.stringify(t));const restored=Town.restore(data);assert.deepEqual(cargoBalance(restored),cargoBalance(t));assert.equal(restored.life.boat.z,t.life.boat.z);delete data.life;data.version=1;const old=Town.restore(data);assert.equal(old.buildings.length,t.buildings.length);assert.equal(old.life.boat.cargo,12);});
