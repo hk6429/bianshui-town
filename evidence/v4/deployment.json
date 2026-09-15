@@ -1,0 +1,35 @@
+{
+  "url": "https://bianshui-town.pages.dev/",
+  "deployment": "4b5a3f3a",
+  "source_commit": "737b2e6",
+  "files": [
+    {
+      "file": "assets/index-Bkc9a-c3.js",
+      "matches_build": true
+    },
+    {
+      "file": "assets/index-Cn-K9Gfm.css",
+      "matches_build": true
+    },
+    {
+      "file": "concepts/01-settlement.png",
+      "matches_build": true
+    },
+    {
+      "file": "concepts/02-daytime.png",
+      "matches_build": true
+    },
+    {
+      "file": "concepts/03-nighttime.png",
+      "matches_build": true
+    },
+    {
+      "file": "concepts/04-block.png",
+      "matches_build": true
+    },
+    {
+      "file": "index.html",
+      "matches_build": true
+    }
+  ]
+}

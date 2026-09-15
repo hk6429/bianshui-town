@@ -4,6 +4,12 @@
 
 ![第四版院落近景](evidence/v4/05-courtyard.png)
 
+## 線上遊玩
+
+https://bianshui-town.pages.dev/
+
+Cloudflare Pages 正式版；存檔依瀏覽器與網址個別保存，本機版不會自動轉移。
+
 ## 啟動
 
 需要 Node.js 22 與 npm。
@@ -129,3 +135,7 @@ node tests/life-browser.mjs
 Three.js、Vite、原生 JavaScript、Node.js Test Runner、Playwright。
 
 Three.js 使用方式參考官方文件：https://threejs.org/docs/ 。
+
+## 部署
+
+Pages 專案 `bianshui-town`，正式分支 `main`，目前手動發布。執行 `npm run build` 後執行 `wrangler pages deploy dist --project-name bianshui-town --branch main`。需要回復時，重新發布已驗證提交的 build，或從 Pages 部署紀錄回復先前正式部署。
