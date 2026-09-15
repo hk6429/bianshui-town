@@ -1,5 +1,5 @@
 export function courtyards(block){
- const result=[];
+ const result=[];if(block.combined)return result;
  for(const c of block.cells)for(const [dx,dz] of [[1,0],[0,1]])if(block.cells.some(n=>n.x===c.x+dx&&n.z===c.z+dz))result.push({x:c.x*4+dx*2,z:c.z*4+dz*2,acrossX:!!dx,cells:[[c.x,c.z],[c.x+dx,c.z+dz]],width:dx?1.2:3.2,depth:dz?1.2:3.2});
  return result;
 }

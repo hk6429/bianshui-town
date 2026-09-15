@@ -1,0 +1,69 @@
+
+> bianshui-town@0.4.0 test
+> node --test tests/*.test.js
+
+✔ follow camera tracks a moving resident and holds the actual house when indoors (58.313458ms)
+✔ street focus cancels following and centers the exact event venue while preserving view angle (0.574417ms)
+✔ courtyard view looks down without moving the camera into the far fog (0.113458ms)
+✔ bridge and dock connect to town without crossing building interiors (64.035417ms)
+✔ boat lowers mast at bridge and porters unload actual cargo (128.572333ms)
+✔ ox cart delivers cargo to shops with conservation over several voyages (258.957583ms)
+✔ visitors cross bridge, browse a shop and depart at night (122.727583ms)
+✔ chat has a bounded pause then residents resume their schedule (123.493125ms)
+✔ pause freezes people, freight, boat and dialogue timers (35.418542ms)
+✔ version one progress migrates and version two preserves cargo (98.449292ms)
+✔ roof surfaces survive merging with indexed tile ribs (9.52375ms)
+✔ drag limits to three orthogonally connected cells (0.52375ms)
+✔ three cells share only an exterior road perimeter (0.199667ms)
+✔ invalid, overlapping, out-of-bounds and disconnected placements are atomic (2.337708ms)
+✔ auto roads connect distant blocks without entering any building (6.309625ms)
+✔ construction, population, work assignment and real arrival occur over time (6.853333ms)
+✔ paused simulation does not advance and night returns residents home (57.92525ms)
+✔ save restores connected roads, shared blocks and residents (49.090041ms)
+✔ street events gather real residents, finish and release everyone (260.056417ms)
+✔ resident diary follows actual work, meals and return home; rolls over by day (11.496375ms)
+✖ v1/v2 saves migrate diaries and v3 survives active events without stranded residents (67.919209ms)
+✔ pedestrian yields to oncoming ox, resumes after passing and uses side of road (0.175334ms)
+✔ same-direction followers maintain headway; opposite lanes and bridge crowding make progress (0.104125ms)
+✔ three event types cycle over multiple days while freight remains conserved (574.423917ms)
+✔ stationary residents are not described as yielding or blocked (0.200833ms)
+✔ rain cancels outdoor events, shelters residents, and clear weather releases them (139.489917ms)
+✔ two and three connected cells have private courtyards, without internal roads (0.714375ms)
+✔ all raw materials are physically processed, delivered and sold with provenance and conservation (976.328708ms)
+✔ a workshop without a present worker or raw input produces nothing (8.371375ms)
+✔ v3 freight migrates without loss; v4 restores weather, lots and manufacturing progress (62.133375ms)
+✔ four plots form one complex with an exterior entrance and no internal streets (8.218291ms)
+✔ invalid blueprints and occupied or out-of-bounds four plots are rejected atomically (1.36525ms)
+✔ pond is an occupied landscape; people visit but are not assigned garden jobs (15.993791ms)
+✔ v4 restores unchanged IDs and freight; v5 round trip preserves all blueprint footprints (81.016125ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 33
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1258.094833
+
+✖ failing tests:
+
+test at tests/stories.test.js:18:1
+✖ v1/v2 saves migrate diaries and v3 survives active events without stranded residents (67.919209ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  5 !== 4
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/stories.test.js:19:88)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 5,
+    expected: 4,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

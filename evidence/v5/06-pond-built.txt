@@ -1,0 +1,67 @@
+Browser tab: 610003768, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v5".
+1 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v5
+	2 container app
+		3 image Description: 汴水小鎮互動三維場景, ID: world
+		4 container
+			5 text 汴
+			6 heading 汴水小鎮, Value: 1
+				7 text 汴水小鎮
+			8 text 一城煙火，慢慢生長
+			75 text ☀
+			76 text 未時 · 日光正好
+			77 text 第 1 日　14:11
+			12 button Description: 切換白晝與夜晚, ID: light-toggle
+			13 button Description: 天候：晴天，手動模式, Help: 切換自然天候、細雨、晴天, ID: weather-btn
+			14 button (collapsed) 市井見聞, ID: life-btn, Secondary Actions: Expand
+			15 checkbox Description: 開啟環境音, Help: 環境音, Value: 0, ID: sound-btn
+			16 button 畫卷, ID: concepts-btn
+			17 button Description: 操作說明, ID: help-btn
+		18 container 小鎮概況
+			78 text 6
+			20 text 位居民
+			79 text 11
+			22 text 處建築園景
+			80 text 9
+			24 text 處街坊
+		25 container inspector
+			62 text 園景 · 1 格街坊
+			63 heading 小荷池塘, Value: 2
+				64 text 小荷池塘
+			65 text 已落成 · 已固定檢視
+			66 text 園中漫步
+			67 text 等候新朋友到來
+			68 text 此刻在場 · 0 人
+			69 text 目前無人在此停留
+			70 container
+				71 text 楊萬里 · 〈小池〉 小荷才露尖尖角，早有蜻蜓立上頭。
+				72 button 讀作品與地景 ↗
+			73 text 點選空地取消固定
+		29 container
+			30 text 汴 水 風過河岸，日子悠長
+		31 text 小荷池塘開始挖池
+		32 container
+			33 button ＋ 宋韻營造, ID: blueprints-btn
+			34 text 自由探索 · 拖曳移動畫面，點選屋舍與居民
+			35 container 建造與探索
+				36 checkbox 自由探索 1, Value: 1
+					37 text 自由探索
+					38 text 1
+				39 checkbox 民居 2, Value: 0
+					40 text 民居
+					41 text 2
+				42 checkbox 商鋪 3, Value: 0
+					43 text 商鋪
+					44 text 3
+				45 checkbox 作坊 4, Value: 0
+					46 text 作坊
+					47 text 4
+				48 button Description: 暫停, Help: 暫停或繼續（空白鍵）, ID: pause-btn
+				49 button 1×, Help: 調整時間速度, ID: speed-btn
+			50 text 滾輪縮放 · 右鍵拖曳平移 · Q / E 旋轉
+			74 text 預覽場景 · 不覆寫小鎮
+		52 container
+			53 button Description: 放大, ID: zoom-in
+			54 button Description: 縮小, ID: zoom-out
+			55 button Description: 回到初始視角, ID: reset-view
+
+The focused UI element is 49 button 1×, Help: 調整時間速度, ID: speed-btn

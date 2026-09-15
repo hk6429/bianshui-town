@@ -1,3 +1,5 @@
+import {songBuilding} from './song-buildings.js';
+import {designFor,DESIGNS} from './heritage.js';
 import {WeatherScene} from './weather-scene.js';
 import {displayGoods} from './goods-scene.js';
 import {at} from './production.js';
@@ -76,13 +78,14 @@ export class TownScene {
    this.clearGroup(this.roads);const raw=new THREE.Group();
    for(const k of town.roads){const [x,z]=point(k);if((z===-16&&x>=12&&x<=24)||(z===8&&x>=12&&x<=16))continue;box(raw,.76,.025,.76,palette.road,x,streetHeight(x,z)-.025,z);for(const [dx,dz] of [[1,0],[0,1]])if(town.roads.has(key(x+dx,z+dz)))box(raw,dx?1:.76,.025,dz?1:.76,palette.road,x+dx*.5,streetHeight(x+dx*.5,z+dz*.5)-.025,z+dz*.5);}
    this.roads.add(batch(raw));
-   for(const d of this.decorations)d.group.visible=!town.buildings.some(b=>Math.abs(b.x*4-d.x)<2.3&&Math.abs(b.z*4-d.z)<2.3)&&![...town.roads].some(k=>{const [x,z]=point(k);return Math.abs(x-d.x)<.5&&Math.abs(z-d.z)<.5;});
+   for(const d of this.decorations)d.group.visible=!town.buildings.some(b=>Math.abs(b.x*4-d.x)<(b.footprint?4.3:2.3)&&Math.abs(b.z*4-d.z)<(b.footprint?4.3:2.3))&&![...town.roads].some(k=>{const [x,z]=point(k);return Math.abs(x-d.x)<.5&&Math.abs(z-d.z)<.5;});
    this.clearGroup(this.meadow);const flowers=new THREE.Group();for(const d of this.decorations){if(d.group.visible){const copy=d.group.clone(true);copy.traverse(o=>{if(o.isMesh)o.geometry=o.geometry.clone();});flowers.add(copy);}d.group.visible=false;}this.meadow.add(batch(flowers));this.lastRevision=town.revision;
   }
   for(const p of town.people){if(!this.personModels.has(p.id)){const g=this.person(p.id);g.traverse(o=>o.userData.personId=p.id);this.personModels.set(p.id,g);this.scene.add(g);}}
   for(const c of town.carts){if(!this.cartModels.has(c.id)){const g=new THREE.Group();box(g,.7,.12,.95,0x94724b,0,.43,0);for(const x of [-.38,.38]){box(g,.08,.34,1,0x896945,x,.61,0);const wheel=cyl(g,.24,.24,.07,0x4e4635,x,.25,0,10);wheel.rotation.z=Math.PI/2;}box(g,.65,.35,.08,0x896945,0,.61,-.45);for(const x of [-.25,.25])box(g,.04,.04,.8,0x745b3e,x,.48,.7);const cargo=new THREE.Group();cargo.position.set(0,.55,-.2);cargo.position.y=.65;g.add(cargo);g.userData.cargo=cargo;const porter=this.person(c.id);porter.position.z=1.1;g.add(porter);this.cartModels.set(c.id,g);this.scene.add(g);}}
  }
  buildHouse(b,town={blocks:[]}){
+  if(b.type==='shop'||b.type==='garden'||b.footprint){const raw=songBuilding(b,{box,cyl,ball,beam,roof,tree,mat}),warm=raw.userData.warm,model=batch(raw);model.userData.warm=warm;return model;}
   const g=new THREE.Group(),stage=b.stage,w=3.15,d=2.6,h=1.72+(b.variant===1?.22:0);g.position.set(b.x*4,0,b.z*4);g.rotation.y=b.facing;if(courtyardFor(town,b))g.scale.set(.72,.8,.72);
   box(g,3.8,.16,3.8,0xc4b58f,0,.03,0);box(g,w,.2,d,palette.stone,0,.16,-.2);
   if(stage===0){for(const x of [-1.3,1.3])for(const z of [-1.2,1.2])box(g,.22,.22,.22,0x9e9377,x,.3,z);for(let i=0;i<5;i++)box(g,1.2,.07,.1,palette.wood,-.5,.32+i*.08,.4);return batch(g);}
@@ -121,8 +124,8 @@ export class TownScene {
  update(town,dt){
   this.sync(town);const hour=town.time%24;
   const day=THREE.MathUtils.smoothstep(Math.sin((hour-6)/24*Math.PI*2),-.18,.35);this.scene.background.set(0x354b61).lerp(new THREE.Color(0xcbd1b4),day);this.scene.fog.color.copy(this.scene.background);this.ambient.intensity=1.2+day*1.3;this.ambient.color.set(0xa7c6ed).lerp(new THREE.Color(0xfff5d7),day);this.sun.intensity=.5+day*2.5;this.sun.color.set(0xadc5ed).lerp(new THREE.Color(0xffe8c0),day);this.water.color.set(0x405e72).lerp(new THREE.Color(0x79a8a3),day);
-  for(const b of town.buildings){const model=this.buildingModels.get(b.id);if(model.userData.warm){const occupied=town.occupants(b).length>0;model.userData.warm.emissiveIntensity=(1-day)*(occupied?2.2:.5);model.userData.glow.material.opacity=(1-day)*(occupied?.5:.16);}}
-  for(const p of town.people){const m=this.personModels.get(p.id),b=town.building(p.current),yard=!p.outside&&b&&hour>=6&&hour<20;m.visible=p.outside||yard;if(p.outside){const [px,pz]=streetPosition(p);m.position.set(px,streetHeight(p.x,p.z)+(p.traffic?.startsWith('讓')?0:Math.abs(Math.sin(town.elapsed*8+p.id))*.025),pz);m.rotation.y=p.angle||0;}else if(yard){const court=courtyardPosition(town,p),side=(p.id%2?-.4:.4),inset=courtyardFor(town,b)?1:.65;m.position.set(court?court[0]:b.entrance[0]+Math.cos(b.facing)*side-Math.sin(b.facing)*inset,.16,court?court[1]:b.entrance[1]-Math.sin(b.facing)*side-Math.cos(b.facing)*inset);m.rotation.y=b.facing;}this.lifeScene.animateHuman(m,town.elapsed,p.outside&&p.route.length>0&&!p.traffic?.startsWith('讓')&&p.traffic!=='等前方行人走開'&&!(p.socialUntil>town.elapsed),p.socialUntil>town.elapsed||yard||!!p.streetEvent&&!p.route.length);}
+  for(const b of town.buildings){const model=this.buildingModels.get(b.id);if(model.userData.warm){const occupied=town.occupants(b).length>0;model.userData.warm.emissiveIntensity=(1-day)*(occupied?2.2:.5);if(model.userData.glow)model.userData.glow.material.opacity=(1-day)*(occupied?.5:.16);}}
+  for(const p of town.people){const m=this.personModels.get(p.id),b=town.building(p.current),yard=!p.outside&&b&&hour>=6&&hour<20;m.visible=p.outside||yard;if(p.outside){const [px,pz]=streetPosition(p);m.position.set(px,streetHeight(p.x,p.z)+(p.traffic?.startsWith('讓')?0:Math.abs(Math.sin(town.elapsed*8+p.id))*.025),pz);m.rotation.y=p.angle||0;}else if(yard){const court=courtyardPosition(town,p),side=(p.id%2?-.4:.4),inset=b.type==='garden'?.12:courtyardFor(town,b)?1:.65;m.position.set(court?court[0]:b.entrance[0]+Math.cos(b.facing)*side-Math.sin(b.facing)*inset,.16,court?court[1]:b.entrance[1]-Math.sin(b.facing)*side-Math.cos(b.facing)*inset);m.rotation.y=b.facing;}this.lifeScene.animateHuman(m,town.elapsed,p.outside&&p.route.length>0&&!p.traffic?.startsWith('讓')&&p.traffic!=='等前方行人走開'&&!(p.socialUntil>town.elapsed),p.socialUntil>town.elapsed||yard||!!p.streetEvent&&!p.route.length);}
   for(const c of town.carts){const m=this.cartModels.get(c.id);m.visible=c.outside;m.position.set(c.x,streetHeight(c.x,c.z),c.z);m.rotation.y=c.angle||0;displayGoods(m.userData.cargo,at(town,`cart:${c.id}`));}
   this.lifeScene.update(town,day);this.weatherScene.update(town);if(town.weather.raining){this.sun.intensity*=.45;this.ambient.intensity*=.8;this.scene.background.lerp(new THREE.Color(0x7c9699),.4);this.scene.fog.color.copy(this.scene.background);}
   this.controls.update();this.updateFollow(town,dt);this.controls.target.x=THREE.MathUtils.clamp(this.controls.target.x,-45,40);this.controls.target.z=THREE.MathUtils.clamp(this.controls.target.z,-45,45);this.renderer.render(this.scene,this.camera);return day;
@@ -138,6 +141,7 @@ export class TownScene {
   const target=model?.visible?model.position.clone():new THREE.Vector3(b?b.x*4:p.x,0,b?b.z*4:p.z);target.y=0;
   const delta=target.sub(this.controls.target).multiplyScalar(1-Math.exp(-dt*7));this.controls.target.add(delta);this.camera.position.add(delta);
  }
+ showBuildGrid(visible){if(!this.plotGrid){this.plotGrid=new THREE.Group();this.scene.add(this.plotGrid);const material=new THREE.LineBasicMaterial({color:0x5e7354,transparent:true,opacity:.36});for(let x=-34;x<=10;x+=4)this.plotGrid.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x,.11,-26),new THREE.Vector3(x,.11,26)]),material));for(let z=-26;z<=26;z+=4)this.plotGrid.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-34,.11,z),new THREE.Vector3(10,.11,z)]),material));}this.plotGrid.visible=visible;}
  resetView(){this.controls.target.set(-7,0,0);this.camera.position.set(41,53,65);this.camera.zoom=1;this.camera.updateProjectionMatrix();}
  rotate(angle){const offset=this.camera.position.clone().sub(this.controls.target);offset.applyAxisAngle(new THREE.Vector3(0,1,0),angle);this.camera.position.copy(this.controls.target).add(offset);}
 }
@@ -199,11 +203,11 @@ class LivingScene {
  }
  syncDetails(t){
   for(const b of t.buildings){if(b.stage<3||this.details.has(b.id))continue;
-   const group=new THREE.Group();group.position.set(b.x*4,0,b.z*4);group.rotation.y=b.facing;if(courtyardFor(t,b))group.scale.set(.72,.8,.72);this.root.add(group);
-   if(b.type!=='home'){const flag=sign(group,b.type==='shop'?['茶','食','布'][b.variant]:['瓷','木','織'][b.variant],1.15,1.9,1.65,.42,.68);this.flags.push(flag);}
-   const sheets=[];if(b.type==='home'){beam(group,[-1.2,1.25,-1.58],[1.2,1.25,-1.58],.015,0x776d4d);for(let i=0;i<3;i++){const sheet=box(group,.35,.6,.018,[0xd8c59d,0x9caa92,0xc7b59b][i],-.65+i*.55,.95,-1.57);sheets.push(sheet);}}
-   const steam=[];if(b.type!=='home')for(let i=0;i<3;i++){const m=ball(group,.12,new THREE.MeshBasicMaterial({color:0xe4decc,transparent:true,opacity:.19,depthWrite:false}),.6,2.8,-.4,1);steam.push(m);}
-   const cargo=new THREE.Group();cargo.position.set(-.6,.2,1.65);group.add(cargo);this.details.set(b.id,{group,sheets,steam,cargo});
+   const group=new THREE.Group();group.position.set(b.x*4,0,b.z*4);group.rotation.y=b.facing;if(courtyardFor(t,b)&&b.type==='home')group.scale.set(.72,.8,.72);this.root.add(group);
+   if(b.type!=='home'){const flag=sign(group,DESIGNS[designFor(b)]?.mark||['瓷','木','織'][b.variant],b.footprint?1.5:1.15,1.9,b.footprint?3.55:1.65,.42,.68);this.flags.push(flag);}
+   const sheets=[];if(b.type==='home'&&!b.footprint){beam(group,[-1.2,1.25,-1.58],[1.2,1.25,-1.58],.015,0x776d4d);for(let i=0;i<3;i++){const sheet=box(group,.35,.6,.018,[0xd8c59d,0x9caa92,0xc7b59b][i],-.65+i*.55,.95,-1.57);sheets.push(sheet);}}
+   const steam=[];if(b.type==='work'||designFor(b)==='food')for(let i=0;i<3;i++){const m=ball(group,.12,new THREE.MeshBasicMaterial({color:0xe4decc,transparent:true,opacity:.19,depthWrite:false}),.6,2.8,-.4,1);steam.push(m);}
+   const cargo=new THREE.Group();cargo.position.set(-.6,.2,1.65);group.add(cargo);const dragonflies=[];if(b.design==='pond')for(let i=0;i<3;i++){const insect=new THREE.Group();box(insect,.035,.035,.23,0x70574a);box(insect,.38,.015,.07,0xc7d7c1);group.add(insect);dragonflies.push(insect);}this.details.set(b.id,{group,sheets,steam,cargo,dragonflies});
   }
   for(const b of t.buildings){if(b.stage>=3){const m=this.workers.get(b.id);if(m)m.visible=false;continue;}if(!this.workers.has(b.id)){const m=this.owner.person(6000+b.id);this.root.add(m);this.workers.set(b.id,m);}}
   if(this.sharedRevision!==t.revision){
@@ -238,7 +242,7 @@ class LivingScene {
    if(g.userData.ox){const ox=g.userData.ox;ox.position.y=streetHeight(a.x+Math.sin(a.angle||0)*1.7,a.z+Math.cos(a.angle||0)*1.7)-streetHeight(a.x,a.z);for(let i=0;i<ox.userData.legs.length;i++)ox.userData.legs[i].rotation.x=a.walking?Math.sin(time*4+i*Math.PI)*.32:0;}
   }
   for(const g of this.shared)g.userData.sheets.visible=!t.weather.raining;
-  for(const [id,d] of this.details){const b=t.building(id);displayGoods(d.cargo,at(t,`${b.type==='shop'?'shop':'output'}:${id}`),{buildingId:id});for(const sheet of d.sheets)sheet.visible=!t.weather.raining&&!courtyardFor(t,b);for(let i=0;i<d.sheets.length;i++)d.sheets[i].rotation.x=Math.sin(time*1.1+i)*.09;for(let i=0;i<d.steam.length;i++){const m=d.steam[i],phase=(time*.32+i/3)%1;m.visible=daytime&&t.occupants(b).length>0;m.position.y=2.5+phase*1.7;m.position.x=.5+Math.sin(phase*4)*.15;m.scale.setScalar(.7+phase*1.5);m.material.opacity=(1-phase)*.2;}}
+  for(const [id,d] of this.details){const b=t.building(id);for(let i=0;i<d.dragonflies.length;i++){const f=d.dragonflies[i],r=b.footprint?2:1;f.visible=daytime&&!t.weather.raining;f.position.set(Math.sin(time*.5+i*2)*r,.7+Math.sin(time+i)*.12,Math.cos(time*.4+i*2)*r);f.rotation.y=-time*.5;}displayGoods(d.cargo,at(t,`${b.type==='shop'?'shop':'output'}:${id}`),{buildingId:id});for(const sheet of d.sheets)sheet.visible=!t.weather.raining&&!courtyardFor(t,b);for(let i=0;i<d.sheets.length;i++)d.sheets[i].rotation.x=Math.sin(time*1.1+i)*.09;for(let i=0;i<d.steam.length;i++){const m=d.steam[i],phase=(time*.32+i/3)%1;m.visible=daytime&&t.occupants(b).length>0;m.position.y=2.5+phase*1.7;m.position.x=.5+Math.sin(phase*4)*.15;m.scale.setScalar(.7+phase*1.5);m.material.opacity=(1-phase)*.2;}}
   for(const [id,g] of this.workers){const b=t.building(id);g.visible=b.stage<3;if(g.visible){g.position.set(b.entrance[0],streetHeight(...b.entrance),b.entrance[1]);g.rotation.y=b.facing+Math.PI;this.animateHuman(g,time,false,true);}}
   for(const flag of this.flags)flag.rotation.z=Math.sin(time*.9+flag.id)*.055;for(const material of this.lamps)material.emissiveIntensity=(1-day)*1.8;
   this.fisher.visible=this.washer.visible=daytime&&!t.weather.raining;this.fisher.userData.pole.rotation.x=Math.sin(time*.8)*.07;this.animateHuman(this.washer,time,false,true);this.washer.userData.cloth.position.y=.15+Math.sin(time*2)*.04;

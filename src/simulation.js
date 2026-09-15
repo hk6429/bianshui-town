@@ -1,10 +1,11 @@
+import {DESIGNS,isSquare,gardenActivity} from './heritage.js';
 import {createEconomy,importCargo,migrateEconomy,tickProduction,tickCraftCarts,syncCargo} from './production.js';
 import {createWeather,tickWeather,shelterResident} from './weather.js';
 import {prepareTraffic,applyTraffic} from './traffic.js';
 import {createStories,tickStories,eventAction,remember,rerouteStories} from './stories.js';
 import {createLife,publicRoads,rerouteLife,tickLife} from './life.js';
 export const CELL = 4;
-export const TYPES = {home:'民居',shop:'商鋪',work:'作坊'};
+export const TYPES = {home:'民居',shop:'商鋪',work:'作坊',garden:'園景'};
 export const key = (x,z) => `${x},${z}`;
 export const point = k => k.split(',').map(Number);
 const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
@@ -38,19 +39,22 @@ export function pathfind(nodes,start,goal){
 export class Town {
  constructor(){this.buildings=[];this.blocks=[];this.people=[];this.carts=[];this.roads=new Set();this.time=8;this.elapsed=0;this.nextId=1;this.revision=0;this.events=[];this.life=createLife();this.stories=createStories();this.weather=createWeather();this.economy=createEconomy();importCargo(this);}
  canPlace(cells){
-  if(!cells.length||cells.length>3||new Set(cells.map(c=>key(c.x,c.z))).size!==cells.length)return false;
+  if(!cells.length||cells.length>4||(cells.length===4&&!isSquare(cells))||new Set(cells.map(c=>key(c.x,c.z))).size!==cells.length)return false;
   const connected=new Set([key(cells[0].x,cells[0].z)]);
   for(let i=0;i<3;i++)for(const c of cells)if(dirs.some(([dx,dz])=>connected.has(key(c.x+dx,c.z+dz))))connected.add(key(c.x,c.z));
-  return connected.size===cells.length&&cells.every(c=>Number.isInteger(c.x)&&Number.isInteger(c.z)&&c.x>=bounds.minX&&c.x<=bounds.maxX&&c.z>=bounds.minZ&&c.z<=bounds.maxZ&&!this.buildings.some(b=>b.x===c.x&&b.z===c.z));
+  return connected.size===cells.length&&cells.every(c=>Number.isInteger(c.x)&&Number.isInteger(c.z)&&c.x>=bounds.minX&&c.x<=bounds.maxX&&c.z>=bounds.minZ&&c.z<=bounds.maxZ&&!this.blocks.some(b=>b.cells.some(n=>n.x===c.x&&n.z===c.z)));
  }
- place(type,cells,ready=false){
+ place(type,cells,ready=false,design=null){
   if(!TYPES[type]||!this.canPlace(cells))return null;
-  const block={id:this.nextId++,type,cells:cells.map(c=>({...c}))};this.blocks.push(block);
-  for(const c of cells){const id=this.nextId++;this.buildings.push({id,blockId:block.id,type,...c,born:ready?this.elapsed-100:this.elapsed,variant:id%3,stage:ready?4:0,entrance:null,name:type==='home'?`${['柳蔭','汴水','杏花'][id%3]}人家 ${id}`:type==='shop'?['春水茶坊','陳記食肆','錦色布莊'][id%3]:['青瓷作坊','木作小院','織雲坊'][id%3]});}
-  this.rebuildRoads();this.revision++;this.log(`一處${cells.length===1?'新':cells.length+'間相連的'}${TYPES[type]}${ready?'已落成':'開始動工'}`);
+  const spec=DESIGNS[design];if(design&&(!spec||spec.type!==type||!spec.sizes.includes(cells.length)))return null;if(type==='garden'&&!spec)return null;
+  const combined=isSquare(cells);
+  const block={id:this.nextId++,type,combined,cells:cells.map(c=>({...c}))};this.blocks.push(block);
+  const plots=combined?[{x:cells.reduce((s,c)=>s+c.x,0)/4,z:cells.reduce((s,c)=>s+c.z,0)/4,footprint:cells.map(c=>({...c}))}]:cells;
+  for(const c of plots){const id=this.nextId++;this.buildings.push({id,blockId:block.id,type,...c,design:design||(combined&&type==='shop'?'wine':null),born:ready?this.elapsed-100:this.elapsed,variant:spec?spec.variant:id%3,stage:ready?4:0,entrance:null,name:spec?spec.name:combined?(type==='shop'?'夢華酒樓':type==='home'?'合院人家':'合院工坊'):type==='home'?`${['柳蔭','汴水','杏花'][id%3]}人家 ${id}`:type==='shop'?['春水茶坊','陳記食肆','錦色布莊'][id%3]:['青瓷作坊','木作小院','織雲坊'][id%3]});}
+  syncCargo(this);this.rebuildRoads();this.revision++;this.log(`一處${combined?'四格合建的':cells.length===1?'新':cells.length+'間相連的'}${TYPES[type]}${ready?'已落成':'開始動工'}`);
   return block;
  }
- isInterior(x,z){return this.buildings.some(b=>Math.abs(x-b.x*4)<2&&Math.abs(z-b.z*4)<2);}
+ isInterior(x,z){return this.buildings.some(b=>Math.abs(x-b.x*4)<(b.footprint?4:2)&&Math.abs(z-b.z*4)<(b.footprint?4:2));}
  rebuildRoads(){
   this.roads=this.buildings.length?publicRoads():new Set();for(const block of this.blocks)for(const k of perimeter(block.cells))this.roads.add(k);
   // Join each exterior loop to the existing street network through free ground.
@@ -68,6 +72,7 @@ export class Town {
   }
   for(const b of this.buildings){
    const group=this.blocks.find(g=>g.id===b.blockId);
+   if(b.footprint){b.entrance=[b.x*4,b.z*4+4];b.facing=0;continue;}
    const choices=[[0,1],[1,0],[-1,0],[0,-1]];
    const [dx,dz]=choices.find(([dx,dz])=>!group.cells.some(c=>c.x===b.x+dx&&c.z===b.z+dz))||[0,1];
    b.entrance=[b.x*4+dx*2,b.z*4+dz*2];b.facing=Math.atan2(dx,dz);
@@ -103,19 +108,19 @@ export class Town {
   }
   for(const a of [...this.people,...this.life.visitors,...this.life.porters])a.traffic='';
   tickWeather(this);tickStories(this);prepareTraffic(this);
-  const workplaces=this.buildings.filter(b=>b.type!=='home'&&b.stage>=3);
+  const workplaces=this.buildings.filter(b=>(b.type==='shop'||b.type==='work')&&b.stage>=3);
   for(const p of this.people){
    if(!p.work){const job=workplaces.find(b=>this.workers(b).length<(b.type==='work'?4:2));if(job)p.work=job.id;}
    if(shelterResident(this,p,dt))continue;
    if(eventAction(this,p)){this.move(p,dt);eventAction(this,p);continue;}
-   const h=this.time%24;if((p.socialUntil||0)>this.elapsed&&h>=6&&h<20)continue;const shops=this.buildings.filter(b=>b.type==='shop'&&b.stage>=3);
+   const h=this.time%24;if((p.socialUntil||0)>this.elapsed&&h>=6&&h<20)continue;const shops=this.buildings.filter(b=>(b.type==='shop'||b.type==='garden')&&b.stage>=3);
    let target=p.home;
    if(h>=7&&h<17&&!(h>=11.5&&h<13))target=p.work||p.home;
    else if((h>=11.5&&h<13)||(h>=17&&h<20))target=shops.length?shops[p.id%shops.length].id:p.home;
    if(!p.outside && p.current!==target)this.travel(p,target);
    else if(p.outside && p.destination!==target)this.travel(p,target);
    this.move(p,dt);
-   if(!p.outside){const b=this.building(p.current);p.action=b?.type==='home'?(h>=21||h<6?'安睡中':h>=8&&h<18?'在院裡整理花草':'在家歇息'):b?.type==='shop'?(p.work===b.id?'招呼客人':'喝茶、採買'):['燒製陶器','打磨木器','整理織物'][b?.variant||0];}
+   if(!p.outside){const b=this.building(p.current);p.action=b?.type==='garden'?gardenActivity(b):b?.type==='home'?(h>=21||h<6?'安睡中':h>=8&&h<18?'在院裡整理花草':'在家歇息'):b?.type==='shop'?(p.work===b.id?'招呼客人':'喝茶、採買'):['燒製陶器','打磨木器','整理織物'][b?.variant||0];}
   }
   const shops=this.buildings.filter(b=>b.type==='shop'&&b.stage>=3);
   for(const b of this.buildings.filter(b=>b.type==='work'&&b.stage>=3)){
@@ -146,10 +151,10 @@ export class Town {
   this.place('shop',[{x:1,z:2},{x:2,z:2}],true);
   this.tick(.01);this.log('一城煙火，等你慢慢看');
  }
- toJSON(){return {version:4,economy:this.economy,weather:this.weather,stories:this.stories,life:this.life,time:this.time,elapsed:this.elapsed,nextId:this.nextId,buildings:this.buildings,blocks:this.blocks,people:this.people,carts:this.carts,events:this.events};}
+ toJSON(){return {version:5,economy:this.economy,weather:this.weather,stories:this.stories,life:this.life,time:this.time,elapsed:this.elapsed,nextId:this.nextId,buildings:this.buildings,blocks:this.blocks,people:this.people,carts:this.carts,events:this.events};}
  static restore(data){
-  if(![1,2,3,4].includes(data?.version)||!Array.isArray(data.blocks)||!Array.isArray(data.buildings)||!Array.isArray(data.people)||!Array.isArray(data.carts))throw new Error('存檔格式不相容');
+  if(![1,2,3,4,5].includes(data?.version)||!Array.isArray(data.blocks)||!Array.isArray(data.buildings)||!Array.isArray(data.people)||!Array.isArray(data.carts))throw new Error('存檔格式不相容');
   if(data.buildings.length>143||!Number.isFinite(data.time)||!Number.isFinite(data.elapsed))throw new Error('存檔內容無效');
-  const town=new Town();Object.assign(town,data);town.life=data.version>=2&&data.life?data.life:createLife();town.stories=data.version>=3&&data.stories?data.stories:createStories();town.weather=data.version===4&&data.weather?data.weather:createWeather();if(data.version!==4||!data.economy)migrateEconomy(town);else syncCargo(town);town.rebuildRoads();town.revision++;return town;
+  const town=new Town();Object.assign(town,data);town.life=data.version>=2&&data.life?data.life:createLife();town.stories=data.version>=3&&data.stories?data.stories:createStories();town.weather=data.version>=4&&data.weather?data.weather:createWeather();if(data.version<4||!data.economy)migrateEconomy(town);else syncCargo(town);town.rebuildRoads();town.revision++;return town;
  }
 }
