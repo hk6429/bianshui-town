@@ -22,12 +22,22 @@ const building=obj({id,blockId:id,type,x:num(-8,2),z:num(-6,6),footprint:opt(arr
 const life=obj({version:en([1]),visitors:arr(external,64),porters:arr(external,64),oxen:arr(external,64),dock:obj({stock:num(0,1024,true),received:count,delivered:count,sold:count}),boat:obj({x:coord,z:coord,state:en(['approach','mooring','unloading','depart','away']),cargo:num(0,1024,true),imported:count,mast:num(0,1),trips:count,wait:signed,announced:bool}),socialCount:count,bridgePasses:count});
 const story=obj({type:en(['story','market','tea']),title:str,gather:str,activity:str,end:str,id,center:pair,venue:str,phase:en(['gathering','active']),deadline:num(),until:opt(num()),participants:arr(id,4,1)});
 const city=obj({pollution:opt(arr(obj({x:num(-8,2,true),z:num(-6,6,true),value:num(0,100)}),143)),version:en([1]),mode:en(['managed','sandbox']),logisticsLevel:opt(num(1,3,true)),trade:opt(obj({funds:count,importExpense:count,revenue:count,taxPaid:count,nextBatch:id,ledger:arr(obj({day:count,kind:en(['import','sale']),batch:count,good:en(goods),quantity:num(1,12,true),unitPrice:count,tax:count,amount:num(-1e12,1e12,true),balance:count}),60)})),treasury:num(-1e12,1e12,true),taxRate:num(0,20,true),day:count,taxIncome:count,spent:count,maintenancePaid:count,deficitDays:count,sanitationDay:opt(count),fireDay:opt(count),ledger:arr(obj({day:count,label:str,amount:num(-1e12,1e12,true),balance:num(-1e12,1e12,true)}),60)});
-const journey=obj({version:en([1]),enabled:bool,vision:en(['home','craft','culture']),guide:obj({stage:num(0,4,true),skipped:bool}),observedResident:bool,claimed:arr(en(['settlement','craft','culture']),3),shortGoal:en(['observe','home'])});
+const commission=obj({resident:id,name:str,state:en(['active','declined','withdrawn','completed']),solution:nullable(en(['tea','garden'])),venue:opt(str),building:opt(id),completedAt:opt(num())});
+const journey=obj({commissions:opt(arr(commission,64)),version:en([1]),enabled:bool,vision:en(['home','craft','culture']),guide:obj({stage:num(0,4,true),skipped:bool}),observedResident:bool,claimed:arr(en(['settlement','craft','culture']),3),shortGoal:en(['observe','home'])});
 const schemas={journey:opt(journey),version:en([1,2,3,4,5,6,7,8,9]),city:opt(city),demography:opt(obj({lastAt:num(),credit:num(0,1),arrived:count,departed:count})),time:num(),elapsed:num(),nextId:id,buildings:arr(building,143),blocks:arr(obj({id,type,combined:opt(bool),cells:arr(cell,4,1)}),143),people:arr(person,1144),carts:arr(person,143),events:arr(journal,24),market:opt(obj({trades:count})),publicWorks:opt(arr(obj({x:num(-8,2,true),z:num(-6,6,true),type:en(['lane','avenue'])}),143)),life:opt(life),weather:opt(obj({mode:en(['auto','rain','clear']),raining:bool,nextAt:num()})),stories:opt(obj({nextAt:num(),sequence:count,completed:count,active:nullable(story),last:opt(obj({id,title:str,venue:str,center:pair}))})),literati:opt(obj({actors:arr(authorActor,AUTHORS.length),collected:arr(obj({author,time:num(),venue:str}),AUTHORS.length),nextAt:num()})),economy:opt(obj({version:en([1]),nextId:id,imported:count,archived:count,sold:obj(Object.fromEntries(goods.map(k=>[k,opt(count)]))),lots:arr(obj({id,good:en(goods),at:place,origin:str,trail:arr(obj({at:place,time:num()}),4096,1),trailOmitted:opt(count),progress:opt(num(0,32)),madeAt:opt(id)}),1024)}))};
 // Historical trail locations and madeAt are provenance, not live references: demolished buildings remain valid history.
 const key=c=>`${c.x},${c.z}`;
 function unique(list,p,seen=new Set()){for(const a of list){if(seen.has(a.id))fail(`${p}.id`,'ID 重複');seen.add(a.id);}return seen;}
 function references(d){
+ const commissions=d.journey?.commissions||[];
+ if(new Set(commissions.map(c=>c.resident)).size!==commissions.length)fail('journey.commissions','居民委託不可重複');
+ for(const c of commissions){
+  if((c.state==='active'||c.state==='completed')!==(c.solution!==null))fail('journey.commissions','委託解法與狀態不符');
+  const completed=c.state==='completed';
+  for(const field of ['venue','building','completedAt'])if(Object.hasOwn(c,field)!==completed)fail('journey.commissions','完成紀錄欄位不一致');
+  if(c.completedAt>d.elapsed)fail('journey.commissions','完成時間不可在未來');
+ }
+
  if(d.journey&&new Set(d.journey.claimed).size!==d.journey.claimed.length)fail('journey.claimed','紀念章不可重複');
  const ids=unique(d.blocks,'blocks');unique(d.buildings,'buildings',ids);unique(d.people,'people',ids);unique(d.carts,'carts',ids);
  if(d.nextId<=Math.max(0,...ids))fail('nextId','必須大於所有現有城市 ID');

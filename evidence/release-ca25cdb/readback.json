@@ -1,0 +1,25 @@
+{
+  "commit": "ca25cdb",
+  "deployment": "https://180d706f.bianshui-town.pages.dev",
+  "checkedAt": "2026-09-16T20:21:31.357410+08:00",
+  "files": [
+    {
+      "path": "/",
+      "status": "200",
+      "matchesBuild": true,
+      "sha256": "371ebebff90e97da5f6aee83ea8784527d6cd66f8a559741593f26f068988ddd"
+    },
+    {
+      "path": "/assets/index-CNqujGT6.js",
+      "status": "200",
+      "matchesBuild": true,
+      "sha256": "4fea5357347cf155b0be2d5088f686f6ec1d2e0ed82b97458d1221a83a4716a3"
+    },
+    {
+      "path": "/assets/index-x9Dg3Pip.css",
+      "status": "200",
+      "matchesBuild": true,
+      "sha256": "79dd097ed05f03a3fdffb1ed8c766112a334f5d46da568693872c3ee4db62af5"
+    }
+  ]
+}

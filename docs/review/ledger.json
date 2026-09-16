@@ -1151,10 +1151,23 @@
       "acceptance": [
         "接受指定居民委託後僅在條件達成時完成；婉拒不扣分；居民卡顯示回應。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/commissions.js",
+        "src/journey-ui.js",
+        "src/main.js",
+        "src/save-schema.js"
+      ],
+      "evidence": [
+        "tests/commissions.test.js",
+        "evidence/commissions/tests.txt",
+        "evidence/commissions/regression.txt",
+        "evidence/commissions/build.txt",
+        "evidence/commissions/README.md",
+        "evidence/commissions/completed.txt",
+        "evidence/commissions/resident-card.txt"
+      ],
+      "verifiedBy": "Codex root: real-town alternative solution tests and Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1174,10 +1187,23 @@
       "acceptance": [
         "同一委託以茶坊解法和園景解法分別測試皆完成，畫面顯示所採解法。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/commissions.js",
+        "src/journey-ui.js",
+        "src/main.js",
+        "src/save-schema.js"
+      ],
+      "evidence": [
+        "tests/commissions.test.js",
+        "evidence/commissions/tests.txt",
+        "evidence/commissions/regression.txt",
+        "evidence/commissions/build.txt",
+        "evidence/commissions/README.md",
+        "evidence/commissions/completed.txt",
+        "evidence/commissions/resident-card.txt"
+      ],
+      "verifiedBy": "Codex root: real-town alternative solution tests and Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1197,10 +1223,23 @@
       "acceptance": [
         "進行中委託可撤回再接取；不抹除建物與文化收藏；沒有失敗倒數。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/commissions.js",
+        "src/journey-ui.js",
+        "src/main.js",
+        "src/save-schema.js"
+      ],
+      "evidence": [
+        "tests/commissions.test.js",
+        "evidence/commissions/tests.txt",
+        "evidence/commissions/regression.txt",
+        "evidence/commissions/build.txt",
+        "evidence/commissions/README.md",
+        "evidence/commissions/completed.txt",
+        "evidence/commissions/resident-card.txt"
+      ],
+      "verifiedBy": "Codex root: real-town alternative solution tests and Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
