@@ -1,0 +1,2306 @@
+{
+  "objective": "四專家評量100項，全部修正後部署",
+  "baseline": "a6a7504",
+  "items": [
+    {
+      "id": "C01",
+      "domain": "城市模擬",
+      "title": "建設沒有資金約束",
+      "kind": "feature_gap",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js:45,52-61 Town.constructor/place；src/urban.js layRoad/upgradeBuilding",
+          "observation": "放置與升級僅檢查空間，沒有錢或報價。"
+        }
+      ],
+      "fix": "建立初始金庫及共用報價/扣款交易；建屋、道路、擴建、搬移各按規模收費，失敗不扣款。",
+      "acceptance": [
+        "餘額不足時任何付費操作均不改地圖；成功一次只扣一次，四格報價高於一格。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C02",
+      "domain": "城市模擬",
+      "title": "營運沒有持續維護成本",
+      "kind": "feature_gap",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js:108-141 Town.tick",
+          "observation": "時間推進只處理人物與貨物，不計建物或道路維護。"
+        }
+      ],
+      "fix": "按遊戲日結算營運支出，使用明列的每類建物/道路維護費。",
+      "acceptance": [
+        "同樣天數不同 tick 步長支出相同；更多已營運設施造成更高支出，暫停不扣款。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C03",
+      "domain": "城市模擬",
+      "title": "沒有稅收與稅率取捨",
+      "kind": "feature_gap",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/production.js createEconomy/transfer；src/simulation.js Town.tick",
+          "observation": "售出只累計件數，市府沒有收入或可調稅率。"
+        }
+      ],
+      "fix": "以已入住住宅和實際成交為稅基，設有限範圍稅率；稅率反向影響需求。",
+      "acceptance": [
+        "無人空屋不繳人口稅；成交產生一次收入；提高稅率增加每筆稅額並降低對應需求。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C04",
+      "domain": "城市模擬",
+      "title": "赤字沒有可恢復的後果",
+      "kind": "feature_gap",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js Town.constructor/tick",
+          "observation": "無債務或營運預算狀態，無法形成財政失衡到改善的循環。"
+        }
+      ],
+      "fix": "加入現金流與欠款狀態，赤字時降低可負擔公共服務效率並限制新建，允許調稅或拆除減支恢復。",
+      "acceptance": [
+        "連續赤字會造成具體服務衰退；調整收支後能恢復，無不可退出的軟鎖。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C05",
+      "domain": "城市模擬",
+      "title": "缺少住宅商業工業需求的供需模型",
+      "kind": "feature_gap",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js TYPES/place/tick；src/production.js deliveryPlan",
+          "observation": "三類建物可無限制增建，住宅入住、工作與消費並未共同形成需求。"
+        }
+      ],
+      "fix": "建立單一 RCI 需求計算，住宅看職缺/服務，商業看人口及消費缺口，作坊看訂單與失業；回傳各自限制原因。",
+      "acceptance": [
+        "純住宅、純商業、純作坊與均衡城鎮的需求方向不同；增建已過剩類型後該類需求下降。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C06",
+      "domain": "城市模擬",
+      "title": "新住戶瞬間補滿住宅",
+      "kind": "feature_gap",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js:111-116 Town.tick",
+          "observation": "第一個有效 tick 便產生容量所需的所有居民。"
+        }
+      ],
+      "fix": "用按遊戲時間累積的移入配額，每次搬入有限住戶並受住宅需求約束；原有無家住戶優先。",
+      "acceptance": [
+        "空屋在第一次 tick 不會全滿；相同時間不同步長移入量一致；需求不足時保留空屋。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C07",
+      "domain": "城市模擬",
+      "title": "失業與居住惡化沒有遷出反饋",
+      "kind": "feature_gap",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js:111-133 Town.tick；src/urban.js demolishBuilding",
+          "observation": "拆屋後居民永久等新居，長期失業與民生不足不影響人口。"
+        }
+      ],
+      "fix": "累計居民長期失業/無家/低滿意狀態，超過寬限期有限遷出；改善條件可停止倒數。",
+      "acceptance": [
+        "短期施工不造成立即遷出；長期無家者減少；提供住宅及工作後移出停止且人員引用一致。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C08",
+      "domain": "城市模擬",
+      "title": "工作指派忽略距離和可達性",
+      "kind": "defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js:120-122 Town.tick",
+          "observation": "find 依建物陣列順序填職缺，可能把住戶指派給無法到達的遠端工作。"
+        }
+      ],
+      "fix": "只在可達職缺中按路徑長度排序，保留既有合理工作；失聯工作經寬限後重新配對。",
+      "acceptance": [
+        "兩職缺同條件時選較短通勤；隔離職缺不被指派；恢復連通後可補缺。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C09",
+      "domain": "城市模擬",
+      "title": "作坊人力多寡不影響產能",
+      "kind": "feature_gap",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/production.js tickProduction",
+          "observation": "只檢查 workers.length 是否大於零，一名與六名到坊工匠相同產量。"
+        }
+      ],
+      "fix": "按到場工匠/核定人力給有界產能倍率，與建物規模加成分開。",
+      "acceptance": [
+        "同原料和等時長下，四名到場工匠的產量高於一名；零人不生產且不耗原料。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C10",
+      "domain": "城市模擬",
+      "title": "居民採買不消耗商品",
+      "kind": "feature_gap",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js:129-133 Town.tick；src/life.js:95-97 tickVisitors",
+          "observation": "居民在店內只變更行動文字，只有遊客會 transfer 到 sold。"
+        }
+      ],
+      "fix": "居民到達商鋪且處於採買時段時，依個人冷卻/需求購買一件可用商品，留下滿足需求的狀態。",
+      "acceptance": [
+        "到店居民消耗一件庫存並增加一次成交；同一 tick 後續重算不重複買；缺貨無憑空成交。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C11",
+      "domain": "城市模擬",
+      "title": "進口和商品售價沒有經濟價值",
+      "kind": "feature_gap",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/production.js createEconomy/importCargo/transfer",
+          "observation": "漕船免費補十二件原料，商品價值只以件數表示。"
+        }
+      ],
+      "fix": "為原料/成品建立價格表及交易帳；進口受可用貿易資金約束，成交產生營業額供稅基使用，避免市府全收營業額。",
+      "acceptance": [
+        "付費補貨可對帳至批次件數；不同商品可有不同價值；資金不足不免費進貨。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C12",
+      "domain": "城市模擬",
+      "title": "物流能力固定無法隨城鎮成長調整",
+      "kind": "feature_gap",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/life.js:54-70 tickPorters/tickOxen",
+          "observation": "永遠兩名腳夫、一輛牛車，擴城只增加作坊而無物流投資選擇。"
+        }
+      ],
+      "fix": "提供有限等級的貨棧物流投資，提高腳夫/牛車或載量，帶來建置與維護成本。",
+      "acceptance": [
+        "相同貨量/路線下升級後交貨時間縮短且支出增加；重複更新不超額生成運輸者。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C13",
+      "domain": "城市模擬",
+      "title": "自動接路使道路規劃缺少因果",
+      "kind": "feature_gap",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js:65-80 rebuildRoads",
+          "observation": "每一街坊自動 BFS 接回 publicRoads，即使沒鋪路也連通。"
+        }
+      ],
+      "fix": "保留街坊門前步道，但經營模式跨街坊連接依玩家道路；起始城配置必要道路，沙盒模式可另保留自動連接。",
+      "acceptance": [
+        "移除唯一外聯道路後街坊被判斷隔離；重鋪後恢復；新局起始區域可正常通行。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C14",
+      "domain": "城市模擬",
+      "title": "道路等級不影響交通能力",
+      "kind": "feature_gap",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/urban.js ROAD_TYPES/roadNodes；src/traffic.js trafficMotion",
+          "observation": "lane 與 avenue 產生相同路節點；交通計算不讀道路類型。"
+        }
+      ],
+      "fix": "以道路節點附帶寬度/容量，寬路提高可用容量或減少會車等待，成本較高。",
+      "acceptance": [
+        "同流量同路徑下寬路的通行量高於小路；升級不改建物占地；實際移動採用道路屬性。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C15",
+      "domain": "城市模擬",
+      "title": "遊客尋路失敗仍可遠端購物",
+      "kind": "defect",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/life.js:93-97 tickVisitors",
+          "observation": "send 回 false 仍進 browse，下一輪直接移除遠端商鋪庫存。已以隔離路網重現：人在 [33,-16]，店門 [0,2]，sold.cloth=1。"
+        }
+      ],
+      "fix": "只有 send 成功才切換前往商店階段；browse 前再驗證抵達目標入口與目標仍存在。",
+      "acceptance": [
+        "隔離城門與店鋪後推進訪客兩輪，sold 不增加；接通並實際抵達後才成交。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C16",
+      "domain": "城市模擬",
+      "title": "商鋪沒有店員仍可營業",
+      "kind": "defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/life.js:95-97 tickVisitors；src/simulation.js:122 Town.tick",
+          "observation": "購買只檢查 stock，零雇員或店員不在店時一樣出售。"
+        }
+      ],
+      "fix": "商鋪營業要有到場員工或明確自助模式；缺工應降低營業能力並產生招工需求。",
+      "acceptance": [
+        "有庫存零到場店員時無一般交易；店員抵達後恢復；離店休息時遵守相同規則。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C17",
+      "domain": "城市模擬",
+      "title": "住宅缺少基本供水覆蓋",
+      "kind": "feature_gap",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js Town.constructor/tick；src/heritage.js DESIGNS",
+          "observation": "只有景觀池塘，未見供水設施、容量或住宅覆蓋計算。"
+        }
+      ],
+      "fix": "加入宋代水井服務，以可達步行距離和容量分配住宅供水；影響民生滿意和入住。",
+      "acceptance": [
+        "服務範圍內足量住戶有供水；超容量或不可達住戶顯示不足；新水井提升覆蓋並扣維護費。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C18",
+      "domain": "城市模擬",
+      "title": "密集居住與生產沒有衛生代價",
+      "kind": "feature_gap",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js Town.tick；src/production.js tickProduction",
+          "observation": "人口/生產增加沒有廢棄物累積與清運能力。"
+        }
+      ],
+      "fix": "建立人口和作坊產出的衛生負荷，透過清運服務抵消；未處理負荷影響健康/宜居。",
+      "acceptance": [
+        "相同面積增加人口時負荷上升；清運足量可穩定負荷；停服務後逐日惡化而非瞬間歸零。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C19",
+      "domain": "城市模擬",
+      "title": "木造聚落缺少防火服務價值",
+      "kind": "feature_gap",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/heritage.js DESIGNS；src/weather.js；src/simulation.js Town.tick",
+          "observation": "窯坊、木造民宅與天候沒有火災風險或防火覆蓋。"
+        }
+      ],
+      "fix": "加入可重現的防火風險與消防巡守服務，窯坊密度增加風險、服務降低風險；可先以損耗/停工事件實作。",
+      "acceptance": [
+        "固定種子或可注入事件下，無服務受損高於有服務；事件有明確復原條件且不無預警全城清空。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C20",
+      "domain": "城市模擬",
+      "title": "藥鋪只有造型沒有健康效益",
+      "kind": "feature_gap",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/variety.js:10 herbShop；src/simulation.js Town.tick",
+          "observation": "百草藥鋪與普通商鋪沒有健康服務差異。"
+        }
+      ],
+      "fix": "為已營業且有員工的藥鋪建立醫療容量/覆蓋，調整居民健康與缺勤。",
+      "acceptance": [
+        "同衛生條件下有藥鋪覆蓋的居民恢復較快；無員工藥鋪不供服務；服務不超過容量。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C21",
+      "domain": "城市模擬",
+      "title": "書院教育不連到城市能力",
+      "kind": "feature_gap",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/heritage.js:31,38 academy/gardenActivity；src/production.js tickProduction",
+          "observation": "書院僅產生讀書行動文字，沒有教育覆蓋或能力累積。"
+        }
+      ],
+      "fix": "以到院/服務覆蓋累積有界教育程度，對相關工匠熟練產能提供小幅加成，避免立即滿級。",
+      "acceptance": [
+        "受教育居民經遊戲日逐步增加能力，未覆蓋者不增加；能力對實際產能有可測影響且有上限。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C22",
+      "domain": "城市模擬",
+      "title": "作坊污染與住宅混置沒有取捨",
+      "kind": "feature_gap",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/production.js tickProduction；src/simulation.js Town.place/tick",
+          "observation": "窯坊、染坊與住宅相鄰沒有任何環境外部成本。"
+        }
+      ],
+      "fix": "依運作中的作坊類型/產量向鄰近格累加污染；隨距離衰減與停工恢復，降低住宅宜居。",
+      "acceptance": [
+        "活躍作坊近處污染高於遠處；停工後逐步下降；相同人口下混住工坊區宜居較低。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C23",
+      "domain": "城市模擬",
+      "title": "園景設施對宜居沒有空間效益",
+      "kind": "feature_gap",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/heritage.js DESIGNS/gardenActivity；src/simulation.js Town.tick",
+          "observation": "公園與亭園只供行程和造型，沒有範圍、容量或邊際遞減。"
+        }
+      ],
+      "fix": "建立可達園景覆蓋/宜居加成，納入距離及重複設施遞減，影響入住意願。",
+      "acceptance": [
+        "住宅附近第一座公園提升宜居；遠端隔離公園無同等加成；同地大量堆疊不能無限增加。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C24",
+      "domain": "城市模擬",
+      "title": "二至五級建築與經營能力脫節",
+      "kind": "feature_gap",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/building-tiers.js TIER_DETAILS；src/urban.js upgradeBuilding；src/simulation.js:112；src/production.js tickProduction",
+          "observation": "tier 主要改外觀；容量/速度只看 level 和 footprint，三級到五級無功能變化。"
+        }
+      ],
+      "fix": "集中定義每級容量/服務/產能及維護費，升級前後使用同一表計算並保持合理上限。",
+      "acceptance": [
+        "同類三級比二級有可測容量或產能增益也有成本；五級不再升級；外觀文案與機制一致。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "C25",
+      "domain": "城市模擬",
+      "title": "民生滿意沒有可計算的綜合回饋",
+      "kind": "feature_gap",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js:115 居民欄位、Town.tick",
+          "observation": "居民只有住家工作行程與文字動作，無可解釋的民生狀態。"
+        }
+      ],
+      "fix": "以住房、就業、採買、服務、環境計算有界滿意度並保留各分項，作為遷入/遷出的共同輸入。",
+      "acceptance": [
+        "單獨改善其中一項可改善該分項；停服務或污染上升會下降；所有分項和總分可用固定情境重算，非裝飾數字。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/city.json"
+    },
+    {
+      "id": "O01",
+      "domain": "八角遊戲化",
+      "title": "自主城鎮願景",
+      "kind": "新增功能缺口",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js: Town.constructor; index.html: #welcome",
+          "observation": "開局只有自由放置與示範，沒有玩家可選、可完成的城鎮願景。"
+        }
+      ],
+      "fix": "新增可自由切換的安居、工藝、文風三種願景，各綁實際城鎮條件，不封鎖沙盒。",
+      "acceptance": [
+        "選安居後看得到至少兩個實際條件；改選文風後追蹤條件改變，既有建物不受損。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O02",
+      "domain": "八角遊戲化",
+      "title": "第一輪城市循環引導",
+      "kind": "新增功能缺口",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js: #start-btn.onclick; index.html: #welcome",
+          "observation": "首步提示蓋民居後即消失，未讓新手走完建造、觀察居民、因應需求的循環。"
+        }
+      ],
+      "fix": "加入可略過的狀態式引導，至少涵蓋落成、觀察居民、增添工作場所及回看結果。",
+      "acceptance": [
+        "空鎮開始逐步完成四步；純等待不會完成觀察步驟；略過後仍可重開。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O03",
+      "domain": "八角遊戲化",
+      "title": "條件式里程碑",
+      "kind": "新增功能缺口",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js: updateUI; src/simulation.js: Town.constructor",
+          "observation": "只有人口與建物數值，缺少已達成挑戰與下一步進程。"
+        }
+      ],
+      "fix": "建立條件式里程碑帳，區分未達成、可領取與已完成，顯示來源條件。",
+      "acceptance": [
+        "混合住宅、工作與文化三類里程碑可因真實條件達成；重複檢查不重複獎勵。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O04",
+      "domain": "八角遊戲化",
+      "title": "居民具名委託",
+      "kind": "新增功能缺口",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js: renderInspector person branch; src/simulation.js: Town.tick",
+          "observation": "居民可被追蹤，但沒有具名委託把造城選擇連到受益者。"
+        }
+      ],
+      "fix": "由實際居民發布可接受或婉拒的非限時生活委託，條件綁建物或觀察事件。",
+      "acceptance": [
+        "接受指定居民委託後僅在條件達成時完成；婉拒不扣分；居民卡顯示回應。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O05",
+      "domain": "八角遊戲化",
+      "title": "可比較的委託選擇",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/stories.js: STORY_TYPES; src/main.js: updateJournal",
+          "observation": "街坊事件全由時間驅動，沒有讓玩家選不同解法的任務。"
+        }
+      ],
+      "fix": "至少一項委託提供兩個不同建物或行動的替代解法，各可完成。",
+      "acceptance": [
+        "同一委託以茶坊解法和園景解法分別測試皆完成，畫面顯示所採解法。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O06",
+      "domain": "八角遊戲化",
+      "title": "委託撤回與替代",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js: renderInspector; src/stories.js: createStories",
+          "observation": "新增自主委託時需要正式撤回流程；目前沒有任何任務狀態可承接玩家改變心意。"
+        }
+      ],
+      "fix": "任務帳加入放下委託與重新接取，不設到期懲罰或不可逆失敗。",
+      "acceptance": [
+        "進行中委託可撤回再接取；不抹除建物與文化收藏；沒有失敗倒數。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O07",
+      "domain": "八角遊戲化",
+      "title": "實作成長挑戰",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/urban.js: upgradeBuilding; src/building-tiers.js: TIER_DETAILS",
+          "observation": "建築只要落成就能連按升滿級，升級無技能或經營挑戰。"
+        }
+      ],
+      "fix": "在自願挑戰模式加入升級前實際使用條件，例如已有住戶或發生一次工作；沙盒保留自由升級。",
+      "acceptance": [
+        "挑戰模式未滿使用條件不能晉級且說明原因；符合後可升級；沙盒仍可自由升級。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O08",
+      "domain": "八角遊戲化",
+      "title": "建造前生活預覽",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js: renderBlueprints; src/heritage.js: DESIGNS",
+          "observation": "圖鑑主要列造型與規模，玩家無法在落地前連結該選擇與居民活動。"
+        }
+      ],
+      "fix": "每張藍圖提供結構化的活動、對應居民行為及相關委託預覽，來源共用規則。",
+      "acceptance": [
+        "比較茶坊與書院可見不同活動；完成建造後真實居民行為吻合預覽。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O09",
+      "domain": "八角遊戲化",
+      "title": "改建前後成果對照",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js: applyUrban; src/simulation.js: Town.log",
+          "observation": "改建只顯示完成提示，沒有連續觀察自己選擇帶來的變化。"
+        }
+      ],
+      "fix": "記錄最近一次營造的前後快照，呈現居民使用與活動種類的實際變動，不自創因果。",
+      "acceptance": [
+        "加建一座文化建築後面板可查看營造前與目前使用情況，無使用時明示尚未發生。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O10",
+      "domain": "八角遊戲化",
+      "title": "城市自訂名稱",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js: Town.constructor; index.html: .brand",
+          "observation": "所有城鎮固定稱汴水小鎮，缺少最低限度的個人認領。"
+        }
+      ],
+      "fix": "加入城鎮命名欄位與名稱回顯，保留遊戲品牌名稱。",
+      "acceptance": [
+        "玩家命名可回顯在城鎮概覽與成果卡；空白與過長輸入有界處理。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O11",
+      "domain": "八角遊戲化",
+      "title": "地標自訂命名",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js: Town.place; src/main.js: renderInspector",
+          "observation": "建物名稱全由模板生成，無法把個人故事賦予具體地方。"
+        }
+      ],
+      "fix": "建物提供自訂名稱，保留原始類型名稱供辨識。",
+      "acceptance": [
+        "命名一座茶坊後該地點資訊及相關居民目的地一致顯示新名，另一座茶坊不受影響。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O12",
+      "domain": "八角遊戲化",
+      "title": "地方收藏書籤",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js: renderInspector; src/scene.js: TownScene.focusAt",
+          "observation": "地點能即時選取，但沒有玩家策展的私房散步路線。"
+        }
+      ],
+      "fix": "提供命名地點書籤清單與跳轉，可新增移除並處理地標已拆除。",
+      "acceptance": [
+        "收藏兩處地點後可分別定位，刪除其中一處只移除該書籤；不存在地標明示失效。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O13",
+      "domain": "八角遊戲化",
+      "title": "主動文化採集",
+      "kind": "新增功能缺口",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/literati.js: tickLiterati; src/main.js: renderWriters",
+          "observation": "作品只需作者計時完成就全自動收入文集，玩家探索不影響收藏。"
+        }
+      ],
+      "fix": "保留自動落筆為世界事件，另設玩家探訪閱讀印記；實際開啟作品才算讀訪。",
+      "acceptance": [
+        "僅放置等待可有落筆但無讀訪印記；開啟指定作品僅增加該作品印記。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O14",
+      "domain": "八角遊戲化",
+      "title": "文化地景連結挑戰",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js: showLiterature; src/heritage.js: SOURCES",
+          "observation": "原文與建築意象有說明，但閱讀與在城市裡辨識地景沒有互動連結。"
+        }
+      ],
+      "fix": "加入可選的詩文地景配對活動，以現有 source 關聯驗證並提供來源回饋。",
+      "acceptance": [
+        "將小池配到池塘取得通過；配到工坊給解釋且可重試；不偽稱史實原址。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O15",
+      "domain": "八角遊戲化",
+      "title": "文化收藏個人心得",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js: showAuthorWork; src/literati-data.js: AUTHORS",
+          "observation": "作品卡只能閱讀，玩家沒有留下自己的解讀或城市設計理由。"
+        }
+      ],
+      "fix": "為已讀作品提供個人短箋與綁定一處自選地景，明示為玩家心得。",
+      "acceptance": [
+        "不同作品可留不同短箋及地景；再開作品回顯正確，文字安全呈現。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O16",
+      "domain": "八角遊戲化",
+      "title": "收藏後續策展",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js: renderWriters; src/literati.js: createLiterati",
+          "observation": "五篇全收集後只剩已落筆計數，沒有可選的整理與展示成果。"
+        }
+      ],
+      "fix": "提供自選三篇組成城鎮選集的策展成果，按作品而非重複次數判定。",
+      "acceptance": [
+        "選集必須三篇不同已讀作品；可重編並展示標題、作品與地景，不要求刷次數。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O17",
+      "domain": "八角遊戲化",
+      "title": "居民熟識關係",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js: data-follow handler; src/simulation.js: resident creation",
+          "observation": "跟隨居民目前只有鏡頭功能，沒有可累積且可理解的相識關係。"
+        }
+      ],
+      "fix": "加入有限且不隨離線衰退的熟識狀態，由觀察不同日常或完成該居民委託推進。",
+      "acceptance": [
+        "重複點跟隨不刷熟識；觀察不同日常後提升；沒有每日簽到需求。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O18",
+      "domain": "八角遊戲化",
+      "title": "固定居民名冊",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js: renderInspector; src/main.js: updateJournal",
+          "observation": "離開居民卡後缺少個人常看居民名冊，與同一人的連結容易斷掉。"
+        }
+      ],
+      "fix": "加入居民關注清單，支援加入、移除、回到居民及顯示最近已知行程。",
+      "acceptance": [
+        "關注兩人可分別打開正確居民；移除一人不影響另一人；人口變更不選錯人。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O19",
+      "domain": "八角遊戲化",
+      "title": "城鎮議事回應",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/stories.js: STORY_TYPES; src/main.js: updateJournal",
+          "observation": "現有茶敘與說書只有演出，居民沒有對玩家選擇提出可處理意見。"
+        }
+      ],
+      "fix": "增設本機居民議事卡，以真實城鎮條件提供兩種自願提案並追蹤採納結果。",
+      "acceptance": [
+        "無園景時能出現相關提案；接受後建造對應設施才回應達成；可忽略無懲罰。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O20",
+      "domain": "八角遊戲化",
+      "title": "探索未見線索",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js: updateJournal; src/stories.js: STORY_TYPES",
+          "observation": "見聞呈現事件計數，未見過的活動沒有可追尋線索。"
+        }
+      ],
+      "fix": "加入不同活動類型的已見/未見探索冊；未見項僅提供可驗證出現條件。",
+      "acceptance": [
+        "沒看過說書時顯示條件；僅世界發生但玩家未查看不標已見；實際查看後才更新。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O21",
+      "domain": "八角遊戲化",
+      "title": "事件分歧與回看",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/stories.js: tickStories; src/stories.js: STORY_TYPES",
+          "observation": "三事件固定輪轉且無分歧，幾輪後探索內容完全可預測。"
+        }
+      ],
+      "fix": "至少一類事件增加依場地或玩家選擇觸發的兩種結果，記錄本次分支理由。",
+      "acceptance": [
+        "在不同條件或選擇下出現兩個可辨識結果；回看能說明觸發原因，無付費抽取。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O22",
+      "domain": "八角遊戲化",
+      "title": "錯過事件補訪",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/stories.js: finish; src/main.js: data-story-focus handler",
+          "observation": "只留最後事件地點，點過去可能已散場，無法補讀錯過內容。"
+        }
+      ],
+      "fix": "保存有界事件圖文摘要與補訪入口，不要求玩家守候短事件。",
+      "acceptance": [
+        "事件散場後仍可讀摘要及已發生參與者；補訪不冒稱人群仍在現場。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O23",
+      "domain": "八角遊戲化",
+      "title": "自願挑戰與純觀察切換",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js: #demo-btn.onclick; src/simulation.js: Town.constructor",
+          "observation": "目前只有單一自由觀察模式；加入城市目標後需讓玩家保留原本慢步調。"
+        }
+      ],
+      "fix": "明確提供自由營造/引導挑戰模式，切換保留城市並讓挑戰條件僅影響自願進程。",
+      "acceptance": [
+        "中途關閉挑戰後可正常建造與閱讀；再次開啟可繼續目標，不用重置。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O24",
+      "domain": "八角遊戲化",
+      "title": "停留時間可預期的目標",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/literati.js: nextAt and writing progress; src/stories.js: nextAt; src/main.js: #speed-btn",
+          "observation": "等待驅動內容占比高，玩家無法依本次可用時間選一件短任務。"
+        }
+      ],
+      "fix": "提供不以現實倒數限制的短程目標清單，標明所需操作及是否等候遊戲時間。",
+      "acceptance": [
+        "可挑選不等待天候的短目標並完成；需等候的項目事前明示；無真實時間到期。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "O25",
+      "domain": "八角遊戲化",
+      "title": "可停止的階段結語",
+      "kind": "新增功能缺口",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js: updateUI; src/simulation.js: Town.log",
+          "observation": "沒有本次達成事項與可自然停下的里程碑回顧，長時間觀看缺乏收束。"
+        }
+      ],
+      "fix": "提供按需的本次旅程回顧，彙整唯一成就、讀訪與委託；達成願景可選結束本次觀察。",
+      "acceptance": [
+        "完成一項目標與閱讀一篇後摘要各列一次；重看不新增；結束按鈕暫停但不重置城市。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/octalysis.json"
+    },
+    {
+      "id": "U01",
+      "domain": "互動與無障礙",
+      "title": "鍵盤無法營造",
+      "kind": "interaction_gap_or_defect",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "index.html #world；src/main.js:51-58",
+          "observation": "canvas 無 tabindex；放置只綁 pointerdown/move/up，keydown 沒有網格游標或確認放置。"
+        }
+      ],
+      "fix": "加入可聚焦營造網格游標，方向鍵移格、Enter 放置；沿用相同預覽與驗證。",
+      "acceptance": [
+        "純鍵盤選民居、移動兩格、預覽並建造成功，Esc 退出。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U02",
+      "domain": "互動與無障礙",
+      "title": "鍵盤無法平移鏡頭",
+      "kind": "interaction_gap_or_defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js:58；src/scene.js:49",
+          "observation": "keydown 只有模式、空白、Esc、Q/E；OrbitControls 未呼叫 listenToKeyEvents。"
+        }
+      ],
+      "fix": "加入方向鍵或 WASD 鏡頭平移並寫入操作說明，避免與營造游標衝突。",
+      "acceptance": [
+        "探索模式純鍵盤可向四方移動且不改變小鎮。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U03",
+      "domain": "互動與無障礙",
+      "title": "空白鍵搶走按鈕原生啟動",
+      "kind": "interaction_gap_or_defect",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js:58",
+          "observation": "非 dialog 時一律 Space preventDefault 並 click pause-btn，沒有判斷 event.target。"
+        }
+      ],
+      "fix": "輸入框、按鈕、連結等互動元素取得焦點時保留原生鍵盤操作；場景焦點才使用快捷鍵。",
+      "acceptance": [
+        "Tab 到宋韻營造後按 Space 開圖錄且不切換暫停。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U04",
+      "domain": "互動與無障礙",
+      "title": "多指觸控可能誤蓋",
+      "kind": "interaction_gap_or_defect",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js:53-56",
+          "observation": "down/drag 為單一全域物件，沒有 pointerId/isPrimary 或多指取消；第二指及任意 pointerup 都可覆寫或提交。"
+        }
+      ],
+      "fix": "追蹤主指標，多指開始取消營造草稿；縮放手勢結束不提交。",
+      "acceptance": [
+        "建造模式雙指縮放及交錯抬指均零新增，單指仍正常放置。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U05",
+      "domain": "互動與無障礙",
+      "title": "手機缺少抬指後預覽確認",
+      "kind": "interaction_gap_or_defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js:55",
+          "observation": "pointerup 直接 town.place 或 applyUrban，觸控手指遮擋格子後即提交。"
+        }
+      ],
+      "fix": "觸控提供預覽後確認/取消操作，或明確可選精準建造模式。",
+      "acceptance": [
+        "手指離開後可看完整占地、移動草稿並明確確認一次。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U06",
+      "domain": "互動與無障礙",
+      "title": "禁止原因只有紅綠顏色",
+      "kind": "interaction_gap_or_defect",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js:53-55；src/scene.js:130",
+          "observation": "預覽只傳 0x668856/0xb5644c；失敗事後僅顯示通用放不下訊息。"
+        }
+      ],
+      "fix": "預覽同步文字與符號，區分範圍外、屋舍、道路、占地形狀限制。",
+      "acceptance": [
+        "不辨色仍能在提交前得知可否放置及確切障礙。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U07",
+      "domain": "互動與無障礙",
+      "title": "營造預覽未揭露合建結果",
+      "kind": "interaction_gap_or_defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js:54,149；src/scene.js:130；src/simulation.js:54-60",
+          "observation": "pointermove 只更新占地框，blueprint-status 保留選圖時的名稱與大小；Town.place 會將 residence 的2×2轉 mansion，四格直線則成四棟，提交前沒有同步顯示實際結果名稱與棟數。實際 Node 重現：residence 的2×2成功放置1棟 mansion（四合雅宅），並非拒絕。"
+        }
+      ],
+      "fix": "依營造草稿計算並顯示實際結果名稱、占地格數及建築棟數，涵蓋單格、直線多棟與四格合建。",
+      "acceptance": [
+        "選雅居小樓後斜拉2×2，提交前顯示四合雅宅、占地4格、1棟；直線拉4格顯示4棟。文字與提交結果一致。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U08",
+      "domain": "互動與無障礙",
+      "title": "缺少實體建築選取與清單替代",
+      "kind": "interaction_gap_or_defect",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/scene.js:129；index.html #world",
+          "observation": "居民與建築僅由 raycaster 點 3D 模型選取；DOM 沒有全鎮建築/居民可選清單。"
+        }
+      ],
+      "fix": "加入可搜尋或篩選的城市物件清單，鍵盤可選取並定位既有實體。",
+      "acceptance": [
+        "讀屏與鍵盤可找到任意建築及居民，開啟對應小卡。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U09",
+      "domain": "互動與無障礙",
+      "title": "建築小卡重繪破壞焦點",
+      "kind": "interaction_gap_or_defect",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js:62,84,139",
+          "observation": "inspectorContent 內容改變即 innerHTML；施工進度/在場人數每 180ms 可變，整組操作按鈕重建。"
+        }
+      ],
+      "fix": "依建築 id 保留 DOM，局部更新數據或維持 focus/scroll。",
+      "acceptance": [
+        "聚焦升級或搬移按鈕並等待居民活動，焦點與捲動位置不丟失。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U10",
+      "domain": "互動與無障礙",
+      "title": "小卡缺少直接關閉",
+      "kind": "interaction_gap_or_defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js renderInspector；index.html #inspector",
+          "observation": "只有點空地/Esc 清除，inspector 沒有關閉按鈕，觸控需找未被面板占用的空地。"
+        }
+      ],
+      "fix": "提供具名稱的關閉小卡按鈕，並清除選取框/回復焦點。",
+      "acceptance": [
+        "手機與鍵盤可在小卡內關閉，且場景選取同步清除。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U11",
+      "domain": "互動與無障礙",
+      "title": "選單開啟缺少區域焦點導引",
+      "kind": "interaction_gap_or_defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js:39,73,80；index.html #life-panel/#inspector",
+          "observation": "顯示 aside 或切居民時沒有 focus 或宣告，新內容不在目前焦點旁。"
+        }
+      ],
+      "fix": "為使用者明確點選造成的新面板提供標題焦點與返回控制；hover 不搶焦點。",
+      "acceptance": [
+        "鍵盤開市井見聞或居民小卡後立即能讀到標題並進入內容。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U12",
+      "domain": "互動與無障礙",
+      "title": "多個 dialog 缺少可及名稱",
+      "kind": "interaction_gap_or_defect",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "index.html dialog#gallery/#help/#production/#blueprints/#literature",
+          "observation": "這些 dialog 有視覺 h2，但未設定 aria-labelledby 或 aria-label。"
+        }
+      ],
+      "fix": "所有 dialog 綁定唯一標題 id。",
+      "acceptance": [
+        "每個開啟對話框在 accessibility tree 具有正確名稱。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U13",
+      "domain": "互動與無障礙",
+      "title": "建築選取框混淆操作對象",
+      "kind": "interaction_gap_or_defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js:85,158",
+          "observation": "選 b 時 outline(block.cells) 高亮整個街坊，但搬移/拆除只傳 b.id。"
+        }
+      ],
+      "fix": "主要框線只標實際建築 footprint；街坊以次要提示區分。",
+      "acceptance": [
+        "三格街坊選一屋時明確標示單屋，拆除目標不會被理解為整街坊。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U14",
+      "domain": "互動與無障礙",
+      "title": "低視窗高度小卡無可讀空間",
+      "kind": "interaction_gap_or_defect",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/style.css 手機 .inspector max-height:calc(100vh - 435px)",
+          "observation": "寬<=600 且高390 的橫向視窗得到負 max-height；固定 top 與 bottom 工具列仍占畫面。"
+        }
+      ],
+      "fix": "短螢幕使用可捲動底板/全螢幕面板，max-height 有合理下限並避免遮住操作。",
+      "acceptance": [
+        "600×390 與 390×600 下小卡內容及關閉/管理均可到達。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U15",
+      "domain": "互動與無障礙",
+      "title": "重要資訊字級過小",
+      "kind": "interaction_gap_or_defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/style.css .stat span/.bottom-caption/.inspector .sub/.life-events",
+          "observation": "狀態標籤 8–10px；手機 bottom-caption 7px，inspector 主文 11px。"
+        }
+      ],
+      "fix": "提高重要操作與數據文字到易讀尺寸，提供可放大排版。",
+      "acceptance": [
+        "手機核心標籤至少12px、正文至少14px，200%文字放大仍可操作。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U16",
+      "domain": "互動與無障礙",
+      "title": "低對比輔助文字",
+      "kind": "interaction_gap_or_defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/style.css --muted:#79806b；.welcome-foot #939880；.blueprint-card small #828a70",
+          "observation": "淡灰綠字搭近白紙底，且多用9–10px；需計算每個實際背景確認。"
+        }
+      ],
+      "fix": "調整語義文字色使一般文字對比至少4.5:1；不依透明場景底色決定可讀性。",
+      "acceptance": [
+        "量測日夜紙底及手機樣式的資訊文字對比，列出數值；本次僅來源風險判定。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U17",
+      "domain": "互動與無障礙",
+      "title": "常用控制觸控範圍過小",
+      "kind": "interaction_gap_or_defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/style.css .circle 29px；.view-controls button 34×35；.mini-tool min-width:28px",
+          "observation": "手機問號及縮放等控制小於44px舒適點擊目標。"
+        }
+      ],
+      "fix": "常用操作擴大到至少44×44 CSS px並保留間距。",
+      "acceptance": [
+        "手機實測問號、縮放、暫停、倍率可單獨點選而不觸發相鄰控制。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U18",
+      "domain": "互動與無障礙",
+      "title": "沒有減少動態模式",
+      "kind": "interaction_gap_or_defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js:139；src/scene.js:49,149；src/style.css",
+          "observation": "frame 即使 paused 仍 scene.update；鏡頭阻尼與跟隨平滑固定，無 prefers-reduced-motion。"
+        }
+      ],
+      "fix": "尊重系統減少動態並提供選項，停用非必要動態/平滑追蹤。",
+      "acceptance": [
+        "模擬 reduce 時鏡頭定位無平滑飛移，雨景/裝飾動態可減少但核心模擬不被破壞。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U19",
+      "domain": "互動與無障礙",
+      "title": "營造取消提示只有 Esc",
+      "kind": "interaction_gap_or_defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js:149,161；index.html .build-actions",
+          "observation": "搬移、圖樣及道路提示 Esc 取消；沒有明確取消營造按鈕。"
+        }
+      ],
+      "fix": "草稿/編輯模式顯示取消按鈕並復原探索狀態。",
+      "acceptance": [
+        "手機可一按取消道路或搬移，無資料變動且預覽消失。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U20",
+      "domain": "互動與無障礙",
+      "title": "建築用途缺乏場景圖例",
+      "kind": "interaction_gap_or_defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/scene.js 建築模型；index.html toolbar",
+          "observation": "工具列解釋營造類型，但已建場景沒有可開關用途圖例/標籤，必須逐屋點選。"
+        }
+      ],
+      "fix": "提供簡潔圖例及可切換的民居/商鋪/作坊/園景標籤或辨識符號。",
+      "acceptance": [
+        "混合街坊可在不逐屋開卡下分辨用途，並可隱藏標籤。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U21",
+      "domain": "互動與無障礙",
+      "title": "施工進度缺少語義數值",
+      "kind": "interaction_gap_or_defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js:84 .progress",
+          "observation": "只有 div/i style width 百分比；沒有 progressbar role 或 aria-valuenow，讀屏僅讀階段字。"
+        }
+      ],
+      "fix": "使用原生 progress 或具標籤/數值的 progressbar，呈現施工百分比。",
+      "acceptance": [
+        "輔助技術讀得目前工程百分比且不每180ms大量播報。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U22",
+      "domain": "互動與無障礙",
+      "title": "貨物選取沒有當前狀態",
+      "kind": "interaction_gap_or_defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js:131,134-138",
+          "observation": "data-lot 按鈕全同樣式；selectedLot 更新只重繪 detail，未標 aria-pressed/current 或選取外觀。"
+        }
+      ],
+      "fix": "列表標示目前貨物，detail 使用標題關联；篩選後同步選取。",
+      "acceptance": [
+        "點第2批貨後列表與詳細內容同指一筆，鍵盤/讀屏可辨認。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U23",
+      "domain": "互動與無障礙",
+      "title": "畫卷在手機沒有入口",
+      "kind": "interaction_gap_or_defect",
+      "severity": "low",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/style.css @media(max-width:600px) .top-actions .quiet/#concepts-btn",
+          "observation": "concepts-btn 被 display:none，其他 DOM 無開 gallery 的入口。"
+        }
+      ],
+      "fix": "手機更多功能選單提供畫卷入口，保持主要畫面簡潔。",
+      "acceptance": [
+        "390px 下能找到並開關畫卷，不需旋轉螢幕。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U24",
+      "domain": "互動與無障礙",
+      "title": "暫停狀態缺少按下語義",
+      "kind": "interaction_gap_or_defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js:30；index.html #pause-btn",
+          "observation": "切換文字、class、aria-label，但無 aria-pressed；開 dialog 自動暫停也沒有狀態提示。"
+        }
+      ],
+      "fix": "以明確時間狀態文字及 aria-pressed 表示使用者暫停；區分閱讀中暫停。",
+      "acceptance": [
+        "主動暫停時讀屏可辨識，關閉 dialog 不意外解除原先暫停。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "U25",
+      "domain": "互動與無障礙",
+      "title": "操作通知過短且無回看",
+      "kind": "interaction_gap_or_defect",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js:24 toast",
+          "observation": "所有結果訊息3200ms消失，包括放置失敗及操作回饋，無可回看的最後操作訊息。"
+        }
+      ],
+      "fix": "重要失敗保留至下一操作或提供近期通知區，短 toast 用於低風險成功提示。",
+      "acceptance": [
+        "慢速閱讀使用者在5秒後仍可找回最後失敗原因且能修正。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/ux.json"
+    },
+    {
+      "id": "E01",
+      "domain": "工程可靠性",
+      "title": "損壞存檔遭自動覆寫",
+      "kind": "bug",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js:21,25,139",
+          "observation": "啟動 catch 開新 Town，但 save 與12秒自動儲存未鎖定；原始壞資料會被新城覆蓋。"
+        }
+      ],
+      "fix": "讀取失敗隔離原始文字並進入復原模式；使用者選擇新城前禁止覆寫原 key。",
+      "acceptance": [
+        "放入非 JSON 後啟動、等待兩次自動儲存及離頁；原字串仍存在，能下載救援。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E02",
+      "domain": "工程可靠性",
+      "title": "缺少上一版有效存檔",
+      "kind": "gap",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js save",
+          "observation": "只有單一 bianshui-town-v1 key；每次 setItem 覆蓋唯一副本。"
+        }
+      ],
+      "fix": "儲存前保留上一份通過驗證的快照，主檔與備份分開管理。",
+      "acceptance": [
+        "主檔損壞或遷移失敗，可還原上一個有效版本；不得以壞主檔污染備份。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E03",
+      "domain": "工程可靠性",
+      "title": "缺少可攜匯出與驗證匯入",
+      "kind": "gap",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js save；index.html",
+          "observation": "目前只有 localStorage 自動存；沒有使用者可下載及跨裝置還原的存檔入口。"
+        }
+      ],
+      "fix": "增加版本化 JSON 匯出、檔案大小限制、乾跑驗證與確認取代；匯入失敗不動當前城。",
+      "acceptance": [
+        "匯出再匯入保留建築、貨物與人物；錯格式及未支援版本回報原因且保持原城。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E04",
+      "domain": "工程可靠性",
+      "title": "同源多分頁進度互相覆寫",
+      "kind": "gap",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js save / beforeunload",
+          "observation": "每個分頁每12秒及 beforeunload 寫相同 key；無 storage 事件監聽或寫入版本比較。"
+        }
+      ],
+      "fix": "增加存檔 revision 與分頁所有者，偵測外部分頁更新後暫停自動覆寫並提供選擇。",
+      "acceptance": [
+        "兩分頁各編輯一次，後存或關閉舊分頁不得默默覆蓋新版；使用者可保留兩版。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E05",
+      "domain": "工程可靠性",
+      "title": "還原接受覆寫實例方法",
+      "kind": "bug",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js Town.restore Object.assign(town,data)",
+          "observation": "重現：有效存檔加入 tick:0，restore 成功；下一次 town.tick 呼叫將失敗。額外 unexpected 欄位也原樣保留。"
+        }
+      ],
+      "fix": "以明確資料欄位白名單建立實例，拒絕方法名稱與 __proto__/constructor 等保留鍵。",
+      "acceptance": [
+        "輸入 tick、rebuildRoads、__proto__ 等欄位不能改變 Town prototype 或方法；不接受任意實例欄位。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E06",
+      "domain": "工程可靠性",
+      "title": "巢狀存檔結構缺少驗證",
+      "kind": "bug",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js Town.restore；src/production.js syncCargo",
+          "observation": "restore 只驗四個頂層陣列；weather:{mode:\"alien\"} 可還原成功，life/economy/stories 缺少必要陣列可在後續執行爆錯。"
+        }
+      ],
+      "fix": "逐版本驗證巢狀物件及必要欄位，先遷移到標準結構再實例化。",
+      "acceptance": [
+        "weather、life、economy、stories、literati 缺欄、錯型別與未知狀態均有定位錯誤，不進 frame。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E07",
+      "domain": "工程可靠性",
+      "title": "ID唯一性及配置器不受保護",
+      "kind": "bug",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js Town.restore / nextId；src/production.js economy.nextId",
+          "observation": "重現：完整存檔 nextId=1 可被接受，之後建立物件會撞上既有 ID；沒有檢查重複建築、居民與貨物 ID。"
+        }
+      ],
+      "fix": "驗證各命名空間唯一、安全整數與參照，配置器必須大於現存最大 ID；可安全重算者明示修復。",
+      "acceptance": [
+        "重複 ID 被拒絕；低 nextId 修復或拒絕；連續新增100筆不產生重複 ID。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E08",
+      "domain": "工程可靠性",
+      "title": "還原可繞過地塊及街坊不變條件",
+      "kind": "bug",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js Town.restore / canPlace / rebuildRoads",
+          "observation": "重現：block.cells 與 building.x 同改999仍 restore 成功；未驗占地越界、重疊、blockId 關係與 footprint 一致。"
+        }
+      ],
+      "fix": "建立城市幾何與參照驗證，沿用營造限制；匯入前檢查全城占地與街坊成員。",
+      "acceptance": [
+        "超界、重疊、孤立 blockId、錯 footprint 均拒絕；合法四格中心半整數座標可還原。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E09",
+      "domain": "工程可靠性",
+      "title": "數值及列舉狀態缺少範圍驗證",
+      "kind": "bug",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js Town.restore；src/production.js RECIPES[b.variant]",
+          "observation": "time=-10 被接受；born、速度、variant、進度與統計未驗，variant 越界可使 r.input 存取出錯。"
+        }
+      ],
+      "fix": "為時間、速度、等級、配方索引、庫存統計制定有限範圍及列舉；拒絕不可能狀態。",
+      "acceptance": [
+        "負時間、負速度、非有限數及 variant=999 不可進模擬；合法零值不誤判。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E10",
+      "domain": "工程可靠性",
+      "title": "讀檔與舊版遷移沒有資源預算",
+      "kind": "gap",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js Town.restore；src/production.js migrateEconomy.restore",
+          "observation": "只限制 buildings.length<=143；blocks/people/carts/路徑/貨物等無數量限制，舊檔 cargo/count 直接 for 迴圈展開。"
+        }
+      ],
+      "fix": "限制原始位元組、巢狀數量、路徑與文字長度及遷移總筆數，先檢查後展開。",
+      "acceptance": [
+        "超大 people、route 或舊版 cargo=1e9 在有界時間拒絕；主執行緒不長時間卡住。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E11",
+      "domain": "工程可靠性",
+      "title": "還原物件與輸入快照共用參照",
+      "kind": "bug",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js Town.restore Object.assign",
+          "observation": "重現：restore(d) 後修改 town.people[0].name，d.people[0].name 同步變為 mutated；多數陣列未深複製。"
+        }
+      ],
+      "fix": "還原時複製合法資料或使用不可變快照，避免污染呼叫者與復原紀錄。",
+      "acceptance": [
+        "restore 後模擬、改名、轉移貨物均不修改輸入 JSON 物件，包含巢狀 trail。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E12",
+      "domain": "工程可靠性",
+      "title": "讀檔會抹除進行中的人物路線",
+      "kind": "bug",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js Town.restore / rebuildRoads",
+          "observation": "demo運行10秒後，居民39/40/41路線長度為13/17/16；restore後全為0，且重設destination。"
+        }
+      ],
+      "fix": "區分首次拓樸重建與編輯後重新導航；合法路線保留，失效路線才從當前位置重算。",
+      "acceptance": [
+        "存讀循環不改變路線、位置與目標；下一固定步與未讀檔分支得到相同狀態。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E13",
+      "domain": "工程可靠性",
+      "title": "模擬結果受畫面更新頻率影響",
+      "kind": "bug",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js frame；src/simulation.js tick；src/production.js tickProduction",
+          "observation": "demo各跑60秒，0.1秒步長首居民z=-0.816，1/60秒步長z=-0.719333；frame直接dt*speed且長幀裁切0.1秒。"
+        }
+      ],
+      "fix": "採固定模擬步長與累積器，倍率決定執行步數；明訂背景與過載時間策略。",
+      "acceptance": [
+        "30/60/120Hz相同輸入與60秒前景時間，模擬快照一致；1×/4×的等量模擬時間一致。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E14",
+      "domain": "工程可靠性",
+      "title": "tick非有限時間會污染全城",
+      "kind": "bug",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/simulation.js Town.tick",
+          "observation": "僅 if(dt<=0)return；tick(NaN) 可令 elapsed=NaN，Infinity 同樣不被拒絕。"
+        }
+      ],
+      "fix": "入口拒絕非有限或不合法dt；大dt走固定步長或明確上限，不讓部分子系統先更新。",
+      "acceptance": [
+        "NaN/Infinity/負dt不改任何狀態；超大dt安全拒絕或有界處理。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E15",
+      "domain": "工程可靠性",
+      "title": "復原舊編輯會回捲其後整段模擬",
+      "kind": "gap",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js applyUrban / #undo-urban",
+          "observation": "undoTown是操作前全城快照；經過任意時間按復原，會連貨物、居民進度、天氣與時間全部回捲。"
+        }
+      ],
+      "fix": "定義復原語意；可採只復原編輯的命令，或清楚顯示快照時間並在久遠/後續操作時失效。",
+      "acceptance": [
+        "搬移後運行60秒再復原，依介面明示契約保留模擬進度，或明確告知整城回到何時。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E16",
+      "domain": "工程可靠性",
+      "title": "重置後重載即失去復原機會",
+      "kind": "gap",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js #confirm-new / undoTown",
+          "observation": "重置立即 save 覆蓋主存檔，而 undoTown 只在記憶體；關閉或重載後無法救回剛重置的城。"
+        }
+      ],
+      "fix": "重置前持久保存復原點，並提供重載後仍可使用的還原入口與清楚有效期限。",
+      "acceptance": [
+        "重置、重新整理後可完整還原原城；建立新城也不立即銷毀唯一復原副本。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E17",
+      "domain": "工程可靠性",
+      "title": "城市編輯缺少失敗交易回滾",
+      "kind": "gap",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js applyUrban；src/urban.js moveBuilding / refresh",
+          "observation": "applyUrban先備份但fn回傳false或拋錯不還原；都市操作先detach/attach再refresh，後段例外會留下半套變更。"
+        }
+      ],
+      "fix": "將模型修改設為交易，先驗證再提交；失敗還原模型並重新同步場景，保留原復原點。",
+      "acceptance": [
+        "在refresh注入例外，地塊/居民/貨物/存檔皆與編輯前相同；顯示可理解錯誤。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E18",
+      "domain": "工程可靠性",
+      "title": "GPU材質與紋理未隨模型釋放",
+      "kind": "bug",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/scene.js clearGroup / outline / sign / LifeScene.reset；src/weather-scene.js umbrella",
+          "observation": "clearGroup/reset只dispose geometry；outline每次new MeshBasicMaterial，招牌new CanvasTexture，暖光/雨傘也有專屬材質；沒有對應釋放。"
+        }
+      ],
+      "fix": "明確區分共享與專屬資源，釋放專屬材質與map；共享cache生命週期統一管理並重用預覽。",
+      "acceptance": [
+        "100次預覽/建造/拆除/雨景/重置後renderer.info.memory及紋理數回到穩定基線；共享材質仍可用。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E19",
+      "domain": "工程可靠性",
+      "title": "WebGL內容遺失缺少應用復原契約",
+      "kind": "gap",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/scene.js TownScene constructor；src/main.js frame",
+          "observation": "只有初次WebGLRenderer建立catch；未監聽canvas webglcontextlost/restored，也沒有存檔/狀態提示流程。"
+        }
+      ],
+      "fix": "內容遺失時停止畫面提交並保留進度，恢復後重建必要場景；逾時提供重新載入與匯出。",
+      "acceptance": [
+        "以WEBGL_lose_context測試遺失與恢復，不改城市資料，恢復後可繼續互動；失敗有明確提示。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E20",
+      "domain": "工程可靠性",
+      "title": "單一局部操作重建整城模型與路面",
+      "kind": "gap",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js pointerup / applyUrban scene.reset；src/scene.js sync",
+          "observation": "新增一屋及都市編輯均scene.reset；同一revision亦讓道路與花草全部重建，施工階段變更也增加revision。"
+        }
+      ],
+      "fix": "分離拓樸、建築、裝飾修訂版本，依受影響ID局部更新；不因施工外觀變化重建道路。",
+      "acceptance": [
+        "大型城單屋升級/施工轉階時未變建築保有模型identity，道路幾何不重新建立；記錄更新耗時。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E21",
+      "domain": "工程可靠性",
+      "title": "背景分頁仍排程渲染與音訊計算",
+      "kind": "gap",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js frame；src/sound.js update",
+          "observation": "document.hidden只阻擋town.tick；scene.update、render、UI掃描、定時save仍走同一rAF迴圈。"
+        }
+      ],
+      "fix": "隱藏時停止視覺更新與非必要工作，保留一次存檔及靜音；回前景重設時間基準。",
+      "acceptance": [
+        "背景期間渲染計數不增加、音訊靜音、資料不漂移；回前景沒有大dt追趕。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E22",
+      "domain": "工程可靠性",
+      "title": "單一更新例外會永久停止動畫",
+      "kind": "gap",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js frame",
+          "observation": "requestAnimationFrame(frame)放在函式末尾，tick/render/UI任一throw就無下一幀，沒有故障顯示與安全存檔阻擋。"
+        }
+      ],
+      "fix": "加入頂層錯誤邊界，停止受損模擬並顯示復原/重新載入操作；保護最近有效存檔。",
+      "acceptance": [
+        "注入tick或scene.update例外後有可見錯誤，仍可下載有效快照或復原，不無限重試或覆蓋正常存檔。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E23",
+      "domain": "工程可靠性",
+      "title": "貨物流轉歷程可無限增長",
+      "kind": "gap",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/production.js transfer l.trail.push；src/urban.js demolishBuilding",
+          "observation": "每次轉移追加trail而無上限；移建/拆除導致貨物返回貨棧後可再運送，即使貨物總量有界，單筆歷程仍可長大。"
+        }
+      ],
+      "fix": "設單筆歷程預算，保留來源、製作、最近紀錄及早期歷程摘要/累計數。",
+      "acceptance": [
+        "同一批貨轉移10000次後存檔大小有界，來源與最近位置仍可追溯，貨物守恆不變。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E24",
+      "domain": "工程可靠性",
+      "title": "未處理庫存上限會被整船突破",
+      "kind": "bug",
+      "severity": "medium",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/production.js importCargo",
+          "observation": "程式註解要求未處理貨物上限96，但只檢查加入前；重現95件時 importCargo 後107件。"
+        }
+      ],
+      "fix": "依剩餘容量決定整批拒絕或只載入剩餘數量，統一船貨/帳目計數。",
+      "acceptance": [
+        "95件庫存再進貨不超96；96件不再進；imported等於現存與歸檔總和。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    },
+    {
+      "id": "E25",
+      "domain": "工程可靠性",
+      "title": "存檔字串可進入未跳脫HTML欄位",
+      "kind": "bug",
+      "severity": "high",
+      "baseline": "a6a7504",
+      "baselineEvidence": [
+        {
+          "source": "src/main.js renderInspector stall、renderProduction、renderLot；src/simulation.js Town.restore",
+          "observation": "重現market.trades=\"<img src=x onerror=alert(1)>\"可restore；stall分支將其直接插入innerHTML。lot.id亦直接插入屬性及標題。未在瀏覽器執行payload。"
+        }
+      ],
+      "fix": "數值欄位嚴格驗證；所有外部存檔衍生文字使用textContent或完整跳脫，不依型別假設當作安全HTML。",
+      "acceptance": [
+        "惡意market.trades與lot.id被驗證拒絕；渲染防線亦不產生img/script/事件屬性；合法資料顯示正常。"
+      ],
+      "status": "open",
+      "implementation": [],
+      "evidence": [],
+      "verifiedBy": null,
+      "reviewSource": "docs/review/engineering.json"
+    }
+  ]
+}

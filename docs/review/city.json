@@ -1,0 +1,502 @@
+[
+  {
+    "id": "C01",
+    "domain": "city_simulation",
+    "severity": "high",
+    "kind": "feature_gap",
+    "title": "建設沒有資金約束",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/simulation.js:45,52-61 Town.constructor/place；src/urban.js layRoad/upgradeBuilding",
+        "observation": "放置與升級僅檢查空間，沒有錢或報價。"
+      }
+    ],
+    "fix": "建立初始金庫及共用報價/扣款交易；建屋、道路、擴建、搬移各按規模收費，失敗不扣款。",
+    "acceptance": [
+      "餘額不足時任何付費操作均不改地圖；成功一次只扣一次，四格報價高於一格。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C02",
+    "domain": "city_simulation",
+    "severity": "high",
+    "kind": "feature_gap",
+    "title": "營運沒有持續維護成本",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/simulation.js:108-141 Town.tick",
+        "observation": "時間推進只處理人物與貨物，不計建物或道路維護。"
+      }
+    ],
+    "fix": "按遊戲日結算營運支出，使用明列的每類建物/道路維護費。",
+    "acceptance": [
+      "同樣天數不同 tick 步長支出相同；更多已營運設施造成更高支出，暫停不扣款。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C03",
+    "domain": "city_simulation",
+    "severity": "high",
+    "kind": "feature_gap",
+    "title": "沒有稅收與稅率取捨",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/production.js createEconomy/transfer；src/simulation.js Town.tick",
+        "observation": "售出只累計件數，市府沒有收入或可調稅率。"
+      }
+    ],
+    "fix": "以已入住住宅和實際成交為稅基，設有限範圍稅率；稅率反向影響需求。",
+    "acceptance": [
+      "無人空屋不繳人口稅；成交產生一次收入；提高稅率增加每筆稅額並降低對應需求。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C04",
+    "domain": "city_simulation",
+    "severity": "high",
+    "kind": "feature_gap",
+    "title": "赤字沒有可恢復的後果",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/simulation.js Town.constructor/tick",
+        "observation": "無債務或營運預算狀態，無法形成財政失衡到改善的循環。"
+      }
+    ],
+    "fix": "加入現金流與欠款狀態，赤字時降低可負擔公共服務效率並限制新建，允許調稅或拆除減支恢復。",
+    "acceptance": [
+      "連續赤字會造成具體服務衰退；調整收支後能恢復，無不可退出的軟鎖。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C05",
+    "domain": "city_simulation",
+    "severity": "high",
+    "kind": "feature_gap",
+    "title": "缺少住宅商業工業需求的供需模型",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/simulation.js TYPES/place/tick；src/production.js deliveryPlan",
+        "observation": "三類建物可無限制增建，住宅入住、工作與消費並未共同形成需求。"
+      }
+    ],
+    "fix": "建立單一 RCI 需求計算，住宅看職缺/服務，商業看人口及消費缺口，作坊看訂單與失業；回傳各自限制原因。",
+    "acceptance": [
+      "純住宅、純商業、純作坊與均衡城鎮的需求方向不同；增建已過剩類型後該類需求下降。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C06",
+    "domain": "city_simulation",
+    "severity": "medium",
+    "kind": "feature_gap",
+    "title": "新住戶瞬間補滿住宅",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/simulation.js:111-116 Town.tick",
+        "observation": "第一個有效 tick 便產生容量所需的所有居民。"
+      }
+    ],
+    "fix": "用按遊戲時間累積的移入配額，每次搬入有限住戶並受住宅需求約束；原有無家住戶優先。",
+    "acceptance": [
+      "空屋在第一次 tick 不會全滿；相同時間不同步長移入量一致；需求不足時保留空屋。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C07",
+    "domain": "city_simulation",
+    "severity": "high",
+    "kind": "feature_gap",
+    "title": "失業與居住惡化沒有遷出反饋",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/simulation.js:111-133 Town.tick；src/urban.js demolishBuilding",
+        "observation": "拆屋後居民永久等新居，長期失業與民生不足不影響人口。"
+      }
+    ],
+    "fix": "累計居民長期失業/無家/低滿意狀態，超過寬限期有限遷出；改善條件可停止倒數。",
+    "acceptance": [
+      "短期施工不造成立即遷出；長期無家者減少；提供住宅及工作後移出停止且人員引用一致。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C08",
+    "domain": "city_simulation",
+    "severity": "medium",
+    "kind": "defect",
+    "title": "工作指派忽略距離和可達性",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/simulation.js:120-122 Town.tick",
+        "observation": "find 依建物陣列順序填職缺，可能把住戶指派給無法到達的遠端工作。"
+      }
+    ],
+    "fix": "只在可達職缺中按路徑長度排序，保留既有合理工作；失聯工作經寬限後重新配對。",
+    "acceptance": [
+      "兩職缺同條件時選較短通勤；隔離職缺不被指派；恢復連通後可補缺。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C09",
+    "domain": "city_simulation",
+    "severity": "medium",
+    "kind": "feature_gap",
+    "title": "作坊人力多寡不影響產能",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/production.js tickProduction",
+        "observation": "只檢查 workers.length 是否大於零，一名與六名到坊工匠相同產量。"
+      }
+    ],
+    "fix": "按到場工匠/核定人力給有界產能倍率，與建物規模加成分開。",
+    "acceptance": [
+      "同原料和等時長下，四名到場工匠的產量高於一名；零人不生產且不耗原料。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C10",
+    "domain": "city_simulation",
+    "severity": "high",
+    "kind": "feature_gap",
+    "title": "居民採買不消耗商品",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/simulation.js:129-133 Town.tick；src/life.js:95-97 tickVisitors",
+        "observation": "居民在店內只變更行動文字，只有遊客會 transfer 到 sold。"
+      }
+    ],
+    "fix": "居民到達商鋪且處於採買時段時，依個人冷卻/需求購買一件可用商品，留下滿足需求的狀態。",
+    "acceptance": [
+      "到店居民消耗一件庫存並增加一次成交；同一 tick 後續重算不重複買；缺貨無憑空成交。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C11",
+    "domain": "city_simulation",
+    "severity": "high",
+    "kind": "feature_gap",
+    "title": "進口和商品售價沒有經濟價值",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/production.js createEconomy/importCargo/transfer",
+        "observation": "漕船免費補十二件原料，商品價值只以件數表示。"
+      }
+    ],
+    "fix": "為原料/成品建立價格表及交易帳；進口受可用貿易資金約束，成交產生營業額供稅基使用，避免市府全收營業額。",
+    "acceptance": [
+      "付費補貨可對帳至批次件數；不同商品可有不同價值；資金不足不免費進貨。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C12",
+    "domain": "city_simulation",
+    "severity": "medium",
+    "kind": "feature_gap",
+    "title": "物流能力固定無法隨城鎮成長調整",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/life.js:54-70 tickPorters/tickOxen",
+        "observation": "永遠兩名腳夫、一輛牛車，擴城只增加作坊而無物流投資選擇。"
+      }
+    ],
+    "fix": "提供有限等級的貨棧物流投資，提高腳夫/牛車或載量，帶來建置與維護成本。",
+    "acceptance": [
+      "相同貨量/路線下升級後交貨時間縮短且支出增加；重複更新不超額生成運輸者。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C13",
+    "domain": "city_simulation",
+    "severity": "high",
+    "kind": "feature_gap",
+    "title": "自動接路使道路規劃缺少因果",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/simulation.js:65-80 rebuildRoads",
+        "observation": "每一街坊自動 BFS 接回 publicRoads，即使沒鋪路也連通。"
+      }
+    ],
+    "fix": "保留街坊門前步道，但經營模式跨街坊連接依玩家道路；起始城配置必要道路，沙盒模式可另保留自動連接。",
+    "acceptance": [
+      "移除唯一外聯道路後街坊被判斷隔離；重鋪後恢復；新局起始區域可正常通行。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C14",
+    "domain": "city_simulation",
+    "severity": "medium",
+    "kind": "feature_gap",
+    "title": "道路等級不影響交通能力",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/urban.js ROAD_TYPES/roadNodes；src/traffic.js trafficMotion",
+        "observation": "lane 與 avenue 產生相同路節點；交通計算不讀道路類型。"
+      }
+    ],
+    "fix": "以道路節點附帶寬度/容量，寬路提高可用容量或減少會車等待，成本較高。",
+    "acceptance": [
+      "同流量同路徑下寬路的通行量高於小路；升級不改建物占地；實際移動採用道路屬性。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C15",
+    "domain": "city_simulation",
+    "severity": "high",
+    "kind": "defect",
+    "title": "遊客尋路失敗仍可遠端購物",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/life.js:93-97 tickVisitors",
+        "observation": "send 回 false 仍進 browse，下一輪直接移除遠端商鋪庫存。已以隔離路網重現：人在 [33,-16]，店門 [0,2]，sold.cloth=1。"
+      }
+    ],
+    "fix": "只有 send 成功才切換前往商店階段；browse 前再驗證抵達目標入口與目標仍存在。",
+    "acceptance": [
+      "隔離城門與店鋪後推進訪客兩輪，sold 不增加；接通並實際抵達後才成交。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C16",
+    "domain": "city_simulation",
+    "severity": "medium",
+    "kind": "defect",
+    "title": "商鋪沒有店員仍可營業",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/life.js:95-97 tickVisitors；src/simulation.js:122 Town.tick",
+        "observation": "購買只檢查 stock，零雇員或店員不在店時一樣出售。"
+      }
+    ],
+    "fix": "商鋪營業要有到場員工或明確自助模式；缺工應降低營業能力並產生招工需求。",
+    "acceptance": [
+      "有庫存零到場店員時無一般交易；店員抵達後恢復；離店休息時遵守相同規則。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C17",
+    "domain": "city_simulation",
+    "severity": "high",
+    "kind": "feature_gap",
+    "title": "住宅缺少基本供水覆蓋",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/simulation.js Town.constructor/tick；src/heritage.js DESIGNS",
+        "observation": "只有景觀池塘，未見供水設施、容量或住宅覆蓋計算。"
+      }
+    ],
+    "fix": "加入宋代水井服務，以可達步行距離和容量分配住宅供水；影響民生滿意和入住。",
+    "acceptance": [
+      "服務範圍內足量住戶有供水；超容量或不可達住戶顯示不足；新水井提升覆蓋並扣維護費。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C18",
+    "domain": "city_simulation",
+    "severity": "medium",
+    "kind": "feature_gap",
+    "title": "密集居住與生產沒有衛生代價",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/simulation.js Town.tick；src/production.js tickProduction",
+        "observation": "人口/生產增加沒有廢棄物累積與清運能力。"
+      }
+    ],
+    "fix": "建立人口和作坊產出的衛生負荷，透過清運服務抵消；未處理負荷影響健康/宜居。",
+    "acceptance": [
+      "相同面積增加人口時負荷上升；清運足量可穩定負荷；停服務後逐日惡化而非瞬間歸零。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C19",
+    "domain": "city_simulation",
+    "severity": "medium",
+    "kind": "feature_gap",
+    "title": "木造聚落缺少防火服務價值",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/heritage.js DESIGNS；src/weather.js；src/simulation.js Town.tick",
+        "observation": "窯坊、木造民宅與天候沒有火災風險或防火覆蓋。"
+      }
+    ],
+    "fix": "加入可重現的防火風險與消防巡守服務，窯坊密度增加風險、服務降低風險；可先以損耗/停工事件實作。",
+    "acceptance": [
+      "固定種子或可注入事件下，無服務受損高於有服務；事件有明確復原條件且不無預警全城清空。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C20",
+    "domain": "city_simulation",
+    "severity": "medium",
+    "kind": "feature_gap",
+    "title": "藥鋪只有造型沒有健康效益",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/variety.js:10 herbShop；src/simulation.js Town.tick",
+        "observation": "百草藥鋪與普通商鋪沒有健康服務差異。"
+      }
+    ],
+    "fix": "為已營業且有員工的藥鋪建立醫療容量/覆蓋，調整居民健康與缺勤。",
+    "acceptance": [
+      "同衛生條件下有藥鋪覆蓋的居民恢復較快；無員工藥鋪不供服務；服務不超過容量。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C21",
+    "domain": "city_simulation",
+    "severity": "medium",
+    "kind": "feature_gap",
+    "title": "書院教育不連到城市能力",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/heritage.js:31,38 academy/gardenActivity；src/production.js tickProduction",
+        "observation": "書院僅產生讀書行動文字，沒有教育覆蓋或能力累積。"
+      }
+    ],
+    "fix": "以到院/服務覆蓋累積有界教育程度，對相關工匠熟練產能提供小幅加成，避免立即滿級。",
+    "acceptance": [
+      "受教育居民經遊戲日逐步增加能力，未覆蓋者不增加；能力對實際產能有可測影響且有上限。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C22",
+    "domain": "city_simulation",
+    "severity": "high",
+    "kind": "feature_gap",
+    "title": "作坊污染與住宅混置沒有取捨",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/production.js tickProduction；src/simulation.js Town.place/tick",
+        "observation": "窯坊、染坊與住宅相鄰沒有任何環境外部成本。"
+      }
+    ],
+    "fix": "依運作中的作坊類型/產量向鄰近格累加污染；隨距離衰減與停工恢復，降低住宅宜居。",
+    "acceptance": [
+      "活躍作坊近處污染高於遠處；停工後逐步下降；相同人口下混住工坊區宜居較低。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C23",
+    "domain": "city_simulation",
+    "severity": "medium",
+    "kind": "feature_gap",
+    "title": "園景設施對宜居沒有空間效益",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/heritage.js DESIGNS/gardenActivity；src/simulation.js Town.tick",
+        "observation": "公園與亭園只供行程和造型，沒有範圍、容量或邊際遞減。"
+      }
+    ],
+    "fix": "建立可達園景覆蓋/宜居加成，納入距離及重複設施遞減，影響入住意願。",
+    "acceptance": [
+      "住宅附近第一座公園提升宜居；遠端隔離公園無同等加成；同地大量堆疊不能無限增加。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C24",
+    "domain": "city_simulation",
+    "severity": "medium",
+    "kind": "feature_gap",
+    "title": "二至五級建築與經營能力脫節",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/building-tiers.js TIER_DETAILS；src/urban.js upgradeBuilding；src/simulation.js:112；src/production.js tickProduction",
+        "observation": "tier 主要改外觀；容量/速度只看 level 和 footprint，三級到五級無功能變化。"
+      }
+    ],
+    "fix": "集中定義每級容量/服務/產能及維護費，升級前後使用同一表計算並保持合理上限。",
+    "acceptance": [
+      "同類三級比二級有可測容量或產能增益也有成本；五級不再升級；外觀文案與機制一致。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  },
+  {
+    "id": "C25",
+    "domain": "city_simulation",
+    "severity": "high",
+    "kind": "feature_gap",
+    "title": "民生滿意沒有可計算的綜合回饋",
+    "baseline": "a6a7504",
+    "evidence": [
+      {
+        "source": "src/simulation.js:115 居民欄位、Town.tick",
+        "observation": "居民只有住家工作行程與文字動作，無可解釋的民生狀態。"
+      }
+    ],
+    "fix": "以住房、就業、採買、服務、環境計算有界滿意度並保留各分項，作為遷入/遷出的共同輸入。",
+    "acceptance": [
+      "單獨改善其中一項可改善該分項；停服務或污染上升會下降；所有分項和總分可用固定情境重算，非裝飾數字。"
+    ],
+    "status": "open",
+    "mode_contract": "新增城市經營機制只在 management 模式啟用；sandbox 維持既有自由建造與行為。真正交易/尋路缺陷兩模式都修正。"
+  }
+]
