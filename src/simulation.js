@@ -9,6 +9,8 @@ import {tierOf} from './building-tiers.js';
 import {roadNodes,mergeGardens} from './urban.js';
 import {createLiterati,tickLiterati,rerouteLiterati} from './literati.js';
 import {isUtility} from './public-services.js';
+import {tickHealthcare} from './healthcare.js';
+import {onSickLeave} from './employment.js';
 import {tickFire} from './fire-service.js';
 import {tickSanitation} from './sanitation.js';
 import {DESIGNS,isSquare,gardenActivity} from './heritage.js';
@@ -131,6 +133,7 @@ export class Town {
   assignJobs(this);
   for(const p of this.people){
    if(!p.home&&!p.work){p.outside=true;p.action='在街口等候新居';continue;}
+   if(onSickLeave(this,p)){p.streetEvent=null;p.socialUntil=0;p.shelter=null;if(p.home&&(p.destination!==p.home||!p.outside&&p.current!==p.home||p.outside&&!p.route.length))this.travel(p,p.home);this.move(p,dt);p.action=p.outside?'身體不適，返家休養':'身體不適，在家休養（病假）';continue;}
    if(shelterResident(this,p,dt))continue;
    if(eventAction(this,p)){this.move(p,dt);eventAction(this,p);continue;}
    const h=this.time%24;if((p.socialUntil||0)>this.elapsed&&h>=6&&h<20)continue;const shops=this.buildings.filter(b=>(b.type==='shop'||b.type==='garden'&&!isUtility(b))&&b.stage>=3);
@@ -149,7 +152,7 @@ export class Town {
   }
   for(const p of this.people)residentPurchase(this,p);
   tickProduction(this,dt);tickCraftCarts(this,dt);
-  tickLife(this,dt);tickLiterati(this,dt);settleBudget(this);tickSanitation(this);tickFire(this);
+  tickLife(this,dt);tickLiterati(this,dt);settleBudget(this);tickSanitation(this);tickFire(this);tickHealthcare(this,dt);
   for(const p of this.people){if(this.weather.raining&&p.outside&&!p.shelter&&!p.action.startsWith('撐傘'))p.action='撐傘 · '+p.action;remember(this,p,p.action);}
  }
  move(p,dt){

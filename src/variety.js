@@ -7,6 +7,6 @@ export const NEW_DESIGNS={
  dyeHouse:{name:'曬布染坊',type:'work',variant:2,mark:'染',sizes:[1,4],source:null,detail:'染缸、曬布高架與織機廳；沿用纖維製布，四格變彩帛大院。',largeName:'彩帛大院'},
  bookshop:{name:'街角書肆',type:'shop',variant:0,mark:'書',sizes:[1,4],source:null,detail:'開放書架、卷冊與閱書棚；四格變雙翼書樓。',largeName:'雙翼書樓'},
  incenseShop:{name:'清芬香鋪',type:'shop',variant:2,mark:'香',sizes:[1,4],source:null,detail:'高窄閣樓、香盒櫃與垂簾；四格變香閣合院。',largeName:'清芬香閣'},
- herbShop:{name:'百草藥鋪',type:'shop',variant:0,mark:'藥',sizes:[1,4],source:null,detail:'抽屜藥櫃、圓匾與草藥棚；四格變百草庭院。',largeName:'百草庭院'},
+ herbShop:{name:'百草藥鋪',type:'shop',variant:0,mark:'藥',sizes:[1,4],source:null,detail:'抽屜藥櫃、圓匾與草藥棚；四格變百草庭院。營業且健康店員到場才供醫療，每名店員每級照護4人（四格8人），沿路24步起；每30秒回復8點健康。',largeName:'百草庭院'},
  cakeShop:{name:'蒸香餅店',type:'shop',variant:1,mark:'餅',sizes:[1,4],source:null,detail:'低簷雙灶、蒸籠與紅布棚；四格變前店後坊。',largeName:'蒸香餅坊'}
 };

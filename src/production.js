@@ -1,7 +1,7 @@
 import {damaged} from './fire-service.js';
 import {roadReachable,roadAnchor} from './road-network.js';
 import {purchaseImports,recordSale} from './trade.js';
-import {staffingRatio,jobCapacity} from './employment.js';
+import {staffingRatio,jobCapacity,presentWorkers} from './employment.js';
 import {saleTax,managed} from './city-finance.js';
 export const MAX_LOT_TRAIL=32,MAX_UNPROCESSED_LOTS=96;
 export const GOODS={clay:'泥料',timber:'木材',fiber:'纖維',ceramics:'陶器',furniture:'木器',cloth:'布匹',legacy:'日用雜貨'};
@@ -58,7 +58,7 @@ export function tickProduction(t,dt){
  for(const b of t.buildings.filter(b=>b.type==='work'&&b.stage>=3)){
   if(damaged(b)){b.productionStatus='火警後整修中，暫停生產';continue;}
   const r=RECIPES[b.variant],lot=at(t,`input:${b.id}`,r.input)[0];
-  const workers=t.workers(b).filter(p=>!p.outside&&p.current===b.id);
+  const workers=presentWorkers(t,b);
   b.productionStatus=!workers.length?'等工匠到坊':!lot?'等候原料':at(t,`output:${b.id}`).length>=6?'成品待運':`${r.action} · 到場 ${workers.length}／${jobCapacity(b)} 人`;
   if(!lot||!workers.length||at(t,`output:${b.id}`).length>=6)continue;
   lot.progress=(lot.progress||0)+dt*(b.footprint?2:b.level>=2?1.5:1)*staffingRatio(t,b);

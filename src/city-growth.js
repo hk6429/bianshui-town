@@ -42,7 +42,7 @@ function leaveTown(t,p,reason){
  const e=t.stories.active;if(e){e.participants=e.participants.filter(id=>id!==p.id);if(!e.participants.length){t.stories.active=null;t.stories.nextAt=t.elapsed+35;}}
  t.demography.departed++;t.log(`${p.name}因${reason}遷離小鎮`);
 }
-export function residentCondition(p){const h=p.hardship||{};return [['unhoused','無家'],['unemployed','失業'],['unserved','日用品不足']].filter(([key])=>h[key]>0).map(([key,label])=>`${label} ${h[key]} 秒／寬限 ${GRACE[key]} 秒`).join('；')||'生活狀況穩定';}
+export function residentCondition(p){const h=p.hardship||{},issues=[['unhoused','無家'],['unemployed','失業'],['unserved','日用品不足']].filter(([key])=>h[key]>0).map(([key,label])=>`${label} ${h[key]} 秒／寬限 ${GRACE[key]} 秒`);if((p.health??100)<40)issues.push('健康偏低，需休養');return issues.join('；')||'生活狀況穩定';}
 export function tickPopulation(t){
  const d=t.demography;
  if(!managed(t)){

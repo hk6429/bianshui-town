@@ -141,3 +141,16 @@
 - city.fireDay、building.fireWarningAt/fireDamage/fireRepairAt可選v9欄位；schema要求damage與repairAt成對且不同時warning。restore舊檔從當日開始。clearFire即時清除作坊停工文字（真瀏覽器發現並修正）。
 - 下一獨立階段C20醫療：沿用person.health，營業且到場員工的herbShop才供醫療，有限容量+可達範圍，在同衛生下更快恢復，健康影響缺勤與真產能；參考commerce.shopIsOpen與employment.presentWorkers，避免醫療自我依賴造成停擺。
 - C21教育/C22污染/C23園景/C24全類型分級/C25幸福度，以及所有O/U/E待辦與最後四領域複評仍未完成；百項全部完成後才部署。
+
+## 新階段起點：C20 藥鋪醫療與病假
+- 基準3271993，前輪防火為progress。本輪藥鋪需shopIsOpen與健康店員到場，依住家可達路程及同時照護名額分配，優先低健康。
+- 健康<40病假返家，presentWorkers與真產能排除病假；醫療每30秒回8點，40可返工，不解除工作指派。待聚焦與瀏覽器驗收。
+
+## 最新交接：C20 藥鋪醫療里程碑（2026-09-16）
+- 37 verified / 5 implemented / 58 open；C20已verified，204/204全套、18/18醫療/就業/成長聚焦、build、Chrome真3D醫療/病假/返工證據通過。evidence/healthcare；沒有部署。
+- healthcare.js：只有herbShop與shopIsOpen、健康到場人力；每店員每級4人，四格8人，同時照護slots。依home→clinic commuteDistance 24+4×(tier-1)，低health優先，augmenting path交疊重新分配；每dt health+=8/30，cap100，sandbox不結算。
+- employment.onSickLeave(t,p) managed且health<40；presentWorkers排除病假。production改用presentWorkers，原staffingRatio同一依據。simulation病假優先返家並保留work，停止街頭活動，health>=40恢復排程。
+- main居民小卡顯示health floor與照護/病假；residentCondition加入健康低警訊，修掉穩定文字矛盾。藥鋪卡/收支總覽/圖錄說明已接。存檔沿用person.health，沒有新增欄位。
+- 真3D蘇安健康36居家病假→60，日誌09:00返坊09:20燒製、13:39再燒製。這是正常town.tick，非只有harness數字變動。
+- 下一新階段C21書院教育：按遊戲日漸進、有界學力，書院可達與容量，影響相關工匠真產能；不可瞬間滿級或只顯示數字。需要ledger契約再讀。
+- 城市餘C21–25，所有O/U和未驗E仍必要；最後四領域複評與全100完成後才部署。

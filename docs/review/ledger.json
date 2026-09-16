@@ -786,10 +786,28 @@
       "acceptance": [
         "同衛生條件下有藥鋪覆蓋的居民恢復較快；無員工藥鋪不供服務；服務不超過容量。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/healthcare.js",
+        "src/employment.js",
+        "src/commerce.js",
+        "src/production.js",
+        "src/simulation.js",
+        "src/city-growth.js",
+        "src/finance-ui.js",
+        "src/main.js",
+        "src/variety.js"
+      ],
+      "evidence": [
+        "tests/healthcare.test.js",
+        "evidence/healthcare/README.md",
+        "evidence/healthcare/tests.txt",
+        "evidence/healthcare/no-staff.txt",
+        "evidence/healthcare/3d-clinic.txt",
+        "evidence/healthcare/3d-returned.txt",
+        "evidence/healthcare/3d-threshold.txt"
+      ],
+      "verifiedBy": "根代理：醫療/病假因果測試、204項回歸、Chrome實際三維照護與返工日誌讀回；非真人玩家驗收",
       "reviewSource": "docs/review/city.json"
     },
     {

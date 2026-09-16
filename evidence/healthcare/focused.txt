@@ -1,0 +1,26 @@
+✔ RCI responds differently to housing, retail, workshops and balance; excess supply reduces its own demand (11.342542ms)
+✔ tax increases reduce all three real demand scores, delay arrivals and empty homes pay no tax (31.03125ms)
+✔ managed arrivals are gradual, frame-step independent and cannot accumulate a burst behind low demand (82.179583ms)
+✔ long-term homelessness causes bounded exits, clears chat/story references and preserves valid saves (12.364125ms)
+✔ rehousing has priority over immigration; restoring home and job ends hardship before departure (57.268084ms)
+✔ unemployment and unmet goods each have their own grace, relief cancels only the relevant timer (74.952ms)
+✔ census credit and hardship round-trip without replay; sandbox remains explicitly unconstrained (61.249125ms)
+✔ removing the last story participant cancels the event without orphan references (0.544292ms)
+✔ nearest reachable job wins over earlier building order; reasonable existing job remains (9.54525ms)
+✔ isolated vacancies remain empty; reconnecting fills jobs; lost work receives a grace period (11.739542ms)
+✔ four present craftspeople produce more than one; no workers consume no inputs (6.380375ms)
+✔ same sanitation conditions: a staffed operating pharmacy improves health faster than no staff (2.800333ms)
+✔ off-duty, sick, absent or damaged pharmacies cannot provide care, and night hours stop treatment (1.813291ms)
+✔ simultaneous patient capacity is finite, prioritises lower health and never doubles healing across clinics (0.707375ms)
+✔ care follows actual road distance and stops immediately when the only connection is cut (0.720709ms)
+✔ sick workers do not produce; after care they return to their retained job through the normal schedule (212.937833ms)
+✔ healthcare is bounded and step-independent, saved health resumes without reset or duplicated treatment (4.792208ms)
+✔ sandbox preserves optional legacy health but does not apply sick leave or healing; invalid dt has no effect (2.872291ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 400.723917
