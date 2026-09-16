@@ -1,0 +1,18 @@
+Browser tab: 610004107, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v5".
+1 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v5
+	2 container 〈觀書有感〉其一, ID: literature
+		3 container
+			4 text 在景中讀一段宋人文字
+			5 heading 〈觀書有感〉其一, Value: 2, ID: literature-title
+				6 text 〈觀書有感〉其一
+			7 button 關閉作品小卡
+		8 container literature-body
+			9 text 朱熹 · 南宋 · 讀書的譬喻
+			10 text 半畝方塘一鑑開，天光雲影共徘徊。
+			11 heading 文字如何長成風景, Value: 3
+				12 text 文字如何長成風景
+			13 text 以方塘與活水比喻讀書所得。遊戲把書齋與方塘組成書院，並非詩中建築的考據復原。
+			14 link Description: 閱讀原文出處 ↗, Value: zh.wikisource.org/zh-hant/%E8%A7%80%E6%9B%B8%E6%9C%89%E6%84%9F
+			15 text 引文為公版古典作品。建築名稱與造型為遊戲設計。
+
+The focused UI element is 7 button 關閉作品小卡

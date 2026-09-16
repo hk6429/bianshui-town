@@ -1,0 +1,12 @@
+Browser tab: 610004107, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v4".
+1 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v4
+	2 container 拆除建築, ID: demolish
+		3 heading 拆除建築, Value: 2, ID: demolish-title
+			4 text 拆除建築
+		5 button 取消拆除
+		6 text 拆除「柳蔭人家 3」這一棟（占地 1 格）？同街坊其他建築保留。住戶保留並等候新居，貨物退回貨棧。可使用「復原上一步」撤銷。
+		7 container
+			8 button 保留建築
+			9 button 拆除並保留復原, ID: demolish-confirm
+
+The focused UI element is 5 button 取消拆除

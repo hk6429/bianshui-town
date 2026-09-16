@@ -1,0 +1,183 @@
+Browser tab: 610004107, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v4".
+1 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v4
+	2 container 宋韻營造圖錄, ID: blueprints
+		3 container
+			4 text 一街煙火 · 半畝詩心
+			5 heading 宋韻營造圖錄, Value: 2, ID: blueprints-title
+				6 text 宋韻營造圖錄
+			7 button 關閉營造圖錄
+		8 text 選一張圖樣，再到空地點一下；斜向拖曳 2 × 2 自動四格合建，直線可拖四間。四格合建會把 2 × 2 空地化成一座完整建築；原有屋舍與進度保留。
+		9 container 占地大小
+			10 checkbox 一格小築, Value: 1
+			11 checkbox 四格合建 · 2 × 2, Value: 0
+		12 container 建築種類
+			13 checkbox 全部, Value: 1
+			14 checkbox 新作十式, Value: 0
+			15 checkbox 民居, Value: 0
+			16 checkbox 工坊, Value: 0
+			17 checkbox 商鋪, Value: 0
+			18 checkbox 公共園景, Value: 0
+		19 container blueprint-grid
+			20 container
+				21 heading 竹籬小築, Value: 3
+					22 text 竹籬小築
+				23 text 矮瓦屋、竹籬與菜圃；四格變竹院田居。 宋式街坊 · 遊戲建築設計
+				24 button 點蓋／拖曳合建 ↗
+			25 container
+				26 heading 望河閣居, Value: 3
+					27 text 望河閣居
+				28 text 高台、側梯與望河露臺；四格變雙閣合院。 宋式街坊 · 遊戲建築設計
+				29 button 點蓋／拖曳合建 ↗
+			30 container
+				31 heading 梅窗人家, Value: 3
+					32 text 梅窗人家
+				33 text 白牆月門、梅樹與側廊；四格變梅香庭院。 宋式街坊 · 遊戲建築設計
+				34 button 點蓋／拖曳合建 ↗
+			35 container
+				36 heading 坡頂陶坊, Value: 3
+					37 text 坡頂陶坊
+				38 text 斜坡窯身、雙煙孔與晾坯架；四格變連窯陶院。 宋式街坊 · 遊戲建築設計
+				39 button 點蓋／拖曳合建 ↗
+			40 container
+				41 heading 鋸木棚坊, Value: 3
+					42 text 鋸木棚坊
+				43 text 開放木棚、鋸架與圓木堆；四格變雙棚木院。 宋式街坊 · 遊戲建築設計
+				44 button 點蓋／拖曳合建 ↗
+			45 container
+				46 heading 曬布染坊, Value: 3
+					47 text 曬布染坊
+				48 text 染缸、曬布高架與織機廳；沿用纖維製布，四格變彩帛大院。 宋式街坊 · 遊戲建築設計
+				49 button 點蓋／拖曳合建 ↗
+			50 container
+				51 heading 街角書肆, Value: 3
+					52 text 街角書肆
+				53 text 開放書架、卷冊與閱書棚；四格變雙翼書樓。 宋式街坊 · 遊戲建築設計
+				54 button 點蓋／拖曳合建 ↗
+			55 container
+				56 heading 清芬香鋪, Value: 3
+					57 text 清芬香鋪
+				58 text 高窄閣樓、香盒櫃與垂簾；四格變香閣合院。 宋式街坊 · 遊戲建築設計
+				59 button 點蓋／拖曳合建 ↗
+			60 container
+				61 heading 百草藥鋪, Value: 3
+					62 text 百草藥鋪
+				63 text 抽屜藥櫃、圓匾與草藥棚；四格變百草庭院。營業且健康店員到場才供醫療，每名店員每級照護4人（四格8人），沿路24步起；每30秒回復8點健康。 宋式街坊 · 遊戲建築設計
+				64 button 點蓋／拖曳合建 ↗
+			65 container
+				66 heading 蒸香餅店, Value: 3
+					67 text 蒸香餅店
+				68 text 低簷雙灶、蒸籠與紅布棚；四格變前店後坊。 宋式街坊 · 遊戲建築設計
+				69 button 點蓋／拖曳合建 ↗
+			70 container
+				71 heading 街坊巡守所, Value: 3
+					72 text 街坊巡守所
+				73 text 望火樓、警鐘與水桶架；每級巡守8處（一格）或32處（四格），沿路24步起，每級加4步；降低火警機率與損害。每格100文，維護3文乘級數。 宋式街坊 · 遊戲建築設計
+				74 button 點蓋／拖曳合建 ↗
+			75 container
+				76 heading 街坊清運院, Value: 3
+					77 text 街坊清運院
+				78 text 清運車、分類桶與堆置棚；每日一格每級處理12份、四格48份，沿路24步起，每級加4步。人口與作坊產出髒污，欠款降低服務。每格建設100文、維護3文乘級數。 宋式街坊 · 遊戲建築設計
+				79 button 點蓋／拖曳合建 ↗
+			80 container
+				81 heading 街坊水井, Value: 3
+					82 text 街坊水井
+				83 text 轆轤、井欄與汲水桶；一格每級供水12人、四格48人，沿路24步內供應住宅，每升一級增加4步。建設每格100文，每日每格3文乘級數。 宋式街坊 · 遊戲建築設計
+				84 button 點蓋／拖曳合建 ↗
+			85 container
+				86 heading 街巷說書棚, Value: 3
+					87 text 街巷說書棚
+				88 text 說書臺、篷頂與聽眾長凳；四格成帶圍廊的瓦舍勾欄，定期聚眾聽書。 孟元老 · 《東京夢華錄》卷五〈京瓦伎藝〉
+				89 button 點蓋／拖曳合建 ↗
+			90 container
+				91 heading 桑柳果圃, Value: 3
+					92 text 桑柳果圃
+				93 text 果樹、竹籬與田間小徑；四格增添水渠與農舍，屬田園意象設計。 宋式街坊 · 遊戲建築設計
+				94 button 點蓋／拖曳合建 ↗
+			95 container
+				96 heading 曲水疊石園, Value: 3
+					97 text 曲水疊石園
+				98 text 四格花園合成曲水、疊石、亭榭與花木的完整園景。 宋式街坊 · 遊戲建築設計
+				99 button 使用四格合建 ↗
+			100 container
+				101 heading 雅居小樓, Value: 3
+					102 text 雅居小樓
+				103 text 雙層民居、木欄與花窗；可住四人。 宋式街坊 · 遊戲建築設計
+				104 button 一格營造 ↗
+			105 container
+				106 heading 四合雅宅, Value: 3
+					107 text 四合雅宅
+				108 text 四格特殊民居，正廳與雙翼廂房圍合花木中庭；可住八人。 宋式街坊 · 遊戲建築設計
+				109 button 使用四格合建 ↗
+			110 container
+				111 heading 精製窯坊, Value: 3
+					112 text 精製窯坊
+				113 text 窯爐、煙囪與晾坯架；陶器加工加快。 宋式街坊 · 遊戲建築設計
+				114 button 一格營造 ↗
+			115 container
+				116 heading 精製木作坊, Value: 3
+					117 text 精製木作坊
+				118 text 鋸木棚、堆料與長工作檯；木器加工加快。 宋式街坊 · 遊戲建築設計
+				119 button 一格營造 ↗
+			120 container
+				121 heading 精製織坊, Value: 3
+					122 text 精製織坊
+				123 text 織機、彩線與曬布架；布匹加工加快。 宋式街坊 · 遊戲建築設計
+				124 button 一格營造 ↗
+			125 container
+				126 heading 瓷窯大院, Value: 3
+					127 text 瓷窯大院
+				128 text 四格雙窯、晾坯庭與倉房；可容六名工匠，加工速度兩倍。 宋式街坊 · 遊戲建築設計
+				129 button 使用四格合建 ↗
+			130 container
+				131 heading 木作營造院, Value: 3
+					132 text 木作營造院
+				133 text 四格木作大廳、堆料場與鋸架；可容六名工匠，加工速度兩倍。 宋式街坊 · 遊戲建築設計
+				134 button 使用四格合建 ↗
+			135 container
+				136 heading 織錦大院, Value: 3
+					137 text 織錦大院
+				138 text 四格織機廳、染布架與曬場；可容六名工匠，加工速度兩倍。 宋式街坊 · 遊戲建築設計
+				139 button 使用四格合建 ↗
+			140 container
+				141 heading 百花公園, Value: 3
+					142 text 百花公園
+				143 text 公共花圃、石徑與歇腳長椅；四格為中央花壇大花園。 宋式街坊 · 遊戲建築設計
+				144 button 點蓋／拖曳合建 ↗
+			145 container
+				146 heading 臨街茶坊, Value: 3
+					147 text 臨街茶坊
+				148 text 開敞茶棚、圓桌與矮凳；四格變成環廊茶院。 孟元老 · 《東京夢華錄》卷二〈酒樓〉
+				149 button 點蓋／拖曳合建 ↗
+			150 container
+				151 heading 炊煙食肆, Value: 3
+					152 text 炊煙食肆
+				153 text 高灶煙囪、蒸籠與暖色雨棚；四格擴為前店後廚。 孟元老 · 《東京夢華錄》卷二〈酒樓〉
+				154 button 點蓋／拖曳合建 ↗
+			155 container
+				156 heading 錦色布莊, Value: 3
+					157 text 錦色布莊
+				158 text 高挑倉閣、彩布垂簾與布架；四格成為雙翼布行。 孟元老 · 《東京夢華錄》卷二〈酒樓〉
+				159 button 點蓋／拖曳合建 ↗
+			160 container
+				161 heading 夢華酒樓, Value: 3
+					162 text 夢華酒樓
+				163 text 四格合院、雙層樓閣、綵樓歡門與酒甕。 孟元老 · 《東京夢華錄》卷二〈酒樓〉
+				164 button 使用四格合建 ↗
+			165 container
+				166 heading 方塘書院, Value: 3
+					167 text 方塘書院
+				168 text 講堂、兩側廊房、中央方塘；每級提供8個街坊教育名額，學力逐日累積並小幅提升工匠產能。 朱熹 · 〈觀書有感〉其一
+				169 button 使用四格合建 ↗
+			170 container
+				171 heading 臨泉亭, Value: 3
+					172 text 臨泉亭
+				173 text 開敞六角亭、石徑與泉池；四格增添迴廊與樹蔭。 歐陽修 · 〈醉翁亭記〉
+				174 button 點蓋／拖曳合建 ↗
+			175 container
+				176 heading 小荷池塘, Value: 3
+					177 text 小荷池塘
+				178 text 挖出池床，注水後長出荷葉、荷花；蜻蜓在池面盤旋。 楊萬里 · 〈小池〉
+				179 button 點蓋／拖曳合建 · 挖池塘 ↗
+		180 text 以宋人筆下的生活為靈感，跨越南北宋與不同地域；外觀為遊戲轉譯，非歷史建築復原。各圖樣的可用占地依按鈕標示；四格特殊建築需完整 2 × 2 空地。
+
+The focused UI element is 7 button 關閉營造圖錄

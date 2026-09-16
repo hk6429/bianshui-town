@@ -1,0 +1,189 @@
+Browser tab: 610004107, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v4".
+1 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v4
+	2 container 物產流轉, ID: production
+		3 container
+			4 text 從一船原料，到一件日用之物
+			5 heading 物產流轉, Value: 2, ID: production-title
+				6 text 物產流轉
+			7 button 關閉物產流轉
+		8 text 原料卸貨 → 牛車送坊 → 工匠加工 → 推車送店 → 來客採買。查看時暫停時間；每份原料簡化為一件成品。
+		9 container production-overview
+			10 container
+				11 heading 泥料 → 陶器, Value: 3
+					12 text 泥料 → 陶器
+				13 text 原料 34 份 · 成品 0 件 · 售出 10 件 青瓷作坊：等工匠到坊
+			14 container
+				15 heading 木材 → 木器, Value: 3
+					16 text 木材 → 木器
+				17 text 原料 23 份 · 成品 3 件 · 售出 18 件 木作小院：等工匠到坊
+				18 text 木作小院：等工匠到坊
+			19 container
+				20 heading 纖維 → 布匹, Value: 3
+					21 text 纖維 → 布匹
+				22 text 原料 40 份 · 成品 0 件 · 售出 4 件 織雲坊：等工匠到坊
+				23 text 織雲坊：等工匠到坊
+		24 heading 追蹤一批貨, Value: 3
+			25 text 追蹤一批貨
+		26 container
+			27 text 貨物種類
+			28 pop up button (collapsed, settable) Description: 篩選貨物種類, Value: 全部貨物, ID: goods-filter, Secondary Actions: Expand
+				29 menu
+					30 (selected) 全部貨物
+					31 泥料
+					32 木材
+					33 纖維
+					34 陶器
+					35 木器
+					36 布匹
+					37 日用雜貨
+		38 container lot-list
+			39 button #62 木器 · 木作小院 · 成品待運
+			40 button #59 木器 · 木作小院 · 成品待運
+			41 button #53 木器 · 春水茶坊 · 店內上架
+			42 button #132 纖維 · 岸邊貨棧
+			43 button #131 木材 · 岸邊貨棧
+			44 button #130 泥料 · 岸邊貨棧
+			45 button #129 纖維 · 岸邊貨棧
+			46 button #128 木材 · 岸邊貨棧
+			47 button #127 泥料 · 岸邊貨棧
+			48 button #126 纖維 · 岸邊貨棧
+			49 button #125 木材 · 岸邊貨棧
+			50 button #124 泥料 · 岸邊貨棧
+			51 button #123 纖維 · 岸邊貨棧
+			52 button #122 木材 · 岸邊貨棧
+			53 button #121 泥料 · 岸邊貨棧
+			54 button #120 纖維 · 岸邊貨棧
+			55 button #119 木材 · 岸邊貨棧
+			56 button #118 泥料 · 岸邊貨棧
+			57 button #117 纖維 · 岸邊貨棧
+			58 button #116 木材 · 岸邊貨棧
+			59 button #115 泥料 · 岸邊貨棧
+			60 button #114 纖維 · 岸邊貨棧
+			61 button #113 木材 · 岸邊貨棧
+			62 button #112 泥料 · 岸邊貨棧
+			63 button #111 纖維 · 岸邊貨棧
+			64 button #110 木材 · 岸邊貨棧
+			65 button #109 泥料 · 岸邊貨棧
+			66 button #108 纖維 · 岸邊貨棧
+			67 button #107 木材 · 岸邊貨棧
+			68 button #106 泥料 · 岸邊貨棧
+			69 button #105 纖維 · 岸邊貨棧
+			70 button #104 木材 · 岸邊貨棧
+			71 button #103 泥料 · 岸邊貨棧
+			72 button #102 纖維 · 岸邊貨棧
+			73 button #101 木材 · 岸邊貨棧
+			74 button #100 泥料 · 岸邊貨棧
+			75 button #99 纖維 · 岸邊貨棧
+			76 button #98 木材 · 岸邊貨棧
+			77 button #97 泥料 · 岸邊貨棧
+			78 button #96 纖維 · 岸邊貨棧
+			79 button #95 木材 · 岸邊貨棧
+			80 button #94 泥料 · 岸邊貨棧
+			81 button #93 纖維 · 岸邊貨棧
+			82 button #92 木材 · 岸邊貨棧
+			83 button #91 泥料 · 岸邊貨棧
+			84 button #90 纖維 · 岸邊貨棧
+			85 button #89 木材 · 岸邊貨棧
+			86 button #88 泥料 · 岸邊貨棧
+			87 button #87 纖維 · 岸邊貨棧
+			88 button #86 木材 · 岸邊貨棧
+			89 button #85 泥料 · 岸邊貨棧
+			90 button #84 纖維 · 岸邊貨棧
+			91 button #83 木材 · 岸邊貨棧
+			92 button #82 泥料 · 岸邊貨棧
+			93 button #81 纖維 · 岸邊貨棧
+			94 button #80 木材 · 岸邊貨棧
+			95 button #79 泥料 · 岸邊貨棧
+			96 button #78 纖維 · 岸邊貨棧
+			97 button #77 木材 · 岸邊貨棧
+			98 button #76 泥料 · 岸邊貨棧
+			99 button #75 纖維 · 岸邊貨棧
+			100 button #74 木材 · 岸邊貨棧
+			101 button #73 泥料 · 岸邊貨棧
+			102 button #72 纖維 · 岸邊貨棧
+			103 button #71 木材 · 木作小院 · 原料／加工
+			104 button #70 泥料 · 岸邊貨棧
+			105 button #69 纖維 · 岸邊貨棧
+			106 button #68 木材 · 木作小院 · 原料／加工
+			107 button #67 泥料 · 岸邊貨棧
+			108 button #66 纖維 · 岸邊貨棧
+			109 button #65 木材 · 木作小院 · 原料／加工
+			110 button #64 泥料 · 岸邊貨棧
+			111 button #63 纖維 · 岸邊貨棧
+			112 button #61 泥料 · 岸邊貨棧
+			113 button #60 纖維 · 岸邊貨棧
+			114 button #58 泥料 · 岸邊貨棧
+			115 button #57 纖維 · 岸邊貨棧
+			116 button #55 泥料 · 岸邊貨棧
+			117 button #54 纖維 · 岸邊貨棧
+			118 button #52 泥料 · 岸邊貨棧
+			119 button #51 纖維 · 岸邊貨棧
+			120 button #49 泥料 · 岸邊貨棧
+			121 button #48 纖維 · 岸邊貨棧
+			122 button #46 泥料 · 岸邊貨棧
+			123 button #45 纖維 · 岸邊貨棧
+			124 button #43 泥料 · 岸邊貨棧
+			125 button #42 纖維 · 岸邊貨棧
+			126 button #40 泥料 · 岸邊貨棧
+			127 button #39 纖維 · 岸邊貨棧
+			128 button #37 泥料 · 岸邊貨棧
+			129 button #36 纖維 · 岸邊貨棧
+			130 button #34 泥料 · 岸邊貨棧
+			131 button #33 纖維 · 岸邊貨棧
+			132 button #31 泥料 · 岸邊貨棧
+			133 button #30 纖維 · 岸邊貨棧
+			134 button #27 纖維 · 織雲坊 · 原料／加工
+			135 button #24 纖維 · 織雲坊 · 原料／加工
+			136 button #21 纖維 · 織雲坊 · 原料／加工
+			137 button #18 纖維 · 織雲坊 · 原料／加工
+			138 button #15 纖維 · 織雲坊 · 原料／加工
+			139 button #56 木器 · 已售出
+			140 button #50 木器 · 已售出
+			141 button #47 木器 · 已售出
+			142 button #44 木器 · 已售出
+			143 button #41 木器 · 已售出
+			144 button #38 木器 · 已售出
+			145 button #35 木器 · 已售出
+			146 button #32 木器 · 已售出
+			147 button #29 木器 · 已售出
+			148 button #28 陶器 · 已售出
+			149 button #26 木器 · 已售出
+			150 button #25 陶器 · 已售出
+			151 button #23 木器 · 已售出
+			152 button #22 陶器 · 已售出
+			153 button #20 木器 · 已售出
+			154 button #19 陶器 · 已售出
+			155 button #17 木器 · 已售出
+			156 button #16 陶器 · 已售出
+			157 button #14 木器 · 已售出
+			158 button #13 陶器 · 已售出
+			159 button #12 布匹 · 已售出
+			160 button #11 木器 · 已售出
+			161 button #10 陶器 · 已售出
+			162 button #9 布匹 · 已售出
+		163 container lot-detail
+			164 heading #62 木器, Value: 3
+				165 text #62 木器
+			166 text 來源：汴河第 6 航次 · 製作：木作小院
+			167 content list
+				168 container
+					169 AXListMarker 1. 
+					170 text 第 4 日 04:16 · 漕船
+				171 container
+					172 AXListMarker 2. 
+					173 text 第 4 日 09:08 · 腳夫搬運中
+				174 container
+					175 AXListMarker 3. 
+					176 text 第 4 日 09:25 · 岸邊貨棧
+				177 container
+					178 AXListMarker 4. 
+					179 text 第 6 日 21:41 · 牛車運送中
+				180 container
+					181 AXListMarker 5. 
+					182 text 第 7 日 01:49 · 木作小院 · 原料／加工
+				183 container
+					184 AXListMarker 6. 
+					185 text 第 7 日 09:47 · 木作小院 · 成品待運
+			186 button 看這批貨的位置 ↗
+
+The focused UI element is 7 button 關閉物產流轉

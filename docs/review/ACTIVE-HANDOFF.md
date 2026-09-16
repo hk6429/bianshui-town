@@ -297,3 +297,12 @@
 - DOM證據應使用disableDiffing:true，否則第二次快照可能只留「無變化」，本次已重存完整person/journal/harness證據。
 - 下一有界階段U12–U17：dialog名稱、選取範圍、手機遮擋/尺寸/對比；先查逐項契約。手機小卡下半部目前被底部工具列遮住，需修正。
 - 原百項及四專家最終複評目標保持，尚未部署。
+
+## 新階段U12/U13名稱與選取範圍
+- 基準42dc8d7。先完成所有dialog標題綁定及實際建築占地框線；後續U14–U17版面另作有界階段。單屋框線改共用urban.footprint，cache含建築ID與占地，避免同街坊切換或擴建仍沿用舊框。
+
+## 最新交接：U12/U13完成
+- 56 verified / 5 implemented / 39 open。6聚焦/249全套/build通過。五個缺名dialog逐一UI開啟保存AX，16個標題唯一參照讀回；單屋框、同街坊切換、四格框及拆除鄰屋保留通過。evidence/selection-dialogs。
+- U14–U17尚未修改。建議短螢幕小卡用全畫面可捲動層並抬高z-index，關閉sticky且不被底工具列遮擋；提高字級/不透明紙底與對比、44px觸控鍵。必驗600×390、390×600與200%文字放大、對比實算及問號/縮放/暫停/倍率各鍵。
+- Browser fill空字串曾未清空search，需實際getAX核對；native Cmd+A BackSpace已清空。單次CDP導航後timeout可取新AX再操作，不盲目重啟。
+- 未部署，全部100項及四領域最後複評仍未完成。

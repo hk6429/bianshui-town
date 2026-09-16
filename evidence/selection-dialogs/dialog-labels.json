@@ -1,0 +1,98 @@
+[
+  {
+    "id": "city-directory",
+    "labelledby": "city-directory-title",
+    "title": "城市建築與居民",
+    "unique": 1
+  },
+  {
+    "id": "public-works",
+    "labelledby": "public-title",
+    "title": "公共營造",
+    "unique": 1
+  },
+  {
+    "id": "stalls",
+    "labelledby": "stalls-title",
+    "title": "街頭攤販",
+    "unique": 1
+  },
+  {
+    "id": "demolish",
+    "labelledby": "demolish-title",
+    "title": "拆除建築",
+    "unique": 1
+  },
+  {
+    "id": "writers",
+    "labelledby": "writers-title",
+    "title": "文人行旅",
+    "unique": 1
+  },
+  {
+    "id": "author-work",
+    "labelledby": "author-work-title",
+    "title": "",
+    "unique": 1
+  },
+  {
+    "id": "gallery",
+    "labelledby": "gallery-title",
+    "title": "一座小鎮，四段光景",
+    "unique": 1
+  },
+  {
+    "id": "help",
+    "labelledby": "help-title",
+    "title": "慢慢造，慢慢看。",
+    "unique": 1
+  },
+  {
+    "id": "production",
+    "labelledby": "production-title",
+    "title": "物產流轉",
+    "unique": 1
+  },
+  {
+    "id": "blueprints",
+    "labelledby": "blueprints-title",
+    "title": "宋韻營造圖錄",
+    "unique": 1
+  },
+  {
+    "id": "literature",
+    "labelledby": "literature-title",
+    "title": "",
+    "unique": 1
+  },
+  {
+    "id": "confirm-undo",
+    "labelledby": "undo-title",
+    "title": "回到操作前的小鎮？",
+    "unique": 1
+  },
+  {
+    "id": "confirm-reset",
+    "labelledby": "reset-title",
+    "title": "重置小鎮？",
+    "unique": 1
+  },
+  {
+    "id": "save-manager",
+    "labelledby": "save-title",
+    "title": "存檔與復原",
+    "unique": 1
+  },
+  {
+    "id": "city-budget",
+    "labelledby": "budget-title",
+    "title": "小鎮收支與營造模式",
+    "unique": 1
+  },
+  {
+    "id": "runtime-error",
+    "labelledby": "runtime-error-title",
+    "title": "小鎮已安全暫停",
+    "unique": 1
+  }
+]

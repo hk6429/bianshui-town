@@ -1,0 +1,36 @@
+Browser tab: 610004107, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v4".
+0 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v4
+	1 container 城市建築與居民, ID: city-directory
+		2 container
+			3 heading 城市建築與居民, Value: 2, ID: city-directory-title
+				4 text 城市建築與居民
+			5 button 關閉城市清單
+		6 container
+			7 text 搜尋名稱、編號或地點 
+			8 search text field (settable) 搜尋名稱、編號或地點 , ID: city-object-query
+		9 container
+			10 text 類型 
+			11 pop up button (collapsed, settable) 類型 , Value: 民居, ID: city-object-filter, Secondary Actions: Expand
+				12 menu
+					13 全部
+					14 (selected) 民居
+					15 商鋪
+					16 作坊
+					17 園景與公設
+					18 居民
+		21 text 找到 12 個對象
+		20 content list city-objects
+			22 button 柳蔭人家 3 · 民居 · 編號3 · X -3、Z 0
+			23 button 汴水人家 4 · 民居 · 編號4 · X -2、Z 0
+			24 button 柳蔭人家 12 · 民居 · 編號12 · X 1、Z -3
+			25 button 汴水人家 13 · 民居 · 編號13 · X 1、Z -2
+			26 button 柳蔭人家 15 · 民居 · 編號15 · X -5、Z 3
+			27 button 汴水人家 16 · 民居 · 編號16 · X -4、Z 3
+			28 button 汴水人家 22 · 民居 · 編號22 · X -6、Z -4
+			29 button 杏花人家 23 · 民居 · 編號23 · X -5、Z -4
+			30 button 柳蔭人家 24 · 民居 · 編號24 · X -4、Z -4
+			31 button 柳蔭人家 30 · 民居 · 編號30 · X -2、Z 3
+			32 button 汴水人家 31 · 民居 · 編號31 · X -2、Z 4
+			33 button 杏花人家 32 · 民居 · 編號32 · X -1、Z 4
+
+The focused UI element is 8 search text field (settable) 搜尋名稱、編號或地點 , ID: city-object-query

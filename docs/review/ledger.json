@@ -2017,10 +2017,21 @@
       "acceptance": [
         "每個開啟對話框在 accessibility tree 具有正確名稱。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "index.html"
+      ],
+      "evidence": [
+        "evidence/selection-dialogs/README.md",
+        "evidence/selection-dialogs/full-tests.txt",
+        "evidence/selection-dialogs/dialog-labels.json",
+        "evidence/selection-dialogs/gallery.txt",
+        "evidence/selection-dialogs/help.txt",
+        "evidence/selection-dialogs/production.txt",
+        "evidence/selection-dialogs/blueprints.txt",
+        "evidence/selection-dialogs/literature.txt"
+      ],
+      "verifiedBy": "root：Chrome無障礙樹、實際單屋/四格框線、隔離城拆除鄰屋保留及249項回歸",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2040,10 +2051,23 @@
       "acceptance": [
         "三格街坊選一屋時明確標示單屋，拆除目標不會被理解為整街坊。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/main.js",
+        "src/scene.js",
+        "src/urban.js"
+      ],
+      "evidence": [
+        "evidence/selection-dialogs/README.md",
+        "evidence/selection-dialogs/full-tests.txt",
+        "evidence/selection-dialogs/single-house.png",
+        "evidence/selection-dialogs/neighbour-selected.png",
+        "evidence/selection-dialogs/four-cell.png",
+        "evidence/selection-dialogs/demolish-target.txt",
+        "evidence/selection-dialogs/after-demolition.txt",
+        "evidence/selection-dialogs/focused-tests.txt"
+      ],
+      "verifiedBy": "root：Chrome無障礙樹、實際單屋/四格框線、隔離城拆除鄰屋保留及249項回歸",
       "reviewSource": "docs/review/ux.json"
     },
     {

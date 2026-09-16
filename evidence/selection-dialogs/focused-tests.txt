@@ -1,0 +1,14 @@
+✔ public streets connect to doors, block construction, persist and can be removed (6.43175ms)
+✔ moving one connected house preserves occupants and leaves its neighbour intact (34.869583ms)
+✔ demolition conserves cargo, residents survive and are rehoused without dangling references (503.288625ms)
+✔ home and workshop upgrades expand capacity, preserve variants and reject occupied four-grid expansion (12.126416ms)
+✔ editing roads while a loaded cart is moving never delivers to a missing shop (596.463542ms)
+✔ visitors actually walk onto a connected public street (122.909917ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1341.946625
