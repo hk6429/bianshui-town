@@ -68,3 +68,13 @@
 - 財政測試唯一前置調整：明確seed2人代替第一tick自動入住，稅額斷言未降低。其餘 sandbox 舊測試維持。
 - 下一個有界工作階段優先 C11–C14：玩家路網／公私路接續、有限物流容量及補貨成本，連結需求與經濟。讀各 ledger acceptance 後實作；C04 服務衰退保留到公設包。
 - 全部 O/U、E01–04/E18–21 待辦不省略；百項與最終四領域複評完成才發布。正式站仍 V10，不部署尚未完整驗收的重整版。
+
+## 最新交接：貿易與貨棧里程碑（2026-09-16）
+- 前輪98ac613為progress。C11/C12已完成，最新30 verified / 5 implemented / 1 in_progress / 64 open，goal active。
+- trade.js：city.trade，600初始周轉金，首次12件船貨付128；進口先受資金/庫存上限約束，成交記gross revenue，市府只得tax，商戶回補net。有限ledger60列，UI12列；schema驗總餘額與每列數量/單價。
+- logistics.js：city.logisticsLevel 1–3，300/600升級費、額外維護0/6/12；porters2/3/4、load1/2/3；oxen1/2/3、load3/5/7。life實際spawn與transfer接入，貨物守恆、唯一ID及封頂驗證。
+- 同12件同路線送店一級373.00秒、三級128.35秒。166/166全套、build、Chrome升級/封頂/reload成功。evidence/trade-logistics。
+- 下一個獨立工作階段必須處理C13/C14（尚open）：managed取消跨街坊自動BFS但保留門前步道；起始公共路需接玩家道路；拆唯一外聯→隔離、重鋪→恢復；大路容量接入實際traffic，寬路吞吐高於小路且占地不變。
+- 注意道路幾何：地塊中心c*4，建築門前perimeter在±2；roadNodes十字半徑2，publicRoads主幹x12，最右可建地x2中心8，外緣10距主幹2單位。需要明確公共接點，不可用任意最近路瞬移跨隔離。
+- production.deliveryPlan目前不篩可達，首選孤立點可能卡整輛牛車；tickCraftCarts可能遇返家失敗仍帶貨，C13階段一起驗。
+- 正式仍V10；百項全部修正、逐項驗收及四領域複評後才部署。

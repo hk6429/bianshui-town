@@ -1,0 +1,27 @@
+✔ managed building prices are shared with execution; invalid or unaffordable placement changes nothing (2.269208ms)
+✔ roads, moves, upgrades and expansion debit once; insufficient funds preserve all state (10.803708ms)
+✔ failed refresh does not commit construction fees or ledger entries (2.096875ms)
+✔ daily upkeep depends on active facilities, is independent of tick sizes and settles once (106.892458ms)
+✔ only housed residents and new actual sales pay tax; policy range and tax pressure are bounded (0.792375ms)
+✔ old saves migrate to sandbox without back-charging; mode toggles never refill the treasury (53.435542ms)
+✔ debt blocks paid construction but permits demolition and policy changes (0.919209ms)
+✔ city schema rejects invalid policy, missing v9 budget and future settlement cursor (0.738ms)
+✔ isolated visitors cannot buy remotely and resume after roads reconnect (3.689458ms)
+✔ interrupted routes wait for reconnection and missing destinations never sell (2.2485ms)
+✔ 10000 transfers retain source, manufacturing and recent history in bounded storage (19.972083ms)
+✔ 95 active lots admit only remaining capacity, then 96 refuses more without count drift (0.2855ms)
+物流實測：一級 373.00 秒，三級 128.35 秒
+✔ managed imports reconcile prices, quantities and working capital separately from city money (2.178208ms)
+✔ insufficient trade funds block imports; partial cargo only bills the accepted units (0.235375ms)
+✔ sales credit gross revenue less tax to trade, only tax to city, and cannot repeat (0.486958ms)
+✔ logistics investment has finite levels, atomic affordability and daily upkeep (0.441958ms)
+✔ upgraded real transport delivers the same 12 goods sooner without duplicate carriers (119.473042ms)
+✔ old city budgets receive trade baseline and level one, without retroactively billing inventory (48.1685ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 247.908541

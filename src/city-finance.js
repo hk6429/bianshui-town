@@ -1,9 +1,11 @@
+import {createTrade} from './trade.js';
 import {tierOf} from './building-tiers.js';
 export const BUILD_COST={home:120,shop:180,work:240,garden:100};
 export const ROAD_COST={lane:20,avenue:45};
+export const LOGISTICS_UPKEEP=6;
 export const UPKEEP={home:2,shop:4,work:6,garden:3,lane:1,avenue:2};
 export const GOODS_VALUE={clay:10,timber:12,fiber:10,ceramics:45,furniture:60,cloth:40,legacy:20};
-export const createCity=(mode='sandbox',time=8)=>({version:1,mode,treasury:2400,taxRate:10,day:Math.floor(time/24),ledger:[],taxIncome:0,spent:0,maintenancePaid:0,deficitDays:0});
+export const createCity=(mode='sandbox',time=8)=>({version:1,mode,logisticsLevel:1,trade:createTrade(),treasury:2400,taxRate:10,day:Math.floor(time/24),ledger:[],taxIncome:0,spent:0,maintenancePaid:0,deficitDays:0});
 export const managed=t=>t.city?.mode==='managed';
 export const buildCost=(type,cells)=>BUILD_COST[type]*cells.length;
 export const moveCost=b=>30*(b.footprint?.length||1);
@@ -13,7 +15,7 @@ export const affordable=(t,cost)=>!managed(t)||(Number.isSafeInteger(cost)&&cost
 function record(t,label,amount){t.city.ledger.push({day:Math.floor(t.time/24),label,amount,balance:t.city.treasury});if(t.city.ledger.length>60)t.city.ledger.shift();}
 export function charge(t,cost,label){if(!affordable(t,cost))return false;if(managed(t)&&cost){t.city.treasury-=cost;t.city.spent+=cost;record(t,label,-cost);}return true;}
 export function refundBuilding(t,b){if(!managed(t))return;const amount=Math.floor(BUILD_COST[b.type]*(b.footprint?.length||1)/4);t.city.treasury+=amount;record(t,'拆除回收建材',amount);}
-export function dailyUpkeep(t){return t.buildings.filter(b=>b.stage>=3).reduce((n,b)=>n+UPKEEP[b.type]*(b.footprint?.length||1)*tierOf(b),0)+t.publicWorks.reduce((n,r)=>n+UPKEEP[r.type],0);}
+export function dailyUpkeep(t){return t.buildings.filter(b=>b.stage>=3).reduce((n,b)=>n+UPKEEP[b.type]*(b.footprint?.length||1)*tierOf(b),0)+t.publicWorks.reduce((n,r)=>n+UPKEEP[r.type],0)+((t.city.logisticsLevel||1)-1)*LOGISTICS_UPKEEP;}
 export const householdTax=t=>Math.floor(t.people.filter(p=>p.home&&t.building(p.home)).length*20*t.city.taxRate/100);
 export const taxDemand=t=>managed(t)?Math.max(0,100+(10-t.city.taxRate)*5):100;
 export function saleTax(t,good){if(!managed(t))return 0;const tax=Math.floor((GOODS_VALUE[good]||0)*t.city.taxRate/100);if(tax){t.city.treasury+=tax;t.city.taxIncome+=tax;record(t,'商品成交稅',tax);}return tax;}

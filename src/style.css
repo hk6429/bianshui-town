@@ -32,3 +32,5 @@
 #city-budget{width:680px;max-width:calc(100vw - 24px)}#city-budget label{display:block;margin:12px 0}#city-budget input,#city-budget select{min-height:44px;font:inherit;padding:8px}#budget-ledger{max-height:220px;overflow:auto;font-size:14px;line-height:1.8}#budget-prices{font-size:14px;line-height:1.8}
 
 #city-demand meter{display:block;width:100%;height:18px}#city-demand p{font-size:14px;line-height:1.7}#population-policy{font-size:14px;line-height:1.8}
+
+#trade-ledger{max-height:200px;overflow:auto;font-size:14px;line-height:1.8}#city-budget button:disabled{opacity:.55;cursor:default}

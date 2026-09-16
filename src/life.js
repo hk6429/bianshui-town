@@ -1,3 +1,4 @@
+import {logistics} from './logistics.js';
 import {shopIsOpen} from './commerce.js';
 import {marketStalls,marketOpen} from './market.js';
 import {at,transfer,deliveryPlan,importCargo,GOODS,goodsBalance} from './production.js';
@@ -54,7 +55,7 @@ function tickBoat(t,dt){
 }
 function tickPorters(t,dt){
  const l=t.life;
- if(!l.porters.length)for(let i=0;i<2;i++)l.porters.push({...actor(3001+i,'porter',12,8),wait:i*2,phase:'fetch'});
+ const capacity=logistics(t);while(l.porters.length<capacity.porters){let id=3001;while([...l.porters,...l.oxen,...l.visitors].some(a=>a.id===id))id++;l.porters.push({...actor(id,'porter',12,8),wait:l.porters.length*2,phase:'fetch'});}
  for(const p of l.porters){
   if(p.walking){advance(p,dt,t);if(p.walking)continue;}
   p.wait-=dt;if(p.wait>0)continue;
@@ -62,21 +63,21 @@ function tickPorters(t,dt){
    if(l.boat.state==='unloading'&&l.boat.cargo>0){send(t,p,BERTH,'走向船邊接貨');p.phase='load';}
    else p.action='在碼頭候船';
   }else if(p.phase==='load'){
-   if(l.boat.cargo>0){transfer(t,'boat',`porter:${p.id}`,1);send(t,p,DOCK,'扛貨送往岸邊貨棧');p.phase='store';}else {send(t,p,DOCK,'返回岸邊');p.phase='fetch';}
-  }else{const n=transfer(t,`porter:${p.id}`,'dock',1);l.dock.received+=n;p.wait=2;p.phase='fetch';p.action='把貨物放入貨棧';}
+   if(l.boat.cargo>0){transfer(t,'boat',`porter:${p.id}`,capacity.porterLoad);send(t,p,DOCK,'扛貨送往岸邊貨棧');p.phase='store';}else {send(t,p,DOCK,'返回岸邊');p.phase='fetch';}
+  }else{const n=transfer(t,`porter:${p.id}`,'dock',Infinity);l.dock.received+=n;p.wait=2;p.phase='fetch';p.action='把貨物放入貨棧';}
  }
 }
 function tickOxen(t,dt){
  const l=t.life;
- if(t.buildings.some(b=>b.stage>=3&&b.type!=='home')&&!l.oxen.length)l.oxen.push({...actor(4001,'ox',...DOCK),name:'牛車腳行',phase:'load'});
+ const capacity=logistics(t);if(t.buildings.some(b=>b.stage>=3&&b.type!=='home'))while(l.oxen.length<capacity.oxen){let id=4001;while([...l.porters,...l.oxen,...l.visitors].some(a=>a.id===id))id++;l.oxen.push({...actor(id,'ox',...DOCK),name:'牛車腳行',phase:'load'});}
  for(const a of l.oxen){
   if(a.walking){advance(a,dt,t);if(a.walking)continue;}
   a.wait-=dt;if(a.wait>0)continue;
   if(a.phase==='load'){
    const plan=deliveryPlan(t);
-   if(plan&&send(t,a,plan.building.entrance,`運送${GOODS[plan.good]}前往${plan.building.name}`)){transfer(t,'dock',`ox:${a.id}`,3,plan.good);a.target=plan.building.id;a.deliveryAt=plan.to;a.phase='deliver';}else a.action='牛車等候原料與作坊接貨';
+   if(plan&&send(t,a,plan.building.entrance,`運送${GOODS[plan.good]}前往${plan.building.name}`)){transfer(t,'dock',`ox:${a.id}`,capacity.oxLoad,plan.good);a.target=plan.building.id;a.deliveryAt=plan.to;a.phase='deliver';}else a.action='牛車等候原料與作坊接貨';
   }else if(a.phase==='deliver'){
-   const target=t.building(a.target);if(target){const lots=at(t,`ox:${a.id}`),label=GOODS[lots[0]?.good]||'貨物';const n=transfer(t,`ox:${a.id}`,a.deliveryAt||`shop:${target.id}`,3);if(target.type==='shop')l.dock.delivered+=n;else target.lastSupply=t.elapsed;t.log(`牛車送抵${target.name}，補入 ${n} 件${label}`);}a.phase='return';a.wait=5;a.action='卸貨，讓牛歇歇腳';
+   const target=t.building(a.target);if(target){const lots=at(t,`ox:${a.id}`),label=GOODS[lots[0]?.good]||'貨物';const n=transfer(t,`ox:${a.id}`,a.deliveryAt||`shop:${target.id}`,Infinity);if(target.type==='shop')l.dock.delivered+=n;else target.lastSupply=t.elapsed;t.log(`牛車送抵${target.name}，補入 ${n} 件${label}`);}a.phase='return';a.wait=5;a.action='卸貨，讓牛歇歇腳';
   }else if(send(t,a,DOCK,'空車返回碼頭'))a.phase='load';
  }
 }

@@ -1,3 +1,4 @@
+import {purchaseImports,recordSale} from './trade.js';
 import {staffingRatio,jobCapacity} from './employment.js';
 import {saleTax} from './city-finance.js';
 export const MAX_LOT_TRAIL=32,MAX_UNPROCESSED_LOTS=96;
@@ -10,7 +11,8 @@ export function importCargo(t){
  // Bound the unprocessed stock so an unattended town cannot grow its save forever.
  const capacity=MAX_UNPROCESSED_LOTS-t.economy.lots.filter(l=>l.at!=='sold').length;
  if(capacity<=0)return false;
- for(let i=0;i<Math.min(12,capacity);i++)add(t,RECIPES[i%3].input,'boat',`汴河第 ${t.life.boat.trips+1} 航次`);
+ const goods=purchaseImports(t,Array.from({length:Math.min(12,capacity)},(_,i)=>RECIPES[i%3].input));if(!goods.length)return false;
+ for(const good of goods)add(t,good,'boat',`汴河第 ${t.life.boat.trips+1} 航次`);
  syncCargo(t);return true;
 }
 function recordTrail(l,entry){
@@ -25,7 +27,7 @@ function recordTrail(l,entry){
 export function transfer(t,from,to,count=1,good){
  if(from==='sold'||from===to)return 0;
  const lots=at(t,from,good).slice(0,count);
- for(const l of lots){l.at=to;recordTrail(l,{at:to,time:t.time});if(to==='sold'){t.economy.sold[l.good]=(t.economy.sold[l.good]||0)+1;saleTax(t,l.good);}}
+ for(const l of lots){l.at=to;recordTrail(l,{at:to,time:t.time});if(to==='sold'){t.economy.sold[l.good]=(t.economy.sold[l.good]||0)+1;recordSale(t,l.good,saleTax(t,l.good));}}
  const sold=at(t,'sold');if(sold.length>24){const ids=new Set(sold.slice(0,sold.length-24).map(l=>l.id));t.economy.lots=t.economy.lots.filter(l=>!ids.has(l.id));t.economy.archived+=ids.size;}
  syncCargo(t);return lots.length;
 }

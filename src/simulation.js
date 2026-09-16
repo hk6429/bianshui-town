@@ -1,3 +1,4 @@
+import {createTrade} from './trade.js';
 import {createDemography,tickPopulation} from './city-growth.js';
 import {residentPurchase} from './commerce.js';
 import {assignJobs} from './employment.js';
@@ -173,6 +174,6 @@ export class Town {
   data=validateSave(data);
   if(![1,2,3,4,5,6,7,8,9].includes(data?.version)||!Array.isArray(data.blocks)||!Array.isArray(data.buildings)||!Array.isArray(data.people)||!Array.isArray(data.carts))throw new Error('存檔格式不相容');
   if(data.buildings.length>143||!Number.isFinite(data.time)||!Number.isFinite(data.elapsed))throw new Error('存檔內容無效');
-  const town=new Town();Object.assign(town,data);town.demography=data.demography||createDemography(town.elapsed);town.city=data.city||createCity('sandbox',town.time);town.buildings=town.buildings.map(b=>({...b,tier:tierOf(b)}));town.market=data.version>=8&&data.market?data.market:{trades:0};town.publicWorks=data.version>=7&&Array.isArray(data.publicWorks)?data.publicWorks:[];town.literati=data.version>=6&&data.literati?data.literati:{...createLiterati(),nextAt:town.elapsed+3};town.life=data.version>=2&&data.life?data.life:createLife();town.stories=data.version>=3&&data.stories?data.stories:createStories();town.weather=data.version>=4&&data.weather?data.weather:createWeather();if(data.version<4||!data.economy)migrateEconomy(town);else syncCargo(town);town.rebuildRoads({preserveRoutes:true});town.revision++;return town;
+  const town=new Town();Object.assign(town,data);town.demography=data.demography||createDemography(town.elapsed);town.city=data.city||createCity('sandbox',town.time);town.city.trade??=createTrade();town.city.logisticsLevel??=1;town.buildings=town.buildings.map(b=>({...b,tier:tierOf(b)}));town.market=data.version>=8&&data.market?data.market:{trades:0};town.publicWorks=data.version>=7&&Array.isArray(data.publicWorks)?data.publicWorks:[];town.literati=data.version>=6&&data.literati?data.literati:{...createLiterati(),nextAt:town.elapsed+3};town.life=data.version>=2&&data.life?data.life:createLife();town.stories=data.version>=3&&data.stories?data.stories:createStories();town.weather=data.version>=4&&data.weather?data.weather:createWeather();if(data.version<4||!data.economy)migrateEconomy(town);else syncCargo(town);town.rebuildRoads({preserveRoutes:true});town.revision++;return town;
  }
 }

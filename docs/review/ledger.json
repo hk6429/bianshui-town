@@ -410,10 +410,27 @@
       "acceptance": [
         "付費補貨可對帳至批次件數；不同商品可有不同價值；資金不足不免費進貨。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/trade.js",
+        "src/logistics.js",
+        "src/production.js",
+        "src/life.js",
+        "src/city-finance.js",
+        "src/finance-ui.js",
+        "src/save-schema.js",
+        "src/simulation.js",
+        "index.html"
+      ],
+      "evidence": [
+        "tests/trade-logistics.test.js",
+        "evidence/trade-logistics/README.md",
+        "evidence/trade-logistics/tests.txt",
+        "evidence/trade-logistics/browser.txt",
+        "evidence/trade-logistics/reload.txt",
+        "evidence/trade-logistics/level3.png"
+      ],
+      "verifiedBy": "根代理：價格分帳／實際運輸情境及 Chrome 升級讀回驗收；最終四領域複評尚待",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -433,10 +450,27 @@
       "acceptance": [
         "相同貨量/路線下升級後交貨時間縮短且支出增加；重複更新不超額生成運輸者。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/trade.js",
+        "src/logistics.js",
+        "src/production.js",
+        "src/life.js",
+        "src/city-finance.js",
+        "src/finance-ui.js",
+        "src/save-schema.js",
+        "src/simulation.js",
+        "index.html"
+      ],
+      "evidence": [
+        "tests/trade-logistics.test.js",
+        "evidence/trade-logistics/README.md",
+        "evidence/trade-logistics/tests.txt",
+        "evidence/trade-logistics/browser.txt",
+        "evidence/trade-logistics/reload.txt",
+        "evidence/trade-logistics/level3.png"
+      ],
+      "verifiedBy": "根代理：價格分帳／實際運輸情境及 Chrome 升級讀回驗收；最終四領域複評尚待",
       "reviewSource": "docs/review/city.json"
     },
     {
