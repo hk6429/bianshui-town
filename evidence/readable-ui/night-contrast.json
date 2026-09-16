@@ -1,0 +1,262 @@
+[
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 72, 48)",
+    "font": "20px",
+    "id": "",
+    "tag": "H1",
+    "text": "汴水小鎮",
+    "ratio": 8.886467695334666
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(121, 88, 45)",
+    "font": "20px",
+    "id": "sun-icon",
+    "tag": "SPAN",
+    "text": "☾",
+    "ratio": 5.867062211426865
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 72, 48)",
+    "font": "15px",
+    "id": "period",
+    "tag": "STRONG",
+    "text": "亥時 · 燈火可親",
+    "ratio": 8.886467695334666
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 72, 48)",
+    "font": "15px",
+    "id": "clock",
+    "tag": "SPAN",
+    "text": "第 1 日　21:02",
+    "ratio": 8.886467695334666
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "25px",
+    "id": "light-toggle",
+    "tag": "BUTTON",
+    "text": "☀",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "quiet",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "weather-btn",
+    "tag": "BUTTON",
+    "text": "晴天 · 自然",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "quiet",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "life-btn",
+    "tag": "BUTTON",
+    "text": "市井見聞",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "circle",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "sound-btn",
+    "tag": "BUTTON",
+    "text": "♪",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "quiet",
+    "color": "rgb(145, 79, 54)",
+    "font": "17.5px",
+    "id": "reset-town",
+    "tag": "BUTTON",
+    "text": "重置小鎮",
+    "ratio": 5.64313143373038
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "circle",
+    "color": "rgb(57, 62, 48)",
+    "font": "15px",
+    "id": "help-btn",
+    "tag": "BUTTON",
+    "text": "?",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "25px",
+    "id": "population",
+    "tag": "STRONG",
+    "text": "8",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(83, 95, 75)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "SPAN",
+    "text": "位居民",
+    "ratio": 6.132411603161017
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "25px",
+    "id": "building-count",
+    "tag": "STRONG",
+    "text": "5",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(83, 95, 75)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "SPAN",
+    "text": "處建築園景",
+    "ratio": 6.132411603161017
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "25px",
+    "id": "block-count",
+    "tag": "STRONG",
+    "text": "5",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(83, 95, 75)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "SPAN",
+    "text": "處街坊",
+    "ratio": 6.132411603161017
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "tools-toggle",
+    "tag": "BUTTON",
+    "text": "營造與工具",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(225, 230, 210)",
+    "class": "",
+    "color": "rgb(62, 87, 58)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "SPAN",
+    "text": "自由探索",
+    "ratio": 6.256979485257012
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "SPAN",
+    "text": "民居",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "SPAN",
+    "text": "商鋪",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "SPAN",
+    "text": "作坊",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "mini-tool",
+    "color": "rgb(57, 62, 48)",
+    "font": "18.75px",
+    "id": "pause-btn",
+    "tag": "BUTTON",
+    "text": "Ⅱ",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "mini-tool",
+    "color": "rgb(57, 62, 48)",
+    "font": "18.75px",
+    "id": "speed-btn",
+    "tag": "BUTTON",
+    "text": "1×",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "25px",
+    "id": "zoom-in",
+    "tag": "BUTTON",
+    "text": "＋",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "25px",
+    "id": "zoom-out",
+    "tag": "BUTTON",
+    "text": "−",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "25px",
+    "id": "reset-view",
+    "tag": "BUTTON",
+    "text": "⌖",
+    "ratio": 9.995800266627386
+  }
+]

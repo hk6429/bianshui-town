@@ -1,0 +1,17 @@
+✔ all buildings and people are individually searchable even when names are identical (2.811584ms)
+✔ removed residents disappear and blank searches preserve available results (1.077875ms)
+✔ single pointer owns edits and can finish only once; unrelated and right-button releases cannot submit (0.775708ms)
+✔ both release orders and interleaved third fingers suppress the entire pinch gesture (0.149917ms)
+✔ cancellation or mode changes suppress late releases and recover on next clean gesture (0.111292ms)
+✔ moving a four-cell draft preserves its footprint and leaves original coordinates unchanged (1.701458ms)
+✔ native controls, shortcuts with modifiers, and IME never change the scene (0.869833ms)
+✔ keyboard cursor traverses all four axes and stays inside the buildable map (0.211958ms)
+✔ camera pan preserves viewing offset, clamps edges and leaves city state untouched (0.336208ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 130.263709

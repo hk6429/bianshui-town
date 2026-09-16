@@ -1,0 +1,41 @@
+Browser tab: 610004111, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v8".
+0 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v8
+	1 container app
+		2 image Description: 汴水小鎮互動三維場景, ID: world
+		3 container
+			4 heading 汴水小鎮, Value: 1
+				5 text 汴水小鎮
+			6 text ☾
+			7 text 丑時 · 萬籟俱寂
+			8 text 第 2 日　01:02
+			9 button Description: 切換白晝與夜晚, ID: light-toggle
+			10 button Description: 天候：晴天，自然模式, Help: 切換自然天候、細雨、晴天, ID: weather-btn
+			11 button (collapsed) 市井見聞, ID: life-btn, Secondary Actions: Expand
+			12 checkbox Description: 開啟環境音, Help: 環境音, Value: 0, ID: sound-btn
+			13 button Description: 重置小鎮, ID: reset-town
+			14 button Description: 操作說明, ID: help-btn
+		15 container 小鎮概況
+			16 text 10
+			17 text 位居民
+			18 text 5
+			19 text 處建築園景
+			20 text 5
+			21 text 處街坊
+		22 text 望河雙閣升至 2 級
+		23 container town-tools
+			24 button (collapsed) 營造與工具, ID: tools-toggle, Secondary Actions: Expand
+			25 button 取消營造, ID: cancel-build
+			26 text ✓ 可營造 · 搬移「望河雙閣」 · 占地4格 · 1棟 · 自由營造 · 本次不扣款
+			27 container 建造與探索
+				28 checkbox 自由探索, Value: 0
+				29 checkbox 民居, Value: 0
+				30 checkbox 商鋪, Value: 0
+				31 checkbox 作坊, Value: 0
+				32 button Description: 暫停, Help: 暫停或繼續（空白鍵）, ID: pause-btn
+				33 button 1×, Help: 調整時間速度, ID: speed-btn
+		34 container
+			35 button Description: 放大, ID: zoom-in
+			36 button Description: 縮小, ID: zoom-out
+			37 button Description: 回到初始視角, ID: reset-view
+
+The focused UI element is 2 image Description: 汴水小鎮互動三維場景, ID: world

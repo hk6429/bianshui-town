@@ -1,0 +1,16 @@
+{
+  "paused": {
+    "clock": "第 2 日　02:36",
+    "pause": "繼續",
+    "speed": "1×"
+  },
+  "help": {
+    "open": true,
+    "title": "慢慢造，慢慢看。"
+  },
+  "after": {
+    "clock": "第 2 日　02:36",
+    "pause": "繼續",
+    "speed": "2×"
+  }
+}

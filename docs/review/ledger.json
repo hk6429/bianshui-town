@@ -2087,10 +2087,23 @@
       "acceptance": [
         "600×390 與 390×600 下小卡內容及關閉/管理均可到達。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/readable-ui.css",
+        "src/style.css",
+        "index.html",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/readable-ui/README.md",
+        "evidence/readable-ui/full-tests.txt",
+        "evidence/readable-ui/390x600-card.png",
+        "evidence/readable-ui/390x600-actions.png",
+        "evidence/readable-ui/600x390-actions.png",
+        "evidence/readable-ui/600x390-upgraded.txt",
+        "evidence/readable-ui/390x600-move.txt"
+      ],
+      "verifiedBy": "root：實測390×600/600×390、200%字級、DOM對比、常用按鈕獨立操作及249項回歸",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2110,10 +2123,20 @@
       "acceptance": [
         "手機核心標籤至少12px、正文至少14px，200%文字放大仍可操作。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/readable-ui.css",
+        "src/style.css",
+        "index.html",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/readable-ui/README.md",
+        "evidence/readable-ui/full-tests.txt",
+        "evidence/readable-ui/200-percent-card.png",
+        "evidence/readable-ui/200-percent-metrics.json"
+      ],
+      "verifiedBy": "root：實測390×600/600×390、200%字級、DOM對比、常用按鈕獨立操作及249項回歸",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2133,10 +2156,23 @@
       "acceptance": [
         "量測日夜紙底及手機樣式的資訊文字對比，列出數值；本次僅來源風險判定。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/readable-ui.css",
+        "src/style.css",
+        "index.html",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/readable-ui/README.md",
+        "evidence/readable-ui/full-tests.txt",
+        "evidence/readable-ui/day-contrast.json",
+        "evidence/readable-ui/night-contrast.json",
+        "evidence/readable-ui/help-contrast.json",
+        "evidence/readable-ui/blueprint-contrast.json",
+        "evidence/readable-ui/card-contrast.json"
+      ],
+      "verifiedBy": "root：實測390×600/600×390、200%字級、DOM對比、常用按鈕獨立操作及249項回歸",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2156,10 +2192,23 @@
       "acceptance": [
         "手機實測問號、縮放、暫停、倍率可單獨點選而不觸發相鄰控制。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/readable-ui.css",
+        "src/style.css",
+        "index.html",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/readable-ui/README.md",
+        "evidence/readable-ui/full-tests.txt",
+        "evidence/readable-ui/touch-targets.json",
+        "evidence/readable-ui/control-actions.json",
+        "evidence/readable-ui/zoom-before.png",
+        "evidence/readable-ui/zoom-in.png",
+        "evidence/readable-ui/zoom-out.png"
+      ],
+      "verifiedBy": "root：實測390×600/600×390、200%字級、DOM對比、常用按鈕獨立操作及249項回歸",
       "reviewSource": "docs/review/ux.json"
     },
     {

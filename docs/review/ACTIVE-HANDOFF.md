@@ -306,3 +306,13 @@
 - U14–U17尚未修改。建議短螢幕小卡用全畫面可捲動層並抬高z-index，關閉sticky且不被底工具列遮擋；提高字級/不透明紙底與對比、44px觸控鍵。必驗600×390、390×600與200%文字放大、對比實算及問號/縮放/暫停/倍率各鍵。
 - Browser fill空字串曾未清空search，需實際getAX核對；native Cmd+A BackSpace已清空。單次CDP導航後timeout可取新AX再操作，不盲目重啟。
 - 未部署，全部100項及四領域最後複評仍未完成。
+
+## 最新交接：U14–U17完成
+- 60 verified / 5 implemented / 35 open。9聚焦/249全套/build通過；evidence/readable-ui保存短視窗、200%字級、對比及獨立按鈕UI證據。未部署。
+- readable-ui.css於style.css後匯入；原font-size/font shorthand px改rem並最低.75rem，正文.875rem。保留Chrome預設root20px，200% root40px；不改存檔。
+- compactUI判定width<=850或height<=700或large-text；工具折疊、aside獨立全畫面，關閉sticky，背景controls visibilityhidden。mode-hint在extra-tools外且is-building時顯示，cancel-build在compact-actions。
+- 不可用body.dataset.mode：既有querySelectorAll(data-mode)會把body當營造按鈕，導致冒泡點擊執行setMode；已改is-building class，實際驗證展開/收合與預覽。
+- Chrome viewport set390×600實際355×545；以429×660與660×429校準到390×600/600×390，務必讀innerWidth/Height；已reset。瀏覽器DOM沙盒沒有checkVisibility，改逐祖先computedStyle display/visibility/opacity。
+- 對比最低日/夜/說明5.64，圖錄4.79，小卡6.13。以opaque祖先底色計算，排除裝飾題字/停用鈕，沒有低於4.5的採樣。
+- 下一階段建議U18、U20–U25仍依ledger驗收，不能因本次CSS可能改善而提前標完成。U23原.top-actions .quiet#concepts-btn仍有高specificity display:none，須明確加可見入口。O01–25及E開放與5待補驗亦保留，最後四領域複評後部署。
+- 全畫面小卡僅明確點選/清單選取才出現；compactUI抑制hover預覽，避免移鼠即遮住全城。桌面一般尺寸保留hover。

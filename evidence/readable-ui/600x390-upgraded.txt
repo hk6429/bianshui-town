@@ -1,0 +1,54 @@
+Browser tab: 610004111, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v8".
+1 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v8
+	2 container app
+		3 image Description: 汴水小鎮互動三維場景, ID: world
+		4 container 望河雙閣, ID: inspector
+			5 button 關閉資訊小卡, ID: close-inspector
+			6 container inspector-content
+				7 text 民居 · 四格合建 · 一座建築
+				8 heading 望河雙閣, Value: 2, ID: inspector-title
+					9 text 望河雙閣
+				10 text 生活漸豐 · 已固定檢視
+				11 text 住在這裡
+				12 container
+					13 button 李小滿 ↗
+					14 button 周小滿 ↗
+					15 button 陳小滿 ↗
+					16 button 柳小滿 ↗
+					17 button 王小滿 ↗
+					18 button 趙小滿 ↗
+					19 button 何小滿 ↗
+					20 button 蘇小滿 ↗
+					21 button 沈青 ↗
+					22 button 李青 ↗
+				23 text 此刻在場 · 10 人
+				24 container
+					25 text 李小滿 · 安睡中
+					26 text 周小滿 · 安睡中
+					27 text 陳小滿 · 安睡中
+					28 text 柳小滿 · 安睡中
+					29 text 王小滿 · 安睡中
+					30 text 趙小滿 · 安睡中
+					31 text 何小滿 · 安睡中
+					32 text 蘇小滿 · 安睡中
+					33 text 沈青 · 安睡中
+					34 text 李青 · 安睡中
+				35 container
+					36 text 街坊供水 供水 0／10 人；有水空位 0 席。供水滿意度 0％。附近沒有可沿路到達且在服務距離內的水井。
+				37 container
+					38 text 衛生清運 積存髒污 0 份；住戶每日新增 10 份。每日結算，增建清運院並接通道路可逐日清除。
+				39 container
+					40 text 防火巡守 火警風險最高 1.0％／日；尚無可達且有容量的巡守服務。前兩日免事件，每日最多一處預警。
+				41 container
+					42 text 生產污染與居住環境 此處污染 0.0／100，居住環境 100.0／100。自由營造保留既有污染，不新增、不衰減，也不降低需求。清運處理固體髒污，不能立即清掉生產污染。
+				43 container
+					44 text 園景宜居 可達園景 0 處，宜居加成 0.0／20。依門前步道路程遞減；效益由高到低排列，第二處折半、第三處四分之一，總加成最高20。自由營造僅供參考，不提高入住需求。
+				45 text 建築 2／5 級 · 添彩 · 住宅容量 10 人 · 每日維護 16 文
+				46 text 下級：雙層金邊寬簷樓閣、雙重牌樓與彩幡；住宅容量 12 人；每日維護 24 文
+				47 button 搬移
+				48 button 拆除
+				49 button 升至 3 級
+				50 text 點選空地取消固定
+		51 text 望河雙閣升至 2 級
+
+The focused UI element is 49 button 升至 3 級

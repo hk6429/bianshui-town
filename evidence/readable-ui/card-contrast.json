@@ -1,0 +1,332 @@
+[
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "panel-close",
+    "color": "rgb(52, 69, 47)",
+    "font": "17.5px",
+    "id": "close-inspector",
+    "tag": "BUTTON",
+    "text": "關閉資訊小卡",
+    "ratio": 9.345497142504307
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "eyebrow",
+    "color": "rgb(83, 95, 75)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "DIV",
+    "text": "民居 · 四格合建 · 一座建築",
+    "ratio": 6.132411603161017
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "27.5px",
+    "id": "inspector-title",
+    "tag": "H2",
+    "text": "望河雙閣",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "sub",
+    "color": "rgb(83, 95, 75)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "DIV",
+    "text": "生活漸豐 · 已固定檢視",
+    "ratio": 6.132411603161017
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(83, 95, 75)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "LABEL",
+    "text": "住在這裡",
+    "ratio": 6.132411603161017
+  },
+  {
+    "background": "rgb(228, 232, 214)",
+    "class": "tag",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "BUTTON",
+    "text": "李小滿 ↗",
+    "ratio": 8.822185007822707
+  },
+  {
+    "background": "rgb(228, 232, 214)",
+    "class": "tag",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "BUTTON",
+    "text": "周小滿 ↗",
+    "ratio": 8.822185007822707
+  },
+  {
+    "background": "rgb(228, 232, 214)",
+    "class": "tag",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "BUTTON",
+    "text": "陳小滿 ↗",
+    "ratio": 8.822185007822707
+  },
+  {
+    "background": "rgb(228, 232, 214)",
+    "class": "tag",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "BUTTON",
+    "text": "柳小滿 ↗",
+    "ratio": 8.822185007822707
+  },
+  {
+    "background": "rgb(228, 232, 214)",
+    "class": "tag",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "BUTTON",
+    "text": "王小滿 ↗",
+    "ratio": 8.822185007822707
+  },
+  {
+    "background": "rgb(228, 232, 214)",
+    "class": "tag",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "BUTTON",
+    "text": "趙小滿 ↗",
+    "ratio": 8.822185007822707
+  },
+  {
+    "background": "rgb(228, 232, 214)",
+    "class": "tag",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "BUTTON",
+    "text": "何小滿 ↗",
+    "ratio": 8.822185007822707
+  },
+  {
+    "background": "rgb(228, 232, 214)",
+    "class": "tag",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "BUTTON",
+    "text": "蘇小滿 ↗",
+    "ratio": 8.822185007822707
+  },
+  {
+    "background": "rgb(228, 232, 214)",
+    "class": "tag",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "BUTTON",
+    "text": "沈青 ↗",
+    "ratio": 8.822185007822707
+  },
+  {
+    "background": "rgb(228, 232, 214)",
+    "class": "tag",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "BUTTON",
+    "text": "李青 ↗",
+    "ratio": 8.822185007822707
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(83, 95, 75)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "LABEL",
+    "text": "此刻在場 · 10 人",
+    "ratio": 6.132411603161017
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "P",
+    "text": "李小滿 · 安睡中周小滿 · 安睡中陳小滿 · 安睡中柳小滿 · 安睡中王小滿 · 安睡中",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(83, 95, 75)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "LABEL",
+    "text": "街坊供水",
+    "ratio": 6.132411603161017
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "P",
+    "text": "供水 0／10 人；有水空位 0 席。供水滿意度 0％。附近沒有可沿路到達且在服務距離內的",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(83, 95, 75)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "LABEL",
+    "text": "衛生清運",
+    "ratio": 6.132411603161017
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "P",
+    "text": "積存髒污 0 份；住戶每日新增 10 份。每日結算，增建清運院並接通道路可逐日清除。",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(83, 95, 75)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "LABEL",
+    "text": "防火巡守",
+    "ratio": 6.132411603161017
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "P",
+    "text": "火警風險最高 1.0％／日；尚無可達且有容量的巡守服務。前兩日免事件，每日最多一處預警。",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(83, 95, 75)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "LABEL",
+    "text": "生產污染與居住環境",
+    "ratio": 6.132411603161017
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "P",
+    "text": "此處污染 0.0／100，居住環境 100.0／100。自由營造保留既有污染，不新增、不衰",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(83, 95, 75)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "LABEL",
+    "text": "園景宜居",
+    "ratio": 6.132411603161017
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "P",
+    "text": "可達園景 0 處，宜居加成 0.0／20。依門前步道路程遞減；效益由高到低排列，第二處折半",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "",
+    "color": "rgb(83, 95, 75)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "LABEL",
+    "text": "建築 2／5 級 · 添彩 · 住宅容量 10 人 · 每日維護 16 文",
+    "ratio": 6.132411603161017
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "tier-detail",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "P",
+    "text": "下級：雙層金邊寬簷樓閣、雙重牌樓與彩幡；住宅容量 12 人；每日維護 24 文",
+    "ratio": 9.995800266627386
+  },
+  {
+    "background": "rgb(225, 229, 209)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "BUTTON",
+    "text": "搬移",
+    "ratio": 8.568984606997818
+  },
+  {
+    "background": "rgb(225, 229, 209)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "BUTTON",
+    "text": "拆除",
+    "ratio": 8.568984606997818
+  },
+  {
+    "background": "rgb(225, 229, 209)",
+    "class": "",
+    "color": "rgb(57, 62, 48)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "BUTTON",
+    "text": "升至 3 級",
+    "ratio": 8.568984606997818
+  },
+  {
+    "background": "rgb(247, 244, 231)",
+    "class": "sub",
+    "color": "rgb(83, 95, 75)",
+    "font": "17.5px",
+    "id": "",
+    "tag": "DIV",
+    "text": "點選空地取消固定",
+    "ratio": 6.132411603161017
+  }
+]

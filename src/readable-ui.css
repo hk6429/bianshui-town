@@ -1,0 +1,103 @@
+/* Readable paper surfaces and scalable type, independent of the moving scene. */
+:root{--paper:#f7f4e7;--muted:#535f4b;font-size:100%}
+button,input,select{min-height:44px;min-width:44px}
+button{font-size:.875rem}
+#app :is(p,dd,li,blockquote),dialog :is(p,dd,li,blockquote){font-size:.875rem;line-height:1.8}
+#app :is(small,label,.sub,.eyebrow,.fine,.stat span,.boat-status,.life-events time,.life-events span,.life-numbers,.welcome-foot),dialog :is(small,label,.fine,.eyebrow,dd,.public-plans span){color:#535f4b;font-size:.875rem}
+.fine{font-size:.875rem!important}
+#app :is(.tag,.watch-buttons button,.build-actions button,.tool,.quiet,.text-button,.building-tools button),dialog button{font-size:.875rem}
+dialog :is(p,dd,.source-author),#literature .source-author,#inspector blockquote{color:#535f4b}
+.eyebrow{letter-spacing:.06em}.clock-panel #clock,.clock-panel strong{font-size:.75rem;color:#394830;letter-spacing:0}
+.stat span{letter-spacing:0}.tool kbd{color:#535f4b}
+.panel,.mode-hint,.build-actions button,.precise-build,.bottom-caption,.brand{background:var(--paper)}
+.brand{padding:8px;border-radius:10px}.brand p,.night .brand p{font-size:.75rem;color:#535f4b}
+.night .brand,.night .bottom-caption,.bottom-caption,.night .mode-hint{color:#394830;background:var(--paper)}
+.bottom-caption{font-size:.75rem;padding:6px;border-radius:6px;flex-wrap:wrap}
+.build-actions button,.mode-hint,.watch-buttons button,.production-link,#street-story p{color:#394830}
+.build-actions span{background:#3e533d}
+.mode-hint{font-size:.875rem;white-space:normal;max-width:100%;line-height:1.5}
+.tool{min-width:52px}.toolbar{gap:6px;flex-wrap:wrap;justify-content:center}
+.mini-tool,.circle,.view-controls button,#light-toggle{min-width:44px;min-height:44px;flex-shrink:0}
+.view-controls{gap:6px}.view-controls button{font-size:1.25rem}
+.dialog-heading{gap:12px}.dialog-heading button{flex-shrink:0;align-self:flex-start}
+dialog{overflow:auto;overflow-wrap:anywhere}dialog input,dialog select{max-width:100%}
+.confirm-actions,.dialog-actions,.plot-size{flex-wrap:wrap;gap:8px}
+.inspector,.life-panel{width:320px;max-height:calc(100dvh - 240px);overflow:auto;overscroll-behavior:contain}
+.inspector .tag{min-height:44px}.panel-close{background:var(--paper);box-shadow:0 -12px 0 12px var(--paper)}
+.compact-actions{display:flex;justify-content:center;gap:8px;margin-bottom:6px}
+.compact-actions button{padding:8px 14px;background:var(--paper);border:1px solid #68745c;border-radius:8px}
+#tools-toggle{display:none}
+.bottom{max-width:calc(100vw - 24px)}
+.topbar{gap:12px}.top-actions{gap:8px}.top-actions #reset-town{min-height:44px}
+#text-size{white-space:nowrap}.toast{background:#34452f;z-index:60}
+
+/* Compact tools leave room for the town; panels get a dedicated reading surface. */
+@media(max-width:850px),(max-height:700px){
+ #tools-toggle{display:block}
+ .bottom{bottom:8px;width:calc(100% - 16px);max-width:680px;max-height:calc(100dvh - 16px);overflow:auto;z-index:10;overscroll-behavior:contain}
+ #extra-tools{display:none}
+ .tools-open #extra-tools{display:block;padding:12px;background:var(--paper);border-radius:12px}
+ .tools-open .bottom{background:var(--paper);border:1px solid #68745c;border-radius:12px;padding:8px;z-index:35}
+ .tools-open .compact-actions{position:sticky;top:0;background:var(--paper);z-index:2;padding:4px}
+ .bottom-caption{display:none}
+ .toolbar{padding:6px;gap:6px}.toolbar .divider{display:none}
+ .tool{min-width:44px;flex:1;padding:6px 2px;letter-spacing:0}.tool kbd{display:none}
+ .scene-keyboard-tools{gap:8px}#scene-instructions{font-size:.875rem}
+ .build-actions{gap:8px}.build-actions button{min-height:44px}
+ .topbar{top:8px;left:8px;right:8px;flex-wrap:wrap;align-items:center}
+ .brand{padding:4px 8px}.brand h1{font-size:1rem;letter-spacing:1px}.brand p{display:none}
+ .clock-panel{position:static;transform:none;padding:4px 8px;gap:4px;max-width:100%;margin-left:auto}
+ .clock-panel strong{white-space:normal}#sun-icon{font-size:1rem}#light-toggle{padding:0}
+ .top-actions{width:100%;display:flex;gap:8px;overflow-x:auto;padding:4px;background:var(--paper);border-radius:12px}
+ .top-actions :is(.quiet,#weather-btn,#life-btn,#reset-town,#sound-btn,#concepts-btn){display:block;position:static;padding:8px;min-height:44px;flex-shrink:0;font-size:.875rem}
+ #help-btn{order:-1}#sound-btn{order:1}#reset-town{order:2}
+ .town-stats{top:142px;right:8px;padding:8px 12px;gap:16px}
+ .stat strong{font-size:1.25rem}
+ .view-controls{right:8px;top:45%;bottom:auto;z-index:8}
+ .inspector,.life-panel{position:fixed;inset:8px;width:auto;height:calc(100dvh - 16px);max-height:none;padding:16px;z-index:40;border:2px solid #68745c;overflow:auto}
+ body:has(.inspector:not([hidden]),.life-panel:not([hidden])) :is(.topbar,.town-stats,.bottom,.view-controls,.follow-status){visibility:hidden;pointer-events:none}
+ .welcome{inset:142px 8px auto;width:auto;max-height:calc(100dvh - 290px);overflow:auto;padding:16px;z-index:12}
+ .welcome h2{font-size:1.4rem}.welcome p{font-size:.875rem}
+ #touch-plan>div{flex-wrap:wrap}#touch-plan{max-height:40dvh;overflow:auto}
+ .follow-status{bottom:155px;top:auto}
+ #blueprint-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+ .public-plans,#writers-list{grid-template-columns:1fr}
+}
+.large-text :is(.inspector,.life-panel){position:fixed;inset:8px;width:auto;height:calc(100dvh - 16px);max-height:none;z-index:40;padding:16px}
+.large-text .topbar{flex-wrap:wrap}.large-text .top-actions{flex-wrap:wrap}
+.large-text .town-stats{display:none}
+.large-text .bottom{max-height:calc(100dvh - 16px);overflow:auto}
+.large-text #blueprint-grid,.large-text #writers-list,.large-text .public-plans{grid-template-columns:1fr}
+.large-text .dialog-heading{position:static!important}
+#app :is(.welcome p,.steps,.boat-status,.life-events span,.life-events time,.welcome-foot),dialog :is(p,dd,.cargo-trail){color:#535f4b}
+@media(max-width:850px),(max-height:700px){
+ .topbar{display:grid;grid-template-columns:minmax(0,1fr) auto}
+ .brand{min-width:0}.brand h1{white-space:normal}.clock-panel{margin:0}
+ .top-actions{grid-column:1/-1;min-width:0}
+}
+@media(max-width:450px){.brand .seal{display:none}}
+#sun-icon{color:#79582d}.dialog-heading button{color:#535f4b}.danger{color:#813f2f}
+@media(max-width:850px),(max-height:700px){
+ .bottom>.mode-hint{display:none}
+ .is-building .bottom>.mode-hint{display:block;max-height:5rem;overflow:auto;margin:6px 0}
+}
+.large-text #tools-toggle{display:block}
+.large-text #extra-tools{display:none}
+.large-text.tools-open #extra-tools{display:block;padding:12px;background:var(--paper)}
+.large-text .bottom{z-index:35;background:var(--paper);border-radius:12px;max-width:680px}
+.large-text .compact-actions{position:sticky;top:0;background:var(--paper);z-index:2}
+.large-text .bottom>.mode-hint{display:none}
+.large-text.is-building .bottom>.mode-hint{display:block;max-height:5rem;overflow:auto}
+.large-text .topbar{display:grid;grid-template-columns:minmax(0,1fr) auto}
+.large-text .clock-panel{position:static;transform:none}
+.large-text .top-actions{grid-column:1/-1;flex-wrap:nowrap;overflow-x:auto;background:var(--paper)}
+.large-text:has(.inspector:not([hidden]),.life-panel:not([hidden])) :is(.topbar,.town-stats,.bottom,.view-controls,.follow-status){visibility:hidden;pointer-events:none}
+@media(max-height:500px){
+ .brand,.town-stats{display:none}
+ .topbar{grid-template-columns:auto minmax(0,1fr)}
+ .top-actions{grid-column:auto}
+ .toolbar .tool-icon{display:none}
+ .view-controls{top:76px;bottom:auto;flex-direction:row}
+ .view-controls button+button{border-top:0;border-left:1px solid var(--line)}
+ .welcome{top:76px;max-height:calc(100dvh - 210px)}
+}

@@ -37,6 +37,7 @@ import {setWeather} from './weather.js';
 import {GOODS,RECIPES,at,placeName,locateLot} from './production.js';
 import {courtyards} from './courtyards.js';
 import './style.css';
+import './readable-ui.css';
 import * as THREE from 'three';
 import {TownScene} from './scene.js';
 import {Soundscape} from './sound.js';
@@ -59,7 +60,12 @@ if(town.buildings.length)$('#welcome').hidden=true;
 function toast(text){$('#toast').textContent=text;$('#toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),3200);}
 function save(){if(recovery?.fault){$('#save-status').textContent='執行錯誤 · 已停止自動儲存';return;}if(fixtureMode){$('#save-status').textContent='預覽場景 · 不覆寫小鎮';return;}const result=saveStore.save(town.toJSON());$('#save-status').textContent=result.ok?'進度已留存':result.status==='conflict'?'另一分頁已有更新 · 請開啟存檔管理':result.status==='recovery'?'原存檔保留 · 自動儲存已停止':'儲存失敗 · 請匯出目前小鎮';if(result.status==='conflict'&&!paused){paused=true;saveUI?.open();}}
 
-function setMode(next){discardPointerDraft();editing=null;selectedDesign=null;$('#blueprint-status').hidden=true;scene.showBuildGrid(next!=='explore');if(next!=='explore')stopFollowing();mode=next;drag=down=null;keyboardActive=false;$('#cancel-build').hidden=next==='explore';scene.clearGroup(scene.preview);document.querySelectorAll('[data-mode]').forEach(b=>{b.classList.toggle('active',b.dataset.mode===mode);b.setAttribute('aria-pressed',String(b.dataset.mode===mode));});scene.controls.mouseButtons.LEFT=mode==='explore'?THREE.MOUSE.PAN:undefined;scene.controls.touches.ONE=mode==='explore'?THREE.TOUCH.PAN:undefined;$('#mode-hint').textContent=mode==='explore'?'自由探索 · 拖曳移動畫面，點選屋舍與居民':`${ROAD_TYPES[mode]||TYPES[mode]||'調整街坊'} · 點選放置，橫拉最多四格；斜拉 2 × 2 自動合建；門前步道須以道路接至東側引道`;canvas.style.cursor=mode==='explore'?'grab':'crosshair';}
+const compactUI=()=>document.body.classList.contains('large-text')||matchMedia('(max-width: 850px), (max-height: 700px)').matches;
+function setToolsOpen(open){document.body.classList.toggle('tools-open',open);$('#tools-toggle').setAttribute('aria-expanded',String(open));$('#tools-toggle').textContent=open?'收合營造與工具':'營造與工具';}
+$('#tools-toggle').onclick=()=>setToolsOpen(!document.body.classList.contains('tools-open'));
+let textScale=100;
+$('#text-size').onclick=()=>{textScale=textScale===200?100:textScale+50;document.documentElement.style.fontSize=`${textScale}%`;document.body.classList.toggle('large-text',textScale>100);$('#text-size').textContent=`文字 ${textScale}%`;$('#text-size').setAttribute('aria-label',`文字大小：${textScale}%`);};
+function setMode(next){document.body.classList.toggle('is-building',next!=='explore');setToolsOpen(false);discardPointerDraft();editing=null;selectedDesign=null;$('#blueprint-status').hidden=true;scene.showBuildGrid(next!=='explore');if(next!=='explore')stopFollowing();mode=next;drag=down=null;keyboardActive=false;$('#cancel-build').hidden=next==='explore';scene.clearGroup(scene.preview);document.querySelectorAll('[data-mode]').forEach(b=>{b.classList.toggle('active',b.dataset.mode===mode);b.setAttribute('aria-pressed',String(b.dataset.mode===mode));});scene.controls.mouseButtons.LEFT=mode==='explore'?THREE.MOUSE.PAN:undefined;scene.controls.touches.ONE=mode==='explore'?THREE.TOUCH.PAN:undefined;$('#mode-hint').textContent=mode==='explore'?'自由探索 · 拖曳移動畫面，點選屋舍與居民':`${ROAD_TYPES[mode]||TYPES[mode]||'調整街坊'} · 點選放置，橫拉最多四格；斜拉 2 × 2 自動合建；門前步道須以道路接至東側引道`;canvas.style.cursor=mode==='explore'?'grab':'crosshair';}
 for(const b of document.querySelectorAll('[data-mode]'))b.onclick=()=>{setMode(b.dataset.mode);$('#welcome').hidden=true;focusScene();};
 $('#start-btn').onclick=()=>{$('#welcome').hidden=true;setMode('home');toast('在草地上點一下，安放第一間民居');};
 $('#demo-btn').onclick=()=>{if(!applyUrban(draft=>{draft.city.mode='sandbox';draft.demo();return true;}))return;$('#welcome').hidden=true;setMode('explore');save();toast('歡迎來到汴水小鎮，點選屋舍看看誰在裡面');};
@@ -72,14 +78,14 @@ $('#zoom-out').onclick=()=>{scene.camera.zoom=Math.max(.6,scene.camera.zoom/1.2)
 $('#reset-view').onclick=()=>{stopFollowing();scene.resetView();};
 $('#sound-btn').onclick=async()=>{try{const on=await sound.toggle();$('#sound-btn').setAttribute('aria-pressed',String(on));$('#sound-btn').setAttribute('aria-label',on?'關閉環境音':'開啟環境音');$('#sound-btn').classList.toggle('sound-on',on);toast(on?'風聲、水聲與市井日常，慢慢聽':'環境音已關閉');}catch(e){toast(e.message);}};
 $('#volume').oninput=e=>sound.setVolume(Number(e.target.value)/100);
-$('#life-btn').onclick=()=>{journalOpen=!journalOpen;if(journalOpen&&innerWidth<600)pinned=hovered=null;$('#life-btn').setAttribute('aria-expanded',String(journalOpen));updateJournal();if(journalOpen)focusHeading($('#life-panel'));};
+$('#life-btn').onclick=()=>{journalOpen=!journalOpen;if(journalOpen&&compactUI())pinned=hovered=null;$('#life-btn').setAttribute('aria-expanded',String(journalOpen));updateJournal();if(journalOpen)focusHeading($('#life-panel'));};
 $('#life-panel').onclick=e=>{
  if(e.target.closest('[data-close-life]')){journalOpen=false;updateJournal();$('#life-btn').focus();return;}
  if(e.target.closest('[data-production]')){renderProduction();$('#production').showModal();return;}
  if(e.target.closest('[data-story-focus]')){
   const event=town.stories.active||town.stories.last;if(!event)return;stopFollowing();pinned=hovered=null;setMode('explore');scene.focusAt(event.center);toast(`${event.title} · ${event.venue}${town.stories.active?'':'（已散場）'}`);
  }else{const btn=e.target.closest('[data-focus]');if(!btn)return;stopFollowing();pinned=hovered=null;setMode('explore');scene.focusAt({bridge:[18,-16],dock:[12,8],town:[-7,0]}[btn.dataset.focus],1.8);}
- if(innerWidth<600){journalOpen=false;updateJournal();}
+ if(compactUI()) {journalOpen=false;updateJournal();}
 };
 $('#concepts-btn').onclick=()=>$('#gallery').showModal();$('#help-btn').onclick=()=>$('#help').showModal();
 for(const b of document.querySelectorAll('[data-close]'))b.onclick=()=>document.getElementById(b.dataset.close).close();
@@ -107,7 +113,7 @@ canvas.addEventListener('pointermove',e=>{
  if(pointerGesture.active.size&&!pointerGesture.owns(e.pointerId))return;
  if(keyboardActive||pendingPlan)return;
  if(mode!=='explore'){const c=cellAt(e);if(!c)return;const cells=editing?.kind==='road'?streetCells(drag?.start||c,c):editing?plannedCells(c):selectedDesign&&plotSize===4?plannedCells(c):drag?dragCells(drag.start,c):[c];if(drag)drag.cells=cells;scene.outline(cells,canPlan(cells)?0x668856:0xb5644c);return;}
- if(!down)hovered=scene.pick(e.clientX,e.clientY);
+ if(!down)hovered=compactUI()?null:scene.pick(e.clientX,e.clientY);
 });
 function submitPlan(cells){
  if(!canPlan(cells)){toast($('#mode-hint').textContent);return false;}
@@ -134,7 +140,7 @@ function keyboardPreview(){
  const cells=plannedCells(keyboardCursor),valid=canPlan(cells);scene.outline(cells,valid?0x668856:0xb5644c);
  $('#scene-instructions').textContent=`營造游標 X ${keyboardCursor.x}、Z ${keyboardCursor.z} · ${cells.length} 格 · ${valid?'可放置，Enter 確認':'不可放置，請移動至空地或確認金庫'} · 方向鍵移格，Esc 取消`;
 }
-function focusScene(){canvas.focus({preventScroll:true});keyboardActive=true;if(pendingPlan)showPendingPlan();else keyboardPreview();}
+function focusScene(){if(compactUI())setToolsOpen(false);canvas.focus({preventScroll:true});keyboardActive=true;if(pendingPlan)showPendingPlan();else keyboardPreview();}
 function cancelBuild(){stopFollowing();setMode('explore');pinned=hovered=null;focusScene();}
 $('#keyboard-scene').onclick=focusScene;$('#cancel-build').onclick=cancelBuild;
 window.addEventListener('keydown',e=>{
@@ -182,7 +188,7 @@ $('#inspector').onclick=e=>{
 };
 let outlined='';
 function renderInspector(){
- const ref=pinned||hovered,panel=$('#inspector-content'),shell=$('#inspector');if(ref&&innerWidth<600&&journalOpen){journalOpen=false;updateJournal();}if(!ref){shell.hidden=true;if(outlined){scene.clearGroup(scene.selection);outlined='';}return;}
+ const ref=pinned||(compactUI()?null:hovered),panel=$('#inspector-content'),shell=$('#inspector');if(ref&&compactUI()&&journalOpen){journalOpen=false;updateJournal();}if(!ref){shell.hidden=true;if(outlined){scene.clearGroup(scene.selection);outlined='';}return;}
  shell.hidden=false;
  const entity=`${ref.kind}:${ref.id}`;if(panel.dataset.entity!==entity){panel.replaceChildren();panel.dataset.entity=entity;delete panel.dataset.content;delete panel.dataset.person;delete panel.dataset.author;shell.scrollTop=0;}
  if(ref.kind==='building'){
