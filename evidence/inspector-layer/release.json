@@ -1,0 +1,18 @@
+{
+  "commit": "2206be3",
+  "deployment": "8ecc6266",
+  "checks": [
+    {
+      "file": "index.html",
+      "matches": true
+    },
+    {
+      "file": "assets/index-C7OJekuF.js",
+      "matches": true
+    },
+    {
+      "file": "assets/index-uMR1eWWh.css",
+      "matches": true
+    }
+  ]
+}
