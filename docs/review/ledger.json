@@ -2926,7 +2926,7 @@
       "acceptance": [
         "放入非 JSON 後啟動、等待兩次自動儲存及離頁；原字串仍存在，能下載救援。"
       ],
-      "status": "implemented",
+      "status": "verified",
       "implementation": [
         "src/save-schema.js",
         "src/save-store.js",
@@ -2936,9 +2936,13 @@
       ],
       "evidence": [
         "evidence/r1/tests.txt",
-        "evidence/r1/README.md"
+        "evidence/r1/README.md",
+        "tests/save-browser-harness.html",
+        "evidence/save-browser/README.md",
+        "evidence/save-browser/flow.json",
+        "evidence/save-browser/rescue-file.json"
       ],
-      "verifiedBy": null,
+      "verifiedBy": "root: real main/save UI, 26-second autosave and unload, original rescue file readback and valid backup restore; final independent review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -2958,7 +2962,7 @@
       "acceptance": [
         "主檔損壞或遷移失敗，可還原上一個有效版本；不得以壞主檔污染備份。"
       ],
-      "status": "implemented",
+      "status": "verified",
       "implementation": [
         "src/save-schema.js",
         "src/save-store.js",
@@ -2968,9 +2972,13 @@
       ],
       "evidence": [
         "evidence/r1/tests.txt",
-        "evidence/r1/README.md"
+        "evidence/r1/README.md",
+        "tests/save-browser-harness.html",
+        "evidence/save-browser/README.md",
+        "evidence/save-browser/flow.json",
+        "evidence/save-browser/rescue-file.json"
       ],
-      "verifiedBy": null,
+      "verifiedBy": "root: real main/save UI, 26-second autosave and unload, original rescue file readback and valid backup restore; final independent review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3000,7 +3008,9 @@
       ],
       "evidence": [
         "evidence/r1/tests.txt",
-        "evidence/r1/README.md"
+        "evidence/r1/README.md",
+        "evidence/save-browser/README.md",
+        "evidence/save-browser/flow.json"
       ],
       "verifiedBy": null,
       "reviewSource": "docs/review/engineering.json"

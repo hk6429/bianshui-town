@@ -1,0 +1,25 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>存檔瀏覽器完整流程</title><style>body{font:16px system-ui}iframe{width:100%;height:580px}pre{white-space:pre-wrap}</style><h1>存檔保護實際介面測試</h1><p>只使用 bianshui-town-test-v1，不讀寫正式存檔。測試需等待兩次自動儲存。</p><button id="run">執行損壞、復原與匯入匯出</button><pre id="result">待執行</pre><iframe></iframe>
+<script type="module">
+import {Town} from '/src/simulation.js';import {validateSave} from '/src/save-schema.js';
+const key='bianshui-town-test-v1',frame=document.querySelector('iframe'),out=document.querySelector('#result'),button=document.querySelector('#run');const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const load=async url=>{await new Promise(r=>{frame.onload=r;frame.src=url;});for(let n=0;n<100&&!frame.contentWindow.__townDebug&&url!=='about:blank';n++)await wait(100);};
+const project=d=>JSON.stringify({buildings:d.buildings,people:d.people,economy:d.economy});
+button.onclick=async()=>{button.disabled=true;const checks=[],downloads=[];const report=()=>out.textContent=JSON.stringify({checks,downloads},null,2);const check=(name,ok)=>{checks.push({name,ok:!!ok});report();if(!ok)throw Error(name);};
+try{
+ const seed=new Town();seed.demo();const backup=JSON.stringify(seed.toJSON()),bad='{damaged-browser-proof';localStorage.setItem(key, bad);localStorage.setItem(key+':backup',backup);
+ await load('/?storage-test=1');let w=frame.contentWindow,d=w.document;check('損壞主檔啟動即顯示救援介面',d.querySelector('#save-manager').open&&d.querySelector('#save-message').textContent.includes('原始檔'));
+ await wait(26000);check('兩次自動儲存後原字串與備份不變',localStorage.getItem(key)===bad&&localStorage.getItem(key+':backup')===backup);
+ async function download(selector){let blob=null;const original=w.URL.createObjectURL;w.URL.createObjectURL=value=>{blob=value;return original.call(w.URL,value);};try{d.querySelector(selector).click();}finally{w.URL.createObjectURL=original;}if(!blob)throw Error('未建立下載檔');const text=await blob.text();downloads.push({button:selector,bytes:blob.size});return text;}
+ check('救援下載內容等於原始損壞字串',await download('#save-rescue')===bad);
+ await load('about:blank');check('離頁儲存亦不覆蓋原字串',localStorage.getItem(key)===bad&&localStorage.getItem(key+':backup')===backup);
+ await load('/?storage-test=1');w=frame.contentWindow;d=w.document;const previous=[...d.querySelectorAll('#save-candidates button')].find(b=>b.textContent.startsWith('上一個有效版本'));check('有效備份可選',!!previous);previous.click();d.querySelector('#save-apply').click();
+ check('還原有效備份保留人物貨物建築',project(w.__townDebug.snapshot())===project(JSON.parse(backup)));check('救援原文保留且備份未被壞主檔污染',localStorage.getItem(key+':quarantine')===bad&&!!validateSave(JSON.parse(localStorage.getItem(key+':backup')).data||JSON.parse(localStorage.getItem(key+':backup'))));
+ d.querySelector('#save-manager-btn').click();const before=project(w.__townDebug.snapshot()),exported=await download('#save-export');check('匯出檔含完整原城',project(JSON.parse(exported).data)===before);
+ async function importText(text){const input=d.querySelector('#save-file'),transfer=new w.DataTransfer();transfer.items.add(new w.File([text],'測試城市.json',{type:'application/json'}));input.files=transfer.files;input.dispatchEvent(new w.Event('change',{bubbles:true}));for(let i=0;i<50&&input.files.length;i++)await wait(100);if(input.files.length)throw Error('檔案處理逾時');}
+ await importText(exported);check('匯入預覽不改原城',!d.querySelector('#save-apply').hidden&&project(w.__townDebug.snapshot())===before);d.querySelector('#save-apply').click();check('匯入套用完整往返',project(w.__townDebug.snapshot())===before);
+ d.querySelector('#save-manager-btn').click();await importText('{bad');check('錯格式顯示原因且不改原城',d.querySelector('#save-message').textContent.includes('匯入未完成')&&d.querySelector('#save-apply').hidden&&project(w.__townDebug.snapshot())===before);
+ const unsupported=JSON.parse(exported);unsupported.data.version=999;await importText(JSON.stringify(unsupported));check('未支援版本顯示原因且不改原城',d.querySelector('#save-message').textContent.includes('匯入未完成')&&d.querySelector('#save-apply').hidden&&project(w.__townDebug.snapshot())===before);
+ checks.push({name:'介面流程通過（實體城市檔案往返待補驗）',ok:true});report();
+}catch(error){out.textContent+='\n失敗：'+error.stack;}finally{button.disabled=false;}
+};
+</script></html>

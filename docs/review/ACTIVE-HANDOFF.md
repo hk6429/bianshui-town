@@ -440,3 +440,12 @@
 - 本輪道路/建築/花草簽章分流、移除 applyUrban 全城 reset、交易失敗同步原城；生活裝飾/工人/訪客/文人增刪同步。
 - Chrome67棟18項通過，升級保留其餘66棟與道路/花草 identity；實際施工只換工坊。update含render165–859ms，未宣稱60fps。316全套通過，build成功。
 - 帳本95 verified /5 implemented /0 open。接著補E01–04與E21的瀏覽器證據；完成後四位專家最終複評，逐項核100契約，再部署最終版。
+
+## E01/E02 完成；E03/E04/E21仍待補驗
+- 最新正式8758181已推送部署，evidence/release-8758181為回讀。
+- 新 tests/save-browser-harness.html 真實iframe main＋saveUI：26秒兩次自動儲存、離頁、原始救援下載回讀、備份復原，E01/E02 verified。帳本97 verified /3 implemented。
+- E03 Blob輸出與File/DataTransfer往返、錯格式/錯version全過，但未取得實際城市JSON磁碟檔；Downloads只有原始救援22bytes正確檔。chrome://downloads被工具URL安全規則拒絕，未繞過。勿以其他browser surface/CDP繞開。可從允許的應用匯出流程與正常本機檔案檢查繼續；E03仍implemented。
+- E04已有衝突對話證據，但兩分頁各編輯後舊頁離開仍待。可新建兩測試分頁，使用真正SaveStore與隔離鍵，測分支保留和beforeunload；最好走main。
+- E21已有background renders0與城市不變，待真正Soundscape音訊gain。舊evidence/runtime/README記CUA focus emulation需用該測試頁CDP暫時關閉且恢復，已有原契約證據。
+- 已關閉本輪測試分頁；目前Chrome browser id2，historyBrowser binding可用。
+- 本輪只有測試/證據，無須再部署未改的production；下一輪補其餘3項後四專家最終複評。

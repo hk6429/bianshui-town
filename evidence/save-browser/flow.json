@@ -1,0 +1,66 @@
+{
+  "checks": [
+    {
+      "name": "損壞主檔啟動即顯示救援介面",
+      "ok": true
+    },
+    {
+      "name": "兩次自動儲存後原字串與備份不變",
+      "ok": true
+    },
+    {
+      "name": "救援下載內容等於原始損壞字串",
+      "ok": true
+    },
+    {
+      "name": "離頁儲存亦不覆蓋原字串",
+      "ok": true
+    },
+    {
+      "name": "有效備份可選",
+      "ok": true
+    },
+    {
+      "name": "還原有效備份保留人物貨物建築",
+      "ok": true
+    },
+    {
+      "name": "救援原文保留且備份未被壞主檔污染",
+      "ok": true
+    },
+    {
+      "name": "匯出檔含完整原城",
+      "ok": true
+    },
+    {
+      "name": "匯入預覽不改原城",
+      "ok": true
+    },
+    {
+      "name": "匯入套用完整往返",
+      "ok": true
+    },
+    {
+      "name": "錯格式顯示原因且不改原城",
+      "ok": true
+    },
+    {
+      "name": "未支援版本顯示原因且不改原城",
+      "ok": true
+    },
+    {
+      "name": "E01 E02 E03 完整流程",
+      "ok": true
+    }
+  ],
+  "downloads": [
+    {
+      "button": "#save-rescue",
+      "bytes": 22
+    },
+    {
+      "button": "#save-export",
+      "bytes": 74983
+    }
+  ]
+}
