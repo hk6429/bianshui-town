@@ -1,0 +1,32 @@
+✔ single upgrade and stage transition preserve unrelated models, roads and meadow across restored town identities (46.460209ms)
+✔ road changes rebuild roads; move and demolish synchronize without rebuilding unchanged houses (36.892834ms)
+✔ model construction failure keeps existing model and allows rollback synchronization (20.666584ms)
+✔ every catalog design and available footprint progresses through five distinct models, never six (894.771542ms)
+✔ five tiers survive serialization, moving and four-cell expansion without losing residents or inventory (17.455458ms)
+✔ old saves start at visual tier one with existing functional upgrades intact; incomplete construction cannot upgrade (2.462833ms)
+✔ place: refresh failure preserves complete town and disk (68.826125ms)
+✔ place: render failure preserves complete town and disk (68.789584ms)
+✔ place: storage failure preserves complete town and disk (65.53225ms)
+✔ road: refresh failure preserves complete town and disk (43.046834ms)
+✔ road: render failure preserves complete town and disk (51.5625ms)
+✔ road: storage failure preserves complete town and disk (64.260042ms)
+✔ move: refresh failure preserves complete town and disk (44.158292ms)
+✔ move: render failure preserves complete town and disk (61.955916ms)
+✔ move: storage failure preserves complete town and disk (59.11325ms)
+✔ upgrade: refresh failure preserves complete town and disk (46.447458ms)
+✔ upgrade: render failure preserves complete town and disk (56.804708ms)
+✔ upgrade: storage failure preserves complete town and disk (49.504084ms)
+✔ demolish: refresh failure preserves complete town and disk (41.547708ms)
+✔ demolish: render failure preserves complete town and disk (56.127667ms)
+✔ demolish: storage failure preserves complete town and disk (55.031708ms)
+✔ successful edit publishes once with detached undo and original residents/cargo untouched (50.402584ms)
+✔ rejected placement does not call prepare or persist (41.118334ms)
+✔ whole-town undo after 60 simulated seconds restores exactly the disclosed pre-edit point (269.667542ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1270.758083

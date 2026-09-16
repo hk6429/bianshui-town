@@ -3548,10 +3548,20 @@
       "acceptance": [
         "大型城單屋升級/施工轉階時未變建築保有模型identity，道路幾何不重新建立；記錄更新耗時。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/scene.js",
+        "src/literati-scene.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "tests/scene-sync.test.js",
+        "tests/scene-sync-harness.html",
+        "evidence/scene-sync/README.md",
+        "evidence/scene-sync/browser.json",
+        "evidence/scene-sync/tests.txt"
+      ],
+      "verifiedBy": "root: 67-building Chrome transaction and actual construction stage, unchanged model/road identity and timings; final independent review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {

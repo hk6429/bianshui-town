@@ -78,17 +78,27 @@ export class TownScene {
  }
  clearGroup(group){disposeTree(group);delete group.userData.previewSignature;}
  sync(town){
-  if(town.revision!==this.lastRevision){
+  if(town!==this.lastTown||town.revision!==this.lastRevision){
+   this.lastTown=null;
    for(const [id,m] of this.buildingModels)if(!town.building(id)){this.scene.remove(m);this.clearGroup(m);this.buildingModels.delete(id);}
    for(const [id,m] of this.cartModels)if(!town.carts.some(c=>c.id===id)){this.scene.remove(m);this.clearGroup(m);this.cartModels.delete(id);}
-   for(const b of town.buildings){const signature=JSON.stringify([b.stage,b.x,b.z,b.blockId,b.level,b.tier,b.design,b.facing,b.fireWarningAt,b.fireDamage]);const existing=this.buildingModels.get(b.id);if(existing&&existing.userData.signature===signature)continue;if(existing){this.scene.remove(existing);this.clearGroup(existing);}const model=markFire(this.buildHouse(b,town),b,{box,ball,cyl});model.userData={...model.userData,buildingId:b.id,stage:b.stage,signature};model.traverse(o=>{o.userData.buildingId=b.id;});this.buildingModels.set(b.id,model);this.scene.add(model);}
+   for(const b of town.buildings){const signature=JSON.stringify([b.type,b.stage,b.x,b.z,b.blockId,b.level,b.tier,b.design,b.variant,b.footprint,b.facing,b.fireWarningAt,b.fireDamage,!!courtyardFor(town,b)]);const existing=this.buildingModels.get(b.id);if(existing&&existing.userData.signature===signature)continue;const model=markFire(this.buildHouse(b,town),b,{box,ball,cyl});if(existing){this.scene.remove(existing);this.clearGroup(existing);}model.userData={...model.userData,buildingId:b.id,stage:b.stage,signature};model.traverse(o=>{o.userData.buildingId=b.id;});this.buildingModels.set(b.id,model);this.scene.add(model);}
+   const roadSignature=JSON.stringify([[...town.roads].sort(),town.publicWorks]);
+   if(roadSignature!==this.roadSignature){
+   this.roadSignature=null;
    this.clearGroup(this.roads);const raw=new THREE.Group();
    for(const k of town.roads){const [x,z]=point(k);if((z===-16&&x>=12&&x<=24)||(z===8&&x>=12&&x<=16))continue;box(raw,.76,.025,.76,palette.road,x,streetHeight(x,z)-.025,z);for(const [dx,dz] of [[1,0],[0,1]])if(town.roads.has(key(x+dx,z+dz)))box(raw,dx?1:.76,.025,dz?1:.76,palette.road,x+dx*.5,streetHeight(x+dx*.5,z+dz*.5)-.025,z+dz*.5);}
    const squares=publicSquares(town),inSquare=new Set(squares.flatMap(q=>q.cells.map(c=>key(c.x,c.z))));for(const q of squares){const x=q.x*4+2,z=q.z*4+2;box(raw,7.9,.04,7.9,0xaaa992,x,.03,z);for(let i=-3;i<=3;i++){box(raw,7.8,.012,.028,0x92957f,x,.058,z+i);box(raw,.028,.012,7.8,0x92957f,x+i,.058,z);}for(const dx of [-3.2,3.2]){box(raw,.6,.35,1.4,0x876e4d,x+dx,.22,z);cyl(raw,.28,.25,.35,0x947f63,x+dx,.22,z+2.8,8);ball(raw,.35,0x839763,x+dx,.65,z+2.8);}}
    for(const c of town.publicWorks){if(inSquare.has(key(c.x,c.z)))continue;const w=c.type==='avenue'?2.3:.95,color=c.type==='avenue'?0x89948d:0xa19d87;box(raw,4,.04,w,color,c.x*4,.015,c.z*4);box(raw,w,.04,4,color,c.x*4,.015,c.z*4);}
-   this.roads.add(batch(raw));
+   this.roads.add(batch(raw));this.roadSignature=roadSignature;
+   }
+   const meadowSignature=JSON.stringify([roadSignature,town.buildings.map(b=>[b.x,b.z,!!b.footprint])]);
+   if(meadowSignature!==this.meadowSignature){
+   this.meadowSignature=null;
    for(const d of this.decorations)d.group.visible=!town.buildings.some(b=>Math.abs(b.x*4-d.x)<(b.footprint?4.3:2.3)&&Math.abs(b.z*4-d.z)<(b.footprint?4.3:2.3))&&![...town.roads].some(k=>{const [x,z]=point(k);return Math.abs(x-d.x)<.5&&Math.abs(z-d.z)<.5;});
-   this.clearGroup(this.meadow);const flowers=new THREE.Group();for(const d of this.decorations){if(d.group.visible){const copy=d.group.clone(true);copy.traverse(o=>{if(o.isMesh)o.geometry=o.geometry.clone();});flowers.add(copy);}d.group.visible=false;}this.meadow.add(batch(flowers));this.lastRevision=town.revision;
+   this.clearGroup(this.meadow);const flowers=new THREE.Group();for(const d of this.decorations){if(d.group.visible){const copy=d.group.clone(true);copy.traverse(o=>{if(o.isMesh)o.geometry=o.geometry.clone();});flowers.add(copy);}d.group.visible=false;}this.meadow.add(batch(flowers));this.meadowSignature=meadowSignature;
+   }
+   this.lastRevision=town.revision;this.lastTown=town;
   }
   for(const [id,m] of this.personModels)if(!town.people.some(p=>p.id===id)){this.scene.remove(m);this.clearGroup(m);this.personModels.delete(id);}
   for(const p of town.people){if(!this.personModels.has(p.id)){const g=this.person(p.id);g.traverse(o=>o.userData.personId=p.id);this.personModels.set(p.id,g);this.scene.add(g);}}
@@ -220,15 +230,22 @@ class LivingScene {
   for(let i=0;i<(g.userData.arms||[]).length;i++)g.userData.arms[i].rotation.x=talking?-.7+Math.sin(time*4+i)*.2:moving?Math.sin(phase+i*Math.PI)*.3:0;
  }
  syncDetails(t){
+  if(t===this.detailTown&&t.revision===this.detailRevision)return;this.detailTown=null;
+  const signature=b=>JSON.stringify([b.type,b.design,b.variant,b.x,b.z,b.facing,b.footprint,!!courtyardFor(t,b)]);
+  for(const [id,d] of this.details){const b=t.building(id);if(!b||b.stage<3||d.signature!==signature(b)){this.root.remove(d.group);disposeTree(d.group);this.details.delete(id);}}
+  this.flags=this.flags.filter(flag=>{let parent=flag.parent;while(parent&&parent!==this.root)parent=parent.parent;return parent===this.root;});
+  for(const [id,m] of this.workers)if(!t.building(id)||t.building(id).stage>=3){this.root.remove(m);disposeTree(m);this.workers.delete(id);}
   for(const b of t.buildings){if(b.stage<3||this.details.has(b.id))continue;
    const group=new THREE.Group();group.position.set(b.x*4,0,b.z*4);group.rotation.y=b.facing;if(courtyardFor(t,b)&&b.type==='home')group.scale.set(.72,.8,.72);this.root.add(group);
    if(b.type!=='home'){const flag=sign(group,DESIGNS[designFor(b)]?.mark||['瓷','木','織'][b.variant],b.footprint?1.5:1.15,1.9,b.footprint?3.55:1.65,.42,.68);this.flags.push(flag);}
    const sheets=[];if(b.type==='home'&&!b.footprint){beam(group,[-1.2,1.25,-1.58],[1.2,1.25,-1.58],.015,0x776d4d);for(let i=0;i<3;i++){const sheet=box(group,.35,.6,.018,[0xd8c59d,0x9caa92,0xc7b59b][i],-.65+i*.55,.95,-1.57);sheets.push(sheet);}}
    const steam=[];if(b.type==='work'||designFor(b)==='food')for(let i=0;i<3;i++){const m=ball(group,.12,new THREE.MeshBasicMaterial({color:0xe4decc,transparent:true,opacity:.19,depthWrite:false}),.6,2.8,-.4,1);steam.push(m);}
-   const cargo=new THREE.Group();cargo.position.set(-.6,.2,1.65);group.add(cargo);const dragonflies=[];if(b.design==='pond')for(let i=0;i<3;i++){const insect=new THREE.Group();box(insect,.035,.035,.23,0x70574a);box(insect,.38,.015,.07,0xc7d7c1);group.add(insect);dragonflies.push(insect);}this.details.set(b.id,{group,sheets,steam,cargo,dragonflies});
+   const cargo=new THREE.Group();cargo.position.set(-.6,.2,1.65);group.add(cargo);const dragonflies=[];if(b.design==='pond')for(let i=0;i<3;i++){const insect=new THREE.Group();box(insect,.035,.035,.23,0x70574a);box(insect,.38,.015,.07,0xc7d7c1);group.add(insect);dragonflies.push(insect);}this.details.set(b.id,{group,sheets,steam,cargo,dragonflies,signature:signature(b)});
   }
   for(const b of t.buildings){if(b.stage>=3){const m=this.workers.get(b.id);if(m)m.visible=false;continue;}if(!this.workers.has(b.id)){const m=this.owner.person(6000+b.id);this.root.add(m);this.workers.set(b.id,m);}}
-  if(this.sharedRevision!==t.revision){
+  const sharedSignature=JSON.stringify(t.blocks.map(block=>[block.id,block.cells,block.combined,t.buildings.filter(b=>b.blockId===block.id).every(b=>b.stage>=3)]));
+  if(this.sharedSignature!==sharedSignature){
+   this.sharedSignature=null;
    for(const obj of this.shared){this.root.remove(obj);disposeTree(obj);}this.shared=[];
    for(const block of t.blocks)for(const c of courtyards(block)){
     if(!t.buildings.filter(b=>b.blockId===block.id).every(b=>b.stage>=3))continue;
@@ -241,11 +258,13 @@ class LivingScene {
     for(const x of [-.99,.99])box(g,.03,.72,.45,0x80684d,x,.58,.25);
     g.traverse(o=>{const b=t.buildings.find(b=>b.blockId===block.id);o.userData.buildingId=b.id;});this.root.add(g);this.shared.push(g);
    }
-   this.sharedRevision=t.revision;
+   this.sharedSignature=sharedSignature;
   }
+  this.detailTown=t;this.detailRevision=t.revision;
  }
  update(t,day){
   this.syncDetails(t);
+  const actorIds=new Set([...t.life.visitors,...t.life.porters,...t.life.oxen].map(a=>a.id));for(const [id,g] of this.actors)if(!actorIds.has(id)){this.root.remove(g);disposeTree(g);this.actors.delete(id);}
   const event=t.stories.active;
   if(event){
    if(!this.storyHost){this.storyHost=new THREE.Group();this.storySpeaker=this.owner.person(7010);this.storyHost.add(this.storySpeaker);box(this.storyHost,.6,.5,.45,0x8d7049,0,.25,.55);sign(this.storyHost,'聚',0,1.5,0,.45,.6);this.root.add(this.storyHost);}
@@ -269,5 +288,5 @@ class LivingScene {
   this.birds.forEach((g,i)=>{g.visible=daytime;g.position.set(-10+Math.sin(time*.04+i*.06)*22,9+i*.25,Math.cos(time*.04)*18+i);g.rotation.y=time*.04;g.children.forEach((wing,n)=>wing.rotation.z=Math.sin(time*6+i)*(n?-.45:.45));});
   const b=t.life.boat;this.owner.boat.visible=t.buildings.length>0&&b.state!=='away';this.owner.boat.position.set(b.x,Math.sin(time*.8)*.025,b.z);this.owner.boat.rotation.y=0;this.owner.boat.userData.mast.rotation.x=(b.state==='approach'?Math.PI*.49*THREE.MathUtils.smoothstep(6-Math.abs(b.z+16),0,2):0);this.owner.boat.userData.sail.visible=b.mast===1;displayGoods(this.boatCargo,at(t,'boat'),{boat:true});this.boatCargo.position.set(0,.45,.9);this.boatCargo.visible=b.cargo>0;this.rope.visible=b.state==='unloading';
  }
- reset(){for(const group of [...this.actors.values(),...this.workers.values(),...this.shared,...[...this.details.values()].map(d=>d.group)]){this.root.remove(group);disposeTree(group);}this.flags=this.flags.filter(f=>f.parent===this.root);this.actors.clear();this.workers.clear();this.details.clear();this.shared=[];this.sharedRevision=-1;}
+ reset(){for(const group of [...this.actors.values(),...this.workers.values(),...this.shared,...[...this.details.values()].map(d=>d.group)]){this.root.remove(group);disposeTree(group);}this.flags=this.flags.filter(f=>f.parent===this.root);this.actors.clear();this.workers.clear();this.details.clear();this.shared=[];this.sharedSignature=null;this.detailTown=null;this.detailRevision=-1;}
 }

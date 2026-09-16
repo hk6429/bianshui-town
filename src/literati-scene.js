@@ -15,6 +15,7 @@ export class LiteratiScene{
   g.userData={human,desk,brush,label,canvas,labelKey:''};g.traverse(o=>o.userData.authorId=a.author);this.owner.scene.add(g);return g;
  }
  update(t){
+  const ids=new Set(t.literati.actors.map(a=>a.author));for(const [id,g] of this.models)if(!ids.has(id)){this.owner.scene.remove(g);this.owner.clearGroup(g);this.models.delete(id);}
   for(const a of t.literati.actors){let g=this.models.get(a.author);if(!g){g=this.create(a);this.models.set(a.author,g);}g.visible=a.visible;if(!a.visible)continue;
    const p=streetPosition(a);g.position.set(p[0],streetHeight(a.x,a.z),p[1]);g.rotation.y=a.angle||0;
    const writing=a.phase==='writing'&&!t.weather.raining,d=g.userData;d.desk.visible=writing;d.brush.visible=writing;d.brush.rotation.z=writing&&!this.owner.reducedMotion?Math.sin(t.elapsed*5)*.35:0;

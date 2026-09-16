@@ -1,0 +1,21 @@
+{
+  "at": "2026-09-16T22:04:33.577800",
+  "commit": "352fdb8",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "matches_dist": true
+    },
+    {
+      "path": "/assets/index-X9iGOsJR.js",
+      "status": 200,
+      "matches_dist": true
+    },
+    {
+      "path": "/assets/index-CDuQgbai.css",
+      "status": 200,
+      "matches_dist": true
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>局部場景更新測試</title><style>body{font:16px system-ui;background:#e7e0cb}canvas{width:720px!important;height:440px!important}pre{white-space:pre-wrap}button{padding:12px}</style><h1>大城鎮局部模型更新</h1><button id="run">執行局部更新測試</button><pre id="result">測試使用獨立城鎮，不存檔。</pre><canvas id="world"></canvas>
+<script type="module">
+import {TownScene} from '/src/scene.js';import {Town} from '/src/simulation.js';import {upgradeBuilding,moveBuilding,demolishBuilding,layRoad} from '/src/urban.js';import {editTown} from '/src/town-edit.js';
+const output=document.querySelector('#result'),button=document.querySelector('#run'),scene=new TownScene(document.querySelector('#world'));scene.renderer.setSize(720,440,false);let town=new Town();
+for(let z=-6;z<=4;z+=2)for(let x=-8;x<=2;x++)town.place('home',[{x,z}],true,'bambooHome');town.place('work',[{x:0,z:6}],false,'dyeHouse');scene.update(town,0);
+const checkRows=[],times=[];const check=(name,ok)=>{checkRows.push({name,ok:!!ok});if(!ok)throw Error(name);};
+const update=t=>{const start=performance.now();scene.update(t,0);times.push(performance.now()-start);};
+button.onclick=async()=>{button.disabled=true;try{
+ const id=town.buildings[0].id,models=new Map(scene.buildingModels),roads=scene.roads.children[0],meadow=scene.meadow.children[0],detail=scene.lifeScene.details.get(town.buildings[1].id);
+ let result=editTown(town,draft=>upgradeBuilding(draft,id),{prepare:update});check('交易升級成功',result.ok);town=result.town;
+ check('其餘66棟模型身分保留',[...models].filter(([i])=>i!==id).every(([i,m])=>scene.buildingModels.get(i)===m));check('升級房屋已換模型',scene.buildingModels.get(id)!==models.get(id));check('升級保留道路與花草幾何',scene.roads.children[0]===roads&&scene.meadow.children[0]===meadow);check('未變生活裝飾保留',scene.lifeScene.details.get(town.buildings[1].id)===detail);
+ const stageModels=new Map(scene.buildingModels),construction=town.buildings.at(-1).id;for(let n=0;n<110;n++)town.tick(.05);update(town);check('實際施工轉階',town.building(construction).stage===1);check('施工只換工坊模型',[...stageModels].filter(([i])=>i!==construction).every(([i,m])=>scene.buildingModels.get(i)===m));check('施工道路幾何保留',scene.roads.children[0]===roads);
+ result=editTown(town,draft=>moveBuilding(draft,id,{x:-8,z:5}),{prepare:update});check('移動交易成功',result.ok);town=result.town;check('招牌裝飾移至新位置',scene.lifeScene.details.get(id).group.position.z===20);
+ result=editTown(town,draft=>demolishBuilding(draft,id),{prepare:update});check('拆除交易成功',result.ok);town=result.town;check('拆除清除模型及生活裝飾',!scene.buildingModels.has(id)&&!scene.lifeScene.details.has(id));
+ result=editTown(town,draft=>demolishBuilding(draft,construction),{prepare:update});check('拆除未完成工坊成功',result.ok);town=result.town;check('工人清除',!scene.lifeScene.workers.has(construction));
+ const roadBefore=scene.roads.children[0];result=editTown(town,draft=>layRoad(draft,'avenue',[{x:1,z:5}]),{prepare:update});check('道路交易成功',result.ok);town=result.town;check('道路變動才換幾何',scene.roads.children[0]!==roadBefore);
+ const unchanged=JSON.stringify(town.toJSON()),target=town.buildings[1].id;result=editTown(town,draft=>upgradeBuilding(draft,target),{prepare:update,persist:()=>({ok:false})});check('儲存失敗保持原城市',!result.ok&&JSON.stringify(town.toJSON())===unchanged);update(town);check('失敗後可重新繪圖',scene.renderer.info.render.calls>0);
+ output.textContent=JSON.stringify({buildingsAtStart:models.size,passed:checkRows.length,updateMs:times,checks:checkRows},null,2);
+}catch(error){output.textContent=JSON.stringify({checks:checkRows,updateMs:times,error:error.stack},null,2);}finally{button.disabled=false;}};
+</script></html>

@@ -434,3 +434,9 @@
 - 全套313通過，最後卸載修正聚焦3通過及 Chrome 回讀。帳本94 verified /5 implemented /1 open。
 - 下一項 E20：目前 main.applyUrban prepare 仍 scene.reset，sync 每個 revision 重建道路與花草。改成 town identity 或 revision 變時先算 topology/building/decor 簽章，未變保留物件；building signature 加 variant/footprint/courtyard。LifeScene.details/workers/actors、Literati models 要先按有效ID移除，details 依位置/設計/院落變化更新，院落依實際幾何簽章；失敗 rollback 回原town場景。E20 尚未修改。
 - 接著 E01–04／E21 補驗與最終四領域評量；完整目標仍 active。
+
+## E20 局部更新完成，準備部署
+- 上輪352fdb8已部署，正式站回讀 evidence/release-352fdb8。
+- 本輪道路/建築/花草簽章分流、移除 applyUrban 全城 reset、交易失敗同步原城；生活裝飾/工人/訪客/文人增刪同步。
+- Chrome67棟18項通過，升級保留其餘66棟與道路/花草 identity；實際施工只換工坊。update含render165–859ms，未宣稱60fps。316全套通過，build成功。
+- 帳本95 verified /5 implemented /0 open。接著補E01–04與E21的瀏覽器證據；完成後四位專家最終複評，逐項核100契約，再部署最終版。
