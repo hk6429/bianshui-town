@@ -12,12 +12,30 @@ export function decorateTier(g,b,api){
  // Keep ground-level signature objects; the main mass becomes taller too.
  const stretch=1+(tier-1)*.09;for(const child of g.children){child.position.y*=stretch;child.scale.y*=stretch;}
  const detail=new THREE.Group();detail.name=`tier-${tier}`;g.add(detail);
- const roofAt=(x,z,w,d,y,h=.6)=>{const q=new THREE.Group();q.position.set(x,0,z);detail.add(q);roof(q,w,d,h,y,tile);box(q,w*.9,.12,.12,gold,0,y+h+.04,0);for(const dx of [-w*.43,w*.43]){const tip=box(q,.36,.12,.17,gold,dx,y+h*.28,0);tip.rotation.z=Math.sign(dx)*.5;}return q;};
+ const roofAt=(x,z,w,d,y,h=.6)=>{const q=new THREE.Group();q.position.set(x,0,z);detail.add(q);roof(q,w,d,h,y,tile);if(tier>=3){for(const edge of [-1,1])box(q,w,.16,.16,gold,0,y+.04,edge*d*.5);}box(q,w*.9,.12,.12,gold,0,y+h+.04,0);for(const dx of [-w*.43,w*.43]){const tip=box(q,.36,.12,.17,gold,dx,y+h*.28,0);tip.rotation.z=Math.sign(dx)*.5;}return q;};
  const lanternMat=new THREE.MeshStandardMaterial({color:0xf5b24f,emissive:0xe78729,emissiveIntensity:.35,roughness:.7});
  // Large banners, lanterns and a broad gate are readable at the town overview scale.
  const gateH=1.9+tier*.28,front=r-.32;
  for(const x of [-r*.78,r*.78]){box(detail,.17,gateH,.17,wood,x,gateH/2+.2,front);box(detail,.4,.26,.35,gold,x,.32,front);cyl(detail,.24,.21,.5,lanternMat,x,gateH-.3,front+.13,8);box(detail,.48,.13,.45,gold,x,gateH+.04,front);if(tier>=3){box(detail,.36,1.05,.06,shop?0xc85242:0x417d88,x,gateH-.85,front-.18);box(detail,.36,.12,.07,gold,x,gateH-1.35,front-.18);}}
  roofAt(0,front,r*1.95,.72,gateH+.15,.5);
+ // The front silhouette changes by level, even when distant roofs overlap.
+ if(tier>=3){
+  const gateway=new THREE.Group();gateway.name='ceremonial-gateway';detail.add(gateway);
+  for(const x of [-r*.45,r*.45])box(gateway,.24,gateH+.85,.24,wood,x,(gateH+.85)/2,front);
+  box(gateway,r*.9,.55,.18,tier===5?gold:wood,0,gateH+.5,front);
+  roofAt(0,front,r*1.25,.95,gateH+.95,.65);
+  if(tier>=4){
+   const gallery=new THREE.Group();gallery.name='upper-gallery';detail.add(gallery);
+   const deckY=large?3.4:2.6;
+   box(gallery,r*1.65,.22,.55,gold,0,deckY,-r*.72);
+   for(let i=-4;i<=4;i++)box(gallery,.1,.7,.1,wood,i*r*.19,deckY+.35,-r*.44);
+   box(gallery,r*1.65,.12,.12,gold,0,deckY+.72,-r*.44);
+  }
+  if(tier===5){
+   roofAt(0,front,r*.86,1.05,gateH+2,.72);
+   for(const x of [-r*.82,r*.82]){box(gateway,.3,gateH,.3,gold,x,gateH/2,front);ball(gateway,.28,gold,x,gateH+.3,front);}
+  }
+ }
  for(const x of [-r,r]){cyl(detail,.23,.28,.32,0xb7a58a,x,.33,r*.3,8);for(let i=0;i<7;i++)ball(detail,.13,[0xe6a0b0,0xf1d76d,0x91b383][i%3],x+Math.sin(i*2)*.15,.64,r*.3+Math.cos(i*2)*.15);}
  // Each level adds an entire floor: tier 2 one, tier 3 two, tier 4 three, tier 5 four.
  const floors=tier-1,h=large?1.65:1.25,w=large?5.4:2.65,z=garden?-r*.26:-r*.18;
