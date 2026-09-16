@@ -1,0 +1,22 @@
+{
+  "commit": "e68a4da",
+  "deployment": "https://ba7eadef.bianshui-town.pages.dev",
+  "production": "https://bianshui-town.pages.dev",
+  "checks": [
+    {
+      "path": "/",
+      "status": "200",
+      "matchesBuild": true
+    },
+    {
+      "path": "/assets/index-m078Egei.js",
+      "status": "200",
+      "matchesBuild": true
+    },
+    {
+      "path": "/assets/index-BOklB3uZ.css",
+      "status": "200",
+      "matchesBuild": true
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+✔ system preference is followed unless the player explicitly overrides it; invalid settings recover (0.976417ms)
+✔ reduced-motion following locates once without easing and then leaves the camera stationary (0.338041ms)
+✔ rain visuals stop updating while rain state and simulation data are preserved (1.369292ms)
+✔ mixed neighborhoods have distinct text categories independent of color (0.115916ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 107.169542

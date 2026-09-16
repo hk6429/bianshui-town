@@ -10,8 +10,8 @@ export class WeatherScene {
   if(model.userData.umbrella)model.userData.umbrella.visible=visible;
  }
  update(t){
-  this.rain.visible=t.weather.raining;
-  if(t.weather.raining){for(let i=0;i<420;i++){const x=-36+(i*17.731%78),z=-29+(i*7.317%60),y=(15-((t.elapsed*12+i*.37)%15));this.positions.set([x,y,z,x-.13,y-.55,z+.06],i*6);}this.rain.geometry.attributes.position.needsUpdate=true;}
+  this.rain.visible=t.weather.raining&&!this.owner.reducedMotion;
+  if(this.rain.visible){for(let i=0;i<420;i++){const x=-36+(i*17.731%78),z=-29+(i*7.317%60),y=(15-((t.elapsed*12+i*.37)%15));this.positions.set([x,y,z,x-.13,y-.55,z+.06],i*6);}this.rain.geometry.attributes.position.needsUpdate=true;}
   for(const p of t.people)this.umbrella(this.owner.personModels.get(p.id),t.weather.raining&&p.outside&&!p.shelter,{personId:p.id});
   for(const a of [...t.life.visitors,...t.life.porters])this.umbrella(this.owner.lifeScene.actors.get(a.id)?.userData.human,t.weather.raining&&a.visible&&a.kind!=='porter',{lifeId:a.id});
  }

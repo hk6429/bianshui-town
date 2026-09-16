@@ -134,7 +134,7 @@ export class TownScene {
   this.sync(town);const hour=town.time%24;
   const day=THREE.MathUtils.smoothstep(Math.sin((hour-6)/24*Math.PI*2),-.18,.35);this.scene.background.set(0x354b61).lerp(new THREE.Color(0xcbd1b4),day);this.scene.fog.color.copy(this.scene.background);this.ambient.intensity=1.2+day*1.3;this.ambient.color.set(0xa7c6ed).lerp(new THREE.Color(0xfff5d7),day);this.sun.intensity=.5+day*2.5;this.sun.color.set(0xadc5ed).lerp(new THREE.Color(0xffe8c0),day);this.water.color.set(0x405e72).lerp(new THREE.Color(0x79a8a3),day);
   for(const b of town.buildings){const model=this.buildingModels.get(b.id);if(model.userData.warm){const occupied=town.occupants(b).length>0;model.userData.warm.emissiveIntensity=(1-day)*(occupied?2.2:.5);if(model.userData.glow)model.userData.glow.material.opacity=(1-day)*(occupied?.5:.16);}}
-  for(const p of town.people){const m=this.personModels.get(p.id),b=town.building(p.current),yard=!p.outside&&b&&hour>=6&&hour<20;m.visible=p.outside||yard;if(p.outside){const [px,pz]=streetPosition(p);m.position.set(px,streetHeight(p.x,p.z)+(p.traffic?.startsWith('讓')?0:Math.abs(Math.sin(town.elapsed*8+p.id))*.025),pz);m.rotation.y=p.angle||0;}else if(yard){const court=courtyardPosition(town,p),side=(p.id%2?-.4:.4),inset=b.type==='garden'?.12:courtyardFor(town,b)?1:.65;m.position.set(court?court[0]:b.entrance[0]+Math.cos(b.facing)*side-Math.sin(b.facing)*inset,.16,court?court[1]:b.entrance[1]-Math.sin(b.facing)*side-Math.cos(b.facing)*inset);m.rotation.y=b.facing;}this.lifeScene.animateHuman(m,town.elapsed,p.outside&&p.route.length>0&&!p.traffic?.startsWith('讓')&&p.traffic!=='等前方行人走開'&&!(p.socialUntil>town.elapsed),p.socialUntil>town.elapsed||yard||!!p.streetEvent&&!p.route.length);}
+  for(const p of town.people){const m=this.personModels.get(p.id),b=town.building(p.current),yard=!p.outside&&b&&hour>=6&&hour<20;m.visible=p.outside||yard;if(p.outside){const [px,pz]=streetPosition(p);m.position.set(px,streetHeight(p.x,p.z)+(this.reducedMotion||p.traffic?.startsWith('讓')?0:Math.abs(Math.sin(town.elapsed*8+p.id))*.025),pz);m.rotation.y=p.angle||0;}else if(yard){const court=courtyardPosition(town,p),side=(p.id%2?-.4:.4),inset=b.type==='garden'?.12:courtyardFor(town,b)?1:.65;m.position.set(court?court[0]:b.entrance[0]+Math.cos(b.facing)*side-Math.sin(b.facing)*inset,.16,court?court[1]:b.entrance[1]-Math.sin(b.facing)*side-Math.cos(b.facing)*inset);m.rotation.y=b.facing;}this.lifeScene.animateHuman(m,town.elapsed,p.outside&&p.route.length>0&&!p.traffic?.startsWith('讓')&&p.traffic!=='等前方行人走開'&&!(p.socialUntil>town.elapsed),p.socialUntil>town.elapsed||yard||!!p.streetEvent&&!p.route.length);}
   for(const c of town.carts){const m=this.cartModels.get(c.id);m.visible=c.outside;m.position.set(c.x,streetHeight(c.x,c.z),c.z);m.rotation.y=c.angle||0;displayGoods(m.userData.cargo,at(town,`cart:${c.id}`));}
   this.lifeScene.update(town,day);this.weatherScene.update(town);this.authorScene.update(town);this.marketScene.update(town);if(town.weather.raining){this.sun.intensity*=.45;this.ambient.intensity*=.8;this.scene.background.lerp(new THREE.Color(0x7c9699),.4);this.scene.fog.color.copy(this.scene.background);}
   this.controls.update();this.updateFollow(town,dt);this.controls.target.x=THREE.MathUtils.clamp(this.controls.target.x,-45,40);this.controls.target.z=THREE.MathUtils.clamp(this.controls.target.z,-45,45);this.renderer.render(this.scene,this.camera);return day;
@@ -143,12 +143,14 @@ export class TownScene {
  focusAt(point,zoom=2.2,overhead=false){
   this.follow(null);const target=new THREE.Vector3(point[0],0,point[1]);this.camera.position.add(target.clone().sub(this.controls.target));this.controls.target.copy(target);if(overhead){const offset=this.camera.position.clone().sub(this.controls.target),horizontal=Math.hypot(offset.x,offset.z),radius=offset.length()/Math.sqrt(2.44);offset.x*=radius/horizontal;offset.z*=radius/horizontal;offset.y=radius*1.2;this.camera.position.copy(this.controls.target).add(offset);}this.camera.zoom=zoom;this.camera.updateProjectionMatrix();
  }
- follow(id){this.followId=id;}
+ setReducedMotion(value){if(this.reducedMotion!==value)this.reducedFollowId=null;this.reducedMotion=value;this.controls.enableDamping=!value;}
+ follow(id){this.followId=id;this.reducedFollowId=null;}
  updateFollow(town,dt){
   if(this.followId==null)return;const author=typeof this.followId==='string'&&this.followId.startsWith('author:')?this.followId.slice(7):null;const p=author?town.literati.actors.find(a=>a.author===author):town.people.find(p=>p.id===this.followId);if(!p){this.followId=null;return;}
   const model=author?this.authorScene.models.get(author):this.personModels.get(p.id),b=town.building(p.current)||town.building(p.home);
   const target=model?.visible?model.position.clone():new THREE.Vector3(b?b.x*4:p.x,0,b?b.z*4:p.z);target.y=0;
-  const delta=target.sub(this.controls.target).multiplyScalar(1-Math.exp(-dt*7));this.controls.target.add(delta);this.camera.position.add(delta);
+  if(this.reducedMotion&&this.reducedFollowId===this.followId)return;
+  const delta=target.sub(this.controls.target).multiplyScalar(this.reducedMotion?1:1-Math.exp(-dt*7));if(this.reducedMotion)this.reducedFollowId=this.followId;this.controls.target.add(delta);this.camera.position.add(delta);
  }
  showBuildGrid(visible){if(!this.plotGrid){this.plotGrid=new THREE.Group();this.scene.add(this.plotGrid);const material=new THREE.LineBasicMaterial({color:0x5e7354,transparent:true,opacity:.36});for(let x=-34;x<=10;x+=4)this.plotGrid.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x,.11,-26),new THREE.Vector3(x,.11,26)]),material));for(let z=-26;z<=26;z+=4)this.plotGrid.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-34,.11,z),new THREE.Vector3(10,.11,z)]),material));}this.plotGrid.visible=visible;}
  pan(dx,dz){
@@ -211,6 +213,7 @@ class LivingScene {
   g.traverse(o=>o.userData.lifeId=a.id);return g;
  }
  animateHuman(g,time,moving,talking=false){
+  if(this.owner.reducedMotion){time=0;moving=false;talking=false;}
   const phase=time*7+(g.id%7);for(let i=0;i<(g.userData.legs||[]).length;i++)g.userData.legs[i].rotation.x=moving?Math.sin(phase+i*Math.PI)*.4:0;
   for(let i=0;i<(g.userData.arms||[]).length;i++)g.userData.arms[i].rotation.x=talking?-.7+Math.sin(time*4+i)*.2:moving?Math.sin(phase+i*Math.PI)*.3:0;
  }
@@ -246,7 +249,7 @@ class LivingScene {
    if(!this.storyHost){this.storyHost=new THREE.Group();this.storySpeaker=this.owner.person(7010);this.storyHost.add(this.storySpeaker);box(this.storyHost,.6,.5,.45,0x8d7049,0,.25,.55);sign(this.storyHost,'聚',0,1.5,0,.45,.6);this.root.add(this.storyHost);}
    this.storyHost.visible=true;this.storyHost.position.set(event.center[0],streetHeight(...event.center),event.center[1]);this.animateHuman(this.storySpeaker,t.elapsed,false,true);
   }else if(this.storyHost)this.storyHost.visible=false;
-  const time=t.elapsed,daytime=t.time%24>=6&&t.time%24<20;
+  const time=this.owner.reducedMotion?0:t.elapsed,daytime=t.time%24>=6&&t.time%24<20;
   for(const a of [...t.life.visitors,...t.life.porters,...t.life.oxen]){
    let g=this.actors.get(a.id);if(!g){g=this.actorModel(a);this.actors.set(a.id,g);this.root.add(g);}g.visible=a.visible;const [ax,az]=streetPosition(a);g.position.set(ax,streetHeight(a.x,a.z),az);g.rotation.y=a.angle||0;
    if(g.userData.cargo){const cargo=g.userData.cargo;if(!cargo.isGroup){g.remove(cargo);cargo.geometry.dispose();g.userData.cargo=new THREE.Group();g.userData.cargo.position.set(0,.95,-.2);g.add(g.userData.cargo);}displayGoods(g.userData.cargo,at(t,`${a.kind==='ox'?'ox':'porter'}:${a.id}`),{lifeId:a.id});g.userData.cargo.visible=a.carrying>0;}

@@ -1,3 +1,5 @@
+import {BuildingLabels} from './building-labels.js';
+import {readViewPreferences,writeViewPreferences,reducedMotion} from './view-preferences.js';
 import {installNotices} from './notices.js';
 import {patchPanel,focusHeading} from './panel-dom.js';
 import {installCityDirectory} from './city-directory.js';
@@ -58,6 +60,16 @@ try{if(fixtureMode)town=Town.restore(await(await fetch(`/tests/fixtures/${fixtur
 
 try{scene=new TownScene(canvas);}catch(error){$('#welcome').innerHTML='<h2>目前無法開啟 3D 場景</h2><p>請使用支援 WebGL 2 的瀏覽器，並開啟硬體加速後重新整理。</p>';console.error(error);throw error;}
 if(town.buildings.length)$('#welcome').hidden=true;
+const viewPreferences=readViewPreferences(storage),motionQuery=matchMedia('(prefers-reduced-motion: reduce)'),buildingLabels=new BuildingLabels($('#building-use-labels'));
+function applyViewPreferences(){
+ const reduce=reducedMotion(viewPreferences.motion,motionQuery.matches);scene.setReducedMotion(reduce);document.body.classList.toggle('reduced-motion',reduce);
+ buildingLabels.setVisible(viewPreferences.labels);document.body.classList.toggle('labels-visible',viewPreferences.labels);$('#building-legend').hidden=!viewPreferences.labels;$('#building-label-setting').checked=viewPreferences.labels;$('#motion-setting').value=viewPreferences.motion;
+ $('#motion-status').textContent=`目前：${reduce?'減少動態':'完整動態'}${viewPreferences.motion==='auto'?'（依系統）':''}`;
+}
+$('#view-settings-btn').onclick=()=>$('#view-settings').showModal();
+$('#motion-setting').onchange=e=>{viewPreferences.motion=e.target.value;applyViewPreferences();writeViewPreferences(storage,viewPreferences);};
+$('#building-label-setting').onchange=e=>{viewPreferences.labels=e.target.checked;applyViewPreferences();writeViewPreferences(storage,viewPreferences);};
+motionQuery.addEventListener('change',applyViewPreferences);applyViewPreferences();
 const notices=installNotices();
 function toast(text){notices.record(text);$('#toast').textContent=text;$('#toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),3200);}
 function save(){if(recovery?.fault){$('#save-status').textContent='執行錯誤 · 已停止自動儲存';return;}if(fixtureMode){$('#save-status').textContent='預覽場景 · 不覆寫小鎮';return;}const result=saveStore.save(town.toJSON());$('#save-status').textContent=result.ok?'進度已留存':result.status==='conflict'?'另一分頁已有更新 · 請開啟存檔管理':result.status==='recovery'?'原存檔保留 · 自動儲存已停止':'儲存失敗 · 請匯出目前小鎮';if(result.status==='conflict'&&!paused){paused=true;saveUI?.open();}}
@@ -267,7 +279,7 @@ const runtime=createRuntime({
  request:fn=>requestAnimationFrame(fn),cancel:id=>cancelAnimationFrame(id),hidden:()=>document.hidden,
  options:()=>({speed,paused:paused||!!document.querySelector('dialog[open]')}),tick:dt=>{town.tick(dt);if(faultInjection==='tick'&&++faultTicks===3){town.time=NaN;throw Error('測試：模擬更新中斷');}},
  mute:()=>sound.update(town,true),onHide:save,onError:showRuntimeError,
- render:(dt,now,isPaused)=>{const day=scene.update(town,dt);if(faultInjection==='render')throw Error('測試：畫面更新中斷');sound.update(town,isPaused);if(now-lastUi>180){updateUI(day);updateJournal();lastUi=now;}recovery.checkpoint(now);if(now-lastSave>12000){save();lastSave=now;}}
+ render:(dt,now,isPaused)=>{const day=scene.update(town,dt);buildingLabels.update(town,scene);if(faultInjection==='render')throw Error('測試：畫面更新中斷');sound.update(town,isPaused);if(now-lastUi>180){updateUI(day);updateJournal();lastUi=now;}recovery.checkpoint(now);if(now-lastSave>12000){save();lastSave=now;}}
 });
 // Read-only diagnostics allow reproducible interaction checks without modifying simulation state.
 window.__townDebug={follow:()=>({id:following,target:scene.controls.target.toArray()}),screenPerson:id=>{const model=scene.personModels.get(id);if(!model?.visible)return null;const p=model.position.clone().add(new THREE.Vector3(0,.55,0)).project(scene.camera);return {x:(p.x+1)/2*innerWidth,y:(1-p.y)/2*innerHeight};},snapshot:()=>JSON.parse(JSON.stringify(town)),screenCell:(x,z)=>{const p=new THREE.Vector3(x*4,0,z*4).project(scene.camera);return {x:(p.x+1)/2*innerWidth,y:(1-p.y)/2*innerHeight};},screenBuilding:id=>{const b=town.building(id);if(!b)return null;const p=new THREE.Vector3(b.x*4,1,b.z*4).project(scene.camera);return {x:(p.x+1)/2*innerWidth,y:(1-p.y)/2*innerHeight};},renderInfo:()=>({...scene.renderer.info.render}),mode:()=>mode,sound:()=>({enabled:sound.enabled,state:sound.ctx?.state||'not-started',gain:sound.master?.gain.value||0,volume:sound.volume}),screenLife:id=>{const a=[...town.life.visitors,...town.life.porters,...town.life.oxen].find(a=>a.id===id);if(!a)return null;const p=new THREE.Vector3(a.x,1,a.z).project(scene.camera);return {x:(p.x+1)/2*innerWidth,y:(1-p.y)/2*innerHeight};}};

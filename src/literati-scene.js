@@ -17,7 +17,7 @@ export class LiteratiScene{
  update(t){
   for(const a of t.literati.actors){let g=this.models.get(a.author);if(!g){g=this.create(a);this.models.set(a.author,g);}g.visible=a.visible;if(!a.visible)continue;
    const p=streetPosition(a);g.position.set(p[0],streetHeight(a.x,a.z),p[1]);g.rotation.y=a.angle||0;
-   const writing=a.phase==='writing'&&!t.weather.raining,d=g.userData;d.desk.visible=writing;d.brush.visible=writing;d.brush.rotation.z=writing?Math.sin(t.elapsed*5)*.35:0;
+   const writing=a.phase==='writing'&&!t.weather.raining,d=g.userData;d.desk.visible=writing;d.brush.visible=writing;d.brush.rotation.z=writing&&!this.owner.reducedMotion?Math.sin(t.elapsed*5)*.35:0;
    this.owner.lifeScene.animateHuman(d.human,t.elapsed,a.walking&&!a.traffic,writing||a.phase==='reading');this.owner.weatherScene.umbrella(d.human,t.weather.raining,{authorId:a.author});
    const status=t.weather.raining?'聽雨':writing?'落筆':a.phase==='reading'?'展卷':'行旅',text=authorById(a.author).name+' · '+status;
    if(d.labelKey!==text){const ctx=d.canvas.getContext('2d');ctx.clearRect(0,0,384,88);ctx.fillStyle='#f5efddeb';ctx.fillRect(3,3,378,82);ctx.strokeStyle='#a0946e';ctx.lineWidth=3;ctx.strokeRect(3,3,378,82);ctx.fillStyle='#3d543e';ctx.font='42px serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,192,45);d.label.material.map.needsUpdate=true;d.labelKey=text;}

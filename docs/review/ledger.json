@@ -2228,10 +2228,27 @@
       "acceptance": [
         "模擬 reduce 時鏡頭定位無平滑飛移，雨景/裝飾動態可減少但核心模擬不被破壞。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/view-preferences.js",
+        "src/building-labels.js",
+        "src/scene.js",
+        "src/weather-scene.js",
+        "src/literati-scene.js",
+        "src/main.js",
+        "index.html",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "tests/view-preferences.test.js",
+        "evidence/view-preferences/tests.txt",
+        "evidence/view-preferences/build.txt",
+        "evidence/view-preferences/README.md",
+        "evidence/view-preferences/system-reduce.txt",
+        "evidence/view-preferences/labels-on.png",
+        "evidence/view-preferences/labels-off.png"
+      ],
+      "verifiedBy": "Codex root: focused scene tests and native Chrome UI / system preference emulation, 2026-09-16",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2286,10 +2303,27 @@
       "acceptance": [
         "混合街坊可在不逐屋開卡下分辨用途，並可隱藏標籤。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/view-preferences.js",
+        "src/building-labels.js",
+        "src/scene.js",
+        "src/weather-scene.js",
+        "src/literati-scene.js",
+        "src/main.js",
+        "index.html",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "tests/view-preferences.test.js",
+        "evidence/view-preferences/tests.txt",
+        "evidence/view-preferences/build.txt",
+        "evidence/view-preferences/README.md",
+        "evidence/view-preferences/system-reduce.txt",
+        "evidence/view-preferences/labels-on.png",
+        "evidence/view-preferences/labels-off.png"
+      ],
+      "verifiedBy": "Codex root: focused scene tests and native Chrome UI / system preference emulation, 2026-09-16",
       "reviewSource": "docs/review/ux.json"
     },
     {

@@ -333,3 +333,17 @@
 - 本批U21–25已完成；65 verified /5 implemented /30 open。5聚焦與build通過，Chrome施工/貨物切換及篩選/通知延遲回看及修正位置/保留暫停；沿用未變的手機畫卷既有證據。沒有重跑全站驗收。
 - 新增lot詳細標題關聯及空篩選文字；時間狀態只變動時寫DOM，明示主動暫停與閱讀暫停。
 - 下一個有界階段：U18減少動態、U20場景用途標籤；之後O01–25及E18–20，保留E01–04/E21待補驗與最終四領域複評。不得把本批部署說成百項完成。
+
+## 立即交接：U18/U20已實作，瀏覽器連線待恢復
+- 基準e68a4da；上一階段操作狀態部署成功：https://ba7eadef.bianshui-town.pages.dev，正式站讀回相符，evidence/release-e68a4da。
+- 本輪新增view-preferences.js與building-labels.js。系統動態偏好auto/reduce/full，獨立localStorage鍵，不改城鎮存檔；減少動態停止雨線、裝飾與人物肢體擺動，禁用OrbitControls慣性，follow僅定位一次，核心行走與時間不變。
+- 畫面設定提供四類文字標籤，DOM跟隨3D建物投影，不攔截手勢，圖例可關。label高度依模型identity快取Box3，移除已拆建物。尚須畫面確認遮擋/堆疊與切換。
+- 聚焦4/4、build與diff check通過；沒有全套重跑。本批尚未提交、未部署；ledger65 verified /7 implemented /28 open。
+- CUA createBrowserTab以及接回getTab各30秒逾時並kernel reset；getState成功證明測試分頁610004139存在，URL http://127.0.0.1:5173/?fixture=v8&storage-test。不要再開同一測試或重啟服務。下一工作階段先讀browser-troubleshooting，或切原生Chrome AX檢視，勿直接把timeout當頁面失敗。
+- 下一步只補U18系統reduce及手動override、U20混合街坊標籤開關與佈局。若通過，再更新ledger/README、commit/push並部署一次。其後進八角遊戲化O01–25及E18–20，保留E01–04/E21待補驗，百項仍未完成。
+
+## 最新交接：U18/U20完成
+- 67 verified /5 implemented /28 open，UX全25項完成。4聚焦、build及Chrome系統reduce/手動選項/標籤開關與混合街坊實景通過，evidence/view-preferences。
+- 原生Chrome AX能用；先選到測試分頁後CDP也恢復，可用setEmulatedMedia且已clear。不得再把前一段逾時當未解阻礙。
+- 開標籤時body.labels-visible收合extra-tools，tools-toggle仍可開；修正圖例top160避免壓住品牌。localStorage獨立bianshui-view-preferences-v1不動城鎮檔。
+- 下一個獨立工作階段進八角遊戲化，優先O01/O02/O03/O23/O24/O25願景與引導底座。全部O01–25仍open；工程E18–20待實作，E01–04/E21待補驗。不得把全UX完成當全部100項完成。
