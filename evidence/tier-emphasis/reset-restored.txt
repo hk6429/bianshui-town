@@ -1,0 +1,51 @@
+- main:
+  - generic "汴水小鎮互動三維場景"
+  - generic: 汴
+  - heading "汴水小鎮" [level=1]
+  - paragraph: 一城煙火，慢慢生長
+  - generic: ☀
+  - strong: 辰時 · 晨光初醒
+  - generic: 第 1 日 08:41
+  - button "切換白晝與夜晚": ☾
+  - button "天候：晴天，自然模式": 晴天 · 自然
+  - button "市井見聞"
+  - button "開啟環境音": ♪
+  - button "畫卷"
+  - button "重置小鎮"
+  - button "操作說明": "?"
+  - region "小鎮概況":
+    - strong: "8"
+    - text: 位居民
+    - strong: "1"
+    - text: 處建築園景
+    - strong: "1"
+    - text: 處街坊
+  - generic: 汴 水
+  - text: 風過河岸，日子悠長
+  - status: 已讀取選定版本，小鎮暫停中
+  - button "＋ 宋韻營造"
+  - button "公共營造"
+  - button "文人行旅"
+  - button "自由營造 · 收支"
+  - button "存檔管理" [active]
+  - generic: 自由探索 · 拖曳移動畫面，點選屋舍與居民
+  - navigation "建造與探索":
+    - button "自由探索 1" [pressed]:
+      - generic: 自由探索
+      - generic: "1"
+    - button "民居 2":
+      - generic: 民居
+      - generic: "2"
+    - button "商鋪 3":
+      - generic: 商鋪
+      - generic: "3"
+    - button "作坊 4":
+      - generic: 作坊
+      - generic: "4"
+    - button "繼續": ▶
+    - button "1×"
+  - generic: 滾輪縮放 · 右鍵拖曳平移 · Q / E 旋轉
+  - generic: 進度已留存
+  - button "放大": ＋
+  - button "縮小": −
+  - button "回到初始視角": ⌖

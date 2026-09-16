@@ -34,7 +34,18 @@ export function decorateTier(g,b,api){
   if(tier>=4)for(const dx of [-width*.4,width*.4])cyl(detail,.18,.17,.36,lanternMat,x+dx,y+h-.15,z+depth*.5,8);
  }
  // Upper tiers gain a second roofed silhouette, then a conspicuous gold crown.
- if(tier>=4){for(const x of [-r*.78,r*.78]){const y=start*.65;for(const dx of [-.24,.24])box(detail,.09,y,.09,wood,x+dx,y/2+.2,-r*.75);roofAt(x,-r*.75,large?1.45:.8,large?1.25:.7,y+.2,.45);}}
- if(tier===5){const crownY=start+(floors-1)*(h+.65)+h+.72;cyl(detail,.04,.35,.72,gold,0,crownY+.3,z,8);ball(detail,.18,gold,0,crownY+.76,z);for(const x of [-r*.82,r*.82]){box(detail,.085,3.7,.085,gold,x,2.05,front-.3);box(detail,.6,1.6,.06,0xbd493c,x+.25,3.1,front-.3);box(detail,.62,.16,.075,gold,x+.25,2.33,front-.3);}}
+ if(tier>=4){for(const x of [-r*.76,r*.76]){
+  const sideZ=-r*.72,sideW=large?1.65:.9,sideH=large?1.5:1.1;
+  const towerFloors=tier===5?3:2;
+  for(let floor=0;floor<towerFloors;floor++){
+   const y=.25+floor*(sideH+.5),width=sideW*(1-floor*.12);
+   box(detail,width*.72,sideH,width*.65,wall,x,y+sideH/2,sideZ);
+   for(const dx of [-width*.38,width*.38])box(detail,.12,sideH,.12,wood,x+dx,y+sideH/2,sideZ+width*.32);
+   box(detail,width*.46,sideH*.45,.065,0x39665f,x,y+sideH*.55,sideZ+width*.34);
+   roofAt(x,sideZ,width,width*.85,y+sideH,.5);
+   cyl(detail,.16,.14,.35,lanternMat,x,y+sideH-.25,sideZ+width*.55,8);
+  }
+ }}
+ if(tier===5){const crownY=start+(floors-1)*(h+.65)+h+.72;cyl(detail,.04,.35,.72,gold,0,crownY+.3,z,8);ball(detail,.18,gold,0,crownY+.76,z);for(const x of [-r*.82,r*.82]){box(detail,.085,3.7,.085,gold,x,2.05,front-.3);box(detail,.85,2.2,.06,0xbd493c,x+.25,2.95,front-.3);box(detail,.87,.18,.075,gold,x+.25,1.93,front-.3);}}
  return g;
 }
