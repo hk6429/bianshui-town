@@ -941,10 +941,38 @@
       "acceptance": [
         "同類三級比二級有可測容量或產能增益也有成本；五級不再升級；外觀文案與機制一致。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/building-tiers.js",
+        "src/city-growth.js",
+        "src/employment.js",
+        "src/production.js",
+        "src/commerce.js",
+        "src/life.js",
+        "src/city-finance.js",
+        "src/save-schema.js",
+        "src/main.js",
+        "src/water-service.js",
+        "src/sanitation.js",
+        "src/fire-service.js",
+        "src/healthcare.js",
+        "src/education.js",
+        "src/garden-services.js"
+      ],
+      "evidence": [
+        "tests/tier-functions.test.js",
+        "evidence/tier-functions/focused-tests.txt",
+        "evidence/tier-functions/tests.txt",
+        "evidence/tier-functions/build.txt",
+        "evidence/tier-functions/README.md",
+        "evidence/tier-functions/browser-output.txt",
+        "evidence/tier-functions/home-before.txt",
+        "evidence/tier-functions/home-after.txt",
+        "evidence/tier-functions/home-five.txt",
+        "evidence/tier-functions/work-after.txt",
+        "evidence/tier-functions/shop-after.txt"
+      ],
+      "verifiedBy": "根代理：全圖錄一至五級能力/報價/封頂、229項回歸、Chrome相同人力產銷與真三維升級扣款驗證；非真人玩家驗收",
       "reviewSource": "docs/review/city.json"
     },
     {

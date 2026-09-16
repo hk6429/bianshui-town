@@ -196,3 +196,28 @@
 - gardenReport依住戶max1權重平均，managed需求round(avg)；targetPopulation改成2+jobs+min4,floor(avg/5)，取代舊任意遠園gardenHomes計數。homes安置/入住排序pollutionAt-gardenBenefit。sandbox不套用demandModifier。
 - main home/garden小卡與finance-summary，無新存檔欄位。控制首近園6.667、第二10、第三11.333，隔離0；ChromeUI花100升一園二級，range24→28、住宅11.3→13.2。
 - 下一獨立階段C24五級功能：先讀ledger與現有tierOf/jobCapacity/homeCapacity/production/commerce契約，將外觀級數接到全類型實際功能、成本與可驗證上限。C25及O/U/E全部保留，最後四領域複評後才部署。
+
+## 新階段起點：C24五級功能與共同能力表
+- 基準a949860。building-tiers新增TIER_RULES/buildingStats，住宅每級增加1人（四格2人）、作坊每級+25%基礎產能、商鋪每級+1店員；所有公共服務既有範圍/容量與維護費收斂至共同表。
+- 保留舊level/footprint基底；UI現在/下級用同一能力函式與實際upgradePreview顯示，待聚焦/full/browser驗證。
+
+## C24驗證交接：切換至收尾階段
+- 共用能力表與商鋪真交易節流已實作，尚未標記C24 verified、未提交/部署。
+- 兩輪回歸失敗原因已定位：舊urban.test期待4/8，實際新tier2為5/10（已更新）；新增訪客fixture漏visible（已補），不是放寬schema。新nextSaleAt保存交易間隔且拒絕超出elapsed+12秒。
+- 下一階段以聚焦測試重新驗證合法fixture及拒絕未來交易時間，成功後才全套；再完成Chrome二級→三級preview/扣款/能力與商鋪吞吐量操作證據。README/ledger/evidence說明、GitHub推送尚待。
+
+## 最新交接：C24功能完成、UI收尾待驗（2026-09-16）
+- 工作樹基於a949860，C24未commit；40 verified / 6 implemented / 54 open。最新聚焦27/27、全套229/229、build通過（runtime最後build後僅修正test fixture）。evidence/tier-functions。
+- TIER_RULES集中：住宅基底level/footprint保留，單格每級+1、四格每級+2；work基底倍率×[1,1.25,1.5,1.75,2]；shop jobs2..6、每店員銷售seconds12/10/8/6/4，實際間隔seconds/presentWorkers數。
+- sellAtShop共用於residentPurchase與life.tickVisitors，managed nextSaleAt保存間隔，sandbox不節流；schema b.nextSaleAt optional num且<=elapsed+12。測試已驗同店員20秒二級賣5/三級賣6，居民/訪客不可同時超賣、讀檔不重置交易冷卻。
+- buildingStats同時供water/cleaning/fire/medical/education/garden容量、距離、維護。city-finance.upgradeCost用tierRule.upgradeFactor，dailyUpkeep用stats；main buildingTools現在/下級顯示buildingAbility/upkeep與外觀TIER_DETAILS，upgradePreview符合home/work level=2轉換。
+- 已更新舊urban.test新tier2住宅5人、四格10人；初次失敗保留initial-regression.txt。新增測試fixture漏visible已修正，沒有改弱schema。
+- 下一新階段：建立tests/tier-functions-harness.html，用正式Town/upgradeBuilding構建二三級對照、保存隔離城；Chrome真三維操作升級，驗preview與扣款/維護/容量一致及五級不能再升。尚須README、evidence README、ledger verified、handoff、commit/push。測試頁建好之後再開Chrome，勿在驗收途中修改HTML觸發HMR重載。
+- 仍未部署；C25和O/U/E及最後四領域複評都必須完成。不要將本輪implemented當verified。
+
+## 最新交接：C24五級經營能力里程碑（2026-09-16）
+- 41 verified / 5 implemented / 54 open；27/27聚焦、229/229全套、build、Chrome真三維home/work/shop升級與五級封頂通過。evidence/tier-functions；尚未部署。
+- Chrome住宅二→三18920→18740，容量5→6、維護4→6；升五級8人/10文、沒有升級鈕。作坊二→三18200→17840，1.875→2.25倍/維護12→18；商鋪二→三17840→17570、員工3→4、服務10→8秒/維護8→12。
+- 控制頁相同4工匠6.5秒二級未完成、三級1陶器；相同2店員20秒二級5售、三級6售。公設能力bindings與所有圖錄級數已用節點測試核對。
+- README新增共用五級能力表並校正歷史版本容量敘述。僅新增測試HTML與文件，未再改上一階段通過229項的runtime。
+- 下一獨立階段C25整體幸福度/宜居：先讀ledger契約，再整合已存在水/衛生/健康/教育/污染/園景/就業/供貨/稅率的可解釋指標與實際生活結果，不能僅新顯示數字。所有O/U/E及最後四領域複評保留，全100完成後才部署。

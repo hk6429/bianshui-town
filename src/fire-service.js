@@ -1,12 +1,12 @@
 import {commuteDistance} from './employment.js';
-import {tierOf} from './building-tiers.js';
+import {buildingStats} from './building-tiers.js';
 import {managed,charge} from './city-finance.js';
 import {serviceEfficiency,isUtility} from './public-services.js';
 
 export const FIRE_WARNING_SECONDS=30;
 export const damaged=b=>(b?.fireDamage||0)>0;
-export const patrolCapacity=(t,b)=>Math.floor((b.footprint?32:8)*tierOf(b)*serviceEfficiency(t));
-export const patrolRange=b=>24+4*(tierOf(b)-1);
+export const patrolCapacity=(t,b)=>Math.floor(buildingStats(b).patrol*serviceEfficiency(t));
+export const patrolRange=b=>buildingStats(b).range;
 export function fireRisk(t,b){
  const near=t.buildings.filter(q=>q.id!==b.id&&q.stage>=3&&!isUtility(q)&&Math.hypot(q.x-b.x,q.z-b.z)<=2.5);
  const kilns=near.filter(q=>q.type==='work'&&q.variant===0).length+(b.type==='work'&&b.variant===0?1:0);

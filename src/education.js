@@ -1,13 +1,13 @@
 import {commuteDistance,presentWorkers,onSickLeave} from './employment.js';
-import {tierOf} from './building-tiers.js';
+import {buildingStats} from './building-tiers.js';
 import {managed} from './city-finance.js';
 import {serviceEfficiency} from './public-services.js';
 import {damaged} from './fire-service.js';
 
 export const MAX_EDUCATION=100,EDUCATION_PER_DAY=10,GAME_DAY_SECONDS=360;
 export const educationOf=p=>Math.min(MAX_EDUCATION,Math.max(0,p.education??0));
-export const educationRange=b=>24+4*(tierOf(b)-1);
-export const educationCapacity=(t,b)=>b.design==='academy'&&b.stage>=3&&!damaged(b)?Math.floor(8*tierOf(b)*serviceEfficiency(t)):0;
+export const educationRange=b=>buildingStats(b).range;
+export const educationCapacity=(t,b)=>b.design==='academy'&&b.stage>=3&&!damaged(b)?Math.floor(buildingStats(b).education*serviceEfficiency(t)):0;
 export function educationReport(t){
  const academies=t.buildings.filter(b=>b.design==='academy'&&b.stage>=3).sort((a,b)=>a.id-b.id);
  const capacities=new Map(academies.map(b=>[b.id,educationCapacity(t,b)])),usage=new Map(academies.map(b=>[b.id,[]]));

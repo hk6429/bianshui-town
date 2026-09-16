@@ -1,11 +1,11 @@
 import {commuteDistance} from './employment.js';
-import {tierOf} from './building-tiers.js';
+import {buildingStats} from './building-tiers.js';
 
 export {isUtility} from './public-services.js';
 import {serviceEfficiency} from './public-services.js';
-export const waterCapacity=b=>(b.footprint?48:12)*tierOf(b);
-export const waterRange=b=>24+(tierOf(b)-1)*4;
-const capacity=b=>b.footprint?8:b.level>=2?4:2;
+export const waterCapacity=b=>buildingStats(b).water;
+export const waterRange=b=>buildingStats(b).range;
+const capacity=b=>buildingStats(b).housing;
 
 // Recomputed from roads, homes and residents: never persist stale coverage in saves.
 export function waterReport(t){

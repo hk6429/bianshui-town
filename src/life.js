@@ -1,6 +1,6 @@
 import {roadAnchor} from './road-network.js';
 import {logistics} from './logistics.js';
-import {shopIsOpen} from './commerce.js';
+import {shopIsOpen,sellAtShop} from './commerce.js';
 import {marketStalls,marketOpen} from './market.js';
 import {at,transfer,deliveryPlan,importCargo,GOODS,goodsBalance} from './production.js';
 import {applyTraffic} from './traffic.js';
@@ -104,7 +104,7 @@ function tickVisitors(t,dt){
    if(Math.hypot(a.x-target[0],a.z-target[1])>.02){send(t,a,target,shop?`趕集，前往${shop.name}`:'前往橋頭市集');continue;}
    if(shop&&!shopIsOpen(t,shop)){a.action='店鋪尚未有店員到場，等候開張';a.wait=3;continue;}
    a.action=a.kind==='peddler'?'放下擔子，與店家談買賣':'在攤前看貨、喝茶';a.wait=7+a.id%5;a.phase='watch';
-   if(shop?.stock>0){l.dock.sold+=transfer(t,`shop:${shop.id}`,'sold',1);}
+   if(shop?.stock>0){l.dock.sold+=sellAtShop(t,shop);}
   }else if(a.phase==='stall'){
    const stall=marketStalls(t).find(s=>s.id===a.stall);if(stall&&marketOpen(t)&&Math.hypot(a.x-stall.x,a.z-stall.z)>.2){if(send(t,a,[stall.x,stall.z],`前往${stall.name}看貨`))continue;}if(stall&&marketOpen(t)&&Math.hypot(a.x-stall.x,a.z-stall.z)<=.2){a.action=`在${stall.name}選購${stall.goods}`;a.wait=6;t.market.trades++;}a.phase='bridge';
   }else if(a.phase==='watch'){

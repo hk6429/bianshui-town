@@ -1,0 +1,78 @@
+- main:
+  - generic "汴水小鎮互動三維場景"
+  - generic: 汴
+  - heading "汴水小鎮" [level=1]
+  - paragraph: 一城煙火，慢慢生長
+  - generic: ☀
+  - strong: 辰時 · 晨光初醒
+  - generic: 第 1 日 08:29
+  - button "切換白晝與夜晚": ☾
+  - button "天候：晴天，自然模式": 晴天 · 自然
+  - button "市井見聞"
+  - button "開啟環境音": ♪
+  - button "畫卷"
+  - button "重置小鎮"
+  - button "操作說明": "?"
+  - region "小鎮概況":
+    - strong: "4"
+    - text: 位居民
+    - strong: "3"
+    - text: 處建築園景
+    - strong: "3"
+    - text: 處街坊
+  - complementary:
+    - generic: 商鋪 · 1 格街坊
+    - heading "臨街茶坊" [level=2]
+    - generic: 生活漸豐 · 已固定檢視
+    - separator
+    - generic: 在此工作
+    - generic: 等候新朋友到來
+    - generic: 河運補貨
+    - paragraph: 暫停營業 · 到場店員 0／4 人 · 病假 0 人 · 招工 4 人 · 每件交易間隔 — 秒
+    - paragraph: 店內 0 件 · 店前 3 位來客
+    - generic: 此刻在場 · 0 人
+    - paragraph: 目前無人在此停留
+    - paragraph: 街坊未接外路：請由門前步道鋪路至東側引道，才能接貨與迎接新住戶。
+    - generic: 防火巡守
+    - paragraph: 火警風險最高 4.5％／日；尚無可達且有容量的巡守服務。前兩日免事件，每日最多一處預警。
+    - separator
+    - generic: 建築 3／5 級 · 華庭 · 店員名額 4 席，每店員每 8 秒售一件 · 每日維護 12 文
+    - paragraph: 下級：三層高閣、雙側重簷塔與成排燈籠；店員名額 5 席，每店員每 6 秒售一件；每日維護 16 文
+    - button "搬移 30文"
+    - button "拆除"
+    - button "升至 4 級 · 360文"
+    - text: 孟元老 · 《東京夢華錄》卷二〈酒樓〉
+    - blockquote: 凡京師酒店，門首皆縛綵樓歡門。
+    - button "讀作品與地景 ↗"
+    - separator
+    - generic: 點選空地取消固定
+  - generic: 汴 水
+  - text: 風過河岸，日子悠長
+  - status: 臨街茶坊升至 3 級
+  - button "＋ 宋韻營造"
+  - button "公共營造"
+  - button "復原上一步"
+  - button "文人行旅"
+  - button "金庫 17570 文 · 需求"
+  - button "存檔管理"
+  - generic: 自由探索 · 拖曳移動畫面，點選屋舍與居民
+  - navigation "建造與探索":
+    - button "自由探索 1" [pressed]:
+      - generic: 自由探索
+      - generic: "1"
+    - button "民居 2":
+      - generic: 民居
+      - generic: "2"
+    - button "商鋪 3":
+      - generic: 商鋪
+      - generic: "3"
+    - button "作坊 4":
+      - generic: 作坊
+      - generic: "4"
+    - button "繼續": ▶
+    - button "1×"
+  - generic: 滾輪縮放 · 右鍵拖曳平移 · Q / E 旋轉
+  - generic: 進度已留存
+  - button "放大": ＋
+  - button "縮小": −
+  - button "回到初始視角": ⌖

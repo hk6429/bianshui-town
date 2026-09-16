@@ -1,13 +1,13 @@
 import {commuteDistance} from './employment.js';
 import {isUtility,serviceEfficiency} from './public-services.js';
-import {tierOf} from './building-tiers.js';
+import {buildingStats} from './building-tiers.js';
 import {damaged} from './fire-service.js';
 import {managed} from './city-finance.js';
 
-export const gardenRange=b=>24+4*(tierOf(b)-1);
+export const gardenRange=b=>buildingStats(b).range;
 export const isLeisureGarden=b=>b.type==='garden'&&!isUtility(b)&&b.stage>=3&&!damaged(b);
 export function gardenBenefit(t,home){
- const sources=t.buildings.filter(isLeisureGarden).map(b=>{const distance=commuteDistance(t,{home:home.id},b),range=gardenRange(b);return {id:b.id,distance,range,value:Math.max(0,1-distance/range)*(8+2*(tierOf(b)-1))*serviceEfficiency(t)};}).filter(x=>x.distance<x.range&&x.value>0).sort((a,b)=>b.value-a.value||a.id-b.id);
+ const sources=t.buildings.filter(isLeisureGarden).map(b=>{const distance=commuteDistance(t,{home:home.id},b),range=gardenRange(b);return {id:b.id,distance,range,value:Math.max(0,1-distance/range)*buildingStats(b).garden*serviceEfficiency(t)};}).filter(x=>x.distance<x.range&&x.value>0).sort((a,b)=>b.value-a.value||a.id-b.id);
  // Additional gardens share the same leisure time: each successive benefit halves.
  const score=Math.min(20,sources.reduce((sum,s,i)=>sum+s.value/2**i,0));
  return {score,sources};

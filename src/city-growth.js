@@ -1,3 +1,4 @@
+import {buildingStats} from './building-tiers.js';
 import {gardenReport,gardenBenefit} from './garden-services.js';
 import {pollutionReport,pollutionAt} from './pollution.js';
 import {waterReport} from './water-service.js';
@@ -7,7 +8,7 @@ import {jobCapacity,commuteDistance,assignJobs} from './employment.js';
 import {managed,taxDemand} from './city-finance.js';
 export const CENSUS_SECONDS=15;
 export const GRACE={unhoused:90,unemployed:180,unserved:360};
-export const homeCapacity=b=>b.type==='home'&&b.stage>=3?(b.footprint?8:b.level>=2?4:2):0;
+export const homeCapacity=b=>b.type==='home'&&b.stage>=3?buildingStats(b).housing:0;
 export const createDemography=(elapsed=0)=>({lastAt:elapsed,credit:0,arrived:0,departed:0});
 const bounded=n=>Math.round(Math.max(-100,Math.min(100,n)));
 const reachable=(t,home,b)=>Number.isFinite(commuteDistance(t,{home:home.id},b));
@@ -19,7 +20,7 @@ export function cityDemand(t){
  const garden=gardenReport(t),gardenHomes=garden.covered;
  const stock=t.economy.lots.filter(l=>l.at.startsWith('shop:')||l.at.startsWith('output:')).length;
  const unmet=t.people.filter(p=>!(p.needsSatisfiedUntil>t.elapsed)).length;
- const retail=shops.reduce((s,b)=>s+(b.footprint?12:4),0),industrial=works.reduce((s,b)=>s+jobCapacity(b),0),orders=Math.max(0,retail-stock);
+ const retail=shops.reduce((s,b)=>s+buildingStats(b).retail,0),industrial=works.reduce((s,b)=>s+jobCapacity(b),0),orders=Math.max(0,retail-stock);
  const tax=(taxDemand(t)-100)*.6,targetPopulation=2+jobs+Math.min(4,Math.floor(garden.average/5));
  let housingPressure=(targetPopulation-population)*12-vacant*4;
  // A new settlement can attract its first two residents without prebuilt jobs.

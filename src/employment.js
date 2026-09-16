@@ -1,7 +1,8 @@
+import {buildingStats} from './building-tiers.js';
 import {managed} from './city-finance.js';
 export const onSickLeave=(t,p)=>managed(t)&&(p.health??100)<40;
 const routeCache=new WeakMap();
-export const jobCapacity=b=>b.type==='work'?(b.footprint?6:4):b.type==='shop'?2:0;
+export const jobCapacity=b=>buildingStats(b).jobs;
 export const presentWorkers=(t,b)=>t.workers(b).filter(p=>!p.outside&&p.current===b.id&&!onSickLeave(t,p));
 export const staffingRatio=(t,b)=>Math.min(1,presentWorkers(t,b).length/jobCapacity(b));
 export const JOB_GRACE_SECONDS=60;

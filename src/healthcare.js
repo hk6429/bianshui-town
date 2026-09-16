@@ -1,11 +1,11 @@
 import {commuteDistance,presentWorkers,onSickLeave} from './employment.js';
 import {shopIsOpen} from './commerce.js';
-import {tierOf} from './building-tiers.js';
+import {buildingStats} from './building-tiers.js';
 import {managed} from './city-finance.js';
 
 export const HEALING_PER_SECOND=8/30;
-export const medicalRange=b=>24+(tierOf(b)-1)*4;
-export const medicalCapacity=(t,b)=>b?.design==='herbShop'&&shopIsOpen(t,b)?presentWorkers(t,b).length*(b.footprint?8:4)*tierOf(b):0;
+export const medicalRange=b=>buildingStats(b).range;
+export const medicalCapacity=(t,b)=>b?.design==='herbShop'&&shopIsOpen(t,b)?presentWorkers(t,b).length*buildingStats(b).carePerWorker:0;
 export function healthcareReport(t){
  const clinics=t.buildings.filter(b=>b.design==='herbShop'&&b.stage>=3).sort((a,b)=>a.id-b.id);
  const capacities=new Map(clinics.map(b=>[b.id,medicalCapacity(t,b)]));

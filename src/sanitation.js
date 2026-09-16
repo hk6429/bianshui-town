@@ -1,10 +1,10 @@
 import {commuteDistance,jobCapacity} from './employment.js';
-import {tierOf} from './building-tiers.js';
+import {buildingStats} from './building-tiers.js';
 import {serviceEfficiency} from './public-services.js';
 import {managed} from './city-finance.js';
 
-export const cleaningCapacity=(t,b)=>Math.floor((b.footprint?48:12)*tierOf(b)*serviceEfficiency(t));
-export const cleaningRange=b=>24+(tierOf(b)-1)*4;
+export const cleaningCapacity=(t,b)=>Math.floor(buildingStats(b).cleaning*serviceEfficiency(t));
+export const cleaningRange=b=>buildingStats(b).range;
 const ready=t=>t.buildings.filter(b=>b.stage>=3);
 const residents=(t,b)=>t.people.filter(p=>p.home===b.id).length;
 function clean(t,sites,yards){

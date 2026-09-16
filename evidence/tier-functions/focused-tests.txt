@@ -1,0 +1,35 @@
+✔ managed building prices are shared with execution; invalid or unaffordable placement changes nothing (1.792292ms)
+✔ roads, moves, upgrades and expansion debit once; insufficient funds preserve all state (1.0895ms)
+✔ failed refresh does not commit construction fees or ledger entries (1.804167ms)
+✔ daily upkeep depends on active facilities, is independent of tick sizes and settles once (102.305833ms)
+✔ only housed residents and new actual sales pay tax; policy range and tax pressure are bounded (0.545584ms)
+✔ old saves migrate to sandbox without back-charging; mode toggles never refill the treasury (57.521042ms)
+✔ debt blocks paid construction but permits demolition and policy changes (0.471791ms)
+✔ city schema rejects invalid policy, missing v9 budget and future settlement cursor (0.764083ms)
+✔ resident at staffed shop buys one available item, records needs and cannot repeat in same tick (9.521708ms)
+✔ no remote, off-hours, self-purchase, empty-stock or unattended sales (11.537709ms)
+✔ visitor obeys the same staffing rule; arrivals reopen and departures close the shop (1.7385ms)
+✔ every design and footprint has growing tier ability/upkeep, preview matches applied upgrade, and no sixth tier charges (14.051917ms)
+✔ housing capacity drives real occupancy and water reservations, including tiers above two (5.130333ms)
+✔ third-tier workshop finishes a real item sooner with exactly the same crew than second-tier (1.062375ms)
+✔ third-tier shop hires one more real employee than second-tier and retains existing staff (0.536708ms)
+✔ public-service capacity bindings agree with the shared ability table at every tier (0.208291ms)
+✔ shop upgrades increase real sales throughput with the same staff; cooldown persists and empty or closed shops do not sell (1.173375ms)
+✔ managed residents share the visitor sales cooldown, failed purchases retain stock, invalid cooldown saves fail (2.466541ms)
+✔ every catalog design and available footprint progresses through five distinct models, never six (1575.340625ms)
+✔ five tiers survive serialization, moving and four-cell expansion without losing residents or inventory (18.520833ms)
+✔ old saves start at visual tier one with existing functional upgrades intact; incomplete construction cannot upgrade (2.311666ms)
+✔ public streets connect to doors, block construction, persist and can be removed (7.217042ms)
+✔ moving one connected house preserves occupants and leaves its neighbour intact (38.809833ms)
+✔ demolition conserves cargo, residents survive and are rehoused without dangling references (522.80625ms)
+✔ home and workshop upgrades expand capacity, preserve variants and reject occupied four-grid expansion (13.236625ms)
+✔ editing roads while a loaded cart is moving never delivers to a missing shop (633.378084ms)
+✔ visitors actually walk onto a connected public street (135.384708ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1703.239042
