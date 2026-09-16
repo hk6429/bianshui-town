@@ -26,7 +26,7 @@ function save(){if(fixtureMode){$('#save-status').textContent='預覽場景 · �
 function setMode(next){editing=null;selectedDesign=null;$('#blueprint-status').hidden=true;scene.showBuildGrid(next!=='explore');if(next!=='explore')stopFollowing();mode=next;drag=null;scene.clearGroup(scene.preview);document.querySelectorAll('[data-mode]').forEach(b=>{b.classList.toggle('active',b.dataset.mode===mode);b.setAttribute('aria-pressed',String(b.dataset.mode===mode));});scene.controls.mouseButtons.LEFT=mode==='explore'?THREE.MOUSE.PAN:undefined;scene.controls.touches.ONE=mode==='explore'?THREE.TOUCH.PAN:undefined;$('#mode-hint').textContent=mode==='explore'?'自由探索 · 拖曳移動畫面，點選屋舍與居民':`${ROAD_TYPES[mode]||TYPES[mode]||'調整街坊'} · 點選放置，橫拉最多四格；斜拉 2 × 2 自動合建；道路只沿街坊外圍形成`;canvas.style.cursor=mode==='explore'?'grab':'crosshair';}
 for(const b of document.querySelectorAll('[data-mode]'))b.onclick=()=>{setMode(b.dataset.mode);$('#welcome').hidden=true;};
 $('#start-btn').onclick=()=>{$('#welcome').hidden=true;setMode('home');toast('在草地上點一下，安放第一間民居');};
-$('#demo-btn').onclick=()=>{town.demo();$('#welcome').hidden=true;setMode('explore');save();toast('歡迎來到汴水小鎮，點選屋舍看看誰在裡面');};
+$('#demo-btn').onclick=()=>{undoTown=null;$('#undo-urban').hidden=true;town.demo();$('#welcome').hidden=true;setMode('explore');save();toast('歡迎來到汴水小鎮，點選屋舍看看誰在裡面');};
 $('#pause-btn').onclick=()=>{paused=!paused;$('#pause-btn').textContent=paused?'▶':'Ⅱ';$('#pause-btn').classList.toggle('paused',paused);$('#pause-btn').setAttribute('aria-label',paused?'繼續':'暫停');};
 $('#speed-btn').onclick=()=>{speed=speed===1?2:speed===2?4:1;$('#speed-btn').textContent=`${speed}×`;};
 $('#weather-btn').onclick=()=>{const next={auto:'rain',rain:'clear',clear:'auto'}[town.weather.mode];setWeather(town,next);save();};
@@ -46,8 +46,8 @@ $('#life-panel').onclick=e=>{
 };
 $('#concepts-btn').onclick=()=>$('#gallery').showModal();$('#help-btn').onclick=()=>$('#help').showModal();
 for(const b of document.querySelectorAll('[data-close]'))b.onclick=()=>document.getElementById(b.dataset.close).close();
-$('#new-town').onclick=()=>$('#confirm-reset').showModal();
-$('#confirm-new').onclick=()=>{stopFollowing();town=new Town();undoTown=null;$('#undo-urban').hidden=true;scene.reset();scene.resetView();pinned=hovered=null;journalOpen=false;updateJournal();$('#inspector').hidden=true;$('#welcome').hidden=false;$('#confirm-reset').close();$('#help').close();setMode('explore');save();};
+$('#new-town').onclick=$('#reset-town').onclick=()=>$('#confirm-reset').showModal();
+$('#confirm-new').onclick=()=>{stopFollowing();undoTown=JSON.parse(JSON.stringify(town));town=new Town();$('#undo-urban').hidden=false;paused=false;speed=1;$('#speed-btn').textContent='1×';$('#pause-btn').textContent='Ⅱ';$('#pause-btn').classList.remove('paused');$('#pause-btn').setAttribute('aria-label','暫停');down=drag=selectedLot=pendingDelete=null;scene.reset();scene.resetView();pinned=hovered=null;journalOpen=false;updateJournal();$('#inspector').hidden=true;$('#welcome').hidden=false;$('#confirm-reset').close();$('#help').close();setMode('explore');save();toast('小鎮已重置；可立即按復原上一步救回');};
 function cellAt(e){const p=scene.atScreen(e.clientX,e.clientY);return p?{x:Math.round(p.x/CELL),z:Math.round(p.z/CELL)}:null;}
 canvas.addEventListener('contextmenu',e=>e.preventDefault());
 canvas.addEventListener('pointerdown',e=>{stopFollowing();if(e.button!==0)return;down={x:e.clientX,y:e.clientY};if(mode!=='explore'){const c=cellAt(e);if(c){const cells=plannedCells(c);drag={start:c,cells};scene.outline(cells,canPlan(cells)?0x668856:0xb5644c);canvas.setPointerCapture(e.pointerId);}}});
