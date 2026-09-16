@@ -1,0 +1,11 @@
+{
+  "input": "汴水小鎮.json",
+  "output": "汴水小鎮 (1).json",
+  "bytes": 80964,
+  "checks": {
+    "buildings": true,
+    "people": true,
+    "economy": true
+  },
+  "method": "Chrome原生filechooser選磁碟檔，預覽與套用，再按實際匯出鈕下載比較"
+}
