@@ -127,3 +127,5 @@ dialog{overflow:auto;overflow-wrap:anywhere}dialog input,dialog select{max-width
 .town-stats{z-index:1}
 
 #reading-collection{max-width:min(680px,94vw)}#reading-collection label,.reading-editor label{display:block;margin-top:.75rem}#reading-collection :is(input,select),.reading-editor :is(textarea,select){font:inherit;max-width:100%;width:100%;padding:.5rem}#reading-collection button,.reading-editor button{min-height:44px;margin:.4rem 0}#reading-collection article,.reading-editor{border-top:1px solid #bdb09a;margin-top:1rem;padding-top:.75rem}#anthology-result p{white-space:pre-wrap;overflow-wrap:anywhere}
+
+#resident-watch{max-width:min(640px,94vw)}#resident-watch-list article{border-top:1px solid #bdb09a;padding:.75rem 0}#resident-watch button{min-height:44px;margin:.25rem}

@@ -382,3 +382,10 @@
 - journey.reading可選{entries,anthology}，存檔version9；來源匹配與心得地景分開，歷史建物移除不抹心得。showLiterature/showAuthorWork在showModal後記錄讀訪，world collected不授予印記；印記僅開啟全文/節錄，不等於完整閱讀。
 - 初次UI發現WORKS circular TDZ，已分離純資料避免schema→collection→simulation；新測試先import UI再Town重現入口順序，最終48聚焦/288全套及build通過。Chrome錯配重試/三篇防重/不同短箋與地景回顯/全文入口通過，evidence/reading-collection。分頁已關閉。
 - 下一有界階段O17–O18：居民熟識與固定居民名冊。之後O19–22/O25、E18–20及E01–04/E21待補驗、最終四領域複評。完整goal active，非全部完成。
+
+## 最新交接：O17–O18居民熟識與名冊完成（2026-09-16）
+- 上輪28c21fd部署https://e00d4e9c.bianshui-town.pages.dev並正式讀回一致，evidence/release-28c21fd，分類progress。
+- 本輪87 verified /5 implemented /8 open。resident-relationships-data.js純資料11種日常；schema引用純資料避免TDZ。可選journey.residents最多128筆{resident,name,seen,watched,lastAction,lastAt}，watched最多16。
+- focusInspector(person)在一次commitJourney同時observeResident與inspectResident，日常只記主動開卡或點觀察，不由tick/follow自動刷。熟識=不同日常數＋該居民完成委託一次；0初見、1眼熟、3相識、5熟識，離線不衰退。
+- 名冊按ID開卡/定位/跟隨，離鎮停用且保留lastAction；取消關注不刪熟識。Chrome李/周分別關注與跳轉、重複同類不加分、移除一人保留另一人。62聚焦、294全套、build成功，evidence/resident-relationships，測試頁關閉。
+- 下批O19–O22：議事兩案、未見活動線索、事件分歧與補訪；可拆成O19/O20、O21/O22兩個有界階段。之後O25階段結語、E18–20與E01–04/E21待補驗、最終四領域複評。完整goal active。

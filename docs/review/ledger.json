@@ -1669,10 +1669,27 @@
       "acceptance": [
         "重複點跟隨不刷熟識；觀察不同日常後提升；沒有每日簽到需求。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/resident-relationships-data.js",
+        "src/resident-relationships.js",
+        "src/resident-relationships-ui.js",
+        "src/main.js",
+        "src/save-schema.js",
+        "index.html",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "tests/resident-relationships.test.js",
+        "evidence/resident-relationships/tests.txt",
+        "evidence/resident-relationships/regression.txt",
+        "evidence/resident-relationships/build.txt",
+        "evidence/resident-relationships/two-residents.txt",
+        "evidence/resident-relationships/follow.txt",
+        "evidence/resident-relationships/removed-one.txt",
+        "evidence/resident-relationships/README.md"
+      ],
+      "verifiedBy": "Codex root: relationship/save tests and Chrome named-resident watch/follow UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1692,10 +1709,27 @@
       "acceptance": [
         "關注兩人可分別打開正確居民；移除一人不影響另一人；人口變更不選錯人。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/resident-relationships-data.js",
+        "src/resident-relationships.js",
+        "src/resident-relationships-ui.js",
+        "src/main.js",
+        "src/save-schema.js",
+        "index.html",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "tests/resident-relationships.test.js",
+        "evidence/resident-relationships/tests.txt",
+        "evidence/resident-relationships/regression.txt",
+        "evidence/resident-relationships/build.txt",
+        "evidence/resident-relationships/two-residents.txt",
+        "evidence/resident-relationships/follow.txt",
+        "evidence/resident-relationships/removed-one.txt",
+        "evidence/resident-relationships/README.md"
+      ],
+      "verifiedBy": "Codex root: relationship/save tests and Chrome named-resident watch/follow UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {

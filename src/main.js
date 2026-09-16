@@ -1,3 +1,5 @@
+import {observeResident,watchResident,residentRecord,familiarityText} from './resident-relationships.js';
+import {installResidentRelationshipsUI} from './resident-relationships-ui.js';
 import {installReadingCollectionUI} from './reading-collection-ui.js';
 import {WORKS,SOURCE_WORK} from './reading-collection.js';
 import {installPlaceIdentityUI} from './place-identity-ui.js';
@@ -85,6 +87,7 @@ function changeJourney(action){
 }
 const identityUI=installPlaceIdentityUI({getTown:()=>town,change:changeJourney,edit:fn=>applyUrban(fn,{record:false}),focus:b=>{stopFollowing();setMode('explore');pinned={kind:'building',id:b.id};hovered=null;scene.focusAt([b.x*CELL,b.z*CELL],2.3);focusInspector();}});
 const readingUI=installReadingCollectionUI({getTown:()=>town,change:changeJourney,openWork:id=>{const w=WORKS[id];if(w.authorId)showAuthorWork(w.authorId);else showLiterature(w.source);}});
+installResidentRelationshipsUI({getTown:()=>town,change:changeJourney,focus:(p,follow)=>{stopFollowing();setMode('explore');pinned={kind:'person',id:p.id};hovered=null;const b=town.building(p.current)||town.building(p.home);scene.focusAt(!p.outside&&b?[b.x*CELL,b.z*CELL]:[p.x,p.z],2.3);if(follow){following=p.id;scene.follow(p.id);$('#following-name').textContent=`跟著${p.name}過一天`;$('#follow-status').hidden=false;}focusInspector();}});
 const journeyUI=installJourneyUI({getTown:()=>town,change:changeJourney,toast});
 function save(){if(recovery?.fault){$('#save-status').textContent='執行錯誤 · 已停止自動儲存';return;}if(fixtureMode){$('#save-status').textContent='預覽場景 · 不覆寫小鎮';return;}const result=saveStore.save(town.toJSON());$('#save-status').textContent=result.ok?'進度已留存':result.status==='conflict'?'另一分頁已有更新 · 請開啟存檔管理':result.status==='recovery'?'原存檔保留 · 自動儲存已停止':'儲存失敗 · 請匯出目前小鎮';if(result.status==='conflict'&&!paused){paused=true;saveUI?.open();}}
 
@@ -202,12 +205,14 @@ function inspectorContent(panel,html){delete panel.dataset.person;delete panel.d
 function stopFollowing(){following=null;if(scene)scene.follow(null);$('#follow-status').hidden=true;}
 $('#stop-follow').onclick=()=>stopFollowing();
 function closeInspector(){pinned=hovered=null;stopFollowing();scene.clearGroup(scene.selection);outlined='';$('#inspector').hidden=true;canvas.focus({preventScroll:true});}
-function focusInspector(){if(pinned?.kind==='person')changeJourney(t=>inspectResident(t,pinned.id));renderInspector();focusHeading($('#inspector'));}
+function focusInspector(){if(pinned?.kind==='person')changeJourney(t=>{const observed=observeResident(t,pinned.id),guided=inspectResident(t,pinned.id);return observed||guided;});renderInspector();focusHeading($('#inspector'));}
 $('#close-inspector').onclick=closeInspector;
 $('#inspector').addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();closeInspector();}});
 $('#inspector').addEventListener('focusin',()=>{if(!pinned&&hovered)pinned={...hovered};});
 installCityDirectory({getTown:()=>town,select:ref=>{stopFollowing();setMode('explore');pinned=ref;hovered=null;journalOpen=false;updateJournal();const b=ref.kind==='building'?town.building(ref.id):null,p=ref.kind==='person'?town.people.find(p=>p.id===ref.id):null,inside=p&&!p.outside?town.building(p.current)||town.building(p.home):null;scene.focusAt(b?[b.x*CELL,b.z*CELL]:inside?[inside.x*CELL,inside.z*CELL]:[p.x,p.z],2.3);focusInspector();}});
 $('#inspector').onclick=e=>{
+ const watched=e.target.closest('[data-watch-person]');if(watched){const id=Number(watched.dataset.watchPerson),enabled=!residentRecord(town,id)?.watched;if(!changeJourney(t=>watchResident(t,id,enabled)))toast('關注未變更：名冊最多16人、熟識最多128人，或存檔未成功。');renderInspector();return;}
+ const observe=e.target.closest('[data-observe-person]');if(observe){const id=Number(observe.dataset.observePerson);const changed=changeJourney(t=>observeResident(t,id));toast(changed?'已記錄這段日常':'這種日常已觀察過，或記錄未儲存');renderInspector();return;}
  const identity=e.target.closest('[data-place-identity]');if(identity){identityUI.open(Number(identity.dataset.placeIdentity));return;}
  const manage=e.target.closest('[data-manage]');if(manage){const b=town.building(Number(manage.dataset.building));if(!b)return;const op=manage.dataset.manage;if(op==='fire'){toast(applyUrban(draft=>repairFire(draft,b.id))?'火警處置完成，建築恢復使用':editFailure||'金庫不足；整修倒數結束後會免費恢復');renderInspector();return;}if(op==='move'){setMode('move');editing={kind:'move',id:b.id};pinned=hovered=null;$('#mode-hint').textContent=`搬移${b.name} · 點選${b.footprint?'2 × 2':'一格'}空地 · Esc 取消`;focusScene();return;}if(op==='delete'){pendingDelete=b.id;$('#demolish-name').textContent=`拆除「${b.name}」這一棟（占地 ${footprint(b).length} 格）？同街坊其他建築保留。住戶保留並等候新居，貨物退回貨棧。可使用「復原上一步」撤銷。`;$('#demolish').showModal();return;}const ok=applyUrban(draft=>upgradeBuilding(draft,b.id,op==='expand'));toast(ok?(op==='expand'?'四格擴建完成':`${town.building(b.id).name}升至 ${tierOf(town.building(b.id))} 級`):editFailure||(!upgradeUse(town,b).allowed?upgradeUse(town,b).text:op==='expand'?'四格擴建須原位置右方、下方共 2 × 2 空出，且不占道路':'建築尚未落成或已達五級'));renderInspector();return;}
 
@@ -248,9 +253,10 @@ function renderInspector(){
  }else{
   const p=town.people.find(p=>p.id===ref.id);if(!p){shell.hidden=true;return;}const home=town.building(p.home),work=town.building(p.work),dest=town.building(p.destination);
   if(panel.dataset.person!==String(p.id)){
-   panel.innerHTML=`<div class="eyebrow">街巷人物 · 一個人的日常</div><h2 id="person-name"></h2><p id="person-action"></p><details><summary id="person-wellbeing-title">民生滿意分項</summary><p id="person-wellbeing" style="white-space:pre-line"></p></details><button class="primary" id="follow-btn" data-follow="${escape(p.id)}"></button><hr><label>住處 · 工作場所</label><p id="person-place"></p><label>當下目的地</label><p id="person-goal"></p><section><label>街坊委託</label><p id="person-commission-reply"></p><button data-person-commission="${escape(p.id)}">回應這位居民的委託</button></section><label>今日記事 · 最新在上</label><ol id="person-diary" class="life-events"></ol>`;panel.dataset.person=String(p.id);delete panel.dataset.author;delete panel.dataset.content;
+   panel.innerHTML=`<div class="eyebrow">街巷人物 · 一個人的日常</div><h2 id="person-name"></h2><p id="person-action"></p><p id="person-familiarity"></p><button data-observe-person="${p.id}">觀察這段日常</button><button id="watch-person-btn" data-watch-person="${p.id}"></button><details><summary id="person-wellbeing-title">民生滿意分項</summary><p id="person-wellbeing" style="white-space:pre-line"></p></details><button class="primary" id="follow-btn" data-follow="${escape(p.id)}"></button><hr><label>住處 · 工作場所</label><p id="person-place"></p><label>當下目的地</label><p id="person-goal"></p><section><label>街坊委託</label><p id="person-commission-reply"></p><button data-person-commission="${escape(p.id)}">回應這位居民的委託</button></section><label>今日記事 · 最新在上</label><ol id="person-diary" class="life-events"></ol>`;panel.dataset.person=String(p.id);delete panel.dataset.author;delete panel.dataset.content;
   }
   const happiness=wellbeingReport(town).residents.get(p.id);$('#person-wellbeing-title').textContent=`民生滿意 ${happiness.score.toFixed(1)}／100 · 查看分項`;$('#person-wellbeing').textContent=happiness.parts.map(x=>`${x.name} ${x.score.toFixed(1)}／100（占${x.weight}％）\n${x.reason}`).join('\n\n');
+  $('#person-familiarity').textContent=familiarityText(town,p.id);$('#watch-person-btn').textContent=residentRecord(town,p.id)?.watched?'取消關注這位居民':'加入關注名冊';
   $('#person-commission-reply').textContent=commissionReply(town,p.id);
   $('#person-name').textContent=p.name;$('#person-action').textContent=(p.traffic||p.action)+((p.needsSatisfiedUntil||0)>town.elapsed?' · 日用品已備妥':'')+' · '+residentCondition(p)+` · 學力 ${educationOf(p).toFixed(1)}／100 · 健康 ${Math.floor(p.health??100)}／100${onSickLeave(town,p)?' · 病假休養':''}${healthcareReport(town).assigned.has(p.id)?' · 接受藥鋪照護':''}`;
   $('#person-place').textContent=`${home?.name||'尚未安排'} · ${work?.name||'尚待安排'}`;

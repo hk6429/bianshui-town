@@ -1,0 +1,82 @@
+- main:
+  - generic "汴水小鎮互動三維場景"
+  - generic: 汴
+  - heading "汴水小鎮" [level=1]
+  - paragraph: 一城煙火，慢慢生長
+  - generic: ☀
+  - strong: 午時 · 日光正好
+  - generic: 第 1 日 12:18
+  - button "切換白晝與夜晚": ☾
+  - button "天候：晴天，自然模式": 晴天 · 自然
+  - button "市井見聞"
+  - button "開啟環境音": ♪
+  - button "畫卷"
+  - button "重置小鎮"
+  - button "操作說明": "?"
+  - region "小鎮概況":
+    - strong: 汴水小鎮
+    - text: 我的城鎮
+    - strong: "8"
+    - text: 位居民
+    - strong: "5"
+    - text: 處建築園景
+    - strong: "5"
+    - text: 處街坊
+  - complementary "周小滿":
+    - button "關閉資訊小卡"
+    - generic: 街巷人物 · 一個人的日常
+    - heading "周小滿" [active] [level=2]
+    - paragraph: 趕去聽一段說書 · 生活狀況穩定 · 學力 0.0／100 · 健康 100／100
+    - paragraph: 眼熟 · 已主動觀察 1 種日常。見過：沿路行走。同一活動不重複累積，離線不衰退。
+    - button "觀察這段日常"
+    - button "取消關注這位居民"
+    - generic "民生滿意 67.5／100 · 查看分項"
+    - button "停止跟隨" [pressed]
+    - separator
+    - generic: 住處 · 工作場所
+    - paragraph: 望河雙閣 · 街角書肆
+    - generic: 當下目的地
+    - paragraph: 瓦舍勾欄 · 巷口聽說書
+    - generic: 街坊委託
+    - paragraph: 想找一處離家近、沿路可達的茶坊或園景，與街坊歇腳聊天。
+    - button "回應這位居民的委託"
+    - generic: 今日記事 · 最新在上
+    - list:
+      - time: 10:20
+      - generic: 趕去聽一段說書
+      - time: 08:00
+      - generic: 前往街角書肆
+  - generic: 汴 水
+  - text: 風過河岸，日子悠長
+  - generic: 跟著周小滿過一天
+  - button "停止跟隨": 停止跟隨 ×
+  - generic: 居 · 民居
+  - generic: 商 · 商鋪
+  - generic: 園 · 園景／公設
+  - generic: 園 · 園景／公設
+  - generic: 工 · 作坊
+  - generic: 居 民居 · 商 商鋪 · 工 作坊 · 園 園景／公設
+  - status: 這種日常已觀察過，或記錄未儲存
+  - button "營造與工具"
+  - generic: 自由探索 · 拖曳移動畫面，點選屋舍與居民
+  - navigation "建造與探索":
+    - button "自由探索 1" [pressed]:
+      - generic: 自由探索
+      - generic: "1"
+    - button "民居 2":
+      - generic: 民居
+      - generic: "2"
+    - button "商鋪 3":
+      - generic: 商鋪
+      - generic: "3"
+    - button "作坊 4":
+      - generic: 作坊
+      - generic: "4"
+    - button "暫停時間": Ⅱ
+    - button "1×"
+  - generic: 滾輪縮放 · 右鍵拖曳平移 · Q / E 旋轉
+  - status: 時間流動中
+  - generic: 預覽場景 · 不覆寫小鎮
+  - button "放大": ＋
+  - button "縮小": −
+  - button "回到初始視角": ⌖
