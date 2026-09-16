@@ -1,4 +1,4 @@
-# V8 四格街坊與宋代市集 — 驗證中
+# V8 四格街坊與宋代市集 — 已發布
 
 ## 契約
 - 建築直拉 4 格，斜拉 2×2 自動合成特殊建築；新作 3 民居、3 工坊、4 商鋪，各具一格／四格不同幾何。
@@ -35,4 +35,6 @@
 - 已有 build 單一 JS 超過 500 KB 提示；未在本次修改拆包架構。
 
 ## 發布
-- 待來源提交、GitHub 推送、Cloudflare Pages 部署與正式站逐檔回讀。
+- 來源提交 44b6bc4，已推送 GitHub main。Cloudflare Pages 部署 a72a2d18。
+- 正式網址 https://bianshui-town.pages.dev/ ，7/7 檔案 SHA-256 與 dist 相符（release.json）。
+- 正式 Chrome 舊存檔仍為 26 位居民、26 處建築、12 處街坊；新作十式 10 款顯示正確，console error 0。保留正式分頁。
