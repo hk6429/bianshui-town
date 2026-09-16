@@ -1259,10 +1259,27 @@
       "acceptance": [
         "挑戰模式未滿使用條件不能晉級且說明原因；符合後可升級；沙盒仍可自由升級。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/building-life.js",
+        "src/urban.js",
+        "src/main.js",
+        "src/simulation.js",
+        "src/journey-ui.js",
+        "src/save-schema.js",
+        "src/commissions.js"
+      ],
+      "evidence": [
+        "tests/building-life.test.js",
+        "evidence/building-life/tests.txt",
+        "evidence/building-life/regression.txt",
+        "evidence/building-life/build.txt",
+        "evidence/building-life/blueprints.txt",
+        "evidence/building-life/comparison.txt",
+        "evidence/building-life/upgrade-gate.txt",
+        "evidence/building-life/README.md"
+      ],
+      "verifiedBy": "Codex root: real simulation, transaction tests and Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1282,10 +1299,27 @@
       "acceptance": [
         "比較茶坊與書院可見不同活動；完成建造後真實居民行為吻合預覽。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/building-life.js",
+        "src/urban.js",
+        "src/main.js",
+        "src/simulation.js",
+        "src/journey-ui.js",
+        "src/save-schema.js",
+        "src/commissions.js"
+      ],
+      "evidence": [
+        "tests/building-life.test.js",
+        "evidence/building-life/tests.txt",
+        "evidence/building-life/regression.txt",
+        "evidence/building-life/build.txt",
+        "evidence/building-life/blueprints.txt",
+        "evidence/building-life/comparison.txt",
+        "evidence/building-life/upgrade-gate.txt",
+        "evidence/building-life/README.md"
+      ],
+      "verifiedBy": "Codex root: real simulation, transaction tests and Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1305,10 +1339,27 @@
       "acceptance": [
         "加建一座文化建築後面板可查看營造前與目前使用情況，無使用時明示尚未發生。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/building-life.js",
+        "src/urban.js",
+        "src/main.js",
+        "src/simulation.js",
+        "src/journey-ui.js",
+        "src/save-schema.js",
+        "src/commissions.js"
+      ],
+      "evidence": [
+        "tests/building-life.test.js",
+        "evidence/building-life/tests.txt",
+        "evidence/building-life/regression.txt",
+        "evidence/building-life/build.txt",
+        "evidence/building-life/blueprints.txt",
+        "evidence/building-life/comparison.txt",
+        "evidence/building-life/upgrade-gate.txt",
+        "evidence/building-life/README.md"
+      ],
+      "verifiedBy": "Codex root: real simulation, transaction tests and Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {

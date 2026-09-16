@@ -1,3 +1,4 @@
+import {residentBuildingAction} from './building-life.js';
 import {createJourney} from './journey.js';
 import {placementIssue,constructionPlan} from './construction-plan.js';
 import {TYPES} from './grid-rules.js';
@@ -19,7 +20,6 @@ import {tickHealthcare} from './healthcare.js';
 import {onSickLeave} from './employment.js';
 import {tickFire} from './fire-service.js';
 import {tickSanitation} from './sanitation.js';
-import {gardenActivity} from './heritage.js';
 import {createEconomy,importCargo,migrateEconomy,tickProduction,tickCraftCarts,syncCargo} from './production.js';
 import {createWeather,tickWeather,shelterResident} from './weather.js';
 import {prepareTraffic,applyTraffic} from './traffic.js';
@@ -140,7 +140,7 @@ export class Town {
    if(!p.outside && p.current!==target)this.travel(p,target);
    else if(p.outside && p.destination!==target)this.travel(p,target);
    this.move(p,dt);
-   if(!p.outside){const b=this.building(p.current);p.action=b?.type==='garden'?gardenActivity(b):b?.type==='home'?(h>=21||h<6?'安睡中':h>=8&&h<18?'在院裡整理花草':'在家歇息'):b?.type==='shop'?(p.work===b.id?'招呼客人':'喝茶、採買'):['燒製陶器','打磨木器','整理織物'][b?.variant||0];}
+   if(!p.outside){const b=this.building(p.current);p.action=residentBuildingAction(b,p,h);}
   }
   const shops=this.buildings.filter(b=>b.type==='shop'&&b.stage>=3);
   for(const b of this.buildings.filter(b=>b.type==='work'&&b.stage>=3)){

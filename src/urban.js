@@ -1,3 +1,4 @@
+import {upgradeUse} from './building-life.js';
 import {roadAnchor} from './road-network.js';
 import {charge,roadCost,moveCost,upgradeCost,refundBuilding} from './city-finance.js';
 import {NEW_DESIGNS} from './variety.js';
@@ -17,7 +18,7 @@ function detach(t,b){const block=t.blocks.find(g=>g.id===b.blockId),cells=footpr
 function attach(t,b,cells){const block={id:t.nextId++,type:b.type,combined:cells.length===4,cells:cells.map(c=>({...c}))};t.blocks.push(block);b.blockId=block.id;b.x=cells.reduce((s,c)=>s+c.x,0)/cells.length;b.z=cells.reduce((s,c)=>s+c.z,0)/cells.length;if(cells.length===4)b.footprint=cells.map(c=>({...c}));else delete b.footprint;}
 export function moveBuilding(t,id,anchor){const b=t.building(id);if(!b||b.stage<3)return false;const cells=b.footprint?squareCells(anchor):[anchor];if(!freeCells(t,cells,id)||!charge(t,moveCost(b),'搬移建築'))return false;detach(t,b);attach(t,b,cells);refresh(t);t.log(`${b.name}已搬移，住戶與貨物保留`);return true;}
 export function upgradeBuilding(t,id,expand=false){
- const b=t.building(id);if(!b||b.stage<3)return false;
+ const b=t.building(id);if(!b||b.stage<3||!upgradeUse(t,b).allowed)return false;
  if(expand){if(!['home','work'].includes(b.type)||b.footprint)return false;const cells=squareCells({x:b.x,z:b.z});if(!freeCells(t,cells,id)||!charge(t,upgradeCost(b,true),'四格擴建'))return false;detach(t,b);attach(t,b,cells);}
  else{if(tierOf(b)>=MAX_TIER||!charge(t,upgradeCost(b),'建築升級'))return false;b.tier=tierOf(b)+1;}
  if(['home','work'].includes(b.type)){b.level=2;if(!b.design||expand&&!NEW_DESIGNS[b.design])b.design=b.type==='home'?(b.footprint?'mansion':'residence'):['kiln','woodshop','weavery'][b.variant]+(b.footprint?'Hall':'');b.name=b.footprint&&DESIGNS[b.design].largeName?DESIGNS[b.design].largeName:DESIGNS[b.design].name;}

@@ -1,0 +1,28 @@
+✔ challenge rejects unused home without charge, allows actual households; sandbox and disabled challenge retain free upgrades (6.352584ms)
+✔ work requires an actual present healthy worker, not merely a job assignment; garden requires presence (2.531375ms)
+✔ all blueprints expose distinct activity, resident behavior and commission rules; academy preview uses the actual simulation action (2.697125ms)
+✔ construction comparison targets changed buildings only and records no imaginary use (6.922916ms)
+✔ failed build persistence leaves the old comparison untouched; schema rejects malformed snapshots (2.988834ms)
+✔ tea visitors in the real simulation perform the previewed activity; utility use comes from occupied service coverage (5.578875ms)
+✔ tea: named request completes only after actual connected venue is finished; completion is unique (20.228291ms)
+✔ garden: named request completes only after actual connected venue is finished; completion is unique (10.875125ms)
+✔ decline, withdraw, change solution and reaccept preserve city finances and cultural collection (1.30075ms)
+✔ isolated, distant, damaged, utility and absent-resident conditions cannot complete a request (1.590209ms)
+✔ save validation rejects duplicate residents, invalid combinations and future completion; legacy saves remain valid (2.905209ms)
+✔ storage failure does not publish commission state; output escapes resident and historical venue names (1.782292ms)
+✔ history remains bounded; completed departed residents and demolished venues are historical references (1.364542ms)
+✔ every design and footprint has growing tier ability/upkeep, preview matches applied upgrade, and no sixth tier charges (14.079709ms)
+✔ housing capacity drives real occupancy and water reservations, including tiers above two (4.903375ms)
+✔ third-tier workshop finishes a real item sooner with exactly the same crew than second-tier (0.92925ms)
+✔ third-tier shop hires one more real employee than second-tier and retains existing staff (0.5145ms)
+✔ public-service capacity bindings agree with the shared ability table at every tier (0.212292ms)
+✔ shop upgrades increase real sales throughput with the same staff; cooldown persists and empty or closed shops do not sell (1.146334ms)
+✔ managed residents share the visitor sales cooldown, failed purchases retain stock, invalid cooldown saves fail (2.665ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 109.60725

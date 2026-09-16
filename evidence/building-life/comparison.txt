@@ -1,0 +1,202 @@
+- main:
+  - generic "汴水小鎮互動三維場景"
+  - generic: 汴
+  - heading "汴水小鎮" [level=1]
+  - paragraph: 一城煙火，慢慢生長
+  - generic: ☀
+  - strong: 午時 · 日光正好
+  - generic: 第 1 日 11:54
+  - button "切換白晝與夜晚": ☾
+  - button "天候：晴天，自然模式": 晴天 · 自然
+  - button "市井見聞"
+  - button "開啟環境音": ♪
+  - button "畫卷"
+  - button "重置小鎮"
+  - button "操作說明": "?"
+  - region "小鎮概況":
+    - strong: "8"
+    - text: 位居民
+    - strong: "5"
+    - text: 處建築園景
+    - strong: "5"
+    - text: 處街坊
+  - generic: 汴 水
+  - text: 風過河岸，日子悠長
+  - generic: 居 · 民居
+  - generic: 商 · 商鋪
+  - generic: 園 · 園景／公設
+  - generic: 工 · 作坊
+  - generic: 居 民居 · 商 商鋪 · 工 作坊 · 園 園景／公設
+  - status: 曲水疊石園升至 2 級
+  - button "收合營造與工具" [expanded]
+  - button "＋ 宋韻營造"
+  - button "公共營造"
+  - button "復原上一步"
+  - button "城鎮旅程"
+  - button "城市清單"
+  - button "文人行旅"
+  - button "自由營造 · 收支"
+  - button "存檔管理"
+  - button "概念畫卷"
+  - button "通知紀錄": 通知紀錄（1）
+  - button "操作場景（鍵盤）"
+  - button "畫面設定"
+  - button "文字大小：100%": 文字 100%
+  - checkbox "放開後先預覽"
+  - text: 放開後先預覽
+  - status: 先選營造類型，再按操作場景；方向鍵移格、Enter 放置、Esc 取消。
+  - generic: 自由探索 · 拖曳移動畫面，點選屋舍與居民
+  - navigation "建造與探索":
+    - button "自由探索 1" [pressed]:
+      - generic: 自由探索
+      - generic: "1"
+    - button "民居 2":
+      - generic: 民居
+      - generic: "2"
+    - button "商鋪 3":
+      - generic: 商鋪
+      - generic: "3"
+    - button "作坊 4":
+      - generic: 作坊
+      - generic: "4"
+    - button "暫停時間": Ⅱ
+    - button "1×"
+  - generic: 滾輪縮放 · 右鍵拖曳平移 · Q / E 旋轉
+  - status: 閱讀中，時間暫停
+  - generic: 預覽場景 · 不覆寫小鎮
+  - button "放大": ＋
+  - button "縮小": −
+  - button "回到初始視角": ⌖
+- dialog "城鎮旅程":
+  - heading "城鎮旅程" [level=2]
+  - button "關閉城鎮旅程": ×
+  - paragraph: 依自己的步調營造，沒有現實時間期限。此處的引導挑戰獨立於金庫的城市經營／自由營造模式。
+  - checkbox "開啟引導挑戰（關閉即自由觀察）" [checked] [active]
+  - text: 開啟引導挑戰（關閉即自由觀察）
+  - generic: 我的城鎮願景
+  - combobox "我的城鎮願景":
+    - option "安居" [selected]
+    - option "工藝"
+    - option "文風"
+  - heading "營造成果對照" [level=3]
+  - paragraph: 最近營造：曲水疊石園；距今 14 遊戲秒。
+  - table "本次變動建物的快照對照":
+    - caption: 本次變動建物的快照對照
+    - rowgroup:
+      - row "指標 營造前 目前":
+        - columnheader "指標"
+        - columnheader "營造前"
+        - columnheader "目前"
+      - row "建築園景 1 1":
+        - rowheader "建築園景"
+        - cell "1"
+        - cell "1"
+      - row "在建物內居民 0 0":
+        - rowheader "在建物內居民"
+        - cell "0"
+        - cell "0"
+      - row "實際活動（最多32類） 尚未發生居民到場使用 尚未發生居民到場使用":
+        - rowheader "實際活動（最多32類）"
+        - cell "尚未發生居民到場使用"
+        - cell "尚未發生居民到場使用"
+  - paragraph: 這是本次變動建物在兩個時間點的觀察，可能同時受時段、天候、道路及其他事件影響，不能全部歸因於這次營造；沒有到場紀錄時不算新增使用。
+  - heading "居民委託" [level=3]
+  - paragraph: 不設期限，婉拒或放下不扣分。可從居民卡接取；此處列出已回應者及前八位居民。最多保留64份委託紀錄。
+  - article:
+    - heading "李小滿 · 街坊歇腳處" [level=4]
+    - paragraph: 想找一處離家近、沿路可達的茶坊或園景，與街坊歇腳聊天。
+    - paragraph: 兩案擇一：茶坊供街坊喝茶小聚；園景供散步歇腳。皆須距住處六格內、道路相通且落成；既有場所也可使用，不要求消費或等天候。
+    - button "接取茶坊小聚"
+    - button "接取園中歇腳"
+    - button "婉拒"
+  - article:
+    - heading "周小滿 · 街坊歇腳處" [level=4]
+    - paragraph: 想找一處離家近、沿路可達的茶坊或園景，與街坊歇腳聊天。
+    - paragraph: 兩案擇一：茶坊供街坊喝茶小聚；園景供散步歇腳。皆須距住處六格內、道路相通且落成；既有場所也可使用，不要求消費或等天候。
+    - button "接取茶坊小聚"
+    - button "接取園中歇腳"
+    - button "婉拒"
+  - article:
+    - heading "陳小滿 · 街坊歇腳處" [level=4]
+    - paragraph: 想找一處離家近、沿路可達的茶坊或園景，與街坊歇腳聊天。
+    - paragraph: 兩案擇一：茶坊供街坊喝茶小聚；園景供散步歇腳。皆須距住處六格內、道路相通且落成；既有場所也可使用，不要求消費或等天候。
+    - button "接取茶坊小聚"
+    - button "接取園中歇腳"
+    - button "婉拒"
+  - article:
+    - heading "柳小滿 · 街坊歇腳處" [level=4]
+    - paragraph: 想找一處離家近、沿路可達的茶坊或園景，與街坊歇腳聊天。
+    - paragraph: 兩案擇一：茶坊供街坊喝茶小聚；園景供散步歇腳。皆須距住處六格內、道路相通且落成；既有場所也可使用，不要求消費或等天候。
+    - button "接取茶坊小聚"
+    - button "接取園中歇腳"
+    - button "婉拒"
+  - article:
+    - heading "王小滿 · 街坊歇腳處" [level=4]
+    - paragraph: 想找一處離家近、沿路可達的茶坊或園景，與街坊歇腳聊天。
+    - paragraph: 兩案擇一：茶坊供街坊喝茶小聚；園景供散步歇腳。皆須距住處六格內、道路相通且落成；既有場所也可使用，不要求消費或等天候。
+    - button "接取茶坊小聚"
+    - button "接取園中歇腳"
+    - button "婉拒"
+  - article:
+    - heading "趙小滿 · 街坊歇腳處" [level=4]
+    - paragraph: 想找一處離家近、沿路可達的茶坊或園景，與街坊歇腳聊天。
+    - paragraph: 兩案擇一：茶坊供街坊喝茶小聚；園景供散步歇腳。皆須距住處六格內、道路相通且落成；既有場所也可使用，不要求消費或等天候。
+    - button "接取茶坊小聚"
+    - button "接取園中歇腳"
+    - button "婉拒"
+  - article:
+    - heading "何小滿 · 街坊歇腳處" [level=4]
+    - paragraph: 想找一處離家近、沿路可達的茶坊或園景，與街坊歇腳聊天。
+    - paragraph: 兩案擇一：茶坊供街坊喝茶小聚；園景供散步歇腳。皆須距住處六格內、道路相通且落成；既有場所也可使用，不要求消費或等天候。
+    - button "接取茶坊小聚"
+    - button "接取園中歇腳"
+    - button "婉拒"
+  - article:
+    - heading "蘇小滿 · 街坊歇腳處" [level=4]
+    - paragraph: 想找一處離家近、沿路可達的茶坊或園景，與街坊歇腳聊天。
+    - paragraph: 兩案擇一：茶坊供街坊喝茶小聚；園景供散步歇腳。皆須距住處六格內、道路相通且落成；既有場所也可使用，不要求消費或等天候。
+    - button "接取茶坊小聚"
+    - button "接取園中歇腳"
+    - button "婉拒"
+  - paragraph: 引導挑戰進行中
+  - heading "安居願景" [level=3]
+  - list:
+    - listitem: ✓ 落成民居：1／1
+    - listitem: ✓ 實際入住居民：8／4
+  - paragraph: 更換願景不拆建物，也不清除其他紀念章。
+  - heading "第一輪城市循環 · 1／4" [level=3]
+  - paragraph: 主動打開一位居民的資訊小卡
+  - paragraph: 不需等候：城市清單 → 選居民；只等待不算觀察。
+  - button "略過引導"
+  - button "打開城市清單"
+  - heading "城鎮里程碑" [level=3]
+  - paragraph: 達標可領取一枚紀念章；每種僅一次，不扣資源，也不要求每日登入。
+  - article:
+    - heading "煙火初起 · 可領取" [level=4]
+    - list:
+      - listitem: ✓ 落成民居：1／1
+      - listitem: ✓ 實際入住居民：8／2
+    - button "領取紀念章"
+  - article:
+    - heading "百工初成 · 未達成" [level=4]
+    - list:
+      - listitem: ✓ 落成作坊：1／1
+      - listitem: ○ 實際製成或售出一件工藝品：0／1
+    - button "領取紀念章" [disabled]
+  - article:
+    - heading "汴水文韻 · 未達成" [level=4]
+    - list:
+      - listitem: ✓ 落成一處有作品來源的文化地景：1／1
+      - listitem: ○ 文人實際落筆作品：0／1
+    - button "領取紀念章" [disabled]
+  - heading "選一個短程目標" [level=3]
+  - article:
+    - heading "認識一位街坊居民 · 目前選擇" [level=4]
+    - paragraph: 從城市清單打開一位居民的小卡。
+    - paragraph: 已有居民時不需等待天候或遊戲時間；空城須先迎接住戶。
+    - button "追蹤這個目標" [pressed]
+  - article:
+    - heading "完成一處民居 · 已完成" [level=4]
+    - paragraph: 安放民居，等工匠完成施工。
+    - paragraph: 需等約18遊戲秒，不限制現實時間。
+    - button "追蹤這個目標"

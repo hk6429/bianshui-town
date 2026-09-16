@@ -361,3 +361,10 @@
 - 可選journey.commissions，最多64份、一名居民一份，完成歷史保留姓名/場所名稱/ID/elapsed，不要求歷史對象仍存在。離鎮active顯示暫停，可放下。commitJourney先持久化再發布；無金錢或倒數懲罰。
 - 56聚焦、270全套、build成功；Chrome婉拒→茶坊未達disabled→放下→園景完成→居民卡感謝→回到同份委託。evidence/commissions；測試分頁關閉。
 - 下一個獨立階段O07–O09：自願升級條件、營造生活預覽與改建成果對照。仍有O10–22/O25及E18–20未實作，E01–04/E21待補驗；最後四領域複評未做。百項goal保持active，不把本批當全案完成。
+
+## 最新交接：O07–O09建築成長完成（2026-09-16）
+- 上輪ff09432部署https://1bcd6d7f.bianshui-town.pages.dev並正式讀回一致，屬progress；evidence/release-ff09432。
+- 本輪78 verified /5 implemented /17 open。building-life.js共用居民動作/預覽，upgradeUse要求managed＋challenge才生效，住戶/到場工人/園景停留/既有服務報告；sandbox自由升級。
+- recordConstruction在main applyUrban交易內、persist前執行，只記結構改變；undo傳record:false。journey.construction可選，at/targets/label/before，前後只比較涉及建物，活動最多32類。歷史target可被拆除，不驗目前存在。
+- 6個新案例，聚焦20/20。新增最後茶坊/供水案例前275全套；之後只精準化零人措辭及移除orphan import，聚焦與build通過。Chrome茶坊/書院預覽、自由升級、0→0對照、managed挑戰阻擋未使用園景；evidence/building-life。
+- 下個有界階段O10–O12：城鎮命名、建物命名、地點書籤。其餘O13–22/O25、工程E18–20及E01–04/E21待補驗，最終四領域複評仍保留。完整goal active。

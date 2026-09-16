@@ -3,11 +3,12 @@ import {roadReachable} from './road-network.js';
 import {escapeHTML as esc} from './content-html.js';
 export const SOLUTIONS={tea:'茶坊小聚',garden:'園中歇腳'};
 const gardenDesigns=new Set(['garden','scholarGarden','pavilion','pond','orchard']);
+export const commissionSolution=b=>designFor(b)==='tea'?'tea':b.type==='garden'&&(!b.design||gardenDesigns.has(b.design))?'garden':null;
 export const commissionRecord=(t,id)=>(t.journey.commissions||[]).find(c=>c.resident===id);
 export function commissionVenue(t,id,solution){
  const p=t.people.find(p=>p.id===id),home=t.buildings.find(b=>b.id===p?.home);
  if(!home)return null;
- return t.buildings.find(b=>b.stage>=3&&!b.fireDamage&&Math.hypot(b.x-home.x,b.z-home.z)<=6&&roadReachable(t,home.entrance,b.entrance)&&(solution==='tea'?designFor(b)==='tea':solution==='garden'&&b.type==='garden'&&(!b.design||gardenDesigns.has(b.design))))||null;
+ return t.buildings.find(b=>b.stage>=3&&!b.fireDamage&&Math.hypot(b.x-home.x,b.z-home.z)<=6&&roadReachable(t,home.entrance,b.entrance)&&commissionSolution(b)===solution)||null;
 }
 export function respondCommission(t,id,action,solution){
  const p=t.people.find(p=>p.id===id),old=commissionRecord(t,id);
