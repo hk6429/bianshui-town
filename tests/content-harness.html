@@ -1,0 +1,8 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>存檔文字顯示防線</title><h1>存檔文字顯示防線</h1><p>直接測試正式渲染函式；不使用存檔、不執行惡意程式。</p><pre id="result"></pre><section id="cases"></section><script type="module">
+import {lotButton,lotIdentity,lotFocusButton,stallDetails,stallListItem} from '/src/content-html.js';
+const payload='"><img src=x onerror="alert(1)"><script>alert(2)<\/script>';
+const lot={id:payload,good:'cloth'},stall={id:payload,name:'測試攤',goods:'茶湯',venue:payload};
+const root=document.querySelector('#cases');root.innerHTML=lotButton(lot,'貨棧')+'<h3>'+lotIdentity(lot)+'</h3>'+lotFocusButton(lot)+stallListItem(stall)+stallDetails(stall,payload,true)+lotButton({id:12,good:'cloth'},'茶坊');
+const nodes=[...root.querySelectorAll('*')];const bad=root.querySelectorAll('img,script').length;const events=nodes.flatMap(n=>[...n.attributes]).filter(a=>/^on/i.test(a.name)).length;
+document.querySelector('#result').textContent=`img/script 節點：${bad}\n事件屬性：${events}\n惡意原文作為文字：${root.textContent.includes(payload)}\n正常貨物顯示：${root.textContent.includes('#12 布匹 · 茶坊')}`;
+</script></html>

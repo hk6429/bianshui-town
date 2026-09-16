@@ -1943,7 +1943,7 @@
       "acceptance": [
         "重複 ID 被拒絕；低 nextId 修復或拒絕；連續新增100筆不產生重複 ID。"
       ],
-      "status": "implemented",
+      "status": "verified",
       "implementation": [
         "src/save-schema.js",
         "src/save-store.js",
@@ -1953,9 +1953,12 @@
       ],
       "evidence": [
         "evidence/r1/tests.txt",
-        "evidence/r1/README.md"
+        "evidence/r1/README.md",
+        "tests/save-contracts.test.js",
+        "evidence/content-safety/tests.txt",
+        "evidence/content-safety/README.md"
       ],
-      "verifiedBy": null,
+      "verifiedBy": "root: full contract assertions and relevant browser evidence; final independent review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -2071,7 +2074,7 @@
       "acceptance": [
         "restore 後模擬、改名、轉移貨物均不修改輸入 JSON 物件，包含巢狀 trail。"
       ],
-      "status": "implemented",
+      "status": "verified",
       "implementation": [
         "src/save-schema.js",
         "src/save-store.js",
@@ -2081,9 +2084,12 @@
       ],
       "evidence": [
         "evidence/r1/tests.txt",
-        "evidence/r1/README.md"
+        "evidence/r1/README.md",
+        "tests/save-contracts.test.js",
+        "evidence/content-safety/tests.txt",
+        "evidence/content-safety/README.md"
       ],
-      "verifiedBy": null,
+      "verifiedBy": "root: full contract assertions and relevant browser evidence; final independent review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -2220,7 +2226,7 @@
       "acceptance": [
         "重置、重新整理後可完整還原原城；建立新城也不立即銷毀唯一復原副本。"
       ],
-      "status": "implemented",
+      "status": "verified",
       "implementation": [
         "src/save-schema.js",
         "src/save-store.js",
@@ -2231,9 +2237,12 @@
       "evidence": [
         "evidence/r1/tests.txt",
         "evidence/r1/README.md",
-        "evidence/r1/reset-restored.txt"
+        "evidence/r1/reset-restored.txt",
+        "tests/save-contracts.test.js",
+        "evidence/content-safety/tests.txt",
+        "evidence/content-safety/README.md"
       ],
-      "verifiedBy": null,
+      "verifiedBy": "root: full contract assertions and relevant browser evidence; final independent review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -2469,19 +2478,26 @@
       "acceptance": [
         "惡意market.trades與lot.id被驗證拒絕；渲染防線亦不產生img/script/事件屬性；合法資料顯示正常。"
       ],
-      "status": "in_progress",
+      "status": "verified",
       "implementation": [
         "src/save-schema.js",
         "src/save-store.js",
         "src/save-ui.js",
         "src/simulation.js",
-        "src/main.js"
+        "src/main.js",
+        "src/content-html.js"
       ],
       "evidence": [
         "evidence/r1/tests.txt",
-        "evidence/r1/README.md"
+        "evidence/r1/README.md",
+        "tests/save-contracts.test.js",
+        "evidence/content-safety/tests.txt",
+        "evidence/content-safety/README.md",
+        "tests/content-html.test.js",
+        "evidence/content-safety/browser.txt",
+        "evidence/content-safety/browser.png"
       ],
-      "verifiedBy": null,
+      "verifiedBy": "root: full contract assertions and relevant browser evidence; final independent review pending",
       "reviewSource": "docs/review/engineering.json"
     }
   ]

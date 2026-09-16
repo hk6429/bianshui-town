@@ -44,3 +44,11 @@
 - 全套 115/115，build 通過；E22 verified。最新 12 verified / 8 implemented / 1 in_progress / 79 open。
 - 下一個有界階段優先 E25 渲染防線與 R1 餘下存檔驗收；之後 E17/E18/E19/E20，城市財政、服務、八角與 UX 仍保留完整契約。
 - 本次未部署，目標 active，不可完成結案。測試分頁已關閉。
+
+## 存檔顯示與契約補驗（2026-09-16）
+- content-html.js：lotButton/lotIdentity/lotFocusButton/stallDetails/stallListItem 使用統一 escapeHTML，main.js 直接使用，非測試替身。
+- Chrome content-harness 實際 DOM 無 img/script/事件屬性，惡意原文以純文字顯示，合法 #12 布匹正常。
+- tests/save-contracts.test.js 補 E07 新增 100 棟後 ID 唯一、E11 模擬/改名/轉貨不改原快照、E16 reset 後 reload + 新城 autosave 完整復原。
+- E07/E11/E16/E25 現在 verified；全套 120/120，build 通過。證據 evidence/content-safety。
+- 最新 ledger：16 verified / 5 implemented / 79 open。測試頁已關閉。
+- 下一個有界階段可集中 E01–E04 真實存檔 UI 補驗，或 E17 編輯交易；勿重跑已完成的全畫風與五級升級。
