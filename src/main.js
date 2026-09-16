@@ -1,3 +1,4 @@
+import {residentCondition} from './city-growth.js';
 import {shopStatus} from './commerce.js';
 import {installFinanceUI} from './finance-ui.js';
 import {buildCost,moveCost,upgradeCost,roadCost,affordable,managed} from './city-finance.js';
@@ -118,7 +119,7 @@ function renderInspector(){
   if(panel.dataset.person!==String(p.id)){
    panel.innerHTML=`<div class="eyebrow">街巷人物 · 一個人的日常</div><h2 id="person-name"></h2><p id="person-action"></p><button class="primary" id="follow-btn" data-follow="${escape(p.id)}"></button><hr><label>住處 · 工作場所</label><p id="person-place"></p><label>當下目的地</label><p id="person-goal"></p><label>今日記事 · 最新在上</label><ol id="person-diary" class="life-events"></ol>`;panel.dataset.person=String(p.id);delete panel.dataset.author;delete panel.dataset.content;
   }
-  $('#person-name').textContent=p.name;$('#person-action').textContent=(p.traffic||p.action)+((p.needsSatisfiedUntil||0)>town.elapsed?' · 日用品已備妥':'');
+  $('#person-name').textContent=p.name;$('#person-action').textContent=(p.traffic||p.action)+((p.needsSatisfiedUntil||0)>town.elapsed?' · 日用品已備妥':'')+' · '+residentCondition(p);
   $('#person-place').textContent=`${home?.name||'尚未安排'} · ${work?.name||'尚待安排'}`;
   $('#person-goal').textContent=p.streetEvent?`${town.stories.active?.venue||'街口'} · ${town.stories.active?.title||'街坊相聚'}`:dest?.name||'暫無目的地';
   $('#follow-btn').textContent=following===p.id?'停止跟隨':'跟著他過一天';$('#follow-btn').setAttribute('aria-pressed',String(following===p.id));
@@ -127,7 +128,7 @@ function renderInspector(){
   if(outlined){scene.clearGroup(scene.selection);outlined='';}
  }
 }
-function updateUI(day){financeUI.update();$('#weather-btn').textContent=`${town.weather.raining?'細雨':'晴天'} · ${{auto:'自然',rain:'手動',clear:'手動'}[town.weather.mode]}`;$('#weather-btn').setAttribute('aria-label',`天候：${town.weather.raining?'細雨':'晴天'}，${{auto:'自然',rain:'手動',clear:'手動'}[town.weather.mode]}模式`);const h=town.time%24,hh=Math.floor(h),mm=Math.floor((h-hh)*60);$('#clock').textContent=`第 ${Math.floor(town.time/24)+1} 日　${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;const shichen=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'][Math.floor(((h+1)%24)/2)];$('#period').textContent=`${shichen}時 · ${h<6?'萬籟俱寂':h<10?'晨光初醒':h<16?'日光正好':h<19?'炊煙漸起':'燈火可親'}`;$('#sun-icon').textContent=day>.5?'☀':'☾';$('#light-toggle').textContent=day>.5?'☾':'☀';document.body.classList.toggle('night',day<.4);$('#population').textContent=town.people.length;$('#building-count').textContent=town.buildings.length;$('#block-count').textContent=town.blocks.length;renderInspector();}
+function updateUI(day){if(following!=null&&!town.people.some(p=>p.id===following)&&!String(following).startsWith('author:'))stopFollowing();financeUI.update();$('#weather-btn').textContent=`${town.weather.raining?'細雨':'晴天'} · ${{auto:'自然',rain:'手動',clear:'手動'}[town.weather.mode]}`;$('#weather-btn').setAttribute('aria-label',`天候：${town.weather.raining?'細雨':'晴天'}，${{auto:'自然',rain:'手動',clear:'手動'}[town.weather.mode]}模式`);const h=town.time%24,hh=Math.floor(h),mm=Math.floor((h-hh)*60);$('#clock').textContent=`第 ${Math.floor(town.time/24)+1} 日　${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;const shichen=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'][Math.floor(((h+1)%24)/2)];$('#period').textContent=`${shichen}時 · ${h<6?'萬籟俱寂':h<10?'晨光初醒':h<16?'日光正好':h<19?'炊煙漸起':'燈火可親'}`;$('#sun-icon').textContent=day>.5?'☀':'☾';$('#light-toggle').textContent=day>.5?'☾':'☀';document.body.classList.toggle('night',day<.4);$('#population').textContent=town.people.length;$('#building-count').textContent=town.buildings.length;$('#block-count').textContent=town.blocks.length;renderInspector();}
 function boatStatus(){const b=town.life.boat;return b.state==='approach'?(b.mast?'貨船沿汴河駛來':'船家收桅，緩緩穿過虹橋'):({mooring:'船家正在靠岸繫纜',unloading:'腳夫往返船邊卸貨',depart:'卸貨完成，貨船離岸',away:'等候下一艘來船'})[b.state];}
 function updateJournal(){
  const panel=$('#life-panel');$('#life-btn').setAttribute('aria-expanded',String(journalOpen));panel.hidden=!journalOpen;if(!journalOpen)return;const l=town.life;

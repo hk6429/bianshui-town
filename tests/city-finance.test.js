@@ -1,3 +1,4 @@
+import {addResident} from '../src/city-growth.js';
 import {test} from 'node:test';import assert from 'node:assert/strict';
 import {Town} from '../src/simulation.js';import {validateSave} from '../src/save-schema.js';import {editTown} from '../src/town-edit.js';
 import {buildCost,moveCost,upgradeCost,roadCost,dailyUpkeep,householdTax,taxDemand,setCityPolicy,settleBudget} from '../src/city-finance.js';
@@ -18,9 +19,9 @@ test('daily upkeep depends on active facilities, is independent of tick sizes an
  const one=dailyUpkeep(a);a.place('shop',[{x:-3,z:0}],true);assert(dailyUpkeep(a)>one);const active=dailyUpkeep(a);a.place('work',[{x:2,z:4}],false);assert.equal(dailyUpkeep(a),active);
 });
 test('only housed residents and new actual sales pay tax; policy range and tax pressure are bounded',()=>{
- const t=new Town({mode:'managed'});t.place('home',[{x:0,z:0}],true);assert.equal(householdTax(t),0);t.tick(.05);assert.equal(householdTax(t),4);
+ const t=new Town({mode:'managed'});t.place('home',[{x:0,z:0}],true);assert.equal(householdTax(t),0);addResident(t,t.buildings[0]);addResident(t,t.buildings[0]);assert.equal(householdTax(t),4);
  const lot=t.economy.lots[0];lot.good='cloth';const funds=t.city.treasury;assert.equal(transfer(t,'boat','sold',1,'cloth'),1);assert.equal(t.city.treasury,funds+4);assert.equal(transfer(t,'sold','sold',1,'cloth'),0);assert.equal(t.city.treasury,funds+4);
- const demand=taxDemand(t);assert(setCityPolicy(t,{taxRate:20}));assert.equal(householdTax(t),8);assert(taxDemand(t)<demand);const before=JSON.stringify(t);assert(!setCityPolicy(t,{taxRate:21}));assert.equal(JSON.stringify(t),before);
+ const demand=taxDemand(t);assert(setCityPolicy(t,{taxRate:20}));assert.equal(householdTax(t),8);assert(taxDemand(t)<demand);const next=t.economy.lots.find(l=>l.at==='boat');next.good='cloth';const highFunds=t.city.treasury;assert.equal(transfer(t,'boat','sold',1,'cloth'),1);assert.equal(t.city.treasury,highFunds+8);const before=JSON.stringify(t);assert(!setCityPolicy(t,{taxRate:21}));assert.equal(JSON.stringify(t),before);
 });
 test('old saves migrate to sandbox without back-charging; mode toggles never refill the treasury',()=>{
  const t=new Town();t.demo();const old=t.toJSON();old.version=8;delete old.city;const r=Town.restore(old);assert.equal(r.city.mode,'sandbox');const n=r.buildings.length;assert.equal(r.city.ledger.length,0);assert(setCityPolicy(r,{mode:'managed'}));r.city.treasury=500;assert(setCityPolicy(r,{mode:'sandbox'}));r.time+=24;settleBudget(r);assert.equal(r.city.treasury,500);assert(setCityPolicy(r,{mode:'managed'}));assert.equal(r.city.treasury,500);assert.equal(r.buildings.length,n);assert.doesNotThrow(()=>Town.restore(r.toJSON()));

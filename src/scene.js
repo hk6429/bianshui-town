@@ -88,6 +88,7 @@ export class TownScene {
    for(const d of this.decorations)d.group.visible=!town.buildings.some(b=>Math.abs(b.x*4-d.x)<(b.footprint?4.3:2.3)&&Math.abs(b.z*4-d.z)<(b.footprint?4.3:2.3))&&![...town.roads].some(k=>{const [x,z]=point(k);return Math.abs(x-d.x)<.5&&Math.abs(z-d.z)<.5;});
    this.clearGroup(this.meadow);const flowers=new THREE.Group();for(const d of this.decorations){if(d.group.visible){const copy=d.group.clone(true);copy.traverse(o=>{if(o.isMesh)o.geometry=o.geometry.clone();});flowers.add(copy);}d.group.visible=false;}this.meadow.add(batch(flowers));this.lastRevision=town.revision;
   }
+  for(const [id,m] of this.personModels)if(!town.people.some(p=>p.id===id)){this.scene.remove(m);this.clearGroup(m);this.personModels.delete(id);}
   for(const p of town.people){if(!this.personModels.has(p.id)){const g=this.person(p.id);g.traverse(o=>o.userData.personId=p.id);this.personModels.set(p.id,g);this.scene.add(g);}}
   for(const c of town.carts){if(!this.cartModels.has(c.id)){const g=new THREE.Group();box(g,.7,.12,.95,0x94724b,0,.43,0);for(const x of [-.38,.38]){box(g,.08,.34,1,0x896945,x,.61,0);const wheel=cyl(g,.24,.24,.07,0x4e4635,x,.25,0,10);wheel.rotation.z=Math.PI/2;}box(g,.65,.35,.08,0x896945,0,.61,-.45);for(const x of [-.25,.25])box(g,.04,.04,.8,0x745b3e,x,.48,.7);const cargo=new THREE.Group();cargo.position.set(0,.55,-.2);cargo.position.y=.65;g.add(cargo);g.userData.cargo=cargo;const porter=this.person(c.id);porter.position.z=1.1;g.add(porter);this.cartModels.set(c.id,g);this.scene.add(g);}}
  }

@@ -91,7 +91,7 @@
       "acceptance": [
         "無人空屋不繳人口稅；成交產生一次收入；提高稅率增加每筆稅額並降低對應需求。"
       ],
-      "status": "in_progress",
+      "status": "verified",
       "implementation": [
         "src/city-finance.js",
         "src/finance-ui.js",
@@ -99,15 +99,25 @@
         "src/urban.js",
         "src/production.js",
         "src/save-schema.js",
-        "src/main.js"
+        "src/main.js",
+        "src/city-growth.js",
+        "src/scene.js",
+        "index.html",
+        "src/style.css"
       ],
       "evidence": [
         "tests/city-finance.test.js",
         "evidence/city-finance/tests.txt",
         "evidence/city-finance/README.md",
-        "evidence/city-finance/browser-budget.txt"
+        "evidence/city-finance/browser-budget.txt",
+        "tests/city-growth.test.js",
+        "evidence/city-growth/README.md",
+        "evidence/city-growth/tests.txt",
+        "evidence/city-growth/tax20.txt",
+        "evidence/city-growth/population-after.txt",
+        "evidence/city-growth/mobile.png"
       ],
-      "verifiedBy": null,
+      "verifiedBy": "根代理：城市情境測試、Chrome 實際操作與手機面板驗收；最終四領域複評仍待",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -163,10 +173,27 @@
       "acceptance": [
         "純住宅、純商業、純作坊與均衡城鎮的需求方向不同；增建已過剩類型後該類需求下降。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/city-growth.js",
+        "src/simulation.js",
+        "src/save-schema.js",
+        "src/scene.js",
+        "src/finance-ui.js",
+        "src/main.js",
+        "index.html",
+        "src/style.css"
+      ],
+      "evidence": [
+        "tests/city-growth.test.js",
+        "tests/city-finance.test.js",
+        "evidence/city-growth/README.md",
+        "evidence/city-growth/tests.txt",
+        "evidence/city-growth/tax20.txt",
+        "evidence/city-growth/population-after.txt",
+        "evidence/city-growth/mobile.png"
+      ],
+      "verifiedBy": "根代理：城市情境測試、Chrome 實際操作與手機面板驗收；最終四領域複評仍待",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -186,10 +213,27 @@
       "acceptance": [
         "空屋在第一次 tick 不會全滿；相同時間不同步長移入量一致；需求不足時保留空屋。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/city-growth.js",
+        "src/simulation.js",
+        "src/save-schema.js",
+        "src/scene.js",
+        "src/finance-ui.js",
+        "src/main.js",
+        "index.html",
+        "src/style.css"
+      ],
+      "evidence": [
+        "tests/city-growth.test.js",
+        "tests/city-finance.test.js",
+        "evidence/city-growth/README.md",
+        "evidence/city-growth/tests.txt",
+        "evidence/city-growth/tax20.txt",
+        "evidence/city-growth/population-after.txt",
+        "evidence/city-growth/mobile.png"
+      ],
+      "verifiedBy": "根代理：城市情境測試、Chrome 實際操作與手機面板驗收；最終四領域複評仍待",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -209,10 +253,27 @@
       "acceptance": [
         "短期施工不造成立即遷出；長期無家者減少；提供住宅及工作後移出停止且人員引用一致。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/city-growth.js",
+        "src/simulation.js",
+        "src/save-schema.js",
+        "src/scene.js",
+        "src/finance-ui.js",
+        "src/main.js",
+        "index.html",
+        "src/style.css"
+      ],
+      "evidence": [
+        "tests/city-growth.test.js",
+        "tests/city-finance.test.js",
+        "evidence/city-growth/README.md",
+        "evidence/city-growth/tests.txt",
+        "evidence/city-growth/tax20.txt",
+        "evidence/city-growth/population-after.txt",
+        "evidence/city-growth/mobile.png"
+      ],
+      "verifiedBy": "根代理：城市情境測試、Chrome 實際操作與手機面板驗收；最終四領域複評仍待",
       "reviewSource": "docs/review/city.json"
     },
     {

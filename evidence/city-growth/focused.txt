@@ -1,0 +1,24 @@
+✔ managed building prices are shared with execution; invalid or unaffordable placement changes nothing (2.173292ms)
+✔ roads, moves, upgrades and expansion debit once; insufficient funds preserve all state (12.039417ms)
+✔ failed refresh does not commit construction fees or ledger entries (2.397375ms)
+✔ daily upkeep depends on active facilities, is independent of tick sizes and settles once (147.308792ms)
+✔ only housed residents and new actual sales pay tax; policy range and tax pressure are bounded (3.016166ms)
+✔ old saves migrate to sandbox without back-charging; mode toggles never refill the treasury (83.790083ms)
+✔ debt blocks paid construction but permits demolition and policy changes (1.009958ms)
+✔ city schema rejects invalid policy, missing v9 budget and future settlement cursor (0.736292ms)
+✔ RCI responds differently to housing, retail, workshops and balance; excess supply reduces its own demand (51.103958ms)
+✔ tax increases reduce all three real demand scores, delay arrivals and empty homes pay no tax (28.185667ms)
+✔ managed arrivals are gradual, frame-step independent and cannot accumulate a burst behind low demand (146.865ms)
+✔ long-term homelessness causes bounded exits, clears chat/story references and preserves valid saves (4.418208ms)
+✔ rehousing has priority over immigration; restoring home and job ends hardship before departure (58.5835ms)
+✔ unemployment and unmet goods each have their own grace, relief cancels only the relevant timer (74.628125ms)
+✔ census credit and hardship round-trip without replay; sandbox remains explicitly unconstrained (65.047625ms)
+✔ removing the last story participant cancels the event without orphan references (2.236ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 497.706583

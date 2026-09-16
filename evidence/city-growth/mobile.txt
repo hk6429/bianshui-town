@@ -1,0 +1,79 @@
+- main:
+  - generic "汴水小鎮互動三維場景"
+  - generic: 汴
+  - heading "汴水小鎮" [level=1]
+  - generic: ☾
+  - strong: 酉時 · 炊煙漸起
+  - generic: 第 1 日 18:29
+  - button "切換白晝與夜晚": ☀
+  - button "天候：晴天，自然模式": 晴天 · 自然
+  - button "市井見聞"
+  - button "開啟環境音": ♪
+  - button "重置小鎮"
+  - button "操作說明": "?"
+  - region "小鎮概況":
+    - strong: "4"
+    - text: 位居民
+    - strong: "4"
+    - text: 處建築園景
+    - strong: "4"
+    - text: 處街坊
+  - status
+  - button "＋ 宋韻營造"
+  - button "公共營造"
+  - button "文人行旅"
+  - button "金庫 1740 文 · 需求"
+  - button "存檔管理"
+  - generic: 自由探索 · 拖曳移動畫面，點選屋舍與居民
+  - navigation "建造與探索":
+    - button "自由探索" [pressed]:
+      - generic: 自由探索
+    - button "民居":
+      - generic: 民居
+    - button "商鋪":
+      - generic: 商鋪
+    - button "作坊":
+      - generic: 作坊
+    - button "繼續": ▶
+    - button "1×"
+  - generic: 滾輪縮放 · 右鍵拖曳平移 · Q / E 旋轉
+  - generic: 進度已留存
+  - button "放大": ＋
+  - button "縮小": −
+  - button "回到初始視角": ⌖
+- dialog "小鎮收支與營造模式" [active]:
+  - heading "小鎮收支與營造模式" [level=2]
+  - button "關閉小鎮收支": ×
+  - paragraph: 城市經營 · 金庫 1740 文。每日人口稅預估 8 文；目前每日維護費 14 文。經營模式另依實際成交計稅。累計稅收 0 文、已付維護費 0 文。
+  - text: 遊玩模式
+  - combobox "遊玩模式":
+    - option "城市經營" [selected]
+    - option "自由營造"
+  - text: 稅率（0–20%）
+  - spinbutton "稅率（0–20%）": "10"
+  - status: 城市經營會收建設與維護費；自由營造不扣款、不收稅。切換不重設金庫，也不追扣舊城建設費。
+  - button "套用模式與稅率"
+  - region "城市成長需求":
+    - heading "城市成長需求" [level=3]
+    - paragraph: 正值代表有成長空間，負值代表供給過剩。人口還需要空屋與可達工作；空屋不保證有人遷入。
+    - paragraph:
+      - text: 住宅需求 48
+      - meter "住宅需求"
+      - text: 空位 0／容量 4 人；可達工作 6 席，失業 0 人；有可達園景的住宅 0 處；稅率需求修正 +0
+    - paragraph:
+      - text: 商業需求 36
+      - meter "商業需求"
+      - text: 居民 4 人，日用品待補 4 人；商業服務容量 4 人，現有存貨 0 件；稅率需求修正 +0
+    - paragraph:
+      - text: 作坊需求 -16
+      - meter "作坊需求"
+      - text: 商鋪補貨缺口 4 件；失業 0 人，作坊工作容量 4 席；稅率需求修正 +0
+    - paragraph: 城市經營：每 15 遊戲秒評估一次，最多遷入一人；優先安置原有無家住戶。需求越低，等候越久。長期無家 90 秒、失業 180 秒或日用品不足 360 秒後，每次最多遷出一人；改善後停止該項倒數。累計遷入 4 人、遷出 0 人。
+  - heading "營造與維護費" [level=3]
+  - paragraph: 每格建設：民居 120、商鋪 180、作坊 240、園景 100 文；小路 20、大路 45 文。四格按四格計費。每日每格維護：民居 2、商鋪 4、作坊 6、園景 3 文，再乘建築級數；小路 1、大路 2 文。未落成建築暫不收維護費。
+  - heading "最近收支" [level=3]
+  - list:
+    - listitem: 第 1 日 · 建設 -240 文 · 餘額 1740 文
+    - listitem: 第 1 日 · 建設 -180 文 · 餘額 1980 文
+    - listitem: 第 1 日 · 建設 -120 文 · 餘額 2160 文
+    - listitem: 第 1 日 · 建設 -120 文 · 餘額 2280 文
