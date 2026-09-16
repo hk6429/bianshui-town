@@ -402,3 +402,11 @@
 - 16聚焦、303全套、build通過。Chrome v8首場瓦舍無人到場取消；第二場攤前新貨active時跳轉，探索冊確實親自見過，其餘未見；摘要李/周/陳/王四位到場，回訪明示已散場歷史地點。evidence/story-history，測試頁已關閉。
 - 90 verified /6 implemented /4 open；O19仍待完整UI採納建成驗證，E01–04/E21待補驗。剩餘實作O25階段結語、E18–20工程。最後四領域複評仍需完成，百項goal active。
 - 下一有界階段O25，順便補O19；再集中處理E18–20與相關工程待驗。
+
+## 最新交接：O19/O25完成（2026-09-16）
+- 上輪3ee33fc部署https://49fb70d0.bianshui-town.pages.dev，讀回一致；分類progress。
+- journey-summary.js以遊戲載入起點sets計本次新增紀念章/首次讀訪/完成委託；重看不變。一般applyUrban替換Town不重設baseline，只有confirm-new與saveUI replaceTown明確resetSession。回顧純讀，不加存檔欄位。結束按鈕close→paused=true→save→syncPauseButton，不清城鎮。
+- 15聚焦、306全套及build通過。Chrome實際領煙火初起、開蘇軾作品、回顧各1、重看相同，結束後8人5建物且繼續時間pressed。
+- O19完整UI補驗：拆除預覽唯一園景→擱置→採納→disabled→新建百花公園0,0→落成後enabled→回應成功。evidence/journey-summary。測試頁已關閉。
+- UI注意：文學選集的「作品與讀訪印記」是收合details，先點展開，不能直接點隱藏作品；施工progressbar hidden可能只是小卡關閉，須以實際園景數及回應enabled確認落成。
+- 帳本92 verified /5 implemented /3 open，城市/UX/八角各25已驗；工程E18–20待實作，E01–04/E21待補驗，最後四領域複評待做。下一有界階段集中工程場景更新與資源生命週期，勿把本批當百項完成。

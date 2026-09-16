@@ -1,0 +1,23 @@
+✔ missing garden generates proposal; adoption needs actual finished construction; ignore has no penalty (5.250416ms)
+✔ work proposal and garden proposal are independent; unfinished and damaged facilities do not fulfill requests (0.78925ms)
+✔ real world event remains unseen until explicitly viewed while active and someone has arrived (100.887709ms)
+✔ save rejects duplicate proposals, missing completion details, future records and nonexistent event IDs (0.93575ms)
+✔ failed persistence never publishes adoption and historical venue text is escaped (0.507375ms)
+✔ one actual milestone, reading and completed commission appear once; review itself never changes town (9.039583ms)
+✔ existing records are excluded, normal transactional town replacement preserves baseline, explicitly new session starts empty (3.303666ms)
+✔ review allows stopping before vision and escapes resident-provided labels (0.258667ms)
+✔ three visions read actual different conditions and switching never changes the town (1.208833ms)
+✔ all milestone types need their live conditions, and each stamp can only be claimed once (0.837875ms)
+✔ guided cycle requires active observation and returning to review, not elapsed time (0.286917ms)
+✔ optional challenge can be disabled and resumed without resetting city or previous stamps (0.133292ms)
+✔ journey data round-trips with strict bounds, old saves get independent defaults (2.844666ms)
+✔ failed persistence leaves journey and city untouched; success publishes one validated snapshot (0.523792ms)
+✔ an empty real town completes all four guide steps through actual building and simulation (36.91125ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 184.129042

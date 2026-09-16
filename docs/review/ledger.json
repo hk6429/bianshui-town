@@ -1749,22 +1749,28 @@
       "acceptance": [
         "無園景時能出現相關提案；接受後建造對應設施才回應達成；可忽略無懲罰。"
       ],
-      "status": "implemented",
+      "status": "verified",
       "implementation": [
         "src/council-exploration.js",
         "src/journey-ui.js",
         "src/main.js",
         "src/save-schema.js",
-        "src/story-data.js"
+        "src/story-data.js",
+        "src/journey-summary.js"
       ],
       "evidence": [
         "tests/council-exploration.test.js",
         "evidence/council-exploration/tests.txt",
-        "evidence/council-exploration/panel.txt"
+        "evidence/council-exploration/panel.txt",
+        "tests/journey-summary.test.js",
+        "evidence/journey-summary/focused.txt",
+        "evidence/journey-summary/tests.txt",
+        "evidence/journey-summary/recap.txt",
+        "evidence/journey-summary/paused.txt",
+        "evidence/journey-summary/council-complete.txt"
       ],
-      "verifiedBy": null,
-      "reviewSource": "docs/review/octalysis.json",
-      "remaining": "待補完整瀏覽器操作：缺園景採納到落成回應；活動進行中街口跳轉後探索冊更新。"
+      "verifiedBy": "根代理：聚焦測試與Chrome完整操作",
+      "reviewSource": "docs/review/octalysis.json"
     },
     {
       "id": "O20",
@@ -1977,10 +1983,21 @@
       "acceptance": [
         "完成一項目標與閱讀一篇後摘要各列一次；重看不新增；結束按鈕暫停但不重置城市。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/journey-summary.js",
+        "src/journey-ui.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "tests/journey-summary.test.js",
+        "evidence/journey-summary/focused.txt",
+        "evidence/journey-summary/tests.txt",
+        "evidence/journey-summary/recap.txt",
+        "evidence/journey-summary/paused.txt",
+        "evidence/journey-summary/council-complete.txt"
+      ],
+      "verifiedBy": "根代理：聚焦測試與Chrome完整操作",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
