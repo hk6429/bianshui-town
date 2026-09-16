@@ -137,23 +137,32 @@
       "acceptance": [
         "連續赤字會造成具體服務衰退；調整收支後能恢復，無不可退出的軟鎖。"
       ],
-      "status": "in_progress",
+      "status": "verified",
       "implementation": [
+        "src/public-services.js",
+        "src/sanitation.js",
+        "src/water-service.js",
         "src/city-finance.js",
-        "src/finance-ui.js",
-        "src/simulation.js",
-        "src/urban.js",
+        "src/city-growth.js",
         "src/production.js",
+        "src/simulation.js",
         "src/save-schema.js",
-        "src/main.js"
+        "src/heritage.js",
+        "src/song-buildings.js",
+        "src/main.js",
+        "src/finance-ui.js",
+        "index.html"
       ],
       "evidence": [
+        "tests/sanitation.test.js",
         "tests/city-finance.test.js",
-        "evidence/city-finance/tests.txt",
-        "evidence/city-finance/README.md",
-        "evidence/city-finance/browser-budget.txt"
+        "evidence/sanitation/README.md",
+        "evidence/sanitation/tests.txt",
+        "evidence/sanitation/debt-stages.txt",
+        "evidence/sanitation/debt-recovered.txt",
+        "evidence/sanitation/3d-budget.txt"
       ],
-      "verifiedBy": null,
+      "verifiedBy": "根代理：因果與回歸測試、Chrome逐日模組操作及實際三維讀回；非真人玩家驗收",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -686,10 +695,32 @@
       "acceptance": [
         "相同面積增加人口時負荷上升；清運足量可穩定負荷；停服務後逐日惡化而非瞬間歸零。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/public-services.js",
+        "src/sanitation.js",
+        "src/water-service.js",
+        "src/city-finance.js",
+        "src/city-growth.js",
+        "src/production.js",
+        "src/simulation.js",
+        "src/save-schema.js",
+        "src/heritage.js",
+        "src/song-buildings.js",
+        "src/main.js",
+        "src/finance-ui.js",
+        "index.html"
+      ],
+      "evidence": [
+        "tests/sanitation.test.js",
+        "tests/city-finance.test.js",
+        "evidence/sanitation/README.md",
+        "evidence/sanitation/tests.txt",
+        "evidence/sanitation/debt-stages.txt",
+        "evidence/sanitation/debt-recovered.txt",
+        "evidence/sanitation/3d-budget.txt"
+      ],
+      "verifiedBy": "根代理：因果與回歸測試、Chrome逐日模組操作及實際三維讀回；非真人玩家驗收",
       "reviewSource": "docs/review/city.json"
     },
     {

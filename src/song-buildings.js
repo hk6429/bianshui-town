@@ -34,7 +34,10 @@ function baseBuilding(b,api){
   if(b.stage===2&&design!=='pond')roof(g,size-.5,size-.5,.9,2.1,tile);
   return g;
  }
- if(design==='well'){
+ if(design==='cleaningYard'){
+  hall(0,-size*.22,size*.78,size*.33,1.8);const xs=large?[-2,0,2]:[-.65,.65];for(const x of xs){cyl(g,.31,.27,.7,0x65775a,x,.55,.25,10);cyl(g,.34,.34,.06,wood,x,.94,.25,10);box(g,.6,.5,.05,wall,x,1.02,-size*.03);}
+  box(g,large?2.5:1.6,.55,.85,wood,0,.7,size*.3);for(const x of [-.8,.8]){const wheel=cyl(g,.3,.3,.12,0x454536,x,.4,size*.3,10);wheel.rotation.z=Math.PI/2;}beam(g,[.7,.6,size*.3],[1.25,.75,size*.43],.07,wood);
+ }else if(design==='well'){
   const spots=large?[-1.7,1.7]:[0];for(const x of spots){cyl(g,.8,.85,.65,stone,x,.5,0,12);cyl(g,.6,.6,.025,0x325e60,x,.835,0,12);for(const dx of [-.95,.95])box(g,.15,2.3,.15,wood,x+dx,1.3,0);beam(g,[x-.98,1.85,0],[x+.98,1.85,0],.12,wood);box(g,.025,1.15,.025,0xd4b889,x,1.25,0);cyl(g,.19,.15,.33,wood,x+.48,.4,.85,10);const r=new THREE.Group();r.position.x=x;g.add(r);roof(r,2.5,1.8,.6,2.6,tile);box(g,.5,.48,.07,wall,x,2.2,.3);}
   if(large){hall(0,-2.6,5.6,1.35,1.4);for(const x of [-2.8,2.8])urn(x,2.4);}
  }else if(design==='scholarGarden'){

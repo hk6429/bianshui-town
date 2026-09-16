@@ -1,7 +1,7 @@
 import {roadReachable,roadAnchor} from './road-network.js';
 import {purchaseImports,recordSale} from './trade.js';
 import {staffingRatio,jobCapacity} from './employment.js';
-import {saleTax} from './city-finance.js';
+import {saleTax,managed} from './city-finance.js';
 export const MAX_LOT_TRAIL=32,MAX_UNPROCESSED_LOTS=96;
 export const GOODS={clay:'泥料',timber:'木材',fiber:'纖維',ceramics:'陶器',furniture:'木器',cloth:'布匹',legacy:'日用雜貨'};
 export const RECIPES=[{input:'clay',output:'ceramics',seconds:14,action:'拉坯、入窯燒製'},{input:'timber',output:'furniture',seconds:12,action:'鋸切、打磨木器'},{input:'fiber',output:'cloth',seconds:16,action:'紡線、上機織布'}];
@@ -60,7 +60,7 @@ export function tickProduction(t,dt){
   b.productionStatus=!workers.length?'等工匠到坊':!lot?'等候原料':at(t,`output:${b.id}`).length>=6?'成品待運':`${r.action} · 到場 ${workers.length}／${jobCapacity(b)} 人`;
   if(!lot||!workers.length||at(t,`output:${b.id}`).length>=6)continue;
   lot.progress=(lot.progress||0)+dt*(b.footprint?2:b.level>=2?1.5:1)*staffingRatio(t,b);
-  if(lot.progress>=r.seconds){lot.good=r.output;lot.madeAt=b.id;lot.progress=0;transfer(t,`input:${b.id}`,`output:${b.id}`,1,r.output);t.log(`${b.name}製成一件${GOODS[r.output]}，等推車送往商鋪`);}
+  if(lot.progress>=r.seconds){if(managed(t))b.pendingWaste=Math.min(1000000,(b.pendingWaste||0)+2);lot.good=r.output;lot.madeAt=b.id;lot.progress=0;transfer(t,`input:${b.id}`,`output:${b.id}`,1,r.output);t.log(`${b.name}製成一件${GOODS[r.output]}，等推車送往商鋪`);}
  }
 }
 export function tickCraftCarts(t,dt){

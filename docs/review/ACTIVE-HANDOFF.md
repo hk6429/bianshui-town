@@ -112,3 +112,18 @@
 - 7/7供水聚焦、181/181全套、build、Chrome真3D住宅讀回／水井升級／點建扣款通過。evidence/water-service；沒有部署。
 - 33 verified / 5 implemented / 1 in_progress / 61 open。C17已verified，C04仍待真赤字效率，C18–25、O/U與未完成E不可省略。
 - 下一新工作階段接C18衛生，並設計C19防火與C04共用服務效率。衛生須人口+實際生產負荷、清運容量、逐日累積/恢復；不是只畫圖示。不要把本供水滿意度當完整C25幸福度。
+
+## 新階段起點：C18 衛生與 C04 欠款服務衰退
+- 基準fb2f44f，前輪為progress。根代理直接接衛生清運，並把C04效率接入既有水井與新增清運院。
+- 新增 building.waste/pendingWaste、person.health、city.sanitationDay可選白名單；restore舊檔從目前日開始不追算。每日結算，sandbox不累積；切換模式重設衛生游標及待結算生產量。
+- 本階段驗收重點為人口與真生產負荷、容量/可達清運、逐日健康與需求影響、存檔重讀一致、連續赤字效率與正常收入恢復。C19未納入本階段完成宣稱。
+
+## 最新交接：C18/C04 衛生與欠款里程碑（2026-09-16）
+- 35 verified / 5 implemented / 60 open；C04、C18已verified。189/189全套、23/23聚焦、build、Chrome模組逐日及真3D讀回通過。evidence/sanitation；沒有部署。
+- public-services.js提供isUtility(well/cleaningYard)、serviceEfficiency：managed欠款75→50→25%，非負金庫立即恢復。waterReport分配量乘效率；清運同乘。
+- sanitation.js每日按time/24結算，city.sanitationDay游標，人口1/人+真成品2/件；work.pendingWaste累積到下一日，building.waste最多1000。有限容量residual flow接commuteDistance，沿路可達才清；清運模型/圖錄/公共按鈕/衛生UI已接。
+- 每居民health0–100，居住/工作髒污負荷逐日降、乾淨每日+5；目前不影響缺勤，留C20醫療。cityDemand衛生0–100轉需求-20..0。健康與衛生不是完整C25。
+- save v9新增optional building.waste/pendingWaste、person.health、city.sanitationDay（不可未來日）；舊檔從當日開始。sandbox不累積待廢料；模式切換重設日/清待量、不抹既有髒污/健康。
+- settleBudget多日負餘額計數修正為真正連續欠款日，避免高估；新測試涵蓋。
+- 下一獨立階段C19防火：固定種子/可注入事件、窯坊密度風險、可達巡守容量、受損/停工與明確恢復。沿用serviceEfficiency讓赤字影響巡守。勿讓火災無預警清空城市。
+- 後續C20藥鋪容量/員工/健康與缺勤、C21教育、C22污染、C23園景、C24全建築分級、C25幸福度；全部O/U/E待辦和最終四領域複評仍必要，百項完整完成後才部署。

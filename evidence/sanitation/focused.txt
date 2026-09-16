@@ -1,0 +1,31 @@
+✔ managed building prices are shared with execution; invalid or unaffordable placement changes nothing (1.815167ms)
+✔ roads, moves, upgrades and expansion debit once; insufficient funds preserve all state (1.681083ms)
+✔ failed refresh does not commit construction fees or ledger entries (1.663708ms)
+✔ daily upkeep depends on active facilities, is independent of tick sizes and settles once (88.915417ms)
+✔ only housed residents and new actual sales pay tax; policy range and tax pressure are bounded (0.546917ms)
+✔ old saves migrate to sandbox without back-charging; mode toggles never refill the treasury (55.009709ms)
+✔ debt blocks paid construction but permits demolition and policy changes (0.554917ms)
+✔ city schema rejects invalid policy, missing v9 budget and future settlement cursor (0.752958ms)
+✔ population causes proportional daily waste, gradual health decline and real demand loss (2.662166ms)
+✔ reachable finite-capacity cleaning stabilises waste, disconnection gradually worsens and restoration heals (1.498375ms)
+✔ only actual completed production adds pending waste, settled once and preserved across reload (2.739583ms)
+✔ debt progressively cuts both water and cleaning; real tax receipts restore services and paid building access (1.752333ms)
+✔ old saves start today, malformed state is rejected, sandbox and mode switches do not back-charge sanitation (2.509458ms)
+✔ daily health/waste settlement is independent of tick size and resumes without replay (43.705833ms)
+✔ overlapping yards share capacity without leaving avoidable waste in a single-covered street (0.505958ms)
+✔ settling several days counts only consecutive actual deficit days, not earlier solvent days (0.139417ms)
+✔ completed wells supply residents through roads; cut, rebuild, move and demolition recompute coverage (3.454291ms)
+✔ capacity is finite, existing residents have priority, a second well and tier upgrade restore water (2.107292ms)
+✔ coverage uses walking distance rather than straight-line distance; incomplete wells do not serve (0.630334ms)
+✔ water changes housing demand and actual new arrivals without pretending wells are recreation gardens (4.248875ms)
+✔ well construction and daily upkeep are real charges, tiers and four-cell capacity remain consistent (0.921208ms)
+✔ no double supply: overlapping wells report only actual residents and reserved housing seats (0.437459ms)
+✔ overlapping coverage reallocates flexible households so a constrained household is not starved (8.581459ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 225.075709

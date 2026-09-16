@@ -10,6 +10,7 @@ export const SOURCES={
 };
 export const DESIGNS={
  ...NEW_DESIGNS,
+ cleaningYard:{name:'街坊清運院',largeName:'四方清運總院',type:'garden',variant:0,mark:'淨',sizes:[1,4],source:null,detail:'清運車、分類桶與堆置棚；每日一格每級處理12份、四格48份，沿路24步起，每級加4步。人口與作坊產出髒污，欠款降低服務。每格建設100文、維護3文乘級數。'},
  well:{name:'街坊水井',largeName:'四方井院',type:'garden',variant:0,mark:'井',sizes:[1,4],source:null,detail:'轆轤、井欄與汲水桶；一格每級供水12人、四格48人，沿路24步內供應住宅，每升一級增加4步。建設每格100文，每日每格3文乘級數。'},
  wazi:{name:'街巷說書棚',largeName:'瓦舍勾欄',type:'garden',variant:0,mark:'說',sizes:[1,4],source:'wazi',detail:'說書臺、篷頂與聽眾長凳；四格成帶圍廊的瓦舍勾欄，定期聚眾聽書。'},
  orchard:{name:'桑柳果圃',largeName:'桑柳田園',type:'garden',variant:0,mark:'圃',sizes:[1,4],source:null,detail:'果樹、竹籬與田間小徑；四格增添水渠與農舍，屬田園意象設計。'},
