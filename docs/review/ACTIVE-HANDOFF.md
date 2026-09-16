@@ -288,3 +288,12 @@
 - main.canPlan現在更新文字/符號/具體障礙座標/名稱/格數/棟數/費用；submitPlan先驗canPlan後才editTown，避免紅框仍提交。未改存檔格式。
 - Chrome08:02暫停、空城：方形4格1棟2400→1920，直線4格4棟總1→5／1920→1440；已有屋/道路/四格越界能讀確切座標，禁止Enter不扣款。全部storage-test，未部署。
 - 下一獨立階段U08/U09/U10/U11：可搜尋城市物件清單與小卡焦點/關閉（切實體、局部數字更新勿破壞focus/scroll）。需先查inspectorContent與renderInspector，保留hover不搶焦點。O01–25及其餘U/E與四專家最後複評仍待。
+
+## 新階段U08/U09/U10/U11城市物件與小卡焦點
+- 基準da5962f。城市清單提供名稱/類型/編號搜尋與ID選取；小卡內容改patchPanel保留互動DOM及scroll，外層保留關閉鈕；只有明確選取才focusHeading。待單元/Chrome動態焦點與手機關閉驗證。
+
+## 最新交接：U08/U09/U10/U11完成
+- 54 verified / 5 implemented / 41 open。4聚焦、249全套、build通過；城市清單精確ID選取、20次DOM更新及重排、真城市11:30→12:43焦點和scroll保留、390×844關閉返回均驗證。evidence/city-directory。
+- DOM證據應使用disableDiffing:true，否則第二次快照可能只留「無變化」，本次已重存完整person/journal/harness證據。
+- 下一有界階段U12–U17：dialog名稱、選取範圍、手機遮擋/尺寸/對比；先查逐項契約。手機小卡下半部目前被底部工具列遮住，需修正。
+- 原百項及四專家最終複評目標保持，尚未部署。

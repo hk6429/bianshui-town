@@ -351,3 +351,7 @@ Three.js 使用方式參考官方文件：https://threejs.org/docs/ 。
 ## 部署
 
 Pages 專案 `bianshui-town`，正式分支 `main`，目前手動發布。執行 `npm run build` 後執行 `wrangler pages deploy dist --project-name bianshui-town --branch main`。需要回復時，重新發布已驗證提交的 build，或從 Pages 部署紀錄回復先前正式部署。
+
+## 城市清單與資訊小卡
+
+「城市清單」可搜尋名稱、編號及類型，以鍵盤開啟建築或居民資訊；明確選取會將焦點移至標題。資訊更新保留按鈕焦點與捲動位置，小卡可按關閉鈕或 Escape 返回場景。市井見聞亦有標題焦點與關閉返回控制。驗證見 `evidence/city-directory/`。

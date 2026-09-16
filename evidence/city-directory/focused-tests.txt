@@ -1,0 +1,12 @@
+✔ all buildings and people are individually searchable even when names are identical (2.316292ms)
+✔ removed residents disappear and blank searches preserve available results (1.011375ms)
+✔ unvalidated cargo and market values are escaped in text and quoted attributes (0.61425ms)
+✔ ordinary cargo labels and market counters keep readable content (0.159375ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 70.048959

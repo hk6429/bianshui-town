@@ -1,0 +1,94 @@
+Browser tab: 610004099, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v8".
+0 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v8
+	1 container app
+		2 image Description: 汴水小鎮互動三維場景, ID: world
+		3 container
+			4 text 汴
+			5 heading 汴水小鎮, Value: 1
+				6 text 汴水小鎮
+			96 text 一城煙火，慢慢生長
+			141 text ☀
+			142 text 申時 · 日光正好
+			143 text 第 1 日　15:56
+			11 button Description: 切換白晝與夜晚, ID: light-toggle
+			12 button Description: 天候：晴天，自然模式, Help: 切換自然天候、細雨、晴天, ID: weather-btn
+			13 button (expanded) 市井見聞, ID: life-btn, Secondary Actions: Collapse
+			14 checkbox Description: 開啟環境音, Help: 環境音, Value: 0, ID: sound-btn
+			100 button 畫卷, ID: concepts-btn
+			16 button Description: 重置小鎮, ID: reset-town
+			17 button Description: 操作說明, ID: help-btn
+		18 container 小鎮概況
+			144 text 8
+			20 text 位居民
+			145 text 5
+			22 text 處建築園景
+			146 text 5
+			24 text 處街坊
+		147 container Description: 市井見聞, ID: life-panel
+			148 text 此時此地 · 活著的市井
+			149 button 關閉市井見聞
+			150 heading 汴水有消息, Value: 2, ID: life-heading
+				151 text 汴水有消息
+			152 text 腳夫往返船邊卸貨
+			153 text 10
+			154 text 來客
+			155 text 9
+			156 text 件待運
+			157 text 0
+			158 text 件送達
+			159 button 虹橋看船 ↗
+			160 button 碼頭卸貨 ↗
+			161 button 回到街坊 ↗
+			162 button 物產流轉 · 追蹤貨物 ↗
+			163 container street-story
+				164 text 攤前看新貨
+				165 text 街角書肆 · 街坊陸續到來
+				166 button 去街口看看 ↗
+			167 content list
+				168 container
+					169 text 15:37 辛棄疾停筆展卷，〈青玉案・元夕〉收入汴水文集
+				170 container
+					171 text 15:25 牛車送抵曬布染坊，補入 1 件纖維
+				172 container
+					173 text 14:49 范仲淹停筆展卷，〈岳陽樓記〉收入汴水文集
+				174 container
+					175 text 14:40 攤前看新貨：街角書肆前傳來招呼聲
+				176 container
+					177 text 14:04 蘇軾停筆展卷，〈水調歌頭・明月幾時有〉收入汴水文集
+		128 container
+			129 text 汴 水 風過河岸，日子悠長
+		64 container
+			65 button ＋ 宋韻營造, ID: blueprints-btn
+			66 button 公共營造, ID: public-btn
+			67 button 城市清單, ID: city-list-btn
+			68 button 文人行旅, ID: writers-btn
+			69 button 自由營造 · 收支, ID: budget-btn
+			70 button 存檔管理, ID: save-manager-btn
+			130 text 自由探索 · 拖曳移動畫面，點選屋舍與居民
+			72 button 操作場景（鍵盤）, ID: keyboard-scene
+			73 checkbox (settable, integer) Description: 放開後先預覽, Value: 0, ID: precise-build
+			74 text 先選營造類型，再按操作場景；方向鍵移格、Enter 放置、Esc 取消。
+			75 container 建造與探索
+				76 checkbox 自由探索 1, Value: 1
+					131 text 自由探索
+					132 text 1
+				79 checkbox 民居 2, Value: 0
+					133 text 民居
+					134 text 2
+				82 checkbox 商鋪 3, Value: 0
+					135 text 商鋪
+					136 text 3
+				85 checkbox 作坊 4, Value: 0
+					137 text 作坊
+					138 text 4
+				88 button Description: 暫停, Help: 暫停或繼續（空白鍵）, ID: pause-btn
+				89 button 1×, Help: 調整時間速度, ID: speed-btn
+			90 text 滾輪縮放 · 右鍵拖曳平移 · Q / E 旋轉
+			139 text 預覽場景 · 不覆寫小鎮
+		92 container
+			93 button Description: 放大, ID: zoom-in
+			94 button Description: 縮小, ID: zoom-out
+			95 button Description: 回到初始視角, ID: reset-view
+	140 text 1Password 選單可用。按向下箭頭進行選擇。
+
+The focused UI element is 150 heading 汴水有消息, Value: 2, ID: life-heading

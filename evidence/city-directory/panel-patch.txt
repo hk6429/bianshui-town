@@ -1,0 +1,48 @@
+Browser tab: 610004102, Title: "小卡更新驗收", URL: "http://127.0.0.1:5173/tests/panel-harness.html".
+0 AXWebArea 小卡更新驗收, URL: 127.0.0.1:5173/tests/panel-harness.html
+	1 heading 動態小卡焦點與捲動, Value: 1
+		2 text 動態小卡焦點與捲動
+	3 button 執行20次更新與重排, ID: run
+	4 container content
+		5 heading 測試住宅, Value: 2, ID: inspector-title
+			6 text 測試住宅
+		7 text 在場 21 人
+		8 text 生活紀錄0：21
+		9 text 生活紀錄1：21
+		10 text 生活紀錄2：21
+		11 text 生活紀錄3：21
+		12 text 生活紀錄4：21
+		13 text 生活紀錄5：21
+		14 text 生活紀錄6：21
+		15 text 生活紀錄7：21
+		16 text 生活紀錄8：21
+		17 text 生活紀錄9：21
+		18 text 生活紀錄10：21
+		19 text 生活紀錄11：21
+		20 container
+			21 button 搬移
+			22 button 升級 21
+		23 container
+			26 button 居民3
+			27 button 居民2
+			28 button 居民1
+	29 text {
+  "updates": {
+    "sameNode": true,
+    "focus": true,
+    "scrollBefore": 593.6363525390625,
+    "scrollAfter": 593.6363525390625,
+    "text": "升級 20"
+  },
+  "reorder": {
+    "sameNode": true,
+    "focus": true,
+    "order": [
+      "3",
+      "2",
+      "1"
+    ]
+  }
+}
+
+The focused UI element is 27 button 居民2

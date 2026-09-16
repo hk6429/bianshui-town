@@ -1878,10 +1878,21 @@
       "acceptance": [
         "讀屏與鍵盤可找到任意建築及居民，開啟對應小卡。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/city-directory.js",
+        "src/panel-dom.js",
+        "src/main.js",
+        "index.html",
+        "src/style.css"
+      ],
+      "evidence": [
+        "evidence/city-directory/README.md",
+        "evidence/city-directory/focused-tests.txt",
+        "evidence/city-directory/full-tests.txt",
+        "evidence/city-directory/person-keyboard.txt"
+      ],
+      "verifiedBy": "root：純鍵盤操作、完整無障礙樹、真城市焦點與捲動、Chrome手機尺寸及249項回歸",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -1901,10 +1912,22 @@
       "acceptance": [
         "聚焦升級或搬移按鈕並等待居民活動，焦點與捲動位置不丟失。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/city-directory.js",
+        "src/panel-dom.js",
+        "src/main.js",
+        "index.html",
+        "src/style.css"
+      ],
+      "evidence": [
+        "evidence/city-directory/README.md",
+        "evidence/city-directory/focused-tests.txt",
+        "evidence/city-directory/full-tests.txt",
+        "evidence/city-directory/panel-patch.txt",
+        "evidence/city-directory/live-focus.json"
+      ],
+      "verifiedBy": "root：純鍵盤操作、完整無障礙樹、真城市焦點與捲動、Chrome手機尺寸及249項回歸",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -1924,10 +1947,22 @@
       "acceptance": [
         "手機與鍵盤可在小卡內關閉，且場景選取同步清除。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/city-directory.js",
+        "src/panel-dom.js",
+        "src/main.js",
+        "index.html",
+        "src/style.css"
+      ],
+      "evidence": [
+        "evidence/city-directory/README.md",
+        "evidence/city-directory/focused-tests.txt",
+        "evidence/city-directory/full-tests.txt",
+        "evidence/city-directory/mobile-close.png",
+        "evidence/city-directory/mobile-closed.txt"
+      ],
+      "verifiedBy": "root：純鍵盤操作、完整無障礙樹、真城市焦點與捲動、Chrome手機尺寸及249項回歸",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -1947,10 +1982,22 @@
       "acceptance": [
         "鍵盤開市井見聞或居民小卡後立即能讀到標題並進入內容。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/city-directory.js",
+        "src/panel-dom.js",
+        "src/main.js",
+        "index.html",
+        "src/style.css"
+      ],
+      "evidence": [
+        "evidence/city-directory/README.md",
+        "evidence/city-directory/focused-tests.txt",
+        "evidence/city-directory/full-tests.txt",
+        "evidence/city-directory/person-keyboard.txt",
+        "evidence/city-directory/journal-focus.txt"
+      ],
+      "verifiedBy": "root：純鍵盤操作、完整無障礙樹、真城市焦點與捲動、Chrome手機尺寸及249項回歸",
       "reviewSource": "docs/review/ux.json"
     },
     {

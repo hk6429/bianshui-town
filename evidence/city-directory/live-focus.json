@@ -1,0 +1,12 @@
+{
+  "before": {
+    "active": "<button data-manage=\"upgrade\" data-building=\"2\">升至 2 級</button>",
+    "clock": "第 1 日　11:30",
+    "scroll": 599.0908813476562
+  },
+  "after": {
+    "active": "<button data-manage=\"upgrade\" data-building=\"2\">升至 2 級</button>",
+    "clock": "第 1 日　12:43",
+    "scroll": 599.0908813476562
+  }
+}

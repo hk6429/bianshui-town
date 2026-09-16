@@ -1,3 +1,5 @@
+import {patchPanel,focusHeading} from './panel-dom.js';
+import {installCityDirectory} from './city-directory.js';
 import {previewPlan} from './plan-preview.js';
 import {PointerGesture,shiftDraft} from './pointer-gesture.js';
 import {sceneCommand,stepCursor} from './scene-keyboard.js';
@@ -70,8 +72,9 @@ $('#zoom-out').onclick=()=>{scene.camera.zoom=Math.max(.6,scene.camera.zoom/1.2)
 $('#reset-view').onclick=()=>{stopFollowing();scene.resetView();};
 $('#sound-btn').onclick=async()=>{try{const on=await sound.toggle();$('#sound-btn').setAttribute('aria-pressed',String(on));$('#sound-btn').setAttribute('aria-label',on?'關閉環境音':'開啟環境音');$('#sound-btn').classList.toggle('sound-on',on);toast(on?'風聲、水聲與市井日常，慢慢聽':'環境音已關閉');}catch(e){toast(e.message);}};
 $('#volume').oninput=e=>sound.setVolume(Number(e.target.value)/100);
-$('#life-btn').onclick=()=>{journalOpen=!journalOpen;if(journalOpen&&innerWidth<600)pinned=hovered=null;$('#life-btn').setAttribute('aria-expanded',String(journalOpen));updateJournal();};
+$('#life-btn').onclick=()=>{journalOpen=!journalOpen;if(journalOpen&&innerWidth<600)pinned=hovered=null;$('#life-btn').setAttribute('aria-expanded',String(journalOpen));updateJournal();if(journalOpen)focusHeading($('#life-panel'));};
 $('#life-panel').onclick=e=>{
+ if(e.target.closest('[data-close-life]')){journalOpen=false;updateJournal();$('#life-btn').focus();return;}
  if(e.target.closest('[data-production]')){renderProduction();$('#production').showModal();return;}
  if(e.target.closest('[data-story-focus]')){
   const event=town.stories.active||town.stories.last;if(!event)return;stopFollowing();pinned=hovered=null;setMode('explore');scene.focusAt(event.center);toast(`${event.title} · ${event.venue}${town.stories.active?'':'（已散場）'}`);
@@ -119,7 +122,7 @@ canvas.addEventListener('pointerup',e=>{
  if(drag){const cells=drag.cells.map(c=>({...c}));drag=null;
   if(e.pointerType!=='mouse'||$('#precise-build').checked){pendingPlan=cells;showPendingPlan();}
   else{submitPlan(cells);scene.clearGroup(scene.preview);}
- }else if(down&&Math.hypot(e.clientX-down.x,e.clientY-down.y)<5){pinned=scene.pick(e.clientX,e.clientY);hovered=pinned;}
+ }else if(down&&Math.hypot(e.clientX-down.x,e.clientY-down.y)<5){pinned=scene.pick(e.clientX,e.clientY);hovered=pinned;if(pinned)focusInspector();}
  down=null;
 });
 const cancelPointer=e=>{if(!pointerGesture.active.has(e.pointerId))return;pointerGesture.end(e.pointerId,true);discardPointerDraft();};
@@ -155,9 +158,15 @@ window.addEventListener('keydown',e=>{
 });
 window.addEventListener('resize',()=>scene.resize());window.addEventListener('beforeunload',save);document.addEventListener('visibilitychange',()=>{if(document.hidden)discardPointerDraft();runtime.visibility();});
 function formatTime(time){return `${String(Math.floor(time%24)).padStart(2,'0')}:${String(Math.floor(time%1*60)).padStart(2,'0')}`;}
-function inspectorContent(panel,html){delete panel.dataset.person;delete panel.dataset.author;if(panel.dataset.content!==html){panel.innerHTML=html;panel.dataset.content=html;}}
+function inspectorContent(panel,html){delete panel.dataset.person;delete panel.dataset.author;if(panel.dataset.content!==html){patchPanel(panel,html,$('#inspector'));panel.dataset.content=html;}}
 function stopFollowing(){following=null;if(scene)scene.follow(null);$('#follow-status').hidden=true;}
 $('#stop-follow').onclick=()=>stopFollowing();
+function closeInspector(){pinned=hovered=null;stopFollowing();scene.clearGroup(scene.selection);outlined='';$('#inspector').hidden=true;canvas.focus({preventScroll:true});}
+function focusInspector(){renderInspector();focusHeading($('#inspector'));}
+$('#close-inspector').onclick=closeInspector;
+$('#inspector').addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();closeInspector();}});
+$('#inspector').addEventListener('focusin',()=>{if(!pinned&&hovered)pinned={...hovered};});
+installCityDirectory({getTown:()=>town,select:ref=>{stopFollowing();setMode('explore');pinned=ref;hovered=null;journalOpen=false;updateJournal();const b=ref.kind==='building'?town.building(ref.id):null,p=ref.kind==='person'?town.people.find(p=>p.id===ref.id):null,inside=p&&!p.outside?town.building(p.current)||town.building(p.home):null;scene.focusAt(b?[b.x*CELL,b.z*CELL]:inside?[inside.x*CELL,inside.z*CELL]:[p.x,p.z],2.3);focusInspector();}});
 $('#inspector').onclick=e=>{
  const manage=e.target.closest('[data-manage]');if(manage){const b=town.building(Number(manage.dataset.building));if(!b)return;const op=manage.dataset.manage;if(op==='fire'){toast(applyUrban(draft=>repairFire(draft,b.id))?'火警處置完成，建築恢復使用':editFailure||'金庫不足；整修倒數結束後會免費恢復');renderInspector();return;}if(op==='move'){setMode('move');editing={kind:'move',id:b.id};pinned=hovered=null;$('#mode-hint').textContent=`搬移${b.name} · 點選${b.footprint?'2 × 2':'一格'}空地 · Esc 取消`;focusScene();return;}if(op==='delete'){pendingDelete=b.id;$('#demolish-name').textContent=`拆除「${b.name}」？住戶保留並等候新居，貨物退回貨棧。可使用「復原上一步」撤銷。`;$('#demolish').showModal();return;}const ok=applyUrban(draft=>upgradeBuilding(draft,b.id,op==='expand'));toast(ok?(op==='expand'?'四格擴建完成':`${town.building(b.id).name}升至 ${tierOf(town.building(b.id))} 級`):editFailure||(op==='expand'?'四格擴建須原位置右方、下方共 2 × 2 空出，且不占道路':'建築尚未落成或已達五級'));renderInspector();return;}
 
@@ -166,35 +175,36 @@ $('#inspector').onclick=e=>{
 
  const reading=e.target.closest('[data-reading]');if(reading){showLiterature(reading.dataset.reading);return;}
  const courtButton=e.target.closest('[data-courtyard]');if(courtButton){const block=town.blocks.find(b=>b.id===Number(courtButton.dataset.courtyard)),court=courtyards(block)[0];stopFollowing();setMode('explore');scene.focusAt([court.x,court.z],3,true);toast('共享院落 · 側門與晾曬空間');return;}
- const resident=e.target.closest('[data-resident]');if(resident){stopFollowing();pinned={kind:'person',id:Number(resident.dataset.resident)};renderInspector();return;}
+ const resident=e.target.closest('[data-resident]');if(resident){stopFollowing();pinned={kind:'person',id:Number(resident.dataset.resident)};hovered=null;focusInspector();return;}
  const follow=e.target.closest('[data-follow]');if(!follow)return;const id=Number(follow.dataset.follow);
  if(following===id)stopFollowing();else{setMode('explore');following=id;pinned={kind:'person',id};scene.follow(id);scene.camera.zoom=Math.max(scene.camera.zoom,1.8);scene.camera.updateProjectionMatrix();$('#following-name').textContent=`跟著${town.people.find(p=>p.id===id).name}過一天`;$('#follow-status').hidden=false;}
  renderInspector();
 };
 let outlined='';
 function renderInspector(){
- const ref=pinned||hovered,panel=$('#inspector');if(ref&&innerWidth<600&&journalOpen){journalOpen=false;updateJournal();}if(!ref){panel.hidden=true;if(outlined){scene.clearGroup(scene.selection);outlined='';}return;}
- panel.hidden=false;
+ const ref=pinned||hovered,panel=$('#inspector-content'),shell=$('#inspector');if(ref&&innerWidth<600&&journalOpen){journalOpen=false;updateJournal();}if(!ref){shell.hidden=true;if(outlined){scene.clearGroup(scene.selection);outlined='';}return;}
+ shell.hidden=false;
+ const entity=`${ref.kind}:${ref.id}`;if(panel.dataset.entity!==entity){panel.replaceChildren();panel.dataset.entity=entity;delete panel.dataset.content;delete panel.dataset.person;delete panel.dataset.author;shell.scrollTop=0;}
  if(ref.kind==='building'){
-  const b=town.building(ref.id);if(!b){panel.hidden=true;return;}const block=town.blocks.find(g=>g.id===b.blockId),res=town.residents(b),workers=town.workers(b),inside=town.occupants(b),stages=['整地打基礎','木架搭建中','覆瓦砌牆中','已落成','生活漸豐'];
+  const b=town.building(ref.id);if(!b){shell.hidden=true;return;}const block=town.blocks.find(g=>g.id===b.blockId),res=town.residents(b),workers=town.workers(b),inside=town.occupants(b),stages=['整地打基礎','木架搭建中','覆瓦砌牆中','已落成','生活漸豐'];
   inspectorContent(panel,`<div class="eyebrow">${isUtility(b)?'公共設施':TYPES[b.type]} · ${b.footprint?'四格合建 · '+(b.type==='garden'?'一處園景':'一座建築'):block.cells.length+' 格街坊'}</div><h2>${escape(b.name)}</h2><div class="sub">${b.design==='pond'&&b.stage<3?['開挖池床','整修池岸','注水植荷'][b.stage]:stages[b.stage]}${pinned?' · 已固定檢視':''}</div>${b.stage<3?`<div class="progress"><i style="width:${Math.min(100,(town.elapsed-b.born)/18*100)}%"></i></div><p>${b.design==='pond'?'池床開挖、修岸與注水植荷依序進行。':'工匠正在'+stages[b.stage]+'，靜候落成。'}</p>`:`<hr><label>${isUtility(b)?'公共設施':b.type==='garden'?'園中漫步':b.type==='home'?'住在這裡':'在此工作'}</label><div>${(b.type==='garden'?inside:b.type==='home'?res:workers).map(p=>`<button class="tag" data-resident="${escape(p.id)}">${escape(p.name)} ↗</button>`).join('')||(isUtility(b)?'<span class="sub">自動服務，不需指派居民</span>':'<span class="sub">等候新朋友到來</span>')}</div>${courtyards(block).length>0?`<p>共享院落 · ${courtyards(block).length} 處相通庭院</p><button class="tag" data-courtyard="${escape(block.id)}">看看院落 ↗</button>`:''}${b.type==='work'?`<label>作坊進度</label><p>${escape(b.productionStatus||'等候原料')} · 原料 ${at(town,`input:${b.id}`).length} 份 · 成品 ${at(town,`output:${b.id}`).length} 件</p>`:''}${b.type==='shop'?`<label>河運補貨</label><p>${escape(shopStatus(town,b))}</p><p>店內 ${escape(b.stock||0)} 件 · 店前 ${town.life.visitors.filter(v=>v.visible&&v.target===b.id&&!v.walking).length} 位來客</p>`:''}<label>此刻在場 · ${inside.length} 人</label><p>${inside.length?inside.map(p=>`${escape(p.name)} · ${escape(p.action)}`).join('<br>'):'目前無人在此停留'}</p>`}${managed(town)?`<p>${publicAccess(town,b)?'道路已接通河岸貨棧':'街坊未接外路：請由門前步道鋪路至東側引道，才能接貨與迎接新住戶。'}</p>`:''}${waterStatus(town,b)?`<section class="water-status"><label>街坊供水</label><p>${escape(waterStatus(town,b))}</p></section>`:''}${sanitationStatus(town,b)?`<section class="sanitation-status"><label>衛生清運</label><p>${escape(sanitationStatus(town,b))}</p></section>`:''}${fireStatus(town,b)?`<section class="fire-status"><label>防火巡守</label><p>${escape(fireStatus(town,b))}</p>${b.fireWarningAt!==undefined||damaged(b)?`<button data-manage="fire" data-building="${escape(b.id)}">${b.fireWarningAt!==undefined?'排除火警':'立即修復'} · ${managed(town)?fireActionCost(b)+'文':'免費'}</button>`:''}</section>`:''}${healthcareStatus(town,b)?`<section class="healthcare-status"><label>藥鋪醫療</label><p>${escape(healthcareStatus(town,b))}</p></section>`:''}${educationStatus(town,b)?`<section class="education-status"><label>書院教育</label><p>${escape(educationStatus(town,b))}</p></section>`:''}${pollutionStatus(town,b)?`<section class="pollution-status"><label>生產污染與居住環境</label><p>${escape(pollutionStatus(town,b))}</p></section>`:''}${gardenStatus(town,b)?`<section class="garden-status"><label>園景宜居</label><p>${escape(gardenStatus(town,b))}</p></section>`:''}${buildingTools(b)}${literatureLink(b)}<hr><div class="sub">${pinned?'點選空地取消固定':'點選屋舍可固定這張小卡'}</div>`);
   const code='b'+block.id;if(outlined!==code){scene.outline(block.cells,0xd1b57b,scene.selection);outlined=code;}
  }else if(ref.kind==='stall'){
-  const s=marketStalls(town).find(s=>s.id===ref.id);if(!s){panel.hidden=true;return;}inspectorContent(panel,stallDetails(s,town.market.trades,marketOpen(town)));if(outlined){scene.clearGroup(scene.selection);outlined='';}
+  const s=marketStalls(town).find(s=>s.id===ref.id);if(!s){shell.hidden=true;return;}inspectorContent(panel,stallDetails(s,town.market.trades,marketOpen(town)));if(outlined){scene.clearGroup(scene.selection);outlined='';}
  }else if(ref.kind==='author'){
 
-  const a=authorById(ref.id),actor=town.literati.actors.find(v=>v.author===ref.id);if(!a){panel.hidden=true;return;}
+  const a=authorById(ref.id),actor=town.literati.actors.find(v=>v.author===ref.id);if(!a){shell.hidden=true;return;}
   if(panel.dataset.author!==a.id){panel.innerHTML=`<div class="eyebrow">${a.era} · 文人行旅</div><h2>${a.name}</h2><p id="author-status"></p><button class="primary" data-author-follow="${a.id}"></button><hr><label>${a.title}</label><blockquote>${a.quote}</blockquote><button class="tag" data-author-work="${a.id}">讀代表作 ↗</button><p class="fine">跨年代文學相遇 · 落筆為遊戲演出</p>`;panel.dataset.author=a.id;delete panel.dataset.content;delete panel.dataset.person;}
   $('#author-status').textContent=authorStatus(town,actor)+(actor?.phase==='writing'&&!town.weather.raining?` · ${Math.min(100,Math.floor(actor.progress/12*100))}%`:'');
   const btn=panel.querySelector('[data-author-follow]');btn.textContent=following==='author:'+a.id?'停止跟隨':'跟著散步';btn.disabled=!actor?.visible;btn.setAttribute('aria-pressed',String(following==='author:'+a.id));
   if(outlined){scene.clearGroup(scene.selection);outlined='';}
  }else if(ref.kind==='life'){
 
-  const a=[...town.life.visitors,...town.life.porters,...town.life.oxen].find(a=>a.id===ref.id);if(!a){panel.hidden=true;return;}inspectorContent(panel,`<div class="eyebrow">${({ox:'牛車運送',porter:'碼頭腳夫',peddler:'挑擔行商',traveler:'過橋旅人',shopper:'趕集來客'})[a.kind]}</div><h2>${escape(a.name)}</h2><p>${escape(a.traffic||a.action)}</p><hr><label>此刻攜帶</label><p>${a.kind==='peddler'?'挑擔與日用雜貨':a.carrying?at(town,`${a.kind==='ox'?'ox':'porter'}:${a.id}`).map(l=>GOODS[l.good]).join('、'):'輕裝行走'}</p><label>行程</label><p>${a.walking?'正在沿街道前往目的地':'停留、歇腳或等候'}</p>`);if(outlined){scene.clearGroup(scene.selection);outlined='';}
+  const a=[...town.life.visitors,...town.life.porters,...town.life.oxen].find(a=>a.id===ref.id);if(!a){shell.hidden=true;return;}inspectorContent(panel,`<div class="eyebrow">${({ox:'牛車運送',porter:'碼頭腳夫',peddler:'挑擔行商',traveler:'過橋旅人',shopper:'趕集來客'})[a.kind]}</div><h2>${escape(a.name)}</h2><p>${escape(a.traffic||a.action)}</p><hr><label>此刻攜帶</label><p>${a.kind==='peddler'?'挑擔與日用雜貨':a.carrying?at(town,`${a.kind==='ox'?'ox':'porter'}:${a.id}`).map(l=>GOODS[l.good]).join('、'):'輕裝行走'}</p><label>行程</label><p>${a.walking?'正在沿街道前往目的地':'停留、歇腳或等候'}</p>`);if(outlined){scene.clearGroup(scene.selection);outlined='';}
  }else if(ref.kind==='boat'){
   const b=town.life.boat;inspectorContent(panel,`<div class="eyebrow">汴河水運 · 第 ${b.trips+1} 航次</div><h2>汴河漕船</h2><p>${boatStatus()}</p><hr><label>船上貨物</label><p>${escape(b.cargo)} 件，${b.mast?'桅杆升起':'已收桅，準備過橋'}</p><label>本鎮累計</label><p>已卸 ${escape(town.life.dock.received)} 件 · 已送商鋪 ${escape(town.life.dock.delivered)} 件</p>`);if(outlined){scene.clearGroup(scene.selection);outlined='';}
  }else{
-  const p=town.people.find(p=>p.id===ref.id);if(!p){panel.hidden=true;return;}const home=town.building(p.home),work=town.building(p.work),dest=town.building(p.destination);
+  const p=town.people.find(p=>p.id===ref.id);if(!p){shell.hidden=true;return;}const home=town.building(p.home),work=town.building(p.work),dest=town.building(p.destination);
   if(panel.dataset.person!==String(p.id)){
    panel.innerHTML=`<div class="eyebrow">街巷人物 · 一個人的日常</div><h2 id="person-name"></h2><p id="person-action"></p><details><summary id="person-wellbeing-title">民生滿意分項</summary><p id="person-wellbeing" style="white-space:pre-line"></p></details><button class="primary" id="follow-btn" data-follow="${escape(p.id)}"></button><hr><label>住處 · 工作場所</label><p id="person-place"></p><label>當下目的地</label><p id="person-goal"></p><label>今日記事 · 最新在上</label><ol id="person-diary" class="life-events"></ol>`;panel.dataset.person=String(p.id);delete panel.dataset.author;delete panel.dataset.content;
   }
@@ -207,12 +217,13 @@ function renderInspector(){
   if($('#person-diary').innerHTML!==diary)$('#person-diary').innerHTML=diary;
   if(outlined){scene.clearGroup(scene.selection);outlined='';}
  }
+ const heading=panel.querySelector('h2');if(heading){heading.id||='inspector-title';heading.tabIndex=-1;shell.setAttribute('aria-labelledby',heading.id);}
 }
 function updateUI(day){const incident=town.buildings.find(b=>b.fireWarningAt!==undefined)||town.buildings.find(damaged);$('#fire-alert').hidden=!incident;if(incident)$('#fire-alert').textContent=`${incident.fireWarningAt!==undefined?'火警預警':'整修中'}：${incident.name} · 點此查看`;if(following!=null&&!town.people.some(p=>p.id===following)&&!String(following).startsWith('author:'))stopFollowing();financeUI.update();$('#weather-btn').textContent=`${town.weather.raining?'細雨':'晴天'} · ${{auto:'自然',rain:'手動',clear:'手動'}[town.weather.mode]}`;$('#weather-btn').setAttribute('aria-label',`天候：${town.weather.raining?'細雨':'晴天'}，${{auto:'自然',rain:'手動',clear:'手動'}[town.weather.mode]}模式`);const h=town.time%24,hh=Math.floor(h),mm=Math.floor((h-hh)*60);$('#clock').textContent=`第 ${Math.floor(town.time/24)+1} 日　${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;const shichen=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'][Math.floor(((h+1)%24)/2)];$('#period').textContent=`${shichen}時 · ${h<6?'萬籟俱寂':h<10?'晨光初醒':h<16?'日光正好':h<19?'炊煙漸起':'燈火可親'}`;$('#sun-icon').textContent=day>.5?'☀':'☾';$('#light-toggle').textContent=day>.5?'☾':'☀';document.body.classList.toggle('night',day<.4);$('#population').textContent=town.people.length;$('#building-count').textContent=town.buildings.length;$('#block-count').textContent=town.blocks.length;renderInspector();}
 function boatStatus(){const b=town.life.boat;return b.state==='approach'?(b.mast?'貨船沿汴河駛來':'船家收桅，緩緩穿過虹橋'):({mooring:'船家正在靠岸繫纜',unloading:'腳夫往返船邊卸貨',depart:'卸貨完成，貨船離岸',away:'等候下一艘來船'})[b.state];}
 function updateJournal(){
  const panel=$('#life-panel');$('#life-btn').setAttribute('aria-expanded',String(journalOpen));panel.hidden=!journalOpen;if(!journalOpen)return;const l=town.life;
- if(!panel.querySelector('.watch-buttons'))panel.innerHTML=`<div class="eyebrow">此時此地 · 活著的市井</div><h2>汴水有消息</h2><p class="boat-status"></p><div class="life-numbers"><span><b id="j-visitors"></b> 來客</span><span><b id="j-stock"></b> 件待運</span><span><b id="j-delivered"></b> 件送達</span></div><div class="watch-buttons"><button data-focus="bridge">虹橋看船 ↗</button><button data-focus="dock">碼頭卸貨 ↗</button><button data-focus="town">回到街坊 ↗</button></div><button class="production-link" data-production>物產流轉 · 追蹤貨物 ↗</button><div id="street-story"><strong id="story-title"></strong><p id="story-description"></p><button data-story-focus>去街口看看 ↗</button></div><ol class="life-events"></ol>`;
+ if(!panel.querySelector('.watch-buttons'))panel.innerHTML=`<div class="eyebrow">此時此地 · 活著的市井</div><button class="panel-close" data-close-life>關閉市井見聞</button><h2 id="life-heading" tabindex="-1">汴水有消息</h2><p class="boat-status"></p><div class="life-numbers"><span><b id="j-visitors"></b> 來客</span><span><b id="j-stock"></b> 件待運</span><span><b id="j-delivered"></b> 件送達</span></div><div class="watch-buttons"><button data-focus="bridge">虹橋看船 ↗</button><button data-focus="dock">碼頭卸貨 ↗</button><button data-focus="town">回到街坊 ↗</button></div><button class="production-link" data-production>物產流轉 · 追蹤貨物 ↗</button><div id="street-story"><strong id="story-title"></strong><p id="story-description"></p><button data-story-focus>去街口看看 ↗</button></div><ol class="life-events"></ol>`;
  panel.querySelector('.boat-status').textContent=town.buildings.length?boatStatus():'先安放街坊，等市井生活長出來';
  $('#j-visitors').textContent=l.visitors.filter(a=>a.visible).length;$('#j-stock').textContent=l.dock.stock;$('#j-delivered').textContent=l.dock.delivered;
  const event=town.stories.active||town.stories.last;
@@ -232,7 +243,7 @@ function renderLot(){
  const l=town.economy.lots.find(l=>l.id===selectedLot);if(!l){$('#lot-detail').innerHTML='';return;}
  $('#lot-detail').innerHTML=`<h3>${lotIdentity(l)}</h3><p>來源：${escape(l.origin)}${l.madeAt?` · 製作：${escape(town.building(l.madeAt)?.name)}`:''}</p><ol class="cargo-trail">${l.trailOmitted?`<li>較早的 ${escape(l.trailOmitted)} 筆紀錄已收進摘要；來源與製作紀錄仍保留。</li>`:''}${l.trail.map(step=>`<li>第 ${Math.floor(step.time/24)+1} 日 ${formatTime(step.time)} · ${escape(placeName(town,step.at))}</li>`).join('')}</ol>${locateLot(town,l)?lotFocusButton(l):'<p>這件貨已由來客購得。</p>'}`;
 }
-$('#production').onclick=e=>{const select=e.target.closest('[data-lot]');if(select){selectedLot=Number(select.dataset.lot);renderLot();return;}const focus=e.target.closest('[data-lot-focus]');if(!focus)return;const lot=town.economy.lots.find(l=>l.id===Number(focus.dataset.lotFocus)),location=lot&&locateLot(town,lot);if(!location)return;$('#production').close();journalOpen=false;updateJournal();stopFollowing();setMode('explore');pinned=location.ref||null;hovered=null;scene.focusAt(location.point,2.6);toast(`${GOODS[lot.good]} · ${placeName(town,lot.at)}`);};
+$('#production').onclick=e=>{const select=e.target.closest('[data-lot]');if(select){selectedLot=Number(select.dataset.lot);renderLot();return;}const focus=e.target.closest('[data-lot-focus]');if(!focus)return;const lot=town.economy.lots.find(l=>l.id===Number(focus.dataset.lotFocus)),location=lot&&locateLot(town,lot);if(!location)return;$('#production').close();journalOpen=false;updateJournal();stopFollowing();setMode('explore');pinned=location.ref||null;hovered=null;scene.focusAt(location.point,2.6);if(pinned)focusInspector();toast(`${GOODS[lot.good]} · ${placeName(town,lot.at)}`);};
 recovery=new RecoveryPoint({read:()=>town.toJSON(),validate:validateSave});
 const showRuntimeError=installRuntimeRecovery({getRecovery:()=>recovery,store:saveStore,fixtureMode});
 const faultInjection=import.meta.env.DEV&&(fixtureMode||storageTest)?new URLSearchParams(location.search).get('runtime-fault'):null;let faultTicks=0;
@@ -256,7 +267,7 @@ $('#blueprints').onclick=e=>{const filter=e.target.closest('[data-design-filter]
 function showAuthorWork(id){const a=authorById(id);if(!a)return;$('#author-work-title').textContent=a.title;$('#author-work-body').innerHTML=`<p class="source-author">${a.name} · ${a.era} · ${a.form}</p><div class="original-work">${escape(a.text)}</div><hr><p>${escape(a.intro)}</p><a href="${a.url}" target="_blank" rel="noopener noreferrer">閱讀原文出處 ↗</a><p class="fine">宋代公版原文。跨年代的行旅與落筆為遊戲演出。</p>`;$('#author-work').showModal();}
 function renderWriters(){const list=town.literati.collected;$('#writers-count').textContent=`汴水文集 · 已落筆 ${list.length} / ${AUTHORS.length} 篇`;$('#writers-list').innerHTML=AUTHORS.map(a=>{const actor=town.literati.actors.find(v=>v.author===a.id),entry=list.find(v=>v.author===a.id);return `<article class="writer-card"><small>${a.era} · ${a.form}</small><h3>${a.name}</h3><p>${a.title}</p><p class="writer-state">${escape(authorStatus(town,actor))}</p><p class="fine">${entry?`已收入文集 · ${escape(entry.venue)} · 第 ${Math.floor(entry.time/24)+1} 日 ${formatTime(entry.time)}`:'晴天停步落筆後收入文集，代表作隨時可讀。'}</p><div><button data-author-focus="${a.id}" ${actor?.visible?'':'disabled'}>去找${a.name} ↗</button><button data-author-work="${a.id}">讀代表作</button></div></article>`;}).join('');}
 $('#writers-btn').onclick=()=>{renderWriters();$('#writers').showModal();};
-$('#writers').onclick=e=>{const work=e.target.closest('[data-author-work]');if(work){showAuthorWork(work.dataset.authorWork);return;}const focus=e.target.closest('[data-author-focus]');if(!focus)return;const a=town.literati.actors.find(v=>v.author===focus.dataset.authorFocus);if(!a?.visible)return;$('#writers').close();stopFollowing();setMode('explore');journalOpen=false;updateJournal();pinned={kind:'author',id:a.author};hovered=null;scene.focusAt([a.x,a.z],2.8);renderInspector();};
+$('#writers').onclick=e=>{const work=e.target.closest('[data-author-work]');if(work){showAuthorWork(work.dataset.authorWork);return;}const focus=e.target.closest('[data-author-focus]');if(!focus)return;const a=town.literati.actors.find(v=>v.author===focus.dataset.authorFocus);if(!a?.visible)return;$('#writers').close();stopFollowing();setMode('explore');journalOpen=false;updateJournal();pinned={kind:'author',id:a.author};hovered=null;scene.focusAt([a.x,a.z],2.8);focusInspector();};
 
 function canPlan(cells){const report=previewPlan(town,{mode,design:selectedDesign,editing},cells);$('#mode-hint').textContent=report.text;return report.valid;}
 function applyUrban(fn){
@@ -270,7 +281,7 @@ function buildingTools(b){if(b.stage<3)return '';const tier=tierOf(b);return `<h
 
 $('#public-btn').onclick=()=>$('#public-works').showModal();
 $('#public-works').onclick=e=>{const b=e.target.closest('[data-road]');if(!b)return;$('#public-works').close();setMode('road');editing={kind:'road',type:b.dataset.road};pinned=hovered=null;$('#welcome').hidden=true;$('#mode-hint').textContent=`${ROAD_TYPES[editing.type]||'移除自建道路'} · 點選或拖曳空格（最多 24 格） · Esc 取消`;focusScene();};
-$('#fire-alert').onclick=()=>{const b=town.buildings.find(b=>b.fireWarningAt!==undefined)||town.buildings.find(damaged);if(!b)return;stopFollowing();setMode('explore');pinned={kind:'building',id:b.id};hovered=null;scene.focusAt([b.x*CELL,b.z*CELL],2.6);renderInspector();};
+$('#fire-alert').onclick=()=>{const b=town.buildings.find(b=>b.fireWarningAt!==undefined)||town.buildings.find(damaged);if(!b)return;stopFollowing();setMode('explore');pinned={kind:'building',id:b.id};hovered=null;scene.focusAt([b.x*CELL,b.z*CELL],2.6);focusInspector();};
 $('#public-fire').onclick=()=>{$('#public-works').close();plotSize=1;setMode('garden');selectedDesign='firePost';$('#blueprint-status').textContent='街坊巡守所 · 每格100文';$('#blueprint-status').hidden=false;$('#mode-hint').textContent='街坊巡守所 · 點蓋或斜拉四格 · 沿路覆蓋附近建築';$('#welcome').hidden=true;};
 $('#public-cleaning').onclick=()=>{$('#public-works').close();plotSize=1;setMode('garden');selectedDesign='cleaningYard';$('#blueprint-status').textContent='街坊清運院 · 每格100文';$('#blueprint-status').hidden=false;$('#mode-hint').textContent='街坊清運院 · 點蓋或斜拉四格 · 須以道路接至住宅與作坊';$('#welcome').hidden=true;};
 $('#public-water').onclick=()=>{$('#public-works').close();plotSize=1;setMode('garden');selectedDesign='well';$('#blueprint-status').textContent='街坊水井 · 每格100文 · 落成後供水';$('#blueprint-status').hidden=false;$('#mode-hint').textContent='街坊水井 · 點蓋一格或斜拉四格井院 · 須有步道接到住宅';$('#welcome').hidden=true;};
