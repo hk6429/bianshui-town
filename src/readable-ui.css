@@ -161,3 +161,9 @@ dialog{overflow:auto;overflow-wrap:anywhere}dialog input,dialog select{max-width
  body:not(.large-text).tools-open #town-tools{z-index:35}
  body:not(.large-text).tools-open #town-tools>.mode-hint{display:none}
 }
+
+/* Reading panels must sit above scene captions and projected building labels. */
+.inspector,.life-panel{z-index:40;background:#f7f4e7;isolation:isolate}
+body:has(.inspector:not([hidden]),.life-panel:not([hidden])) .scene-label{visibility:hidden}
+.inspector div:has(>button[data-resident]){display:flex;flex-wrap:wrap;gap:6px}
+.inspector button[data-resident].tag{display:inline-flex;align-items:center;min-height:44px;margin:0;padding:6px 9px;line-height:1.4}
