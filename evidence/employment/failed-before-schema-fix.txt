@@ -1,0 +1,949 @@
+
+> bianshui-town@0.10.0 test
+> node --test tests/*.test.js
+
+✔ managed building prices are shared with execution; invalid or unaffordable placement changes nothing (2.266791ms)
+✔ roads, moves, upgrades and expansion debit once; insufficient funds preserve all state (40.137625ms)
+✔ failed refresh does not commit construction fees or ledger entries (3.526166ms)
+✔ daily upkeep depends on active facilities, is independent of tick sizes and settles once (215.649917ms)
+✔ only housed residents and new actual sales pay tax; policy range and tax pressure are bounded (0.993375ms)
+✖ old saves migrate to sandbox without back-charging; mode toggles never refill the treasury (97.669333ms)
+✔ debt blocks paid construction but permits demolition and policy changes (0.98125ms)
+✔ city schema rejects invalid policy, missing v9 budget and future settlement cursor (15.244333ms)
+✔ unvalidated cargo and market values are escaped in text and quoted attributes (1.945125ms)
+✔ ordinary cargo labels and market counters keep readable content (0.177125ms)
+✔ nearest reachable job wins over earlier building order; reasonable existing job remains (9.284167ms)
+✖ isolated vacancies remain empty; reconnecting fills jobs; lost work receives a grace period (10.092375ms)
+✔ four present craftspeople produce more than one; no workers consume no inputs (8.803916ms)
+✔ follow camera tracks a moving resident and holds the actual house when indoors (134.406625ms)
+✔ street focus cancels following and centers the exact event venue while preserving view angle (0.5815ms)
+✔ courtyard view looks down without moving the camera into the far fog (0.124584ms)
+✔ author follow tracks the author model without confusing resident IDs (0.355667ms)
+✔ bridge and dock connect to town without crossing building interiors (104.0735ms)
+✔ boat lowers mast at bridge and porters unload actual cargo (373.900792ms)
+✔ ox cart delivers cargo to shops with conservation over several voyages (685.222375ms)
+✔ visitors cross bridge, browse a shop and depart at night (274.047042ms)
+✔ chat has a bounded pause then residents resume their schedule (209.617291ms)
+✔ pause freezes people, freight, boat and dialogue timers (72.647083ms)
+✖ version one progress migrates and version two preserves cargo (129.582042ms)
+✔ five named authors arrive, walk real roads, stop to write and collect unique originals (709.464375ms)
+✔ rain pauses writing, zero dt pauses everything, and night hides the visitors (196.910833ms)
+✖ v5 migration and v6 reload preserve freight, literature and road changes do not strand authors (199.063375ms)
+✔ all five entries have attributed original texts, form labels and HTTPS source links (0.926875ms)
+✔ isolated visitors cannot buy remotely and resume after roads reconnect (10.337541ms)
+✔ interrupted routes wait for reconnection and missing destinations never sell (4.729042ms)
+✔ 10000 transfers retain source, manufacturing and recent history in bounded storage (32.3775ms)
+✔ 95 active lots admit only remaining capacity, then 96 refuses more without count drift (0.283417ms)
+✖ tick failure stops once and preserves a loadable snapshot despite partial mutation (112.139833ms)
+✖ render failure stops once and preserves a loadable snapshot despite partial mutation (90.169334ms)
+✖ successful checkpoints advance at most once per second and returned copies cannot corrupt recovery (79.820792ms)
+✖ restoring a running town preserves positions, paths and next-step behavior without mutating input (319.530833ms)
+✔ invalid nonfinite negative and excessive simulation time cannot partially mutate a town (75.220625ms)
+✖ a stale non-road path is repaired on load while valid paths remain unchanged (128.992583ms)
+✔ roof surfaces survive merging with indexed tile ribs (8.980458ms)
+✔ 60 seconds of a real town are identical at 30/60/120Hz and equivalent 4x time (1719.588125ms)
+✔ pause discards partial time; resume and long stalls have bounded work (0.154334ms)
+✔ background cancels scheduled rendering, mutes once, preserves town and does not catch up (33.974875ms)
+✖ restored allocator creates 100 buildings without duplicate city IDs (2.214708ms)
+✖ simulation, renaming and cargo transfer after restore never mutate any part of the input (145.850041ms)
+✖ reset checkpoint restores complete live town after reload and new-town autosaves (287.350333ms)
+✖ 接受 v4 fixture 並深複製 (9.760083ms)
+✖ 接受 v5 fixture 並深複製 (1.452833ms)
+✖ 接受 v6 fixture 並深複製 (6.618208ms)
+✖ 接受 v7 fixture 並深複製 (5.633334ms)
+✖ 接受 v8 fixture 並深複製 (0.81525ms)
+✖ 接受 v1 舊版 (1.351084ms)
+✖ 接受 v2 舊版 (1.425458ms)
+✖ 接受 v3 舊版 (1.297709ms)
+✔ 拒絕 tick (0.80475ms)
+✔ 拒絕 unexpected (1.340416ms)
+✔ 拒絕 weather.mode (1.000333ms)
+✔ 拒絕 life.visitors (1.187083ms)
+✔ 拒絕 stories.active (0.734458ms)
+✔ 拒絕 literati.actors (1.005625ms)
+✔ 拒絕 market.trades (0.727ms)
+✔ 拒絕 time (2.154584ms)
+✔ 拒絕 elapsed (0.75975ms)
+✔ 拒絕 variant (2.003541ms)
+✔ 拒絕 speed (0.731375ms)
+✔ 拒絕 nextId (0.639333ms)
+✔ 拒絕 id (0.874667ms)
+✔ 拒絕 id (0.647666ms)
+✔ 拒絕 blockId (0.547083ms)
+✔ 拒絕 cells (0.415916ms)
+✔ 拒絕 footprint (0.387542ms)
+✖ 拒絕 home (3.662417ms)
+✔ 拒絕 route (4.17125ms)
+✔ 拒絕 people (87.9795ms)
+✔ 拒絕 cargo (1.029ms)
+✔ 拒絕 constructor (0.259ms)
+✖ 拒絕 at (0.9305ms)
+✔ JSON 原型保留鍵與超大原文 (0.213667ms)
+✖ 負數外來人物 ID 及半格四格中心合法 (1.083209ms)
+✖ 舊歷程保留不存在的建築，新 trailOmitted 可還原 (0.862583ms)
+✖ 有界展開限制累計舊版貨物 (1.691792ms)
+✔ 循環與存取器不執行 (0.406584ms)
+✖ 版本一舊遷移容許待重建的 life 及歷史 economy (12.469541ms)
+✖ 額外欄位不悄悄移除，重複貨物 ID 與不正確配置器拒絕 (0.917458ms)
+✔ UTF-8 位元組限制與深巢狀資料 (0.774334ms)
+✔ 道路重疊、建築占地與中心不一致均拒絕 (1.816459ms)
+✖ 數值零值保留，NaN、錯型別布林、未來 born 拒絕 (0.598458ms)
+✖ 合法活動的參與者引用、文人列舉與 cargo 位置 (1.012667ms)
+✔ bad primary is quarantined and never overwritten by autosave (0.72975ms)
+✔ only valid prior data becomes backup and reset snapshot survives reload and autosaves (2.822792ms)
+✔ stale tabs cannot overwrite and each tab retains an exportable local branch (0.844792ms)
+✔ import preview validates before replace; invalid input and unavailable storage preserve current data (0.291416ms)
+✔ straight drag allows four orthogonally connected cells (0.561875ms)
+✔ three cells share only an exterior road perimeter (0.198542ms)
+✔ invalid, overlapping, out-of-bounds and disconnected placements are atomic (1.698292ms)
+✔ auto roads connect distant blocks without entering any building (9.685125ms)
+✔ construction, population, work assignment and real arrival occur over time (14.714167ms)
+✔ paused simulation does not advance and night returns residents home (100.98225ms)
+✖ save restores connected roads, shared blocks and residents (88.26775ms)
+✔ street events gather real residents, finish and release everyone (593.451625ms)
+✔ resident diary follows actual work, meals and return home; rolls over by day (43.73925ms)
+✖ v1/v2 saves migrate diaries and v3 survives active events without stranded residents (154.014333ms)
+✔ pedestrian yields to oncoming ox, resumes after passing and uses side of road (0.202583ms)
+✔ same-direction followers maintain headway; opposite lanes and bridge crowding make progress (0.112167ms)
+✔ three event types cycle over multiple days while freight remains conserved (979.153792ms)
+✔ stationary residents are not described as yielding or blocked (0.246709ms)
+✔ every catalog design and available footprint progresses through five distinct models, never six (1915.935458ms)
+✖ five tiers survive serialization, moving and four-cell expansion without losing residents or inventory (17.292292ms)
+✖ old saves start at visual tier one with existing functional upgrades intact; incomplete construction cannot upgrade (0.772417ms)
+✔ place: refresh failure preserves complete town and disk (98.524ms)
+✔ place: render failure preserves complete town and disk (75.636709ms)
+✖ place: storage failure preserves complete town and disk (79.015292ms)
+✔ road: refresh failure preserves complete town and disk (129.1005ms)
+✔ road: render failure preserves complete town and disk (77.03075ms)
+✖ road: storage failure preserves complete town and disk (73.49825ms)
+✔ move: refresh failure preserves complete town and disk (71.587042ms)
+✔ move: render failure preserves complete town and disk (66.801208ms)
+✖ move: storage failure preserves complete town and disk (42.941958ms)
+✔ upgrade: refresh failure preserves complete town and disk (82.863166ms)
+✔ upgrade: render failure preserves complete town and disk (65.326334ms)
+✖ upgrade: storage failure preserves complete town and disk (61.407542ms)
+✔ demolish: refresh failure preserves complete town and disk (67.362458ms)
+✔ demolish: render failure preserves complete town and disk (50.039125ms)
+✖ demolish: storage failure preserves complete town and disk (53.026041ms)
+✖ successful edit publishes once with detached undo and original residents/cargo untouched (61.890042ms)
+✖ rejected placement does not call prepare or persist (51.03075ms)
+✖ whole-town undo after 60 simulated seconds restores exactly the disclosed pre-edit point (33.056833ms)
+✖ public streets connect to doors, block construction, persist and can be removed (6.350417ms)
+✔ moving one connected house preserves occupants and leaves its neighbour intact (64.273417ms)
+✔ demolition conserves cargo, residents survive and are rehoused without dangling references (880.441ms)
+✖ home and workshop upgrades expand capacity, preserve variants and reject occupied four-grid expansion (15.052834ms)
+✔ editing roads while a loaded cart is moving never delivers to a missing shop (667.998208ms)
+✔ visitors actually walk onto a connected public street (127.722833ms)
+✔ rain cancels outdoor events, shelters residents, and clear weather releases them (283.965625ms)
+✔ two and three connected cells have private courtyards, without internal roads (0.832917ms)
+✔ all raw materials are physically processed, delivered and sold with provenance and conservation (1652.759375ms)
+✔ a workshop without a present worker or raw input produces nothing (14.398417ms)
+✖ v3 freight migrates without loss; v4 restores weather, lots and manufacturing progress (44.206583ms)
+✔ four plots form one complex with an exterior entrance and no internal streets (15.316917ms)
+✔ invalid blueprints and occupied or out-of-bounds four plots are rejected atomically (1.371ms)
+✔ pond is an occupied landscape; people visit but are not assigned garden jobs (34.5275ms)
+✖ v4 restores unchanged IDs and freight; v5 round trip preserves all blueprint footprints (57.543541ms)
+✔ all blueprint meshes are finite, distinct in silhouette, and pond water is above its base (178.370584ms)
+✔ a pond is not a rain shelter, including for a resident already visiting it (4.708958ms)
+✔ dragging diagonally in any direction forms a square; straight dragging allows four houses (16.102875ms)
+✔ ten styles have distinct geometry and each four-grid layout differs from its small house (76.0795ms)
+✔ four road plots automatically form a traversable plaza and split on removal (13.491416ms)
+✔ four separately placed flower gardens become one special landscape with valid resident references (45.342959ms)
+✖ stalls receive visitors, market counts survive reload and storytelling uses the wazi (369.825584ms)
+✔ expanding a new style preserves its identity and upgrades its name (13.076792ms)
+ℹ tests 149
+ℹ suites 0
+ℹ pass 103
+ℹ fail 46
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2734.739375
+
+✖ failing tests:
+
+test at tests/city-finance.test.js:25:1
+✖ old saves migrate to sandbox without back-charging; mode toggles never refill the treasury (97.669333ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at Town.restore (file:///Users/naichengchen/projects/bianshui-town/src/simulation.js:175:8)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/city-finance.test.js:26:94)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/employment.test.js:5:1
+✖ isolated vacancies remain empty; reconnecting fills jobs; lost work receives a grace period (10.092375ms)
+  AssertionError [ERR_ASSERTION]: Got unwanted exception.
+  Actual message: "a is not defined"
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/employment.test.js:7:158)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: ReferenceError: a is not defined
+        at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+        at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+        at Town.restore (file:///Users/naichengchen/projects/bianshui-town/src/simulation.js:175:8)
+        at file:///Users/naichengchen/projects/bianshui-town/tests/employment.test.js:7:180
+        at getActual (node:assert:580:5)
+        at strict.doesNotThrow (node:assert:748:32)
+        at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/employment.test.js:7:158)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18),
+    expected: undefined,
+    operator: 'doesNotThrow',
+    diff: 'simple'
+  }
+
+test at tests/life.test.js:12:1
+✖ version one progress migrates and version two preserves cargo (129.582042ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at Town.restore (file:///Users/naichengchen/projects/bianshui-town/src/simulation.js:175:8)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/life.test.js:12:174)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/literati.test.js:15:1
+✖ v5 migration and v6 reload preserve freight, literature and road changes do not strand authors (199.063375ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at Town.restore (file:///Users/naichengchen/projects/bianshui-town/src/simulation.js:175:8)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/literati.test.js:16:127)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/recovery.test.js:4:38
+✖ tick failure stops once and preserves a loadable snapshot despite partial mutation (112.139833ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at RecoveryPoint.validateSave [as validate] (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at RecoveryPoint.checkpoint (file:///Users/naichengchen/projects/bianshui-town/src/recovery.js:4:87)
+      at new RecoveryPoint (file:///Users/naichengchen/projects/bianshui-town/src/recovery.js:3:149)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/recovery.test.js:5:51)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/recovery.test.js:4:38
+✖ render failure stops once and preserves a loadable snapshot despite partial mutation (90.169334ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at RecoveryPoint.validateSave [as validate] (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at RecoveryPoint.checkpoint (file:///Users/naichengchen/projects/bianshui-town/src/recovery.js:4:87)
+      at new RecoveryPoint (file:///Users/naichengchen/projects/bianshui-town/src/recovery.js:3:149)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/recovery.test.js:5:51)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+
+test at tests/recovery.test.js:16:1
+✖ successful checkpoints advance at most once per second and returned copies cannot corrupt recovery (79.820792ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at RecoveryPoint.validateSave [as validate] (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at RecoveryPoint.checkpoint (file:///Users/naichengchen/projects/bianshui-town/src/recovery.js:4:87)
+      at new RecoveryPoint (file:///Users/naichengchen/projects/bianshui-town/src/recovery.js:3:149)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/recovery.test.js:17:44)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+
+test at tests/restore-continuity.test.js:2:1
+✖ restoring a running town preserves positions, paths and next-step behavior without mutating input (319.530833ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at Town.restore (file:///Users/naichengchen/projects/bianshui-town/src/simulation.js:175:8)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/restore-continuity.test.js:2:249)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/restore-continuity.test.js:4:1
+✖ a stale non-road path is repaired on load while valid paths remain unchanged (128.992583ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at Town.restore (file:///Users/naichengchen/projects/bianshui-town/src/simulation.js:175:8)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/restore-continuity.test.js:4:298)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/save-contracts.test.js:4:1
+✖ restored allocator creates 100 buildings without duplicate city IDs (2.214708ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at Town.restore (file:///Users/naichengchen/projects/bianshui-town/src/simulation.js:175:8)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-contracts.test.js:5:18)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/save-contracts.test.js:10:1
+✖ simulation, renaming and cargo transfer after restore never mutate any part of the input (145.850041ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at Town.restore (file:///Users/naichengchen/projects/bianshui-town/src/simulation.js:175:8)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-contracts.test.js:12:78)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/save-contracts.test.js:17:1
+✖ reset checkpoint restores complete live town after reload and new-town autosaves (287.350333ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(store.save(original).ok)
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-contracts.test.js:20:2)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/save-schema.test.js:6:28
+✖ 接受 v4 fixture 並深複製 (9.760083ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:6:83)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/save-schema.test.js:6:28
+✖ 接受 v5 fixture 並深複製 (1.452833ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:6:83)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/save-schema.test.js:6:28
+✖ 接受 v6 fixture 並深複製 (6.618208ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:6:83)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/save-schema.test.js:6:28
+✖ 接受 v7 fixture 並深複製 (5.633334ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:6:83)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/save-schema.test.js:6:28
+✖ 接受 v8 fixture 並深複製 (0.81525ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:6:83)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/save-schema.test.js:7:24
+✖ 接受 v1 舊版 (1.351084ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:7:171)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/save-schema.test.js:7:24
+✖ 接受 v2 舊版 (1.425458ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:7:171)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/save-schema.test.js:7:24
+✖ 接受 v3 舊版 (1.297709ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:7:171)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/save-schema.test.js:11:32
+✖ 拒絕 home (3.662417ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  ReferenceError: a is not defined
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:11:91)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: ReferenceError: a is not defined
+        at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+        at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+        at file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:11:102
+        at getActual (node:assert:580:5)
+        at strict.throws (node:assert:728:24)
+        at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:11:91)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19),
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/save-schema.test.js:11:32
+✖ 拒絕 at (0.9305ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  ReferenceError: a is not defined
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:11:91)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: ReferenceError: a is not defined
+        at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+        at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+        at file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:11:102
+        at getActual (node:assert:580:5)
+        at strict.throws (node:assert:728:24)
+        at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:11:91)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19),
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/save-schema.test.js:13:1
+✖ 負數外來人物 ID 及半格四格中心合法 (1.083209ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:13:90)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/save-schema.test.js:14:1
+✖ 舊歷程保留不存在的建築，新 trailOmitted 可還原 (0.862583ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:14:200)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/save-schema.test.js:15:1
+✖ 有界展開限制累計舊版貨物 (1.691792ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /cargo/. Input:
+  
+  'ReferenceError: a is not defined'
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:15:125)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: ReferenceError: a is not defined
+        at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+        at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+        at file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:15:136
+        at getActual (node:assert:580:5)
+        at strict.throws (node:assert:728:24)
+        at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:15:125)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19),
+    expected: /cargo/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/save-schema.test.js:17:1
+✖ 版本一舊遷移容許待重建的 life 及歷史 economy (12.469541ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:17:101)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/save-schema.test.js:18:1
+✖ 額外欄位不悄悄移除，重複貨物 ID 與不正確配置器拒絕 (0.917458ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /ID 重複/. Input:
+  
+  'ReferenceError: a is not defined'
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:18:122)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: ReferenceError: a is not defined
+        at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+        at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+        at file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:18:133
+        at getActual (node:assert:580:5)
+        at strict.throws (node:assert:728:24)
+        at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:18:122)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19),
+    expected: /ID 重複/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/save-schema.test.js:21:1
+✖ 數值零值保留，NaN、錯型別布林、未來 born 拒絕 (0.598458ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:21:113)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/save-schema.test.js:22:1
+✖ 合法活動的參與者引用、文人列舉與 cargo 位置 (1.012667ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /at/. Input:
+  
+  'ReferenceError: a is not defined'
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:22:224)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: ReferenceError: a is not defined
+        at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+        at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+        at file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:22:235
+        at getActual (node:assert:580:5)
+        at strict.throws (node:assert:728:24)
+        at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/save-schema.test.js:22:224)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19),
+    expected: /at/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/simulation.test.js:10:1
+✖ save restores connected roads, shared blocks and residents (88.26775ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at Town.restore (file:///Users/naichengchen/projects/bianshui-town/src/simulation.js:175:8)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/simulation.test.js:10:145)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/stories.test.js:18:1
+✖ v1/v2 saves migrate diaries and v3 survives active events without stranded residents (154.014333ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at Town.restore (file:///Users/naichengchen/projects/bianshui-town/src/simulation.js:175:8)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/stories.test.js:20:15)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/tiers.test.js:8:1
+✖ five tiers survive serialization, moving and four-cell expansion without losing residents or inventory (17.292292ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at Town.restore (file:///Users/naichengchen/projects/bianshui-town/src/simulation.js:175:8)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/tiers.test.js:8:448)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/tiers.test.js:9:1
+✖ old saves start at visual tier one with existing functional upgrades intact; incomplete construction cannot upgrade (0.772417ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at Town.restore (file:///Users/naichengchen/projects/bianshui-town/src/simulation.js:175:8)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/tiers.test.js:9:276)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/town-edit.test.js:4:100
+✖ place: storage failure preserves complete town and disk (79.015292ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/town-edit.test.js:7:194)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/town-edit.test.js:4:100
+✖ road: storage failure preserves complete town and disk (73.49825ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/town-edit.test.js:7:194)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/town-edit.test.js:4:100
+✖ move: storage failure preserves complete town and disk (42.941958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/town-edit.test.js:7:194)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/town-edit.test.js:4:100
+✖ upgrade: storage failure preserves complete town and disk (61.407542ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/town-edit.test.js:7:194)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/town-edit.test.js:4:100
+✖ demolish: storage failure preserves complete town and disk (53.026041ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/town-edit.test.js:7:194)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/town-edit.test.js:9:1
+✖ successful edit publishes once with detached undo and original residents/cargo untouched (61.890042ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(result.ok)
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/town-edit.test.js:11:2)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/town-edit.test.js:13:1
+✖ rejected placement does not call prepare or persist (51.03075ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(!result.error)
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/town-edit.test.js:13:224)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/town-edit.test.js:14:1
+✖ whole-town undo after 60 simulated seconds restores exactly the disclosed pre-edit point (33.056833ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(edited.ok)
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/town-edit.test.js:15:111)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/urban.test.js:4:1
+✖ public streets connect to doors, block construction, persist and can be removed (6.350417ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at Town.restore (file:///Users/naichengchen/projects/bianshui-town/src/simulation.js:175:8)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/urban.test.js:4:412)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/urban.test.js:7:1
+✖ home and workshop upgrades expand capacity, preserve variants and reject occupied four-grid expansion (15.052834ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at Town.restore (file:///Users/naichengchen/projects/bianshui-town/src/simulation.js:175:8)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/urban.test.js:7:610)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/v4.test.js:26:1
+✖ v3 freight migrates without loss; v4 restores weather, lots and manufacturing progress (44.206583ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at Town.restore (file:///Users/naichengchen/projects/bianshui-town/src/simulation.js:175:8)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/v4.test.js:28:15)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/v5.test.js:19:1
+✖ v4 restores unchanged IDs and freight; v5 round trip preserves all blueprint footprints (57.543541ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at Town.restore (file:///Users/naichengchen/projects/bianshui-town/src/simulation.js:175:8)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/v5.test.js:20:97)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/v8.test.js:7:1
+✖ stalls receive visitors, market counts survive reload and storytelling uses the wazi (369.825584ms)
+  ReferenceError: a is not defined
+      at references (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:39:144)
+      at validateSave (file:///Users/naichengchen/projects/bianshui-town/src/save-schema.js:55:360)
+      at Town.restore (file:///Users/naichengchen/projects/bianshui-town/src/simulation.js:175:8)
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/v8.test.js:7:494)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

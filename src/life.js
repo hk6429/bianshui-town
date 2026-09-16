@@ -1,3 +1,4 @@
+import {shopIsOpen} from './commerce.js';
 import {marketStalls,marketOpen} from './market.js';
 import {at,transfer,deliveryPlan,importCargo,GOODS,goodsBalance} from './production.js';
 import {applyTraffic} from './traffic.js';
@@ -97,6 +98,7 @@ function tickVisitors(t,dt){
    if(a.target&&(!shop||shop.type!=='shop'||shop.stage<3)){a.phase='choose';continue;}
    const target=shop?shop.entrance:MARKET;
    if(Math.hypot(a.x-target[0],a.z-target[1])>.02){send(t,a,target,shop?`趕集，前往${shop.name}`:'前往橋頭市集');continue;}
+   if(shop&&!shopIsOpen(t,shop)){a.action='店鋪尚未有店員到場，等候開張';a.wait=3;continue;}
    a.action=a.kind==='peddler'?'放下擔子，與店家談買賣':'在攤前看貨、喝茶';a.wait=7+a.id%5;a.phase='watch';
    if(shop?.stock>0){l.dock.sold+=transfer(t,`shop:${shop.id}`,'sold',1);}
   }else if(a.phase==='stall'){

@@ -232,10 +232,26 @@
       "acceptance": [
         "兩職缺同條件時選較短通勤；隔離職缺不被指派；恢復連通後可補缺。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/employment.js",
+        "src/commerce.js",
+        "src/simulation.js",
+        "src/production.js",
+        "src/life.js",
+        "src/save-schema.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "tests/employment.test.js",
+        "tests/commerce.test.js",
+        "tests/commerce-harness.html",
+        "evidence/employment/tests.txt",
+        "evidence/employment/browser.txt",
+        "evidence/employment/browser.png",
+        "evidence/employment/README.md"
+      ],
+      "verifiedBy": "根代理：逐項契約測試及 Chrome 隔離模組整合驗收；最終四領域複評尚待完成",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -255,10 +271,26 @@
       "acceptance": [
         "同原料和等時長下，四名到場工匠的產量高於一名；零人不生產且不耗原料。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/employment.js",
+        "src/commerce.js",
+        "src/simulation.js",
+        "src/production.js",
+        "src/life.js",
+        "src/save-schema.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "tests/employment.test.js",
+        "tests/commerce.test.js",
+        "tests/commerce-harness.html",
+        "evidence/employment/tests.txt",
+        "evidence/employment/browser.txt",
+        "evidence/employment/browser.png",
+        "evidence/employment/README.md"
+      ],
+      "verifiedBy": "根代理：逐項契約測試及 Chrome 隔離模組整合驗收；最終四領域複評尚待完成",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -278,10 +310,26 @@
       "acceptance": [
         "到店居民消耗一件庫存並增加一次成交；同一 tick 後續重算不重複買；缺貨無憑空成交。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/employment.js",
+        "src/commerce.js",
+        "src/simulation.js",
+        "src/production.js",
+        "src/life.js",
+        "src/save-schema.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "tests/employment.test.js",
+        "tests/commerce.test.js",
+        "tests/commerce-harness.html",
+        "evidence/employment/tests.txt",
+        "evidence/employment/browser.txt",
+        "evidence/employment/browser.png",
+        "evidence/employment/README.md"
+      ],
+      "verifiedBy": "根代理：逐項契約測試及 Chrome 隔離模組整合驗收；最終四領域複評尚待完成",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -422,10 +470,26 @@
       "acceptance": [
         "有庫存零到場店員時無一般交易；店員抵達後恢復；離店休息時遵守相同規則。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/employment.js",
+        "src/commerce.js",
+        "src/simulation.js",
+        "src/production.js",
+        "src/life.js",
+        "src/save-schema.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "tests/employment.test.js",
+        "tests/commerce.test.js",
+        "tests/commerce-harness.html",
+        "evidence/employment/tests.txt",
+        "evidence/employment/browser.txt",
+        "evidence/employment/browser.png",
+        "evidence/employment/README.md"
+      ],
+      "verifiedBy": "根代理：逐項契約測試及 Chrome 隔離模組整合驗收；最終四領域複評尚待完成",
       "reviewSource": "docs/review/city.json"
     },
     {

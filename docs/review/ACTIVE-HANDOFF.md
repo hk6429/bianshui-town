@@ -43,3 +43,19 @@
 - C01/C02 verified，C03/C04 in_progress：稅負反向需求係數未接RCI；赤字未實作公共服務效率衰退。
 - 財政全套146/146，build成功，Chrome確認2400→2280單次扣120、稅率21拒絕、切sandbox資金不重填。evidence/city-finance。
 - 下一包優先 C05–C10：RCI、分批遷入/遷出、可達就業、人力產能、居民真採買；把taxDemand接到需求，並在C17–C25服務包完成C04衰退。仍保留E01–E04/E18–E21與O/U待辦，不漏項。
+
+## 立即交接：C08/C09 尚未提交（本輪出現兩次整合失敗，已換階段）
+- HEAD 0834261，新增 employment.js/tests/employment.test.js，修改 simulation/production/save-schema/logistics-safety.test；所有本輪工作尚未commit/push。
+- BFS可達職缺按距離，保留合理現職，失聯60秒寬限；人力倍率為到場/容量，乘建築規模。
+- 第一個全套失敗：舊貨運歷程測試stub僅1名工匠，20秒未達新配方時間；改4名代表滿編，維持原貨運斷言。
+- 第二個全套失敗：schema新增future jobLostAt檢查時漏了for(const a of list)。已補回，49項employment/logistics/schema聚焦全部通過。
+- evidence/employment/failed-before-schema-fix.txt是歷史失敗；focused-after-fix.txt才是最新聚焦成功。
+- 下一階段第一步跑全套與build，再實際UI查看人力狀態或保存可重播模擬證據；確認C08/C09契約後才標verified、commit/push。勿將C05–C07/C10遺漏。
+- 最新 ledger 20 verified / 7 implemented / 2 in_progress / 71 open。完整goal active，不是blocked。
+
+## 最新交接：就業與採買里程碑放行（2026-09-16）
+- 上述未提交與失敗紀錄為歷史；本輪 152/152 全套與 build 通過，Chrome 模組驗收 8 格近職／32 格遠職、人力 0/1/3 產出、店員到場及真實庫存成交通過。
+- C08/C09/C10/C16 verified；最新帳本 24 verified / 5 implemented / 2 in_progress / 69 open，100 項目標仍 active。
+- employment.js、commerce.js 及 main/life/production/schema/simulation 整合完成，證據 evidence/employment。
+- 下一個獨立工作階段 C05–C07：單一 RCI 需求、按時間移入、長期失業與無家遷出；接入 C03 稅負需求。不可只改數字或測試，必須真實影响人口與玩家回饋。
+- C04 服務衰退、E01–04/E18–21、O/U 全部保留；百項完成並四領域複評後才部署，正式站仍 V10。

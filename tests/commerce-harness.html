@@ -1,0 +1,29 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>就業與採買驗收</title>
+<h1>就業與採買驗收</h1><p>使用正式模擬模組的隔離城鎮，不讀寫玩家存檔。這是模組整合驗收，不是三維場景操作。</p>
+<button id="run">執行模擬</button><pre id="result">尚未執行</pre>
+<script type="module">
+import {Town} from '/src/simulation.js';
+import {assignJobs,commuteDistance} from '/src/employment.js';
+import {transfer,tickProduction} from '/src/production.js';
+import {residentPurchase,shopStatus} from '/src/commerce.js';
+document.querySelector('#run').onclick=()=>{
+ const lines=[],check=(ok,text)=>{if(!ok)throw Error(text);lines.push('通過：'+text);};
+ try{
+  const t=new Town();t.place('home',[{x:0,z:0},{x:1,z:0}],true);t.place('work',[{x:-6,z:0}],true);t.place('work',[{x:2,z:0}],true);t.tick(.05);
+  const p=t.people[0],far=t.buildings[2],near=t.buildings[3];p.work=null;assignJobs(t);
+  check(p.work===near.id,`選擇近端工作：${commuteDistance(t,p,near)} 格，遠端 ${commuteDistance(t,p,far)} 格`);
+  const counts=[];
+  for(const n of [0,1,4]){const a=new Town();a.place('work',[{x:0,z:0}],true);const b=a.buildings[0];b.variant=0;a.workers=()=>Array.from({length:n},()=>({outside:false,current:b.id}));transfer(a,'boat',`input:${b.id}`,3,'clay');for(let i=0;i<1200;i++)tickProduction(a,.05);counts.push(a.economy.lots.filter(l=>l.good==='ceramics').length);}
+  check(counts[0]===0&&counts[2]>counts[1],`同樣 60 秒，0／1／4 人成品數：${counts.join('／')}`);
+  const a=new Town();a.place('home',[{x:0,z:0},{x:1,z:0}],true);a.place('shop',[{x:-3,z:0}],true);a.tick(.05);a.time=12;
+  const shop=a.buildings.find(b=>b.type==='shop'),[staff,buyer]=a.people;
+  for(const q of a.people){q.work=null;q.outside=true;}staff.work=shop.id;staff.current=shop.id;buyer.current=shop.id;buyer.outside=false;
+  a.economy.lots[0].good='cloth';transfer(a,'boat',`shop:${shop.id}`,1,'cloth');
+  check(!residentPurchase(a,buyer)&&shop.stock===1,'無店員：保留庫存、不成交');lines.push(shopStatus(a,shop));
+  staff.outside=false;check(residentPurchase(a,buyer)&&shop.stock===0&&a.economy.sold.cloth===1,'店員到場：居民採買一件、庫存減一');lines.push(shopStatus(a,shop));
+  check(!residentPurchase(a,buyer),'冷卻期間不重複採買');
+  const restored=Town.restore(a.toJSON());check(restored.people.find(q=>q.id===buyer.id).needsSatisfiedUntil>restored.elapsed,'讀回後保留日用品需求已滿足狀態');
+  document.querySelector('#result').textContent=lines.join('\n');
+ }catch(e){document.querySelector('#result').textContent=lines.join('\n')+'\n失敗：'+e.message;}
+};
+</script></html>

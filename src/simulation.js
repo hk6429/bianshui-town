@@ -1,3 +1,5 @@
+import {residentPurchase} from './commerce.js';
+import {assignJobs} from './employment.js';
 import {createCity,charge,buildCost,settleBudget} from './city-finance.js';
 import {validateSave} from './save-schema.js';
 import {tierOf} from './building-tiers.js';
@@ -126,15 +128,15 @@ export class Town {
   }
   for(const a of [...this.people,...this.life.visitors,...this.life.porters])a.traffic='';
   tickWeather(this);tickStories(this);prepareTraffic(this);
-  const workplaces=this.buildings.filter(b=>(b.type==='shop'||b.type==='work')&&b.stage>=3);
+  assignJobs(this);
   for(const p of this.people){
-   if(!p.work){const job=workplaces.find(b=>this.workers(b).length<(b.type==='work'?(b.footprint?6:4):2));if(job)p.work=job.id;}
    if(!p.home&&!p.work){p.outside=true;p.action='在街口等候新居';continue;}
    if(shelterResident(this,p,dt))continue;
    if(eventAction(this,p)){this.move(p,dt);eventAction(this,p);continue;}
    const h=this.time%24;if((p.socialUntil||0)>this.elapsed&&h>=6&&h<20)continue;const shops=this.buildings.filter(b=>(b.type==='shop'||b.type==='garden')&&b.stage>=3);
    let target=p.home;
-   if(h>=7&&h<17&&!(h>=11.5&&h<13))target=p.work||p.home;
+   if(this.building(p.work)?.type==='shop'&&h>=7&&h<19)target=p.work;
+   else if(h>=7&&h<17&&!(h>=11.5&&h<13))target=p.work||p.home;
    else if((h>=11.5&&h<13)||(h>=17&&h<20))target=shops.length?shops[p.id%shops.length].id:p.home;
    if(!p.outside && p.current!==target)this.travel(p,target);
    else if(p.outside && p.destination!==target)this.travel(p,target);
@@ -145,6 +147,7 @@ export class Town {
   for(const b of this.buildings.filter(b=>b.type==='work'&&b.stage>=3)){
    if(shops.length&&!this.carts.some(c=>c.home===b.id))this.carts.push({id:this.nextId++,home:b.id,current:b.id,destination:b.id,x:b.entrance[0],z:b.entrance[1],outside:false,route:[],speed:.7,wait:0,carrying:0,action:'整理貨物'});
   }
+  for(const p of this.people)residentPurchase(this,p);
   tickProduction(this,dt);tickCraftCarts(this,dt);
   tickLife(this,dt);tickLiterati(this,dt);settleBudget(this);
   for(const p of this.people){if(this.weather.raining&&p.outside&&!p.shelter&&!p.action.startsWith('撐傘'))p.action='撐傘 · '+p.action;remember(this,p,p.action);}

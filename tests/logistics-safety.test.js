@@ -6,6 +6,7 @@ import {transfer,importCargo,goodsBalance,syncCargo,tickProduction} from '../src
 
 function visitorTown(){
  const t=new Town();t.place('shop',[{x:0,z:0}],true);const shop=t.buildings[0];
+ t.workers=b=>b.id===shop.id?[{outside:false,current:shop.id}]:[];
  const lot=t.economy.lots[0];lot.good='cloth';transfer(t,'boat',`shop:${shop.id}`,1,'cloth');
  t.life.visitors=[{id:2000,kind:'shopper',x:GATE[0],z:GATE[1],route:[],walking:false,wait:0,phase:'choose',speed:1}];
  return {t,shop,a:t.life.visitors[0]};
@@ -31,7 +32,7 @@ test('interrupted routes wait for reconnection and missing destinations never se
 
 test('10000 transfers retain source, manufacturing and recent history in bounded storage',()=>{
  const t=new Town();t.place('work',[{x:0,z:0}],true);const work=t.buildings[0],lot=t.economy.lots[0];
- work.variant=0;t.workers=()=>[{outside:false,current:work.id}];
+ work.variant=0;t.workers=()=>Array.from({length:4},()=>({outside:false,current:work.id}));
  transfer(t,'boat',`input:${work.id}`,1,'clay');tickProduction(t,20);
  assert.equal(lot.madeAt,work.id);const origin=lot.origin;
  for(let i=0;i<10000;i++){t.time=i;transfer(t,lot.at,i%2?'dock':'cart:999',1,lot.good);}
