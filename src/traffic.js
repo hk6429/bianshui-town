@@ -2,7 +2,7 @@
 const snapshots=new WeakMap();
 const heading=a=>{const next=a.route?.find(([x,z])=>Math.hypot(x-a.x,z-a.z)>.01);if(!next)return [Math.sin(a.angle||0),Math.cos(a.angle||0)];const dx=next[0]-a.x,dz=next[1]-a.z,d=Math.hypot(dx,dz);return [dx/d,dz/d];};
 export function prepareTraffic(t){
- const actors=[...t.people.filter(p=>p.outside),...t.carts.filter(p=>p.outside).map(p=>({...p,kind:'cart'})),...t.life.visitors.filter(p=>p.visible),...t.life.porters,...t.life.oxen];
+ const actors=[...(t.literati?.actors||[]).filter(a=>a.visible),...t.people.filter(p=>p.outside),...t.carts.filter(p=>p.outside).map(p=>({...p,kind:'cart'})),...t.life.visitors.filter(p=>p.visible),...t.life.porters,...t.life.oxen];
  snapshots.set(t,actors.map(a=>({...a,heading:heading(a),moving:!!a.route?.length,vehicle:['ox','cart'].includes(a.kind)})));
 }
 export function trafficMotion(t,a){

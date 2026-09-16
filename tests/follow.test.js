@@ -21,3 +21,11 @@ test('courtyard view looks down without moving the camera into the far fog',()=>
  const s=Object.create(TownScene.prototype);s.camera=new THREE.OrthographicCamera();s.camera.position.set(41,53,65);s.controls={target:new THREE.Vector3(-7,0,0)};const distance=s.camera.position.distanceTo(s.controls.target);
  s.focusAt([-14,0],3,true);assert(Math.abs(s.camera.position.distanceTo(s.controls.target)-distance)<1e-8);assert.equal(s.camera.zoom,3);
 });
+test('author follow tracks the author model without confusing resident IDs',()=>{
+ const t=new Town(),s=Object.create(TownScene.prototype);t.literati.actors=[{author:'su',id:90001,x:2,z:3,visible:true}];
+ s.camera=new THREE.OrthographicCamera();s.camera.position.set(10,20,30);s.controls={target:new THREE.Vector3()};
+ const model=new THREE.Group();model.position.set(2,0,3);s.authorScene={models:new Map([['su',model]])};s.personModels=new Map();s.follow('author:su');
+ for(let i=0;i<120;i++)s.updateFollow(t,1/60);assert(s.controls.target.distanceTo(model.position)<.02);
+ model.position.set(8,0,-4);for(let i=0;i<120;i++)s.updateFollow(t,1/60);assert(s.controls.target.distanceTo(model.position)<.02);
+ s.follow(null);const before=s.controls.target.clone();model.position.set(99,0,99);s.updateFollow(t,1);assert(s.controls.target.equals(before));
+});
