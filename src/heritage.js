@@ -14,7 +14,7 @@ export const DESIGNS={
  kilnHall:{name:'瓷窯大院',type:'work',variant:0,mark:'窯',sizes:[4],source:null,detail:'四格雙窯、晾坯庭與倉房；可容六名工匠，加工速度兩倍。'},
  woodshopHall:{name:'木作營造院',type:'work',variant:1,mark:'木',sizes:[4],source:null,detail:'四格木作大廳、堆料場與鋸架；可容六名工匠，加工速度兩倍。'},
  weaveryHall:{name:'織錦大院',type:'work',variant:2,mark:'錦',sizes:[4],source:null,detail:'四格織機廳、染布架與曬場；可容六名工匠，加工速度兩倍。'},
- garden:{name:'百花公園',type:'garden',variant:0,mark:'園',sizes:[1,4],source:'pond',detail:'公共花圃、石徑與歇腳長椅；四格為中央花壇大花園。'},
+ garden:{name:'百花公園',type:'garden',variant:0,mark:'園',sizes:[1,4],source:null,detail:'公共花圃、石徑與歇腳長椅；四格為中央花壇大花園。'},
 
  tea:{name:'臨街茶坊',type:'shop',variant:0,mark:'茶',sizes:[1,4],source:'city',detail:'開敞茶棚、圓桌與矮凳；四格變成環廊茶院。'},
  food:{name:'炊煙食肆',type:'shop',variant:1,mark:'食',sizes:[1,4],source:'city',detail:'高灶煙囪、蒸籠與暖色雨棚；四格擴為前店後廚。'},
