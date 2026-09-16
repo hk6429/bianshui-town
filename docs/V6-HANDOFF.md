@@ -18,3 +18,9 @@
 - 固定五篇經核對作品；沒有即時 AI 生成詩詞或作者語音。跨年代同遊不代表歷史事件。
 - 本次為代理操作 Chrome 實測，非使用者本人驗收。
 - 正式部署與回讀證據於 release.json 記錄。
+
+## 正式版放行
+- Cloudflare Pages deployment：7dd236a0；source commit：c04034c。
+- https://bianshui-town.pages.dev/ 的 7 個檔案 SHA-256 均與 dist 相同。
+- Chrome 正式站驗證舊存檔 26 位居民／26 處建築／12 處街坊保留；文人陸續抵達、蘇軾撐傘、定位與跟隨、代表作閱讀皆可操作；console errors 0。
+- 正式畫面：production-follow.png、production-reading.png。
