@@ -19,10 +19,23 @@
       "acceptance": [
         "餘額不足時任何付費操作均不改地圖；成功一次只扣一次，四格報價高於一格。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/city-finance.js",
+        "src/finance-ui.js",
+        "src/simulation.js",
+        "src/urban.js",
+        "src/production.js",
+        "src/save-schema.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "tests/city-finance.test.js",
+        "evidence/city-finance/tests.txt",
+        "evidence/city-finance/README.md",
+        "evidence/city-finance/browser-budget.txt"
+      ],
+      "verifiedBy": "root: finance execution tests and real browser debit; final independent review pending",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -42,10 +55,23 @@
       "acceptance": [
         "同樣天數不同 tick 步長支出相同；更多已營運設施造成更高支出，暫停不扣款。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/city-finance.js",
+        "src/finance-ui.js",
+        "src/simulation.js",
+        "src/urban.js",
+        "src/production.js",
+        "src/save-schema.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "tests/city-finance.test.js",
+        "evidence/city-finance/tests.txt",
+        "evidence/city-finance/README.md",
+        "evidence/city-finance/browser-budget.txt"
+      ],
+      "verifiedBy": "root: finance execution tests and real browser debit; final independent review pending",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -65,9 +91,22 @@
       "acceptance": [
         "無人空屋不繳人口稅；成交產生一次收入；提高稅率增加每筆稅額並降低對應需求。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
+      "status": "in_progress",
+      "implementation": [
+        "src/city-finance.js",
+        "src/finance-ui.js",
+        "src/simulation.js",
+        "src/urban.js",
+        "src/production.js",
+        "src/save-schema.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "tests/city-finance.test.js",
+        "evidence/city-finance/tests.txt",
+        "evidence/city-finance/README.md",
+        "evidence/city-finance/browser-budget.txt"
+      ],
       "verifiedBy": null,
       "reviewSource": "docs/review/city.json"
     },
@@ -88,9 +127,22 @@
       "acceptance": [
         "連續赤字會造成具體服務衰退；調整收支後能恢復，無不可退出的軟鎖。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
+      "status": "in_progress",
+      "implementation": [
+        "src/city-finance.js",
+        "src/finance-ui.js",
+        "src/simulation.js",
+        "src/urban.js",
+        "src/production.js",
+        "src/save-schema.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "tests/city-finance.test.js",
+        "evidence/city-finance/tests.txt",
+        "evidence/city-finance/README.md",
+        "evidence/city-finance/browser-budget.txt"
+      ],
       "verifiedBy": null,
       "reviewSource": "docs/review/city.json"
     },

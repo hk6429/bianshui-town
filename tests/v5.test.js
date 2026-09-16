@@ -19,7 +19,7 @@ test('pond is an occupied landscape; people visit but are not assigned garden jo
 test('v4 restores unchanged IDs and freight; v5 round trip preserves all blueprint footprints',()=>{
  const t=new Town();t.demo();const old=JSON.parse(JSON.stringify(t));old.version=4;const r=Town.restore(old);assert.deepEqual(r.economy,old.economy);assert.deepEqual(r.people.map(p=>p.id),old.people.map(p=>p.id));
  const n=new Town();for(const [i,[id,d]] of Object.entries(DESIGNS).entries())n.place(d.type,d.sizes.includes(1)?[{x:-8+i,z:-4}]:squareCells({x:-8+(i-3)*3,z:0}),true,id);
- const restored=Town.restore(JSON.parse(JSON.stringify(n)));assert.equal(restored.toJSON().version,8);assert.deepEqual(restored.buildings,n.buildings);assert.deepEqual([...restored.roads],[...n.roads]);
+ const restored=Town.restore(JSON.parse(JSON.stringify(n)));assert.equal(restored.toJSON().version,9);assert.deepEqual(restored.buildings,n.buildings);assert.deepEqual([...restored.roads],[...n.roads]);
 });
 
 import {TownScene} from '../src/scene.js';

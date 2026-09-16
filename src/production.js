@@ -1,3 +1,4 @@
+import {saleTax} from './city-finance.js';
 export const MAX_LOT_TRAIL=32,MAX_UNPROCESSED_LOTS=96;
 export const GOODS={clay:'泥料',timber:'木材',fiber:'纖維',ceramics:'陶器',furniture:'木器',cloth:'布匹',legacy:'日用雜貨'};
 export const RECIPES=[{input:'clay',output:'ceramics',seconds:14,action:'拉坯、入窯燒製'},{input:'timber',output:'furniture',seconds:12,action:'鋸切、打磨木器'},{input:'fiber',output:'cloth',seconds:16,action:'紡線、上機織布'}];
@@ -21,8 +22,9 @@ function recordTrail(l,entry){
  l.trail=l.trail.filter((_,i)=>keep.has(i));
 }
 export function transfer(t,from,to,count=1,good){
+ if(from==='sold'||from===to)return 0;
  const lots=at(t,from,good).slice(0,count);
- for(const l of lots){l.at=to;recordTrail(l,{at:to,time:t.time});if(to==='sold')t.economy.sold[l.good]=(t.economy.sold[l.good]||0)+1;}
+ for(const l of lots){l.at=to;recordTrail(l,{at:to,time:t.time});if(to==='sold'){t.economy.sold[l.good]=(t.economy.sold[l.good]||0)+1;saleTax(t,l.good);}}
  const sold=at(t,'sold');if(sold.length>24){const ids=new Set(sold.slice(0,sold.length-24).map(l=>l.id));t.economy.lots=t.economy.lots.filter(l=>!ids.has(l.id));t.economy.archived+=ids.size;}
  syncCargo(t);return lots.length;
 }
