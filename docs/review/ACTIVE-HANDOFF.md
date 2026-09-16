@@ -375,3 +375,10 @@
 - 城鎮名概況/成果卡回顯，品牌不改。建物改名經applyUrban(record:false)交易，活躍目的地文字同步，不改歷史日記。升級/移動保留name，原型originalName跟隨升級；園景合併保留主ID名，其餘書籤明示失效。
 - 66聚焦、282全套通過；之後手機CSS修正最長名稱擠壓與圖層遮擋，最終build成功，mobile.png。Chrome兩書籤各別跳轉、移除一筆保留另一筆、拆除後失效，names.txt居民目的地新名。測試頁關閉、viewport還原。
 - 下個有界階段O13–O16文化收藏：主動閱讀、地景配對、個人心得、三篇策展。O17–22/O25、E18–20與E01–04/E21待補驗、最終四領域複評仍待。完整goal active。
+
+## 最新交接：O13–O16文化收藏完成（2026-09-16）
+- 上輪585c028部署https://60b24f2b.bianshui-town.pages.dev並正式讀回一致，evidence/release-585c028，分類progress。
+- 本輪85 verified /5 implemented /10 open。reading-collection-data.js九篇正規鍵，作者ouyang與source pavilion共用一篇；reading-collection.js主動讀訪/來源配對/400字心得與自選地景/三篇選集。
+- journey.reading可選{entries,anthology}，存檔version9；來源匹配與心得地景分開，歷史建物移除不抹心得。showLiterature/showAuthorWork在showModal後記錄讀訪，world collected不授予印記；印記僅開啟全文/節錄，不等於完整閱讀。
+- 初次UI發現WORKS circular TDZ，已分離純資料避免schema→collection→simulation；新測試先import UI再Town重現入口順序，最終48聚焦/288全套及build通過。Chrome錯配重試/三篇防重/不同短箋與地景回顯/全文入口通過，evidence/reading-collection。分頁已關閉。
+- 下一有界階段O17–O18：居民熟識與固定居民名冊。之後O19–22/O25、E18–20及E01–04/E21待補驗、最終四領域複評。完整goal active，非全部完成。

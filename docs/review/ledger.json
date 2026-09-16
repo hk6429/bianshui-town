@@ -1505,10 +1505,28 @@
       "acceptance": [
         "僅放置等待可有落筆但無讀訪印記；開啟指定作品僅增加該作品印記。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/reading-collection-data.js",
+        "src/reading-collection.js",
+        "src/reading-collection-ui.js",
+        "src/main.js",
+        "src/save-schema.js",
+        "index.html",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "tests/reading-collection.test.js",
+        "evidence/reading-collection/tests.txt",
+        "evidence/reading-collection/regression.txt",
+        "evidence/reading-collection/build.txt",
+        "evidence/reading-collection/match-note.txt",
+        "evidence/reading-collection/anthology.txt",
+        "evidence/reading-collection/reopened-note.txt",
+        "evidence/reading-collection/author-entry.txt",
+        "evidence/reading-collection/README.md"
+      ],
+      "verifiedBy": "Codex root: real author simulation and collection/schema tests, Chrome reading/pairing/curation UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1528,10 +1546,28 @@
       "acceptance": [
         "將小池配到池塘取得通過；配到工坊給解釋且可重試；不偽稱史實原址。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/reading-collection-data.js",
+        "src/reading-collection.js",
+        "src/reading-collection-ui.js",
+        "src/main.js",
+        "src/save-schema.js",
+        "index.html",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "tests/reading-collection.test.js",
+        "evidence/reading-collection/tests.txt",
+        "evidence/reading-collection/regression.txt",
+        "evidence/reading-collection/build.txt",
+        "evidence/reading-collection/match-note.txt",
+        "evidence/reading-collection/anthology.txt",
+        "evidence/reading-collection/reopened-note.txt",
+        "evidence/reading-collection/author-entry.txt",
+        "evidence/reading-collection/README.md"
+      ],
+      "verifiedBy": "Codex root: real author simulation and collection/schema tests, Chrome reading/pairing/curation UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1551,10 +1587,28 @@
       "acceptance": [
         "不同作品可留不同短箋及地景；再開作品回顯正確，文字安全呈現。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/reading-collection-data.js",
+        "src/reading-collection.js",
+        "src/reading-collection-ui.js",
+        "src/main.js",
+        "src/save-schema.js",
+        "index.html",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "tests/reading-collection.test.js",
+        "evidence/reading-collection/tests.txt",
+        "evidence/reading-collection/regression.txt",
+        "evidence/reading-collection/build.txt",
+        "evidence/reading-collection/match-note.txt",
+        "evidence/reading-collection/anthology.txt",
+        "evidence/reading-collection/reopened-note.txt",
+        "evidence/reading-collection/author-entry.txt",
+        "evidence/reading-collection/README.md"
+      ],
+      "verifiedBy": "Codex root: real author simulation and collection/schema tests, Chrome reading/pairing/curation UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1574,10 +1628,28 @@
       "acceptance": [
         "選集必須三篇不同已讀作品；可重編並展示標題、作品與地景，不要求刷次數。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/reading-collection-data.js",
+        "src/reading-collection.js",
+        "src/reading-collection-ui.js",
+        "src/main.js",
+        "src/save-schema.js",
+        "index.html",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "tests/reading-collection.test.js",
+        "evidence/reading-collection/tests.txt",
+        "evidence/reading-collection/regression.txt",
+        "evidence/reading-collection/build.txt",
+        "evidence/reading-collection/match-note.txt",
+        "evidence/reading-collection/anthology.txt",
+        "evidence/reading-collection/reopened-note.txt",
+        "evidence/reading-collection/author-entry.txt",
+        "evidence/reading-collection/README.md"
+      ],
+      "verifiedBy": "Codex root: real author simulation and collection/schema tests, Chrome reading/pairing/curation UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {

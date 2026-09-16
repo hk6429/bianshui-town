@@ -1,0 +1,66 @@
+ton "操作場景（鍵盤）"
+  - button "畫面設定"
+  - button "文字大小：100%": 文字 100%
+  - checkbox "放開後先預覽"
+  - text: 放開後先預覽
+  - status: 先選營造類型，再按操作場景；方向鍵移格、Enter 放置、Esc 取消。
+  - generic: 自由探索 · 拖曳移動畫面，點選屋舍與居民
+  - navigation "建造與探索":
+    - button "自由探索 1" [pressed]:
+      - generic: 自由探索
+      - generic: "1"
+    - button "民居 2":
+      - generic: 民居
+      - generic: "2"
+    - button "商鋪 3":
+      - generic: 商鋪
+      - generic: "3"
+    - button "作坊 4":
+      - generic: 作坊
+      - generic: "4"
+    - button "暫停時間": Ⅱ
+    - button "1×"
+  - generic: 滾輪縮放 · 右鍵拖曳平移 · Q / E 旋轉
+  - status: 閱讀中，時間暫停
+  - generic: 預覽場景 · 不覆寫小鎮
+  - button "放大": ＋
+  - button "縮小": −
+  - button "回到初始視角": ⌖
+  - dialog "〈小池〉":
+    - generic: 在景中讀一段宋人文字
+    - heading "〈小池〉" [level=2]
+    - button "關閉作品小卡" [active]: ×
+    - paragraph: 楊萬里 · 南宋 · 詩中小池
+    - blockquote: 小荷才露尖尖角，早有蜻蜓立上頭。
+    - heading "文字如何長成風景" [level=3]
+    - paragraph: 把小荷、樹陰與蜻蜓轉成可觀察的園景。詩未在此指定汴京地點。
+    - link "閱讀原文出處 ↗":
+      - /url: https://zh.wikisource.org/zh-hant/小池
+    - paragraph: 引文為公版古典作品。建築名稱與造型為遊戲設計。
+    - heading "我的讀訪與短箋" [level=3]
+    - paragraph: 已記錄這篇的主動讀訪；重開不重複計數。
+    - paragraph: 印記只代表開啟過此處提供的全文或節錄，不表示已讀完整原作。
+    - generic: 玩家心得（最多400字）
+    - textbox "玩家心得（最多400字）": 想在花園留一角給蜻蜓。
+    - generic: 我的自選地景
+    - combobox "我的自選地景":
+      - option "不指定地景"
+      - option "望河雙閣"
+      - option "街角書肆"
+      - option "瓦舍勾欄"
+      - option "曲水疊石園" [selected]
+      - option "曬布染坊"
+    - button "儲存我的短箋"
+    - status
+    - heading "可選挑戰：作品與地景配對" [level=4]
+    - paragraph: 依建物原有作品來源判定，不是史實原址考證，也不扣分。
+    - generic: 配對地景
+    - combobox "配對地景":
+      - option "不指定地景" [selected]
+      - option "望河雙閣"
+      - option "街角書肆"
+      - option "瓦舍勾欄"
+      - option "曲水疊石園"
+      - option "曬布染坊"
+    - button "檢查地景配對"
+    - status: 尚未完成配對
