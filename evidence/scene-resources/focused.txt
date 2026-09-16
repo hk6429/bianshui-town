@@ -1,0 +1,14 @@
+✔ owned textures, material arrays, lines and sprites release once; shared resources survive (1.55ms)
+✔ shared caches last until final scene releases; disposal is idempotent and next scene can repopulate (0.144375ms)
+✔ unchanged preview reuses geometry; changed or explicitly cleared preview is reconstructed (0.9475ms)
+✔ every catalog design and available footprint progresses through five distinct models, never six (881.812208ms)
+✔ five tiers survive serialization, moving and four-cell expansion without losing residents or inventory (18.7585ms)
+✔ old saves start at visual tier one with existing functional upgrades intact; incomplete construction cannot upgrade (2.56125ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1004.196875

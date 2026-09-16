@@ -1,0 +1,11 @@
+✔ owned textures, material arrays, lines and sprites release once; shared resources survive (1.431084ms)
+✔ shared caches last until final scene releases; disposal is idempotent and next scene can repopulate (0.136583ms)
+✔ unchanged preview reuses geometry; changed or explicitly cleared preview is reconstructed (0.937833ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 103.992208

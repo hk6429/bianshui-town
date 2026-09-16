@@ -427,3 +427,10 @@
 - 上一輪特色外觀 5a4c14f 已部署，正式站回讀證據 evidence/release-5a4c14f。
 - 本輪 E19 真實 WEBGL_lose_context Chrome 11 項、Node 聚焦 8 項通過；CPU 場景保留，由 Three 重建 GPU，無城市資料變更。10 秒逾時、晚到復原、原暫停狀態及 throw 邊界皆處理。
 - 帳本 93 verified / 5 implemented / 2 open；E18、E20 尚未改。下一輪處理 GPU 物件生命週期與局部更新，再補 E01–04、E21 證據及最終四領域評量。
+
+## E18 百次資源循環完成，準備部署
+- 前輪 E19 已部署 19f1e51；evidence/release-19f1e51 是正式站回讀。
+- 本輪共用 WeakSet／cache owner lease；專屬材料與貼圖跟模型釋放、同位置預覽重用。100 次 Chrome 建造/拆除/雨景/重置回到相同154 geometry/5 texture/7 program。完整卸載修正 shadow 及 release 順序後 0 geometry/0 texture/1 匿名內部 program，限制見 evidence/scene-resources/README.md。
+- 全套313通過，最後卸載修正聚焦3通過及 Chrome 回讀。帳本94 verified /5 implemented /1 open。
+- 下一項 E20：目前 main.applyUrban prepare 仍 scene.reset，sync 每個 revision 重建道路與花草。改成 town identity 或 revision 變時先算 topology/building/decor 簽章，未變保留物件；building signature 加 variant/footprint/courtyard。LifeScene.details/workers/actors、Literati models 要先按有效ID移除，details 依位置/設計/院落變化更新，院落依實際幾何簽章；失敗 rollback 回原town場景。E20 尚未修改。
+- 接著 E01–04／E21 補驗與最終四領域評量；完整目標仍 active。

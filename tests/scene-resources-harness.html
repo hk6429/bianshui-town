@@ -1,0 +1,33 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>繪圖資源循環測試</title><style>body{font:16px system-ui;background:#e7e0cb}canvas{width:640px!important;height:400px!important}pre{white-space:pre-wrap}button{padding:12px}</style><h1>100 次繪圖資源循環</h1><button id="unload">單獨驗證完整卸載</button><button id="run">執行 100 次建造與拆除</button><pre id="result">不使用存檔；每次比較相同空城基線。</pre><canvas id="world"></canvas>
+<script type="module">
+import {TownScene} from '/src/scene.js';import {Town} from '/src/simulation.js';import {setWeather} from '/src/weather.js';import {demolishBuilding} from '/src/urban.js';
+const button=document.querySelector('#run'),output=document.querySelector('#result'),canvas=document.querySelector('#world');let scene=new TownScene(canvas);scene.renderer.setSize(640,400,false);
+const empty=new Town();scene.update(empty,0);const town=new Town();town.demo();for(let i=0;i<200;i++)town.tick(.05);const saved=town.toJSON();
+const read=()=>({...scene.renderer.info.memory,programs:scene.renderer.info.programs.length});
+const turn=()=>new Promise(requestAnimationFrame);
+document.querySelector('#unload').onclick=()=>{
+ scene.update(Town.restore(saved),0);setWeather(town,'rain');scene.update(town,0);const before=read();scene.dispose();scene.dispose();const after=read();
+ output.textContent=JSON.stringify({before,after,remainingPrograms:scene.renderer.info.programs.map(p=>p.name),geometryAndTexturesReleased:after.geometries===0&&after.textures===0},null,2);
+};
+button.onclick=async()=>{button.disabled=true;const samples=[];try{
+ for(let i=0;i<102;i++){
+  const t=Town.restore(saved);scene.reset();scene.update(t,0);
+  scene.outline([{x:0,z:0},{x:1,z:0}],0xff0000);scene.renderer.render(scene.scene,scene.camera);
+  const preview=scene.preview.children[0];scene.outline([{x:0,z:0},{x:1,z:0}],0xff0000);if(scene.preview.children[0]!==preview)throw Error('預覽沒有重用');
+  scene.outline([{x:2,z:2}],0x00ff00);setWeather(t,'rain');scene.update(t,0);
+  // Force every human umbrella visible so hidden residents also exercise ownership.
+  for(const human of scene.personModels.values())scene.weatherScene.umbrella(human,true,{});
+  scene.renderer.render(scene.scene,scene.camera);
+  for(const b of [...t.buildings])demolishBuilding(t,b.id);scene.reset();scene.update(t,0);
+  scene.reset();scene.update(empty,0);const counts=read();
+  if(i>=2)samples.push(counts);
+  output.textContent=JSON.stringify({completed:Math.max(0,i-1),warming:i<2,current:counts},null,2);await turn();
+ }
+ const baseline=samples[0],stable=samples.every(s=>JSON.stringify(s)===JSON.stringify(baseline));
+ scene.reset();scene.update(Town.restore(saved),0);const usable=scene.renderer.info.render.calls>0&&scene.renderer.info.render.triangles>0;
+ const report={cycles:100,baseline,last:samples.at(-1),stable,sharedMaterialsUsable:usable,samples};
+ scene.dispose();scene.dispose();report.afterDispose=read();report.released=report.afterDispose.geometries===0&&report.afterDispose.textures===0;
+ output.textContent=JSON.stringify(report,null,2);if(!stable||!usable||!report.released)output.textContent+='\n失敗：資源未回到穩定基線';
+}catch(error){output.textContent+='\n失敗：'+error.stack;}finally{button.disabled=false;}
+};
+</script></html>

@@ -1,0 +1,524 @@
+{
+  "cycles": 100,
+  "baseline": {
+    "geometries": 154,
+    "textures": 5,
+    "programs": 7
+  },
+  "last": {
+    "geometries": 154,
+    "textures": 5,
+    "programs": 7
+  },
+  "stable": true,
+  "sharedMaterialsUsable": true,
+  "samples": [
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    },
+    {
+      "geometries": 154,
+      "textures": 5,
+      "programs": 7
+    }
+  ],
+  "afterDispose": {
+    "geometries": 0,
+    "textures": 1,
+    "programs": 4
+  },
+  "released": false
+}
+失敗：資源未回到穩定基線

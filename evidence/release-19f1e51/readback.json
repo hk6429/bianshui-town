@@ -1,0 +1,21 @@
+{
+  "at": "2026-09-16T21:52:56.867061",
+  "commit": "19f1e51",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "matches_dist": true
+    },
+    {
+      "path": "/assets/index-BAGU56ut.js",
+      "status": 200,
+      "matches_dist": true
+    },
+    {
+      "path": "/assets/index-CDuQgbai.css",
+      "status": 200,
+      "matches_dist": true
+    }
+  ]
+}

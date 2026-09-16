@@ -3479,10 +3479,22 @@
       "acceptance": [
         "100次預覽/建造/拆除/雨景/重置後renderer.info.memory及紋理數回到穩定基線；共享材質仍可用。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/scene-resources.js",
+        "src/scene.js",
+        "src/goods-scene.js",
+        "src/market-scene.js",
+        "src/literati-scene.js"
+      ],
+      "evidence": [
+        "tests/scene-resources.test.js",
+        "tests/scene-resources-harness.html",
+        "evidence/scene-resources/README.md",
+        "evidence/scene-resources/cycles-100.txt",
+        "evidence/scene-resources/disposed.txt"
+      ],
+      "verifiedBy": "root: real Chrome 100 build/demolish/rain/reset cycles, stable renderer counts and final disposal; final independent review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {

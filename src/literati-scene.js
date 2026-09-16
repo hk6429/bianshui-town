@@ -23,5 +23,5 @@ export class LiteratiScene{
    if(d.labelKey!==text){const ctx=d.canvas.getContext('2d');ctx.clearRect(0,0,384,88);ctx.fillStyle='#f5efddeb';ctx.fillRect(3,3,378,82);ctx.strokeStyle='#a0946e';ctx.lineWidth=3;ctx.strokeRect(3,3,378,82);ctx.fillStyle='#3d543e';ctx.font='42px serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,192,45);d.label.material.map.needsUpdate=true;d.labelKey=text;}
   }
  }
- reset(){for(const g of this.models.values()){this.owner.scene.remove(g);g.traverse(o=>{o.geometry?.dispose();if(o.isSprite){o.material.map?.dispose();o.material.dispose();}});}this.models.clear();}
+ reset(){for(const g of this.models.values()){this.owner.scene.remove(g);this.owner.clearGroup(g);}this.models.clear();}
 }

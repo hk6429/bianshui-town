@@ -1,5 +1,6 @@
+import {disposeTree,shareResource,sharedCache} from './scene-resources.js';
 import * as THREE from 'three';
-const mats=new Map();const material=color=>{if(!mats.has(color))mats.set(color,new THREE.MeshStandardMaterial({color,roughness:1}));return mats.get(color);};
+const mats=sharedCache();const material=color=>{if(!mats.has(color))mats.set(color,shareResource(new THREE.MeshStandardMaterial({color,roughness:1})));return mats.get(color);};
 function add(g,geometry,color,x,y,z){const m=new THREE.Mesh(geometry,material(color));m.position.set(x,y,z);g.add(m);return m;}
 export function goodsModel(good){
  const g=new THREE.Group();
@@ -15,6 +16,6 @@ export function goodsModel(good){
 export function displayGoods(group,lots,ref={}){
  const list=lots.slice(0,4),signature=list.map(l=>l.good).join(',');
  if(group.userData.goodsSignature===signature)return;
- group.traverse(o=>{if(o.geometry)o.geometry.dispose();});group.clear();group.userData.goodsSignature=signature;
+ disposeTree(group);group.userData.goodsSignature=signature;
  list.forEach((l,i)=>{const model=goodsModel(l.good);model.position.set((i%2-.5)*.36,0,Math.floor(i/2)*.4);model.traverse(o=>Object.assign(o.userData,ref));group.add(model);});
 }
