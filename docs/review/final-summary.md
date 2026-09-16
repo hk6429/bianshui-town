@@ -37,3 +37,7 @@ C09人力倍率僅經營模式、C10新增居民消費僅經營模式、O17實�
 - 更長期的平衡、分支清理及實體裝置評測可另立後續工作，不納入本次原100項完成聲明。
 
 最終程式版本 `4106795` 已推送 GitHub main 並部署至 https://bianshui-town.pages.dev 。部署網址 https://26245c88.bianshui-town.pages.dev 。正式站HTML/JS/CSS逐位元組與本機dist一致，Chrome畫面已開啟；證據見 `evidence/release-4106795/readback.json`、`browser.txt`及`browser.png`。
+
+## 2026-09-16 22:44 後續補驗
+
+使用者啟用檔案權限後，實際Chrome filechooser選取磁碟城市檔、套用還原、重新匯出完成；建築/人物/貨物精確一致。先前原生chooser限制已解除，仍不宣稱跨裝置真人驗證。證據：evidence/compact-rail/disk-roundtrip.json。右側工具列新版10e89a3已部署e8506c52，正式站讀回一致。

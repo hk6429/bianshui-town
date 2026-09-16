@@ -1,0 +1,18 @@
+{
+  "commit": "10e89a3",
+  "deployment": "https://e8506c52.bianshui-town.pages.dev",
+  "readback": [
+    {
+      "path": "index.html",
+      "matches": true
+    },
+    {
+      "path": "assets/index-DbRycOtz.js",
+      "matches": true
+    },
+    {
+      "path": "assets/index-C6BHcqzc.css",
+      "matches": true
+    }
+  ]
+}
