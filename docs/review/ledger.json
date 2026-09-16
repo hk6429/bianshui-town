@@ -646,10 +646,27 @@
       "acceptance": [
         "服務範圍內足量住戶有供水；超容量或不可達住戶顯示不足；新水井提升覆蓋並扣維護費。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/water-service.js",
+        "src/city-growth.js",
+        "src/heritage.js",
+        "src/song-buildings.js",
+        "src/simulation.js",
+        "src/main.js",
+        "src/finance-ui.js",
+        "index.html"
+      ],
+      "evidence": [
+        "tests/water-service.test.js",
+        "tests/tiers.test.js",
+        "evidence/water-service/README.md",
+        "evidence/water-service/tests.txt",
+        "evidence/water-service/3d-home.txt",
+        "evidence/water-service/3d-upgraded.txt",
+        "evidence/water-service/3d-construction.txt"
+      ],
+      "verifiedBy": "根代理：供水因果測試、181項回歸及 Chrome 實際三維操作（非真人玩家驗收）",
       "reviewSource": "docs/review/city.json"
     },
     {

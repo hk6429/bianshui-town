@@ -1,0 +1,15 @@
+✔ completed wells supply residents through roads; cut, rebuild, move and demolition recompute coverage (3.250416ms)
+✔ capacity is finite, existing residents have priority, a second well and tier upgrade restore water (2.163792ms)
+✔ coverage uses walking distance rather than straight-line distance; incomplete wells do not serve (0.572166ms)
+✔ water changes housing demand and actual new arrivals without pretending wells are recreation gardens (4.189042ms)
+✔ well construction and daily upkeep are real charges, tiers and four-cell capacity remain consistent (0.915833ms)
+✔ no double supply: overlapping wells report only actual residents and reserved housing seats (0.470542ms)
+✔ overlapping coverage reallocates flexible households so a constrained household is not starved (8.982417ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 83.776708

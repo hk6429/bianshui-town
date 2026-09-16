@@ -34,7 +34,10 @@ function baseBuilding(b,api){
   if(b.stage===2&&design!=='pond')roof(g,size-.5,size-.5,.9,2.1,tile);
   return g;
  }
- if(design==='scholarGarden'){
+ if(design==='well'){
+  const spots=large?[-1.7,1.7]:[0];for(const x of spots){cyl(g,.8,.85,.65,stone,x,.5,0,12);cyl(g,.6,.6,.025,0x325e60,x,.835,0,12);for(const dx of [-.95,.95])box(g,.15,2.3,.15,wood,x+dx,1.3,0);beam(g,[x-.98,1.85,0],[x+.98,1.85,0],.12,wood);box(g,.025,1.15,.025,0xd4b889,x,1.25,0);cyl(g,.19,.15,.33,wood,x+.48,.4,.85,10);const r=new THREE.Group();r.position.x=x;g.add(r);roof(r,2.5,1.8,.6,2.6,tile);box(g,.5,.48,.07,wall,x,2.2,.3);}
+  if(large){hall(0,-2.6,5.6,1.35,1.4);for(const x of [-2.8,2.8])urn(x,2.4);}
+ }else if(design==='scholarGarden'){
   water(5.8,1.7,0,.3);box(g,.85,.12,2.4,wood,0,.4,.3);for(let i=0;i<5;i++){const rock=ball(g,.45+i*.08,0x8e9589,-2.2+Math.sin(i)*.3,.6+i*.15,-1.5+Math.cos(i)*.3);rock.scale.y=1.6;}for(const x of [1.6,2.8])for(const z of [-2.7,-1.5])box(g,.08,1.5,.08,wood,x,1,z);const rr=new THREE.Group();rr.position.set(2.2,0,-2.1);g.add(rr);roof(rr,2,2,.65,1.9,tile);tree(g,-2.4,2.5,.6,true);tree(g,2.6,2.3,.4);
  }else if(design==='orchard'){
   for(const x of [-size*.27,size*.27])for(const z of [-size*.27,size*.27]){tree(g,x,z,large?.48:.25);for(let i=0;i<3;i++)ball(g,.09,0xc2a15b,x+Math.sin(i*2)*.25,large?1.25:.75,z+Math.cos(i*2)*.25);}box(g,.55,.06,size-.3,stone,0,.22,0);if(large){water(.55,6,-3,0);hall(2,-2,1.6,1.5,1.2);}for(let i=0;i<8;i++)box(g,.045,.55,.045,wood,-size*.45+i*size*.13,.4,size*.45);

@@ -8,6 +8,7 @@ import {validateSave} from './save-schema.js';
 import {tierOf} from './building-tiers.js';
 import {roadNodes,mergeGardens} from './urban.js';
 import {createLiterati,tickLiterati,rerouteLiterati} from './literati.js';
+import {isUtility} from './water-service.js';
 import {DESIGNS,isSquare,gardenActivity} from './heritage.js';
 import {createEconomy,importCargo,migrateEconomy,tickProduction,tickCraftCarts,syncCargo} from './production.js';
 import {createWeather,tickWeather,shelterResident} from './weather.js';
@@ -130,7 +131,7 @@ export class Town {
    if(!p.home&&!p.work){p.outside=true;p.action='在街口等候新居';continue;}
    if(shelterResident(this,p,dt))continue;
    if(eventAction(this,p)){this.move(p,dt);eventAction(this,p);continue;}
-   const h=this.time%24;if((p.socialUntil||0)>this.elapsed&&h>=6&&h<20)continue;const shops=this.buildings.filter(b=>(b.type==='shop'||b.type==='garden')&&b.stage>=3);
+   const h=this.time%24;if((p.socialUntil||0)>this.elapsed&&h>=6&&h<20)continue;const shops=this.buildings.filter(b=>(b.type==='shop'||b.type==='garden'&&!isUtility(b))&&b.stage>=3);
    let target=p.home;
    if(this.building(p.work)?.type==='shop'&&h>=7&&h<19)target=p.work;
    else if(h>=7&&h<17&&!(h>=11.5&&h<13))target=p.work||p.home;

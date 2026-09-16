@@ -98,3 +98,17 @@
 - 最新帳本32 verified / 5 implemented / 1 in_progress / 62 open。完整goal仍active，不部署重整版。
 - C01–03/C05–16 已verified，城市剩C04+C17–25；下一個有界階段讀ledger並做公共服務/宜居，優先供水、衛生與防火（C17–19），把C04赤字服務衰退接到真實效率。之後醫療/教育/污染/公園/分級等；不要遺漏O/U與E01–04/E18–21。
 - managed新Town預設一格publicWorks(2,2)lane，不能再假設空城道路0或維護0。新版v9存檔fields沿用，模式切換重建道路；舊v1–8仍sandbox，不追扣舊城成本。
+
+## 新階段起點：C17 住宅供水（2026-09-16）
+- 前輪只有 V10 線上外觀再確認，對百項目標屬 no progress。現以 HEAD0771f72 乾淨工作樹接續 C17。
+- 本階段只負責水井建設／路程與容量分配／住宅入住與供水指標／UI 與驗證；C04/C18/C19 留在下一服務階段，不宣稱一併完成。
+- 維持 100 項全部完成與最終四領域複評後才部署。水井用 garden 類中的 utility 設施，排除休閒園景加成；所有費用沿用共同報價，容量與距離按級數增長。
+
+## 最新交接：C17 供水里程碑（2026-09-16）
+- water-service.js 依 commuteDistance 的實際路程分配；每井12×tier人，四格48×tier；範圍24+4×(tier-1)。先現有人再空位，augmenting path避免交疊水井把唯一可達住宅餓死。
+- 新 well design 屬 garden utility，模型為井欄／轆轤／水桶，一格與四格、五級皆有；共用garden建設100/格與維護3/格×tier。isUtility排除休閒園景加成與遊園目的地。
+- cityDemand 加供水子項：人口>=2時供水滿意度0→100映射-12→+12。初住2人可自備水，之後新移入必須 waterReport.home.available>0；重新安置原有住戶仍優先。sandbox不限制。
+- 公共營造有直接水井按鈕，圖錄也可選；住宅／水井卡與收支總覽顯示供水。全部derived，未新增save欄位。
+- 7/7供水聚焦、181/181全套、build、Chrome真3D住宅讀回／水井升級／點建扣款通過。evidence/water-service；沒有部署。
+- 33 verified / 5 implemented / 1 in_progress / 61 open。C17已verified，C04仍待真赤字效率，C18–25、O/U與未完成E不可省略。
+- 下一新工作階段接C18衛生，並設計C19防火與C04共用服務效率。衛生須人口+實際生產負荷、清運容量、逐日累積/恢復；不是只畫圖示。不要把本供水滿意度當完整C25幸福度。

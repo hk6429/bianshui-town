@@ -20,7 +20,7 @@ test('tax increases reduce all three real demand scores, delay arrivals and empt
  setCityPolicy(high,{taxRate:0});advance(high,30);assert(high.people.length>0);
 });
 test('managed arrivals are gradual, frame-step independent and cannot accumulate a burst behind low demand',()=>{
- const a=city(['home','home','work','shop']),b=Town.restore(a.toJSON());a.tick(.05);assert.equal(a.people.length,0);
+ const a=city(['home','home','work','shop']);assert(a.place('garden',[{x:-4,z:1}],true,'well'));const b=Town.restore(a.toJSON());a.tick(.05);assert.equal(a.people.length,0);
  advance(a,60,.05);advance(b,60,1);assert.equal(a.people.length,4);assert.equal(b.people.length,4);assert.equal(a.demography.arrived,b.demography.arrived);
  const c=city(['home']);c.city.taxRate=20;advance(c,150);assert.equal(c.people.length,0);c.city.taxRate=0;advance(c,15);assert.equal(c.people.length,1);
 });

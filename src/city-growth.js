@@ -1,3 +1,4 @@
+import {waterReport,isUtility} from './water-service.js';
 import {publicAccess} from './road-network.js';
 import {jobCapacity,commuteDistance,assignJobs} from './employment.js';
 import {managed,taxDemand} from './city-finance.js';
@@ -8,7 +9,7 @@ export const createDemography=(elapsed=0)=>({lastAt:elapsed,credit:0,arrived:0,d
 const bounded=n=>Math.round(Math.max(-100,Math.min(100,n)));
 const reachable=(t,home,b)=>Number.isFinite(commuteDistance(t,{home:home.id},b));
 export function cityDemand(t){
- const ready=t.buildings.filter(b=>b.stage>=3),homes=ready.filter(b=>b.type==='home'),shops=ready.filter(b=>b.type==='shop'),works=ready.filter(b=>b.type==='work'),gardens=ready.filter(b=>b.type==='garden');
+ const ready=t.buildings.filter(b=>b.stage>=3),homes=ready.filter(b=>b.type==='home'),shops=ready.filter(b=>b.type==='shop'),works=ready.filter(b=>b.type==='work'),gardens=ready.filter(b=>b.type==='garden'&&!isUtility(b));
  const population=t.people.length,housing=homes.reduce((s,b)=>s+homeCapacity(b),0),vacant=Math.max(0,housing-t.people.filter(p=>p.home).length);
  const accessible=ready.filter(b=>jobCapacity(b)&&homes.some(h=>reachable(t,h,b))),jobs=accessible.reduce((s,b)=>s+jobCapacity(b),0);
  const employed=t.people.filter(p=>accessible.some(b=>b.id===p.work&&Number.isFinite(commuteDistance(t,p,b)))).length,unemployed=population-employed;
@@ -20,8 +21,9 @@ export function cityDemand(t){
  let housingPressure=(targetPopulation-population)*12-vacant*4;
  // A new settlement can attract its first two residents without prebuilt jobs.
  if(population<2)housingPressure=Math.max(12,housingPressure);
+ const water=waterReport(t),waterModifier=managed(t)&&population>=2?Math.round(((water.satisfaction??0)/100-.5)*24):0;
  return {
-  home:{score:bounded(housingPressure+tax),reasons:[`空位 ${vacant}／容量 ${housing} 人`,`可達工作 ${jobs} 席，失業 ${unemployed} 人`,`有可達園景的住宅 ${gardenHomes} 處`,`稅率需求修正 ${tax>=0?'+':''}${tax}`]},
+  home:{score:bounded(housingPressure+tax+waterModifier),reasons:[`空位 ${vacant}／容量 ${housing} 人`,`供水 ${water.served}／${water.residents} 人；有水空位 ${water.available} 席；供水需求修正 ${waterModifier>=0?'+':''}${waterModifier}`,`可達工作 ${jobs} 席，失業 ${unemployed} 人`,`有可達園景的住宅 ${gardenHomes} 處`,`稅率需求修正 ${tax>=0?'+':''}${tax}`]},
   shop:{score:bounded(population*14+unmet*5-retail*10-stock*2+tax),reasons:[`居民 ${population} 人，日用品待補 ${unmet} 人`,`商業服務容量 ${retail} 人，現有存貨 ${stock} 件`,`稅率需求修正 ${tax>=0?'+':''}${tax}`]},
   work:{score:bounded(orders*8+unemployed*8-industrial*12+tax),reasons:[`商鋪補貨缺口 ${orders} 件`,`失業 ${unemployed} 人，作坊工作容量 ${industrial} 席`,`稅率需求修正 ${tax>=0?'+':''}${tax}`]},
   population,housing,vacant,jobs,unemployed,unmet,targetPopulation
@@ -65,7 +67,8 @@ export function tickPopulation(t){
   if(rehoused||departing||demand.home.score<=0||demand.population>=demand.targetPopulation){d.credit=0;continue;}
   // Fractional attraction credit is saved, so reloads and frame rates cannot reset it.
   d.credit=Math.min(1,d.credit+Math.min(1,demand.home.score/40));
-  const home=homes.find(b=>publicAccess(t,b)&&(!t.people.length||t.people.length<2||t.buildings.some(j=>jobCapacity(j)&&j.stage>=3&&reachable(t,b,j))));
+  const water=waterReport(t);
+  const home=homes.find(b=>(t.people.length<2||water.homes.get(b.id)?.available>0)&&publicAccess(t,b)&&(!t.people.length||t.people.length<2||t.buildings.some(j=>jobCapacity(j)&&j.stage>=3&&reachable(t,b,j))));
   if(d.credit>=1-1e-8&&home){addResident(t,home);d.credit=0;d.arrived++;assignJobs(t);t.log(`${home.name}迎來一位新住戶`);}
  }
 }
