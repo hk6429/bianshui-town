@@ -2376,10 +2376,22 @@
       "acceptance": [
         "注入tick或scene.update例外後有可見錯誤，仍可下載有效快照或復原，不無限重試或覆蓋正常存檔。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/runtime.js",
+        "src/recovery.js",
+        "src/recovery-ui.js",
+        "src/main.js",
+        "index.html"
+      ],
+      "evidence": [
+        "tests/recovery.test.js",
+        "evidence/recovery/README.md",
+        "evidence/recovery/tests.txt",
+        "evidence/recovery/restored.txt",
+        "evidence/recovery/fault.png"
+      ],
+      "verifiedBy": "root: injected tick/render faults, browser export and reload; final independent review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {

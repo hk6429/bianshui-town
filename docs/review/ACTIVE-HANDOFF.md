@@ -35,3 +35,12 @@
 - 最新 ledger 為 11 verified / 8 implemented / 1 in_progress / 80 open。
 - CUA CDP 讀取遊戲曾 timeout 兩次，改原生 Chrome AX 成功；測試已關閉、焦點模擬已還原。不因此標任務 blocked。
 - 下一階段：R1 剩餘驗收、E25 渲染防線、E22 執行錯誤復原；尚未動城市財政與服務。
+
+## E22 錯誤復原里程碑（2026-09-16）
+- 前一輪分類 progress：9e1fe9f 已推送固定步進；本輪新增 RecoveryPoint / recovery-ui，runtime 例外停止，main save 阻擋故障後寫入。
+- 每秒安全快照；故障顯示不可取消面板，可匯出／寫回安全快照後重新載入。更換 town 時重建 recovery。
+- DEV 限定 ?runtime-fault=tick|render 配合 fixture=v8 或 storage-test=1；正式 dist 無注入文字。
+- Chrome 已實際注入兩種錯誤、匯出實檔驗證與復原 26/26 隔離城；evidence/recovery。
+- 全套 115/115，build 通過；E22 verified。最新 12 verified / 8 implemented / 1 in_progress / 79 open。
+- 下一個有界階段優先 E25 渲染防線與 R1 餘下存檔驗收；之後 E17/E18/E19/E20，城市財政、服務、八角與 UX 仍保留完整契約。
+- 本次未部署，目標 active，不可完成結案。測試分頁已關閉。
