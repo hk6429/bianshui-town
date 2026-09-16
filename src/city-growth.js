@@ -1,3 +1,4 @@
+import {pollutionReport,pollutionAt} from './pollution.js';
 import {waterReport} from './water-service.js';
 import {isUtility} from './public-services.js';
 import {sanitationReport} from './sanitation.js';
@@ -24,9 +25,10 @@ export function cityDemand(t){
  // A new settlement can attract its first two residents without prebuilt jobs.
  if(population<2)housingPressure=Math.max(12,housingPressure);
  const water=waterReport(t),waterModifier=managed(t)&&population>=2?Math.round(((water.satisfaction??0)/100-.5)*24):0;
+ const pollution=pollutionReport(t);
  const hygiene=sanitationReport(t),hygieneModifier=managed(t)?Math.round((hygiene.hygiene-100)/5):0;
  return {
-  home:{score:bounded(housingPressure+tax+waterModifier+hygieneModifier),reasons:[`空位 ${vacant}／容量 ${housing} 人`,`衛生 ${hygiene.hygiene}／100，需求修正 ${hygieneModifier}`,`供水 ${water.served}／${water.residents} 人；有水空位 ${water.available} 席；供水需求修正 ${waterModifier>=0?'+':''}${waterModifier}`,`可達工作 ${jobs} 席，失業 ${unemployed} 人`,`有可達園景的住宅 ${gardenHomes} 處`,`稅率需求修正 ${tax>=0?'+':''}${tax}`]},
+  home:{score:bounded(housingPressure+tax+waterModifier+hygieneModifier+pollution.demandModifier),reasons:[`居住環境 ${pollution.environment.toFixed(1)}／100，污染需求修正 ${pollution.demandModifier}`,`空位 ${vacant}／容量 ${housing} 人`,`衛生 ${hygiene.hygiene}／100，需求修正 ${hygieneModifier}`,`供水 ${water.served}／${water.residents} 人；有水空位 ${water.available} 席；供水需求修正 ${waterModifier>=0?'+':''}${waterModifier}`,`可達工作 ${jobs} 席，失業 ${unemployed} 人`,`有可達園景的住宅 ${gardenHomes} 處`,`稅率需求修正 ${tax>=0?'+':''}${tax}`]},
   shop:{score:bounded(population*14+unmet*5-retail*10-stock*2+tax),reasons:[`居民 ${population} 人，日用品待補 ${unmet} 人`,`商業服務容量 ${retail} 人，現有存貨 ${stock} 件`,`稅率需求修正 ${tax>=0?'+':''}${tax}`]},
   work:{score:bounded(orders*8+unemployed*8-industrial*12+tax),reasons:[`商鋪補貨缺口 ${orders} 件`,`失業 ${unemployed} 人，作坊工作容量 ${industrial} 席`,`稅率需求修正 ${tax>=0?'+':''}${tax}`]},
   population,housing,vacant,jobs,unemployed,unmet,targetPopulation
@@ -56,7 +58,7 @@ export function tickPopulation(t){
  d.lastAt=Math.max(d.lastAt,t.elapsed-60);
  while(t.elapsed-d.lastAt>=CENSUS_SECONDS-1e-8){
   d.lastAt+=CENSUS_SECONDS;assignJobs(t);
-  const homes=t.buildings.filter(b=>homeCapacity(b)>t.residents(b).length),waiting=t.people.find(p=>!p.home);
+  const homes=t.buildings.filter(b=>homeCapacity(b)>t.residents(b).length).sort((a,b)=>pollutionAt(t,a)-pollutionAt(t,b)||a.id-b.id),waiting=t.people.find(p=>!p.home);
   let rehoused=false;if(waiting&&homes.length){const b=homes.find(b=>!waiting.work||Number.isFinite(commuteDistance(t,{home:b.id},t.building(waiting.work))));if(b){waiting.home=b.id;waiting.destination=null;waiting.outside=true;waiting.action='前往新居';rehoused=true;t.log(`${waiting.name}已安置到${b.name}`);}}
   let departing=null;
   for(const p of t.people){

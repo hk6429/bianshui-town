@@ -1,3 +1,4 @@
+import {tickPollution} from './pollution.js';
 import {tickEducation} from './education.js';
 import {STARTER_ROAD,roadAnchor} from './road-network.js';
 import {createTrade} from './trade.js';
@@ -152,7 +153,7 @@ export class Town {
    if(shops.length&&!this.carts.some(c=>c.home===b.id))this.carts.push({id:this.nextId++,home:b.id,current:b.id,destination:b.id,x:b.entrance[0],z:b.entrance[1],outside:false,route:[],speed:.7,wait:0,carrying:0,action:'整理貨物'});
   }
   for(const p of this.people)residentPurchase(this,p);
-  tickProduction(this,dt);tickCraftCarts(this,dt);
+  tickPollution(this,dt);tickProduction(this,dt);tickCraftCarts(this,dt);
   tickLife(this,dt);tickLiterati(this,dt);settleBudget(this);tickSanitation(this);tickFire(this);tickHealthcare(this,dt);tickEducation(this,dt);
   for(const p of this.people){if(this.weather.raining&&p.outside&&!p.shelter&&!p.action.startsWith('撐傘'))p.action='撐傘 · '+p.action;remember(this,p,p.action);}
  }

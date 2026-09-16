@@ -1,0 +1,23 @@
+✔ RCI responds differently to housing, retail, workshops and balance; excess supply reduces its own demand (11.225041ms)
+✔ tax increases reduce all three real demand scores, delay arrivals and empty homes pay no tax (30.597458ms)
+✔ managed arrivals are gradual, frame-step independent and cannot accumulate a burst behind low demand (84.433417ms)
+✔ long-term homelessness causes bounded exits, clears chat/story references and preserves valid saves (12.44575ms)
+✔ rehousing has priority over immigration; restoring home and job ends hardship before departure (56.872292ms)
+✔ unemployment and unmet goods each have their own grace, relief cancels only the relevant timer (72.578291ms)
+✔ census credit and hardship round-trip without replay; sandbox remains explicitly unconstrained (62.850417ms)
+✔ removing the last story participant cancels the event without orphan references (0.566625ms)
+✔ real finished output pollutes nearby land with distance falloff and quantity/type dependence (2.946125ms)
+✔ missing material, missing staff, full output and fire-damaged works cause no new emissions (1.27875ms)
+✔ stopping output halves pollution gradually and improves residential demand with the same population (2.710333ms)
+✔ moving or demolishing a source leaves contamination on its former land, which then recovers (1.075667ms)
+✔ four-cell sources spread one output emission across their true footprint; pollution remains bounded (4.081583ms)
+✔ pollution survives save and reload, decays without timestep drift, and rejects unsafe fields (4.061958ms)
+✔ sandbox preserves pollution but does not emit, decay or penalize demand; invalid dt has no effect (0.4765ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 397.167666

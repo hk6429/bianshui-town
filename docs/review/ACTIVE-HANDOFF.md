@@ -174,3 +174,15 @@
 - presentWorkers平均學力/100×.2乘入真production進度；離場與病假不加成。UI居民、作坊、書院、finance-summary已接。v9 person.education可選0–100；舊檔不需改版本。
 - Chrome控制0→0.833→10.833→100；無覆蓋0。8.5秒滿學力陶器已完成，基準泥料12.75。正常三維蘇安10.9→12.7，4/8名額。
 - 下一獨立階段C22污染：先讀ledger的fix與acceptance，新增工坊污染與距離暴露對健康/住宅需求的因果關係；避免與waste衛生重複計算/空有色塊。C23/C24/C25、其餘O/U/E及最終四領域複評仍必要。百項完成後才部署。
+
+## 新階段起點：C22生產污染
+- 基準1ef3257。真實成品完成才排放，陶器18/木器8/布匹14；三格內距離衰減、四格均分源強度，city.pollution地塊持久化且每90秒減半。
+- 住宅暴露降低居住環境與住宅需求；污染保留於原土地，不隨建築搬走。與衛生髒污分開、不另重複扣健康。待測試與Chrome驗證。
+
+## 最新交接：C22生產污染里程碑（2026-09-16）
+- 39 verified / 5 implemented / 56 open；15/15聚焦、217/217全套、build、Chrome近遠/停工/真三維拆除恢復已驗證。evidence/pollution，未部署。
+- pollution.js：每件真成品EMISSIONS=[18,8,14]，三格內1-distance/4，四格排放平均於四源格；city.pollution[{x,z,value}]143格上限、0–100、禁止重複格。tickPollution在tickProduction前，90秒半衰，保留原址，不跟隨搬移/拆除。sandbox凍結數值且不扣需求。
+- home占地平均污染、environment100減污染；pollutionReport依home住戶數max1加權，全城home demand扣round(exposure*.3)，新入住/安置候選homes先按pollutionAt排序。與waste衛生分開，不重複扣健康。
+- main home/work小卡與finance-summary已接；README公開規則。舊v9無pollution默認0，無需升版本。
+- Chrome控制3陶器近40.5/遠0，停90秒20.25；真三維UI拆窯仍40.2，正常遊戲08:04→13:17降22，4人保留。中途修改測試HTML造成Vite重載（未重啟服務），污染持久化仍保留。不要在實測期間修改HTML以免干擾UI。
+- 下一獨立階段C23園景效益：讀ledger契約，避免僅全圖有園即加成；需要有限距離/容量、重複園景遞減與實際宜居/造訪效果。C24/C25及O/U/E全部保留，最後四領域複評後才能部署。

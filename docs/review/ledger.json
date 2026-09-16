@@ -866,10 +866,26 @@
       "acceptance": [
         "活躍作坊近處污染高於遠處；停工後逐步下降；相同人口下混住工坊區宜居較低。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/pollution.js",
+        "src/production.js",
+        "src/simulation.js",
+        "src/city-growth.js",
+        "src/save-schema.js",
+        "src/main.js",
+        "src/finance-ui.js"
+      ],
+      "evidence": [
+        "tests/pollution.test.js",
+        "evidence/pollution/README.md",
+        "evidence/pollution/tests.txt",
+        "evidence/pollution/active.txt",
+        "evidence/pollution/stopped.txt",
+        "evidence/pollution/3d-demolished.txt",
+        "evidence/pollution/3d-recovery.txt"
+      ],
+      "verifiedBy": "根代理：污染距離/產量/停工/需求因果測試、217項回歸、Chrome三維拆除後環境恢復；非真人玩家驗收",
       "reviewSource": "docs/review/city.json"
     },
     {
