@@ -1,3 +1,4 @@
+import {townName} from './place-identity.js';
 import {commissionSolution} from './commissions.js';
 import {DESIGNS,gardenActivity} from './heritage.js';
 import {managed} from './city-finance.js';
@@ -39,7 +40,7 @@ export function useSnapshot(t,ids=null){
 const structure=t=>JSON.stringify(t.buildings.map(b=>[b.id,b.x,b.z,b.type,b.design,b.tier,b.footprint]));
 export function recordConstruction(before,after){if(structure(before)===structure(after))return false;const old=new Map(before.buildings.map(b=>[b.id,b])),changed=after.buildings.filter(b=>!old.has(b.id)||structure({buildings:[old.get(b.id)]})!==structure({buildings:[b]}));const targets=[...new Set([...changed.map(b=>b.id),...before.buildings.filter(b=>!after.buildings.some(a=>a.id===b.id)).map(b=>b.id)])];after.journey.construction={targets,at:after.elapsed,label:changed.slice(0,4).map(b=>b.name).join('、')||'拆除建築',before:useSnapshot(before,targets)};return true;}
 export function constructionHTML(t){
- const c=t.journey.construction;if(!c)return '<p>完成一次新建、搬移、擴建、升級或拆除後，這裡會留下最近一次營造的對照。</p>';
+ const c=t.journey.construction;if(!c)return `<p>${esc(townName(t))} · 完成一次新建、搬移、擴建、升級或拆除後，這裡會留下最近一次營造的對照。</p>`;
  const now=useSnapshot(t,c.targets),describe=s=>s.activities.length?s.activities.map(a=>`${esc(a.name)} ${a.count}人`).join('、'):'此刻尚無居民到場使用';
- return `<p>最近營造：${esc(c.label)}；距今 ${Math.max(0,Math.floor(t.elapsed-c.at))} 遊戲秒。</p><table><caption>本次變動建物的快照對照</caption><tr><th>指標</th><th>營造前</th><th>目前</th></tr><tr><th>建築園景</th><td>${c.before.buildings}</td><td>${now.buildings}</td></tr><tr><th>在建物內居民</th><td>${c.before.users}</td><td>${now.users}</td></tr><tr><th>實際活動（最多32類）</th><td>${describe(c.before)}</td><td>${describe(now)}</td></tr></table><p>這是本次變動建物在兩個時間點的觀察，可能同時受時段、天候、道路及其他事件影響，不能全部歸因於這次營造；此刻無人在場不代表過去從未使用。</p>`;
+ return `<p>${esc(townName(t))} · 最近營造：${esc(c.label)}；距今 ${Math.max(0,Math.floor(t.elapsed-c.at))} 遊戲秒。</p><table><caption>本次變動建物的快照對照</caption><tr><th>指標</th><th>營造前</th><th>目前</th></tr><tr><th>建築園景</th><td>${c.before.buildings}</td><td>${now.buildings}</td></tr><tr><th>在建物內居民</th><td>${c.before.users}</td><td>${now.users}</td></tr><tr><th>實際活動（最多32類）</th><td>${describe(c.before)}</td><td>${describe(now)}</td></tr></table><p>這是本次變動建物在兩個時間點的觀察，可能同時受時段、天候、道路及其他事件影響，不能全部歸因於這次營造；此刻無人在場不代表過去從未使用。</p>`;
 }

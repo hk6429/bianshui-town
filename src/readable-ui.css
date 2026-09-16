@@ -120,3 +120,8 @@ dialog{overflow:auto;overflow-wrap:anywhere}dialog input,dialog select{max-width
 .labels-visible:not(.tools-open) #extra-tools{display:none}.labels-visible #tools-toggle{display:inline-flex}
 
 #journey label{display:block;margin:12px 0}#journey select{font:inherit;padding:8px}#journey section{border-top:1px solid var(--line);margin-top:20px;padding-top:8px}#journey article{border:1px solid var(--line);border-radius:8px;padding:12px;margin:12px 0}#journey-content button{border:1px solid var(--line);background:#e3e8d7;padding:10px;border-radius:6px;margin:4px}#journey-content button:disabled{opacity:.6}#journey li{line-height:1.8}
+
+.town-name-stat{max-width:8em;overflow-wrap:anywhere}.town-name-stat strong{font-size:1rem}#place-identity{max-width: min(640px,94vw)}#place-identity section{margin-block:1rem}#place-identity label{display:block;margin-top:.6rem}#place-identity input{max-width:100%;padding:.6rem;font:inherit}#place-identity button{min-height:44px;margin:.25rem}#identity-bookmarks article{border-top:1px solid #bdb09a;padding:.6rem 0}
+.town-name-stat{min-width:0;overflow:hidden}.town-name-stat strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stat:not(.town-name-stat){flex-shrink:0}
+@media(max-width:850px) and (min-height:701px){.town-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;left:8px;right:8px}.town-stats>i{display:none}.town-name-stat{grid-column:1/-1;max-width:none;display:flex;align-items:center;justify-content:center;gap:8px}.town-name-stat strong{max-width:calc(100% - 76px)}.town-stats .stat span{white-space:nowrap}#building-legend{top:248px}}
+.town-stats{z-index:1}

@@ -1379,10 +1379,29 @@
       "acceptance": [
         "玩家命名可回顯在城鎮概覽與成果卡；空白與過長輸入有界處理。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/place-identity.js",
+        "src/place-identity-ui.js",
+        "src/main.js",
+        "src/urban.js",
+        "src/building-life.js",
+        "src/save-schema.js",
+        "index.html",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "tests/place-identity.test.js",
+        "evidence/place-identity/tests.txt",
+        "evidence/place-identity/regression.txt",
+        "evidence/place-identity/build.txt",
+        "evidence/place-identity/names.txt",
+        "evidence/place-identity/bookmarks.txt",
+        "evidence/place-identity/demolished.txt",
+        "evidence/place-identity/mobile.png",
+        "evidence/place-identity/README.md"
+      ],
+      "verifiedBy": "Codex root: identity/save/transaction tests and Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1402,10 +1421,29 @@
       "acceptance": [
         "命名一座茶坊後該地點資訊及相關居民目的地一致顯示新名，另一座茶坊不受影響。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/place-identity.js",
+        "src/place-identity-ui.js",
+        "src/main.js",
+        "src/urban.js",
+        "src/building-life.js",
+        "src/save-schema.js",
+        "index.html",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "tests/place-identity.test.js",
+        "evidence/place-identity/tests.txt",
+        "evidence/place-identity/regression.txt",
+        "evidence/place-identity/build.txt",
+        "evidence/place-identity/names.txt",
+        "evidence/place-identity/bookmarks.txt",
+        "evidence/place-identity/demolished.txt",
+        "evidence/place-identity/mobile.png",
+        "evidence/place-identity/README.md"
+      ],
+      "verifiedBy": "Codex root: identity/save/transaction tests and Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1425,10 +1463,29 @@
       "acceptance": [
         "收藏兩處地點後可分別定位，刪除其中一處只移除該書籤；不存在地標明示失效。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/place-identity.js",
+        "src/place-identity-ui.js",
+        "src/main.js",
+        "src/urban.js",
+        "src/building-life.js",
+        "src/save-schema.js",
+        "index.html",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "tests/place-identity.test.js",
+        "evidence/place-identity/tests.txt",
+        "evidence/place-identity/regression.txt",
+        "evidence/place-identity/build.txt",
+        "evidence/place-identity/names.txt",
+        "evidence/place-identity/bookmarks.txt",
+        "evidence/place-identity/demolished.txt",
+        "evidence/place-identity/mobile.png",
+        "evidence/place-identity/README.md"
+      ],
+      "verifiedBy": "Codex root: identity/save/transaction tests and Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {

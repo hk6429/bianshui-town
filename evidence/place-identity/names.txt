@@ -1,0 +1,101 @@
+- main:
+  - generic "汴水小鎮互動三維場景"
+  - generic: 汴
+  - heading "汴水小鎮" [level=1]
+  - paragraph: 一城煙火，慢慢生長
+  - generic: ☀
+  - strong: 巳時 · 日光正好
+  - generic: 第 1 日 10:02
+  - button "切換白晝與夜晚": ☾
+  - button "天候：晴天，自然模式": 晴天 · 自然
+  - button "市井見聞"
+  - button "開啟環境音": ♪
+  - button "畫卷"
+  - button "重置小鎮"
+  - button "操作說明": "?"
+  - region "小鎮概況":
+    - strong: 柳岸小城
+    - text: 我的城鎮
+    - strong: "8"
+    - text: 位居民
+    - strong: "5"
+    - text: 處建築園景
+    - strong: "5"
+    - text: 處街坊
+  - generic: 汴 水
+  - text: 風過河岸，日子悠長
+  - generic: 居 · 民居
+  - generic: 商 · 商鋪
+  - generic: 園 · 園景／公設
+  - generic: 園 · 園景／公設
+  - generic: 工 · 作坊
+  - generic: 居 民居 · 商 商鋪 · 工 作坊 · 園 園景／公設
+  - status
+  - button "收合營造與工具" [expanded]
+  - button "＋ 宋韻營造"
+  - button "公共營造"
+  - button "復原上一步"
+  - button "私房地圖"
+  - button "城鎮旅程"
+  - button "城市清單"
+  - button "文人行旅"
+  - button "自由營造 · 收支"
+  - button "存檔管理"
+  - button "概念畫卷"
+  - button "通知紀錄": 通知紀錄（0）
+  - button "操作場景（鍵盤）"
+  - button "畫面設定"
+  - button "文字大小：100%": 文字 100%
+  - checkbox "放開後先預覽"
+  - text: 放開後先預覽
+  - status: 先選營造類型，再按操作場景；方向鍵移格、Enter 放置、Esc 取消。
+  - generic: 自由探索 · 拖曳移動畫面，點選屋舍與居民
+  - navigation "建造與探索":
+    - button "自由探索 1" [pressed]:
+      - generic: 自由探索
+      - generic: "1"
+    - button "民居 2":
+      - generic: 民居
+      - generic: "2"
+    - button "商鋪 3":
+      - generic: 商鋪
+      - generic: "3"
+    - button "作坊 4":
+      - generic: 作坊
+      - generic: "4"
+    - button "暫停時間": Ⅱ
+    - button "1×"
+  - generic: 滾輪縮放 · 右鍵拖曳平移 · Q / E 旋轉
+  - status: 閱讀中，時間暫停
+  - generic: 預覽場景 · 不覆寫小鎮
+  - button "放大": ＋
+  - button "縮小": −
+  - button "回到初始視角": ⌖
+  - dialog "城市建築與居民":
+    - heading "城市建築與居民" [active] [level=2]
+    - button "關閉城市清單": ×
+    - text: 搜尋名稱、編號或地點
+    - searchbox "搜尋名稱、編號或地點"
+    - text: 類型
+    - combobox "類型":
+      - option "全部" [selected]
+      - option "民居"
+      - option "商鋪"
+      - option "作坊"
+      - option "園景與公設"
+      - option "居民"
+    - status: 找到 13 個對象
+    - list:
+      - button "望河雙閣 · 民居 · 編號2 · X -5.5、Z 1.5"
+      - button "聽雨書齋 · 商鋪 · 編號4 · X -1、Z -3"
+      - button "瓦舍勾欄 · 園景 · 編號6 · X -5.5、Z -3.5"
+      - button "曲水疊石園 · 園景 · 編號8 · X -1.5、Z 2.5"
+      - button "曬布染坊 · 作坊 · 編號10 · X 1、Z -1"
+      - button "李小滿 · 居民 · 編號11 · 前往聽雨書齋 · 住處望河雙閣"
+      - button "周小滿 · 居民 · 編號12 · 前往聽雨書齋 · 住處望河雙閣"
+      - button "陳小滿 · 居民 · 編號13 · 前往曬布染坊 · 住處望河雙閣"
+      - button "柳小滿 · 居民 · 編號14 · 前往曬布染坊 · 住處望河雙閣"
+      - button "王小滿 · 居民 · 編號15 · 前往曬布染坊 · 住處望河雙閣"
+      - button "趙小滿 · 居民 · 編號16 · 前往曬布染坊 · 住處望河雙閣"
+      - button "何小滿 · 居民 · 編號17 · 在院裡整理花草 · 住處望河雙閣"
+      - button "蘇小滿 · 居民 · 編號18 · 在院裡整理花草 · 住處望河雙閣"

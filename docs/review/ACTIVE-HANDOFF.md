@@ -368,3 +368,10 @@
 - recordConstruction在main applyUrban交易內、persist前執行，只記結構改變；undo傳record:false。journey.construction可選，at/targets/label/before，前後只比較涉及建物，活動最多32類。歷史target可被拆除，不驗目前存在。
 - 6個新案例，聚焦20/20。新增最後茶坊/供水案例前275全套；之後只精準化零人措辭及移除orphan import，聚焦與build通過。Chrome茶坊/書院預覽、自由升級、0→0對照、managed挑戰阻擋未使用園景；evidence/building-life。
 - 下個有界階段O10–O12：城鎮命名、建物命名、地點書籤。其餘O13–22/O25、工程E18–20及E01–04/E21待補驗，最終四領域複評仍保留。完整goal active。
+
+## 最新交接：O10–O12私房地圖完成（2026-09-16）
+- 上輪6da6ced部署https://5c82315f.bianshui-town.pages.dev並讀回相符，evidence/release-6da6ced，分類progress。
+- 本輪81 verified /5 implemented /14 open。place-identity(.js/-ui.js)提供townName、建物name+originalName、bookmarks最多16份，名稱1–24字，空白/過長/控制字元拒絕。journey可選townName/bookmarks；building可選originalName，仍version9。
+- 城鎮名概況/成果卡回顯，品牌不改。建物改名經applyUrban(record:false)交易，活躍目的地文字同步，不改歷史日記。升級/移動保留name，原型originalName跟隨升級；園景合併保留主ID名，其餘書籤明示失效。
+- 66聚焦、282全套通過；之後手機CSS修正最長名稱擠壓與圖層遮擋，最終build成功，mobile.png。Chrome兩書籤各別跳轉、移除一筆保留另一筆、拆除後失效，names.txt居民目的地新名。測試頁關閉、viewport還原。
+- 下個有界階段O13–O16文化收藏：主動閱讀、地景配對、個人心得、三篇策展。O17–22/O25、E18–20與E01–04/E21待補驗、最終四領域複評仍待。完整goal active。

@@ -1,0 +1,24 @@
+{
+  "commit": "6da6ced",
+  "deployment": "https://5c82315f.bianshui-town.pages.dev",
+  "files": [
+    {
+      "path": "/",
+      "status": "200",
+      "matchesBuild": true,
+      "sha256": "35fd5195bcc3c372591480c552be0b31b72b5a85189419522316d995d80156fd"
+    },
+    {
+      "path": "/assets/index-C7EauXy4.js",
+      "status": "200",
+      "matchesBuild": true,
+      "sha256": "84c5d6376527e5a00119dd95f4b602020104aaa41273e8a34d9bc9cf01103914"
+    },
+    {
+      "path": "/assets/index-x9Dg3Pip.css",
+      "status": "200",
+      "matchesBuild": true,
+      "sha256": "79dd097ed05f03a3fdffb1ed8c766112a334f5d46da568693872c3ee4db62af5"
+    }
+  ]
+}
