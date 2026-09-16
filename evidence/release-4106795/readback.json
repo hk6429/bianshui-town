@@ -1,0 +1,28 @@
+{
+  "at": "2026-09-16T22:35:24.610530",
+  "commit": "4106795",
+  "deployment": "https://26245c88.bianshui-town.pages.dev",
+  "checks": [
+    {
+      "path": "index.html",
+      "exit": 0,
+      "matches_dist": true,
+      "bytes": 26124,
+      "sha256": "b6e941ec704b81beb924a301cd8f835dae4c627a87d8c1999d780bedfd6f47a7"
+    },
+    {
+      "path": "assets/index-6t29dIr4.js",
+      "exit": 0,
+      "matches_dist": true,
+      "bytes": 801601,
+      "sha256": "48f9cf28e054ab24eeb06d8968f0a133da48e3f58a0f726fd9e84470f3204507"
+    },
+    {
+      "path": "assets/index-CDuQgbai.css",
+      "exit": 0,
+      "matches_dist": true,
+      "bytes": 34703,
+      "sha256": "073ddefbcd12d86cb51a8ab0c0200826f204b98f09341a8361d4460cc4407532"
+    }
+  ]
+}

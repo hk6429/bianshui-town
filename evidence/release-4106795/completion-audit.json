@@ -1,0 +1,715 @@
+{
+  "at": "2026-09-16T22:36:25.567888",
+  "code": "4106795",
+  "uniqueRequirements": 100,
+  "requirements": [
+    {
+      "id": "C01",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 5,
+      "followup": null
+    },
+    {
+      "id": "C02",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 5,
+      "followup": null
+    },
+    {
+      "id": "C03",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 11,
+      "followup": null
+    },
+    {
+      "id": "C04",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "C05",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "C06",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "C07",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "C08",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "C09",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 11,
+      "followup": "docs/review/final-fixes.md"
+    },
+    {
+      "id": "C10",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 11,
+      "followup": "docs/review/final-fixes.md"
+    },
+    {
+      "id": "C11",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 7,
+      "followup": null
+    },
+    {
+      "id": "C12",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 7,
+      "followup": null
+    },
+    {
+      "id": "C13",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 9,
+      "followup": null
+    },
+    {
+      "id": "C14",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 9,
+      "followup": null
+    },
+    {
+      "id": "C15",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 3,
+      "followup": null
+    },
+    {
+      "id": "C16",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "C17",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "C18",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "C19",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 9,
+      "followup": null
+    },
+    {
+      "id": "C20",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "C21",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "C22",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "C23",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "C24",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 12,
+      "followup": null
+    },
+    {
+      "id": "C25",
+      "status": "verified",
+      "review": "docs/review/final-city.md",
+      "evidenceFiles": 10,
+      "followup": null
+    },
+    {
+      "id": "O01",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "O02",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "O03",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "O04",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "O05",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "O06",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "O07",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 9,
+      "followup": null
+    },
+    {
+      "id": "O08",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 9,
+      "followup": null
+    },
+    {
+      "id": "O09",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 9,
+      "followup": null
+    },
+    {
+      "id": "O10",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 10,
+      "followup": null
+    },
+    {
+      "id": "O11",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 10,
+      "followup": null
+    },
+    {
+      "id": "O12",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 10,
+      "followup": null
+    },
+    {
+      "id": "O13",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 10,
+      "followup": null
+    },
+    {
+      "id": "O14",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 10,
+      "followup": null
+    },
+    {
+      "id": "O15",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 10,
+      "followup": null
+    },
+    {
+      "id": "O16",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 10,
+      "followup": null
+    },
+    {
+      "id": "O17",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 12,
+      "followup": "docs/review/final-fixes.md"
+    },
+    {
+      "id": "O18",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 9,
+      "followup": null
+    },
+    {
+      "id": "O19",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 10,
+      "followup": null
+    },
+    {
+      "id": "O20",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 11,
+      "followup": null
+    },
+    {
+      "id": "O21",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "O22",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "O23",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "O24",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "O25",
+      "status": "verified",
+      "review": "docs/review/final-octalysis.md",
+      "evidenceFiles": 7,
+      "followup": null
+    },
+    {
+      "id": "U01",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 6,
+      "followup": null
+    },
+    {
+      "id": "U02",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 6,
+      "followup": null
+    },
+    {
+      "id": "U03",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 6,
+      "followup": null
+    },
+    {
+      "id": "U04",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 10,
+      "followup": null
+    },
+    {
+      "id": "U05",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 10,
+      "followup": null
+    },
+    {
+      "id": "U06",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 13,
+      "followup": null
+    },
+    {
+      "id": "U07",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 13,
+      "followup": null
+    },
+    {
+      "id": "U08",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 5,
+      "followup": null
+    },
+    {
+      "id": "U09",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 6,
+      "followup": null
+    },
+    {
+      "id": "U10",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 6,
+      "followup": null
+    },
+    {
+      "id": "U11",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 6,
+      "followup": null
+    },
+    {
+      "id": "U12",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 9,
+      "followup": null
+    },
+    {
+      "id": "U13",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 9,
+      "followup": null
+    },
+    {
+      "id": "U14",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "U15",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 5,
+      "followup": null
+    },
+    {
+      "id": "U16",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "U17",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "U18",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "U19",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 6,
+      "followup": null
+    },
+    {
+      "id": "U20",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "U21",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 5,
+      "followup": null
+    },
+    {
+      "id": "U22",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 6,
+      "followup": null
+    },
+    {
+      "id": "U23",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 7,
+      "followup": null
+    },
+    {
+      "id": "U24",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 6,
+      "followup": null
+    },
+    {
+      "id": "U25",
+      "status": "verified",
+      "review": "docs/review/final-ux.md",
+      "evidenceFiles": 6,
+      "followup": null
+    },
+    {
+      "id": "E01",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 7,
+      "followup": null
+    },
+    {
+      "id": "E02",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 7,
+      "followup": null
+    },
+    {
+      "id": "E03",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 6,
+      "followup": null
+    },
+    {
+      "id": "E04",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 8,
+      "followup": null
+    },
+    {
+      "id": "E05",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 3,
+      "followup": null
+    },
+    {
+      "id": "E06",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 3,
+      "followup": null
+    },
+    {
+      "id": "E07",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 6,
+      "followup": null
+    },
+    {
+      "id": "E08",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 3,
+      "followup": null
+    },
+    {
+      "id": "E09",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 3,
+      "followup": null
+    },
+    {
+      "id": "E10",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 3,
+      "followup": null
+    },
+    {
+      "id": "E11",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 6,
+      "followup": null
+    },
+    {
+      "id": "E12",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 3,
+      "followup": null
+    },
+    {
+      "id": "E13",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 4,
+      "followup": null
+    },
+    {
+      "id": "E14",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 3,
+      "followup": null
+    },
+    {
+      "id": "E15",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 5,
+      "followup": null
+    },
+    {
+      "id": "E16",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 7,
+      "followup": null
+    },
+    {
+      "id": "E17",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 5,
+      "followup": null
+    },
+    {
+      "id": "E18",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 6,
+      "followup": null
+    },
+    {
+      "id": "E19",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 6,
+      "followup": null
+    },
+    {
+      "id": "E20",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 6,
+      "followup": null
+    },
+    {
+      "id": "E21",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 9,
+      "followup": null
+    },
+    {
+      "id": "E22",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 6,
+      "followup": null
+    },
+    {
+      "id": "E23",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 3,
+      "followup": null
+    },
+    {
+      "id": "E24",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 3,
+      "followup": null
+    },
+    {
+      "id": "E25",
+      "status": "verified",
+      "review": "docs/review/final-engineering.md",
+      "evidenceFiles": 9,
+      "followup": null
+    }
+  ],
+  "tests": {
+    "pass": 319,
+    "fail": 0
+  },
+  "build": "passed",
+  "deployment": "26245c88",
+  "productionMatches": true,
+  "scope": "原四領域每項25條契約；詳細語意核對以四專家逐項報告及三項修正複評為準，檔案存在檢查不取代語意驗證"
+}

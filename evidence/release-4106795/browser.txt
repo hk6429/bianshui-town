@@ -1,0 +1,12 @@
+Browser tab: 610004750, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "https://bianshui-town.pages.dev/".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 8-10, 19, 21, 23, 25, 66
++			71 text ☀
++			72 text 酉時 · 炊煙漸起
++			73 text 第 17 日　17:09
++			74 text 汴水小鎮
++			75 text 16
++			76 text 6
++			77 text 5
++			78 text 進度已留存
+The focused UI element is 0 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: bianshui-town.pages.dev/

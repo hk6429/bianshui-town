@@ -36,4 +36,4 @@ C09人力倍率僅經營模式、C10新增居民消費僅經營模式、O17實�
 - GPU幾何/紋理卸載歸零但內部匿名program餘1；100輪循環穩定，不宣稱所有GPU記憶體歸零。
 - 更長期的平衡、分支清理及實體裝置評測可另立後續工作，不納入本次原100項完成聲明。
 
-正式站部署與回讀結果將附於發版紀錄，部署成功前不宣稱最終版上線。
+最終程式版本 `4106795` 已推送 GitHub main 並部署至 https://bianshui-town.pages.dev 。部署網址 https://26245c88.bianshui-town.pages.dev 。正式站HTML/JS/CSS逐位元組與本機dist一致，Chrome畫面已開啟；證據見 `evidence/release-4106795/readback.json`、`browser.txt`及`browser.png`。
