@@ -94,7 +94,7 @@ export class TownScene {
   for(const c of town.carts){if(!this.cartModels.has(c.id)){const g=new THREE.Group();box(g,.7,.12,.95,0x94724b,0,.43,0);for(const x of [-.38,.38]){box(g,.08,.34,1,0x896945,x,.61,0);const wheel=cyl(g,.24,.24,.07,0x4e4635,x,.25,0,10);wheel.rotation.z=Math.PI/2;}box(g,.65,.35,.08,0x896945,0,.61,-.45);for(const x of [-.25,.25])box(g,.04,.04,.8,0x745b3e,x,.48,.7);const cargo=new THREE.Group();cargo.position.set(0,.55,-.2);cargo.position.y=.65;g.add(cargo);g.userData.cargo=cargo;const porter=this.person(c.id);porter.position.z=1.1;g.add(porter);this.cartModels.set(c.id,g);this.scene.add(g);}}
  }
  buildHouse(b,town={blocks:[]}){
-  if(b.design||b.type==='shop'||b.type==='garden'||b.footprint){const raw=songBuilding(b,{box,cyl,ball,beam,roof,tree,mat}),warm=raw.userData.warm,model=batch(raw);model.userData.warm=warm;return model;}
+  if(b.design||b.type==='shop'||b.type==='garden'||b.footprint){const raw=songBuilding(b,{box,cyl,ball,beam,roof,tree,mat}),warm=raw.userData.warm,model=batch(raw);model.userData={...raw.userData,warm};return model;}
   const g=new THREE.Group(),stage=b.stage,w=3.15,d=2.6,h=1.72+(b.variant===1?.22:0);g.position.set(b.x*4,0,b.z*4);g.rotation.y=b.facing;if(courtyardFor(town,b))g.scale.set(.72,.8,.72);
   box(g,3.8,.16,3.8,0xc4b58f,0,.03,0);box(g,w,.2,d,palette.stone,0,.16,-.2);
   if(stage===0){for(const x of [-1.3,1.3])for(const z of [-1.2,1.2])box(g,.22,.22,.22,0x9e9377,x,.3,z);for(let i=0;i<5;i++)box(g,1.2,.07,.1,palette.wood,-.5,.32+i*.08,.4);return batch(g);}

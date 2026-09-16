@@ -1,7 +1,7 @@
 export const MAX_TIER=5;
 export const tierOf=b=>Math.max(1,Math.min(MAX_TIER,Number.isInteger(b.tier)?b.tier:1));
 export const TIER_NAMES=['初築','添彩','華庭','重簷','盛景'];
-export const TIER_DETAILS=['保留原有建築樣式','加蓋整層樓閣、大牌樓與燈籠','雙層金邊寬簷樓閣、雙重牌樓與彩幡','三層高閣、雙側重簷塔、空中連廊與成排燈籠','四層金瓦高閣、三重牌樓與雙塔、金柱冠頂、連廊與朱紅長幡'];
+export const TIER_DETAILS=['保留原有建築樣式','增加用途專屬設施','擴充工序或庭院','形成特色附屬建築','完成各類建築的專屬地標'];
 
 // All gameplay tier values live here; legacy level/footprint still determine the base.
 export const BUILDING_UPKEEP={home:2,shop:4,work:6,garden:3};

@@ -1,3 +1,4 @@
+import {tierAppearance} from './tier-appearance.js';
 import {installStoryHistoryUI} from './story-history.js';
 import {observeStory} from './council-exploration.js';
 import {observeResident,watchResident,residentRecord,familiarityText} from './resident-relationships.js';
@@ -41,7 +42,7 @@ import {createRuntime} from './runtime.js';
 import {SaveStore,SAVE_KEY} from './save-store.js';
 import {validateSave} from './save-schema.js';
 import {installSaveUI} from './save-ui.js';
-import {tierOf,MAX_TIER,TIER_NAMES,TIER_DETAILS,buildingStats,buildingAbility,upgradePreview} from './building-tiers.js';
+import {tierOf,MAX_TIER,TIER_NAMES,buildingStats,buildingAbility,upgradePreview} from './building-tiers.js';
 import {NEW_DESIGNS} from './variety.js';
 import {marketStalls,marketOpen} from './market.js';
 import {publicSquares,ROAD_TYPES,streetCells,footprint,layRoad,removeRoad,moveBuilding,demolishBuilding,upgradeBuilding} from './urban.js';
@@ -332,7 +333,7 @@ function applyUrban(fn,{record=true}={}){
  if(!result.ok){if(result.error){editFailure='操作未完成，原小鎮與進度仍保留。';$('#save-status').textContent=editFailure;toast(editFailure);try{scene.reset();}catch{showRuntimeError(result.error);}}return false;}
  town=result.town;undoTown=result.before;runtime.reset();recovery=new RecoveryPoint({read:()=>town.toJSON(),validate:validateSave});$('#undo-urban').hidden=false;if(drag)canPlan(drag.cells);$('#save-status').textContent=fixtureMode?'預覽場景 · 不覆寫小鎮':'進度已留存';return result.result;
 }
-function buildingTools(b){if(b.stage<3)return '';const tier=tierOf(b),use=upgradeUse(town,b);return `<hr><p>${escape(use.text)}</p><label>建築 ${tier}／${MAX_TIER} 級 · ${TIER_NAMES[tier-1]} · ${buildingAbility(b)} · 每日維護 ${buildingStats(b).upkeep} 文</label><p class="tier-detail">${tier<MAX_TIER?`下級：${TIER_DETAILS[tier]}；${buildingAbility(upgradePreview(b))}；每日維護 ${buildingStats(upgradePreview(b)).upkeep} 文`:'已達五級 · 盛景落成'}</p><div class="building-tools"><button data-manage="move" data-building="${escape(b.id)}">搬移 ${managed(town)?moveCost(b)+'文':''}</button><button data-manage="delete" data-building="${escape(b.id)}">拆除</button>${tier<MAX_TIER?`<button data-manage="upgrade" ${!use.allowed?'disabled':''} data-building="${escape(b.id)}">升至 ${tier+1} 級${managed(town)?' · '+upgradeCost(b)+'文':''}</button>`:''}${['home','work'].includes(b.type)&&!b.footprint?`<button data-manage="expand" ${!use.allowed?'disabled':''} data-building="${escape(b.id)}">四格擴建${managed(town)?' · '+upgradeCost(b,true)+'文':''} ↘</button>`:''}</div>`;}
+function buildingTools(b){if(b.stage<3)return '';const tier=tierOf(b),use=upgradeUse(town,b);return `<hr><p>${escape(use.text)}</p><label>建築 ${tier}／${MAX_TIER} 級 · ${TIER_NAMES[tier-1]} · ${buildingAbility(b)} · 每日維護 ${buildingStats(b).upkeep} 文</label><p class="tier-detail">${tier<MAX_TIER?`下級：${tierAppearance(b,tier+1)}；${buildingAbility(upgradePreview(b))}；每日維護 ${buildingStats(upgradePreview(b)).upkeep} 文`:'已達五級 · 盛景落成'}</p><div class="building-tools"><button data-manage="move" data-building="${escape(b.id)}">搬移 ${managed(town)?moveCost(b)+'文':''}</button><button data-manage="delete" data-building="${escape(b.id)}">拆除</button>${tier<MAX_TIER?`<button data-manage="upgrade" ${!use.allowed?'disabled':''} data-building="${escape(b.id)}">升至 ${tier+1} 級${managed(town)?' · '+upgradeCost(b)+'文':''}</button>`:''}${['home','work'].includes(b.type)&&!b.footprint?`<button data-manage="expand" ${!use.allowed?'disabled':''} data-building="${escape(b.id)}">四格擴建${managed(town)?' · '+upgradeCost(b,true)+'文':''} ↘</button>`:''}</div>`;}
 
 $('#public-btn').onclick=()=>$('#public-works').showModal();
 $('#public-works').onclick=e=>{const b=e.target.closest('[data-road]');if(!b)return;$('#public-works').close();setMode('road');editing={kind:'road',type:b.dataset.road};pinned=hovered=null;$('#welcome').hidden=true;$('#mode-hint').textContent=`${ROAD_TYPES[editing.type]||'移除自建道路'} · 點選或拖曳空格（最多 24 格） · Esc 取消`;focusScene();};

@@ -410,3 +410,15 @@
 - O19完整UI補驗：拆除預覽唯一園景→擱置→採納→disabled→新建百花公園0,0→落成後enabled→回應成功。evidence/journey-summary。測試頁已關閉。
 - UI注意：文學選集的「作品與讀訪印記」是收合details，先點展開，不能直接點隱藏作品；施工progressbar hidden可能只是小卡關閉，須以實際園景數及回應enabled確認落成。
 - 帳本92 verified /5 implemented /3 open，城市/UX/八角各25已驗；工程E18–20待實作，E01–04/E21待補驗，最後四領域複評待做。下一有界階段集中工程場景更新與資源生命週期，勿把本批當百項完成。
+
+## 插入里程碑：使用者要求每級建物具有不同特色
+- 基準3da73da，已部署並正式讀回一致。E18–20只做定位，尚未修改工程邏輯。使用者指出升級造型雷同，優先實作視覺分流，原百項目標保持。
+- 根因tier-scene全部共用樓層/牌樓/雙塔。新增tier-appearance.js 24條用途路線，tier-scene依路線逐級新增不同模型部件；UI下級說明跟隨實際路線。保留建物資料/級數/經營能力。
+- 原tiers測試的全部逐級增高且五級翻倍已被新需求取代，改檢47個占地版本各五個不同實際幾何、每級一個不同用途特徵、保存住戶貨物。10聚焦通過；視覺比對頁tests/tier-identity-gallery.html已開。尚須看工坊/商鋪/園景與一格，完整build/部署未做。
+- CUA historyBrowser/visualWeb目前可用，visualWeb是圖錄測試頁。本次尚未承諾任何剩餘工程項完成。
+
+## 用途專屬外觀完成，準備部署
+- tier-appearance.js 24路線與4個增量特徵；tier-scene.js約50個可重用設備/庭院造型，十新作分流，所有圖錄47占地×5級幾何不同。scene.buildHouse保留upgradeProfile/Features供測試。下一級說明使用tierAppearance。
+- 12聚焦、308全套、build成功；Chrome同鏡頭對照民居/工坊/商鋪/園景及一格。第四級被遮擋已移前側，最終圖保存evidence/tier-identity。
+- tests/tier-identity-gallery.html使用單一WebGLRenderer逐列畫至2D canvas，避免多context過量；不要以過期「已顯示」字串判斷換類完成。
+- 本次不改百項數字：92/5/3。視覺需求新增已處理；下一段回到E18–20，E01–04/E21待補驗與四領域最終複評。

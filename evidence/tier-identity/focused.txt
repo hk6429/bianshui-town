@@ -1,0 +1,20 @@
+✔ all ten signature designs retain distinct upgrade routes at every level (137.058ms)
+✔ each route adds four different features; utilities and landscapes keep their own purpose (0.204125ms)
+✔ every design and footprint has growing tier ability/upkeep, preview matches applied upgrade, and no sixth tier charges (16.776458ms)
+✔ housing capacity drives real occupancy and water reservations, including tiers above two (7.197041ms)
+✔ third-tier workshop finishes a real item sooner with exactly the same crew than second-tier (1.116417ms)
+✔ third-tier shop hires one more real employee than second-tier and retains existing staff (0.640333ms)
+✔ public-service capacity bindings agree with the shared ability table at every tier (0.234667ms)
+✔ shop upgrades increase real sales throughput with the same staff; cooldown persists and empty or closed shops do not sell (1.132167ms)
+✔ managed residents share the visitor sales cooldown, failed purchases retain stock, invalid cooldown saves fail (2.32625ms)
+✔ every catalog design and available footprint progresses through five distinct models, never six (902.623ms)
+✔ five tiers survive serialization, moving and four-cell expansion without losing residents or inventory (17.940792ms)
+✔ old saves start at visual tier one with existing functional upgrades intact; incomplete construction cannot upgrade (3.116958ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1092.942834
