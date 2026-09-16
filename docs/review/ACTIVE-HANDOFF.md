@@ -347,3 +347,10 @@
 - 原生Chrome AX能用；先選到測試分頁後CDP也恢復，可用setEmulatedMedia且已clear。不得再把前一段逾時當未解阻礙。
 - 開標籤時body.labels-visible收合extra-tools，tools-toggle仍可開；修正圖例top160避免壓住品牌。localStorage獨立bianshui-view-preferences-v1不動城鎮檔。
 - 下一個獨立工作階段進八角遊戲化，優先O01/O02/O03/O23/O24/O25願景與引導底座。全部O01–25仍open；工程E18–20待實作，E01–04/E21待補驗。不得把全UX完成當全部100項完成。
+
+## 最新交接：城鎮旅程底座完成（2026-09-16）
+- 本批 O01/O02/O03/O23/O24 verified；72 verified /5 implemented /23 open。尚有28項未完成，百項目標持續；O25階段結語未完成。
+- journey.js / journey-ui.js：三願景各兩個真實條件、可略過重開的四步引導、三類唯一紀念章、可關閉再開啟挑戰、兩個明示等待條件的短程目標。
+- journey為版本9存檔的可選欄位，內部version1；舊檔沿用constructor預設。變更先驗證與持久化，失敗不發布。挑戰與財政managed/sandbox分開，預設關閉，不封鎖原有建造及閱讀。
+- 7個旅程聚焦測試通過，包括空鎮真實施工與入住走完四步；加入最後一個案例前全套262/262與build通過。Chrome確認文風切換、主動居民觀察後4/4、唯一領章、關閉後保留進度。證據evidence/journey-foundation。
+- 本階段只部署一次並正式讀回，不重跑全面UI驗收。下一獨立里程碑O04–O06居民具名委託、替代選擇與無懲罰撤回。其餘O、E18–20及E01–04/E21待補驗與四領域最終複評保留。

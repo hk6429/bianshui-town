@@ -1,0 +1,21 @@
+{
+  "commit": "b64501b",
+  "deployment": "https://cd22a680.bianshui-town.pages.dev",
+  "checks": [
+    {
+      "path": "/",
+      "status": "200",
+      "matchesBuild": true
+    },
+    {
+      "path": "/assets/index-B92BsV7I.js",
+      "status": "200",
+      "matchesBuild": true
+    },
+    {
+      "path": "/assets/index-CQmku1a4.css",
+      "status": "200",
+      "matchesBuild": true
+    }
+  ]
+}

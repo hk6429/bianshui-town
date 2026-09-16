@@ -1,0 +1,15 @@
+✔ three visions read actual different conditions and switching never changes the town (0.969125ms)
+✔ all milestone types need their live conditions, and each stamp can only be claimed once (0.615084ms)
+✔ guided cycle requires active observation and returning to review, not elapsed time (0.361208ms)
+✔ optional challenge can be disabled and resumed without resetting city or previous stamps (0.16675ms)
+✔ journey data round-trips with strict bounds, old saves get independent defaults (3.108167ms)
+✔ failed persistence leaves journey and city untouched; success publishes one validated snapshot (0.541666ms)
+✔ an empty real town completes all four guide steps through actual building and simulation (39.821083ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 115.057292

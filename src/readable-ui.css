@@ -118,3 +118,5 @@ dialog{overflow:auto;overflow-wrap:anywhere}dialog input,dialog select{max-width
 @media(max-width:850px),(max-height:700px){#building-legend{top:160px;left:12px;max-width:calc(100vw - 24px)}}
 
 .labels-visible:not(.tools-open) #extra-tools{display:none}.labels-visible #tools-toggle{display:inline-flex}
+
+#journey label{display:block;margin:12px 0}#journey select{font:inherit;padding:8px}#journey section{border-top:1px solid var(--line);margin-top:20px;padding-top:8px}#journey article{border:1px solid var(--line);border-radius:8px;padding:12px;margin:12px 0}#journey-content button{border:1px solid var(--line);background:#e3e8d7;padding:10px;border-radius:6px;margin:4px}#journey-content button:disabled{opacity:.6}#journey li{line-height:1.8}

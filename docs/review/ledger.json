@@ -1034,10 +1034,26 @@
       "acceptance": [
         "選安居後看得到至少兩個實際條件；改選文風後追蹤條件改變，既有建物不受損。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/journey.js",
+        "src/journey-ui.js",
+        "src/main.js",
+        "src/save-schema.js",
+        "src/simulation.js",
+        "index.html",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "tests/journey.test.js",
+        "evidence/journey-foundation/README.md",
+        "evidence/journey-foundation/journey-tests.txt",
+        "evidence/journey-foundation/regression.txt",
+        "evidence/journey-foundation/build.txt",
+        "evidence/journey-foundation/browser.txt",
+        "evidence/journey-foundation/mode-off.txt"
+      ],
+      "verifiedBy": "Codex root: real-town simulation tests and native Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1057,10 +1073,26 @@
       "acceptance": [
         "空鎮開始逐步完成四步；純等待不會完成觀察步驟；略過後仍可重開。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/journey.js",
+        "src/journey-ui.js",
+        "src/main.js",
+        "src/save-schema.js",
+        "src/simulation.js",
+        "index.html",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "tests/journey.test.js",
+        "evidence/journey-foundation/README.md",
+        "evidence/journey-foundation/journey-tests.txt",
+        "evidence/journey-foundation/regression.txt",
+        "evidence/journey-foundation/build.txt",
+        "evidence/journey-foundation/browser.txt",
+        "evidence/journey-foundation/mode-off.txt"
+      ],
+      "verifiedBy": "Codex root: real-town simulation tests and native Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1080,10 +1112,26 @@
       "acceptance": [
         "混合住宅、工作與文化三類里程碑可因真實條件達成；重複檢查不重複獎勵。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/journey.js",
+        "src/journey-ui.js",
+        "src/main.js",
+        "src/save-schema.js",
+        "src/simulation.js",
+        "index.html",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "tests/journey.test.js",
+        "evidence/journey-foundation/README.md",
+        "evidence/journey-foundation/journey-tests.txt",
+        "evidence/journey-foundation/regression.txt",
+        "evidence/journey-foundation/build.txt",
+        "evidence/journey-foundation/browser.txt",
+        "evidence/journey-foundation/mode-off.txt"
+      ],
+      "verifiedBy": "Codex root: real-town simulation tests and native Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1540,10 +1588,26 @@
       "acceptance": [
         "中途關閉挑戰後可正常建造與閱讀；再次開啟可繼續目標，不用重置。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/journey.js",
+        "src/journey-ui.js",
+        "src/main.js",
+        "src/save-schema.js",
+        "src/simulation.js",
+        "index.html",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "tests/journey.test.js",
+        "evidence/journey-foundation/README.md",
+        "evidence/journey-foundation/journey-tests.txt",
+        "evidence/journey-foundation/regression.txt",
+        "evidence/journey-foundation/build.txt",
+        "evidence/journey-foundation/browser.txt",
+        "evidence/journey-foundation/mode-off.txt"
+      ],
+      "verifiedBy": "Codex root: real-town simulation tests and native Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1563,10 +1627,26 @@
       "acceptance": [
         "可挑選不等待天候的短目標並完成；需等候的項目事前明示；無真實時間到期。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/journey.js",
+        "src/journey-ui.js",
+        "src/main.js",
+        "src/save-schema.js",
+        "src/simulation.js",
+        "index.html",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "tests/journey.test.js",
+        "evidence/journey-foundation/README.md",
+        "evidence/journey-foundation/journey-tests.txt",
+        "evidence/journey-foundation/regression.txt",
+        "evidence/journey-foundation/build.txt",
+        "evidence/journey-foundation/browser.txt",
+        "evidence/journey-foundation/mode-off.txt"
+      ],
+      "verifiedBy": "Codex root: real-town simulation tests and native Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/octalysis.json"
     },
     {

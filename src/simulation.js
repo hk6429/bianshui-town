@@ -1,3 +1,4 @@
+import {createJourney} from './journey.js';
 import {placementIssue,constructionPlan} from './construction-plan.js';
 import {TYPES} from './grid-rules.js';
 export {bounds,TYPES} from './grid-rules.js';
@@ -57,7 +58,7 @@ export function pathfind(nodes,start,goal){
  return [];
 }
 export class Town {
- constructor({mode='sandbox'}={}){this.demography=createDemography();this.city=createCity(mode);this.market={trades:0};this.publicWorks=mode==='managed'?[{...STARTER_ROAD}]:[];this.buildings=[];this.blocks=[];this.people=[];this.carts=[];this.roads=new Set();this.time=8;this.elapsed=0;this.nextId=1;this.revision=0;this.events=[];this.life=createLife();this.stories=createStories();this.weather=createWeather();this.literati=createLiterati();this.economy=createEconomy();importCargo(this);if(this.publicWorks.length)this.rebuildRoads();}
+ constructor({mode='sandbox'}={}){this.journey=createJourney();this.demography=createDemography();this.city=createCity(mode);this.market={trades:0};this.publicWorks=mode==='managed'?[{...STARTER_ROAD}]:[];this.buildings=[];this.blocks=[];this.people=[];this.carts=[];this.roads=new Set();this.time=8;this.elapsed=0;this.nextId=1;this.revision=0;this.events=[];this.life=createLife();this.stories=createStories();this.weather=createWeather();this.literati=createLiterati();this.economy=createEconomy();importCargo(this);if(this.publicWorks.length)this.rebuildRoads();}
  canPlace(cells){return placementIssue(this,cells)===null;}
  place(type,cells,ready=false,design=null){
   if(!TYPES[type]||!this.canPlace(cells))return null;
@@ -172,7 +173,7 @@ export class Town {
   this.place('shop',[{x:1,z:2},{x:2,z:2}],true);
   this.tick(.01);this.log('一城煙火，等你慢慢看');
  }
- toJSON(){return {version:9,demography:this.demography,city:this.city,market:this.market,publicWorks:this.publicWorks,literati:this.literati,economy:this.economy,weather:this.weather,stories:this.stories,life:this.life,time:this.time,elapsed:this.elapsed,nextId:this.nextId,buildings:this.buildings,blocks:this.blocks,people:this.people,carts:this.carts,events:this.events};}
+ toJSON(){return {version:9,journey:this.journey,demography:this.demography,city:this.city,market:this.market,publicWorks:this.publicWorks,literati:this.literati,economy:this.economy,weather:this.weather,stories:this.stories,life:this.life,time:this.time,elapsed:this.elapsed,nextId:this.nextId,buildings:this.buildings,blocks:this.blocks,people:this.people,carts:this.carts,events:this.events};}
  static restore(data){
   data=validateSave(data);
   if(![1,2,3,4,5,6,7,8,9].includes(data?.version)||!Array.isArray(data.blocks)||!Array.isArray(data.buildings)||!Array.isArray(data.people)||!Array.isArray(data.carts))throw new Error('存檔格式不相容');

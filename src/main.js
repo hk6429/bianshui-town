@@ -1,3 +1,5 @@
+import {commitJourney,inspectResident} from './journey.js';
+import {installJourneyUI} from './journey-ui.js';
 import {BuildingLabels} from './building-labels.js';
 import {readViewPreferences,writeViewPreferences,reducedMotion} from './view-preferences.js';
 import {installNotices} from './notices.js';
@@ -72,6 +74,10 @@ $('#building-label-setting').onchange=e=>{viewPreferences.labels=e.target.checke
 motionQuery.addEventListener('change',applyViewPreferences);applyViewPreferences();
 const notices=installNotices();
 function toast(text){notices.record(text);$('#toast').textContent=text;$('#toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),3200);}
+function changeJourney(action){
+ try{return commitJourney(town,action,data=>{validateSave(data);const result=fixtureMode?{ok:true}:saveStore.save(data);if(!result.ok)toast('旅程進度未儲存，請先處理存檔管理中的問題');return result;});}catch(error){toast(`旅程操作未完成：${error.message}`);return false;}
+}
+installJourneyUI({getTown:()=>town,change:changeJourney,toast});
 function save(){if(recovery?.fault){$('#save-status').textContent='執行錯誤 · 已停止自動儲存';return;}if(fixtureMode){$('#save-status').textContent='預覽場景 · 不覆寫小鎮';return;}const result=saveStore.save(town.toJSON());$('#save-status').textContent=result.ok?'進度已留存':result.status==='conflict'?'另一分頁已有更新 · 請開啟存檔管理':result.status==='recovery'?'原存檔保留 · 自動儲存已停止':'儲存失敗 · 請匯出目前小鎮';if(result.status==='conflict'&&!paused){paused=true;saveUI?.open();}}
 
 const compactUI=()=>document.body.classList.contains('large-text')||matchMedia('(max-width: 850px), (max-height: 700px)').matches;
@@ -188,7 +194,7 @@ function inspectorContent(panel,html){delete panel.dataset.person;delete panel.d
 function stopFollowing(){following=null;if(scene)scene.follow(null);$('#follow-status').hidden=true;}
 $('#stop-follow').onclick=()=>stopFollowing();
 function closeInspector(){pinned=hovered=null;stopFollowing();scene.clearGroup(scene.selection);outlined='';$('#inspector').hidden=true;canvas.focus({preventScroll:true});}
-function focusInspector(){renderInspector();focusHeading($('#inspector'));}
+function focusInspector(){if(pinned?.kind==='person')changeJourney(t=>inspectResident(t,pinned.id));renderInspector();focusHeading($('#inspector'));}
 $('#close-inspector').onclick=closeInspector;
 $('#inspector').addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();closeInspector();}});
 $('#inspector').addEventListener('focusin',()=>{if(!pinned&&hovered)pinned={...hovered};});

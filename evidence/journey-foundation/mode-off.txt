@@ -1,0 +1,69 @@
+The following is a diff from the previous accessibility tree for Window: "汴水小鎮｜一城煙火，慢慢生長" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 67-130
+~						62 核取方塊 開啟引導挑戰（關閉即自由觀察）, Value: 0
++							174 文字 自由觀察中：自願目標暫停，既有紀念章與進度保留。
++							175 標題 文風願景, Value: 3
++								176 文字 文風願景
++							177 內容列表
++								178 container
++									179 AXListMarker • 
++									180 文字 ✓ 落成一處有作品來源的文化地景：1／1
++								181 container
++									182 AXListMarker • 
++									183 文字 ○ 文人實際落筆作品：0／1
++							184 文字 更換願景不拆建物，也不清除其他紀念章。
++							185 標題 第一輪城市循環 · 4／4, Value: 3
++								186 文字 第一輪城市循環 · 4／4
++							187 文字 已完成落成、觀察、工作場所與成果回看。
++							188 按鈕 重開引導
++							189 按鈕 打開城市清單
++							190 標題 城鎮里程碑, Value: 3
++								191 文字 城鎮里程碑
++							192 文字 達標可領取一枚紀念章；每種僅一次，不扣資源，也不要求每日登入。
++							193 container
++								194 標題 煙火初起 · 已完成, Value: 4
++									195 文字 煙火初起 · 已完成
++								196 內容列表
++									197 container
++										198 AXListMarker • 
++										199 文字 ✓ 落成民居：1／1
++									200 container
++										201 AXListMarker • 
++										202 文字 ✓ 實際入住居民：8／2
++								203 文字 已收藏這枚紀念章
++							204 container
++								205 標題 百工初成 · 未達成, Value: 4
++									206 文字 百工初成 · 未達成
++								207 內容列表
++									208 container
++										209 AXListMarker • 
++										210 文字 ✓ 落成作坊：1／1
++									211 container
++										212 AXListMarker • 
++										213 文字 ○ 實際製成或售出一件工藝品：0／1
++								214 按鈕 (disabled) 領取紀念章
++							215 container
++								216 標題 汴水文韻 · 未達成, Value: 4
++									217 文字 汴水文韻 · 未達成
++								218 內容列表
++									219 container
++										220 AXListMarker • 
++										221 文字 ✓ 落成一處有作品來源的文化地景：1／1
++									222 container
++										223 AXListMarker • 
++										224 文字 ○ 文人實際落筆作品：0／1
++								225 按鈕 (disabled) 領取紀念章
++							226 標題 選一個短程目標, Value: 3
++								227 文字 選一個短程目標
++							228 container
++								229 標題 認識一位街坊居民 · 目前選擇 · 已完成, Value: 4
++									230 文字 認識一位街坊居民 · 目前選擇 · 已完成
++								231 text 從城市清單打開一位居民的小卡。 已有居民時不需等待天候或遊戲時間；空城須先迎接住戶。
++								232 切換鈕 追蹤這個目標, Value: 1
++							233 container
++								234 標題 完成一處民居 · 已完成, Value: 4
++									235 文字 完成一處民居 · 已完成
++								236 text 安放民居，等工匠完成施工。 需等約18遊戲秒，不限制現實時間。
++								237 切換鈕 追蹤這個目標, Value: 0
+~					156 標籤頁 (selected, settable, boolean) Description: 汴水小鎮｜一城煙火，慢慢生長 - 記憶體用量 - 308 MB, Value: on
+The focused UI element is 62 核取方塊 開啟引導挑戰（關閉即自由觀察）, Value: 0
