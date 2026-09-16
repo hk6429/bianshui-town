@@ -147,7 +147,7 @@ dialog{overflow:auto;overflow-wrap:anywhere}dialog input,dialog select{max-width
  body:not(.large-text) #town-tools .bottom-caption{display:flex;flex-direction:column;gap:3px;margin-top:6px;padding:6px 2px;font-size:.6875rem;letter-spacing:0}
  body:not(.large-text) #town-tools .bottom-caption>span:first-child{display:none}
  body:not(.large-text) #town-tools>.mode-hint{display:none}
- body:not(.large-text) .is-building #town-tools>.mode-hint{display:block;position:absolute;right:156px;bottom:0;width:280px;max-width:calc(100vw - 190px);margin:0;padding:10px;font-size:.8125rem}
+ body:not(.large-text).is-building #town-tools>.mode-hint{display:block;position:absolute;right:156px;bottom:0;width:280px;max-width:calc(100vw - 190px);margin:0;padding:10px;font-size:.8125rem}
  body:not(.large-text) #town-tools #extra-tools{position:absolute;right:156px;bottom:0;width:320px;max-width:calc(100vw - 190px);max-height:calc(100dvh - 240px);overflow:auto;overscroll-behavior:contain;text-align:left}
  body:not(.large-text) #town-tools .build-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:0}
  body:not(.large-text) #town-tools .build-actions button{border:1px solid var(--line);border-radius:8px;padding:8px 6px;line-height:1.4}
@@ -158,6 +158,6 @@ dialog{overflow:auto;overflow-wrap:anywhere}dialog input,dialog select{max-width
  body:not(.large-text) .view-controls{right:16px;top:236px;bottom:auto;flex-direction:row;gap:0;padding:3px}
  body:not(.large-text) .view-controls button+button{border-top:0;border-left:1px solid var(--line)}
  body:not(.large-text) .inspector,body:not(.large-text) .life-panel{right:176px}
- body:not(.large-text) .tools-open #town-tools{z-index:35}
- body:not(.large-text) .tools-open #town-tools>.mode-hint{display:none}
+ body:not(.large-text).tools-open #town-tools{z-index:35}
+ body:not(.large-text).tools-open #town-tools>.mode-hint{display:none}
 }
