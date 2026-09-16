@@ -1,3 +1,4 @@
+import {previewPlan} from './plan-preview.js';
 import {PointerGesture,shiftDraft} from './pointer-gesture.js';
 import {sceneCommand,stepCursor} from './scene-keyboard.js';
 import {wellbeingReport} from './wellbeing.js';
@@ -14,7 +15,7 @@ import {publicAccess} from './road-network.js';
 import {residentCondition} from './city-growth.js';
 import {shopStatus} from './commerce.js';
 import {installFinanceUI} from './finance-ui.js';
-import {buildCost,moveCost,upgradeCost,roadCost,affordable,managed} from './city-finance.js';
+import {moveCost,upgradeCost,managed} from './city-finance.js';
 import {editTown} from './town-edit.js';
 import {escapeHTML as escape,lotIdentity,lotButton,lotFocusButton,stallDetails,stallListItem} from './content-html.js';
 import {RecoveryPoint} from './recovery.js';
@@ -26,7 +27,7 @@ import {installSaveUI} from './save-ui.js';
 import {tierOf,MAX_TIER,TIER_NAMES,TIER_DETAILS,buildingStats,buildingAbility,upgradePreview} from './building-tiers.js';
 import {NEW_DESIGNS} from './variety.js';
 import {marketStalls,marketOpen} from './market.js';
-import {publicSquares,ROAD_TYPES,streetCells,footprint,freeCells,layRoad,removeRoad,moveBuilding,demolishBuilding,upgradeBuilding} from './urban.js';
+import {publicSquares,ROAD_TYPES,streetCells,footprint,layRoad,removeRoad,moveBuilding,demolishBuilding,upgradeBuilding} from './urban.js';
 import {AUTHORS,authorById} from './literati-data.js';
 import {authorStatus} from './literati.js';
 import {DESIGNS,SOURCES,designFor,squareCells} from './heritage.js';
@@ -106,6 +107,7 @@ canvas.addEventListener('pointermove',e=>{
  if(!down)hovered=scene.pick(e.clientX,e.clientY);
 });
 function submitPlan(cells){
+ if(!canPlan(cells)){toast($('#mode-hint').textContent);return false;}
  if(editing){const op=editing,squareCount=publicSquares(town).length;const success=applyUrban(draft=>op.kind==='move'?moveBuilding(draft,op.id,cells[0]):op.type==='erase'?removeRoad(draft,cells):layRoad(draft,op.type,cells));toast(success?(op.kind==='move'?'建築已搬移，住戶與貨物保留':publicSquares(town).length>squareCount?'四格道路已合成街坊廣場；可按復原撤銷':'公共道路已更新；可按復原撤銷'):editFailure||'這裡無法操作，請避開建築及範圍外地面');if(success&&op.kind==='move'){setMode('explore');pinned={kind:'building',id:op.id};}return success;}
  const placed=applyUrban(draft=>draft.place(mode,cells,false,selectedDesign));
  if(placed){$('#welcome').hidden=true;const b=town.buildings.find(b=>b.blockId===placed.id);toast(`${b.footprint?'四格合建 · ':''}${b.name}開始${b.design==='pond'?'挖池':'動工'}`);save();if(selectedDesign){setMode('explore');pinned={kind:'building',id:b.id};hovered=null;}}
@@ -256,8 +258,7 @@ function renderWriters(){const list=town.literati.collected;$('#writers-count').
 $('#writers-btn').onclick=()=>{renderWriters();$('#writers').showModal();};
 $('#writers').onclick=e=>{const work=e.target.closest('[data-author-work]');if(work){showAuthorWork(work.dataset.authorWork);return;}const focus=e.target.closest('[data-author-focus]');if(!focus)return;const a=town.literati.actors.find(v=>v.author===focus.dataset.authorFocus);if(!a?.visible)return;$('#writers').close();stopFollowing();setMode('explore');journalOpen=false;updateJournal();pinned={kind:'author',id:a.author};hovered=null;scene.focusAt([a.x,a.z],2.8);renderInspector();};
 
-function plannedCost(cells){if(editing?.kind==='move')return moveCost(town.building(editing.id));if(editing)return editing.type==='erase'?0:roadCost(town,editing.type,cells);return buildCost(mode,cells);}
-function canPlan(cells){const cost=plannedCost(cells);if(managed(town))$('#mode-hint').textContent=`本次 ${cost} 文 · 金庫 ${town.city.treasury} 文${affordable(town,cost)?'':' · 金額不足'}`;else $('#mode-hint').textContent='自由營造 · 本次不扣款';if(!affordable(town,cost))return false;if(!editing)return town.canPlace(cells);if(editing.kind==='move')return freeCells(town,cells,editing.id);if(editing.type==='erase')return cells.some(c=>town.publicWorks.some(p=>p.x===c.x&&p.z===c.z));return freeCells({...town,publicWorks:[]},cells);}
+function canPlan(cells){const report=previewPlan(town,{mode,design:selectedDesign,editing},cells);$('#mode-hint').textContent=report.text;return report.valid;}
 function applyUrban(fn){
  editFailure='';
  const editFault=import.meta.env.DEV&&(fixtureMode||storageTest)&&new URLSearchParams(location.search).get('edit-fault')==='refresh';

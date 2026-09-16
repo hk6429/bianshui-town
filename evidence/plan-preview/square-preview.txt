@@ -1,0 +1,11 @@
+Browser tab: 610004081, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?storage-test=1".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 62-67, 76
++			76 text ☀
++			77 text 辰時 · 晨光初醒
++			78 text 第 1 日　08:02
++			79 text 0
++			80 text 0
++			81 text 0
++			82 text 進度已留存
+The focused UI element is 2 image Description: 汴水小鎮互動三維場景, ID: world

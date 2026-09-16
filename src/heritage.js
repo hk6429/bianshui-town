@@ -39,3 +39,9 @@ export const designFor=b=>b.design|| (b.type==='shop'?['tea','food','textile'][b
 export function squareCells(c){return [{x:c.x,z:c.z},{x:c.x+1,z:c.z},{x:c.x,z:c.z+1},{x:c.x+1,z:c.z+1}];}
 export function isSquare(cells){return cells.length===4&&new Set(cells.map(c=>`${c.x},${c.z}`)).size===4&&Math.max(...cells.map(c=>c.x))-Math.min(...cells.map(c=>c.x))===1&&Math.max(...cells.map(c=>c.z))-Math.min(...cells.map(c=>c.z))===1;}
 export const gardenActivity=b=>({wazi:'在瓦舍聽書、看表演',orchard:'沿田間小徑看果樹',scholarGarden:'在曲水疊石間遊園',pond:'沿池賞荷、看蜻蜓',pavilion:'在亭中歇腳、賞景',academy:'在書院讀書、觀方塘'})[b.design]||'在園中散步';
+
+export function gardenMergeGroups(buildings){
+ const available=buildings.filter(b=>b.design==='garden'&&!b.footprint).sort((a,b)=>a.z-b.z||a.x-b.x),used=new Set(),groups=[];
+ for(const a of available){if(used.has(a.id))continue;const parts=squareCells(a).map(c=>available.find(b=>!used.has(b.id)&&b.x===c.x&&b.z===c.z));if(parts.some(p=>!p))continue;groups.push(parts);for(const b of parts)used.add(b.id);}
+ return groups;
+}

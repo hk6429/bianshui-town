@@ -1790,10 +1790,31 @@
       "acceptance": [
         "不辨色仍能在提交前得知可否放置及確切障礙。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/grid-rules.js",
+        "src/construction-plan.js",
+        "src/plan-preview.js",
+        "src/simulation.js",
+        "src/heritage.js",
+        "src/urban.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "tests/plan-preview.test.js",
+        "evidence/plan-preview/README.md",
+        "evidence/plan-preview/focused-tests.txt",
+        "evidence/plan-preview/tests.txt",
+        "evidence/plan-preview/build.txt",
+        "evidence/plan-preview/square-preview.txt",
+        "evidence/plan-preview/square-built.txt",
+        "evidence/plan-preview/line-preview.txt",
+        "evidence/plan-preview/line-built.txt",
+        "evidence/plan-preview/occupied.txt",
+        "evidence/plan-preview/road-obstacle.txt",
+        "evidence/plan-preview/outside.txt"
+      ],
+      "verifiedBy": "root：全圖錄預覽/實際建造比對、247項回歸、Chrome拖曳與障礙文字查核",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -1813,10 +1834,31 @@
       "acceptance": [
         "選雅居小樓後斜拉2×2，提交前顯示四合雅宅、占地4格、1棟；直線拉4格顯示4棟。文字與提交結果一致。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/grid-rules.js",
+        "src/construction-plan.js",
+        "src/plan-preview.js",
+        "src/simulation.js",
+        "src/heritage.js",
+        "src/urban.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "tests/plan-preview.test.js",
+        "evidence/plan-preview/README.md",
+        "evidence/plan-preview/focused-tests.txt",
+        "evidence/plan-preview/tests.txt",
+        "evidence/plan-preview/build.txt",
+        "evidence/plan-preview/square-preview.txt",
+        "evidence/plan-preview/square-built.txt",
+        "evidence/plan-preview/line-preview.txt",
+        "evidence/plan-preview/line-built.txt",
+        "evidence/plan-preview/occupied.txt",
+        "evidence/plan-preview/road-obstacle.txt",
+        "evidence/plan-preview/outside.txt"
+      ],
+      "verifiedBy": "root：全圖錄預覽/實際建造比對、247項回歸、Chrome拖曳與障礙文字查核",
       "reviewSource": "docs/review/ux.json"
     },
     {

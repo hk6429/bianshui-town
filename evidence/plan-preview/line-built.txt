@@ -1,0 +1,11 @@
+Browser tab: 610004081, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?storage-test=1".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 62-67, 87
++			87 text ☀
++			88 text 辰時 · 晨光初醒
++			89 text 第 1 日　08:02
++			90 text 0
++			91 text 5
++			92 text 2
++			93 text 進度已留存
+The focused UI element is 0 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?storage-test=1

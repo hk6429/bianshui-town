@@ -277,3 +277,14 @@
 - CUA的CDP.send允許Input.dispatchTouchEvent，已查官方protocol JSON參數。可在專用隔離頁以已見空地座標發touchStart/touchMove/touchEnd；touchMove保留單一touchPoint會釋放另一指。測試不是實機人工手勢，切勿混稱。
 - 下一獨立階段U06/U07：統一營造預覽的禁止原因及實際合建名稱/格數/棟數，需對照Town.place/dragCells/DESIGNS sizes及四格自動轉換；目前canPlan只回布林及generic原因，仍有待修。
 - 仍未部署，O01–25及其餘U/E全部保留，最後四領域複評條件不變。
+
+## 新階段U06/U07可解釋營造預覽
+- 基準4df516e。placementIssue共用占地檢查，constructionPlan共用名稱與四格轉型；previewPlan說明障礙/費用/名稱/格數/棟數。園景合併抽出gardenMergeGroups供真合併與預測共同使用。待完整回歸，特別檢查Town.place資料契約與存檔。
+
+## 最新交接：U06/U07營造預覽完成（2026-09-16）
+- 50 verified / 5 implemented / 45 open。11聚焦/247全套/build與Chrome同張雅居圖樣斜拉1座四合雅宅、直拉4棟雅居及障礙文字均通過。evidence/plan-preview。
+- grid-rules TYPES/bounds純常數；simulation保留re-export，避免變動其他import。construction-plan placementIssue共用canPlace與預覽；constructionPlan依nextId先產實際name/design/footprint，Town.place採同規格再扣款建資料。
+- heritage.gardenMergeGroups抽出原合併次序；urban.mergeGardens與previewPlan共用，三舊花園+一新格可預告合併。road preview用publicSquares預告新增廣場。
+- main.canPlan現在更新文字/符號/具體障礙座標/名稱/格數/棟數/費用；submitPlan先驗canPlan後才editTown，避免紅框仍提交。未改存檔格式。
+- Chrome08:02暫停、空城：方形4格1棟2400→1920，直線4格4棟總1→5／1920→1440；已有屋/道路/四格越界能讀確切座標，禁止Enter不扣款。全部storage-test，未部署。
+- 下一獨立階段U08/U09/U10/U11：可搜尋城市物件清單與小卡焦點/關閉（切實體、局部數字更新勿破壞focus/scroll）。需先查inspectorContent與renderInspector，保留hover不搶焦點。O01–25及其餘U/E與四專家最後複評仍待。

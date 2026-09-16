@@ -1,0 +1,19 @@
+✔ preview names and counts match actual placement for every design and supported footprint (23.588125ms)
+✔ same residence blueprint predicts one four-cell mansion or four distinct houses in a line (0.428167ms)
+✔ previews distinguish occupied houses, roads, edges, disconnected shapes, footprint restrictions and insufficient funds (0.653084ms)
+✔ road squares and auto-merged gardens predict the actual combined result (2.311584ms)
+✔ moving ignores the selected footprint but reports other buildings and new roads (1.023917ms)
+✔ public streets connect to doors, block construction, persist and can be removed (6.79075ms)
+✔ moving one connected house preserves occupants and leaves its neighbour intact (36.472875ms)
+✔ demolition conserves cargo, residents survive and are rehoused without dangling references (521.795834ms)
+✔ home and workshop upgrades expand capacity, preserve variants and reject occupied four-grid expansion (12.000458ms)
+✔ editing roads while a loaded cart is moving never delivers to a missing shop (595.469208ms)
+✔ visitors actually walk onto a connected public street (124.418584ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1366.630417

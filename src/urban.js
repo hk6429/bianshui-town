@@ -3,7 +3,7 @@ import {charge,roadCost,moveCost,upgradeCost,refundBuilding} from './city-financ
 import {NEW_DESIGNS} from './variety.js';
 import {tierOf,MAX_TIER} from './building-tiers.js';
 import {bounds,key,point,CELL} from './simulation.js';
-import {DESIGNS,squareCells} from './heritage.js';
+import {DESIGNS,squareCells,gardenMergeGroups} from './heritage.js';
 import {transfer,syncCargo} from './production.js';
 import {send} from './life.js';
 export const ROAD_TYPES={lane:'青石小路',avenue:'寬闊大路'};
@@ -38,4 +38,4 @@ function refresh(t){
 
 // Disjoint 2x2 plots prevent overlapping plazas in larger paved areas.
 export function publicSquares(t){const cells=[...t.publicWorks].sort((a,b)=>a.z-b.z||a.x-b.x),used=new Set(),available=new Set(cells.map(c=>key(c.x,c.z))),out=[];for(const c of cells){const four=squareCells(c);if(four.every(p=>available.has(key(p.x,p.z))&&!used.has(key(p.x,p.z)))){out.push({...c,cells:four});for(const p of four)used.add(key(p.x,p.z));}}return out;}
-export function mergeGardens(t){let result=null;for(const a of [...t.buildings].filter(b=>b.design==='garden'&&!b.footprint).sort((a,b)=>a.z-b.z||a.x-b.x)){if(!t.building(a.id))continue;const cells=squareCells(a),parts=cells.map(c=>t.buildings.find(b=>b.design==='garden'&&!b.footprint&&b.x===c.x&&b.z===c.z));if(parts.some(p=>!p))continue;const ids=new Set(parts.map(b=>b.id));for(const b of parts)detach(t,b);attach(t,a,cells);a.tier=Math.max(...parts.map(tierOf));a.design='scholarGarden';a.name=DESIGNS.scholarGarden.name;a.born=Math.max(...parts.map(b=>b.born));a.stage=Math.min(...parts.map(b=>b.stage));t.buildings=t.buildings.filter(b=>!ids.has(b.id)||b.id===a.id);for(const p of [...t.people,...t.carts])for(const k of ['current','destination','shelter'])if(ids.has(p[k]))p[k]=a.id;for(const p of [...t.life.visitors,...t.life.oxen])if(ids.has(p.target))p.target=a.id;result=t.blocks.find(b=>b.id===a.blockId);t.log('四格花園相連，合成曲水疊石園');}return result;}
+export function mergeGardens(t){let result=null;for(const parts of gardenMergeGroups(t.buildings)){const a=parts[0],cells=squareCells(a);const ids=new Set(parts.map(b=>b.id));for(const b of parts)detach(t,b);attach(t,a,cells);a.tier=Math.max(...parts.map(tierOf));a.design='scholarGarden';a.name=DESIGNS.scholarGarden.name;a.born=Math.max(...parts.map(b=>b.born));a.stage=Math.min(...parts.map(b=>b.stage));t.buildings=t.buildings.filter(b=>!ids.has(b.id)||b.id===a.id);for(const p of [...t.people,...t.carts])for(const k of ['current','destination','shelter'])if(ids.has(p[k]))p[k]=a.id;for(const p of [...t.life.visitors,...t.life.oxen])if(ids.has(p.target))p.target=a.id;result=t.blocks.find(b=>b.id===a.blockId);t.log('四格花園相連，合成曲水疊石園');}return result;}
