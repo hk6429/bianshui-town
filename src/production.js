@@ -1,3 +1,4 @@
+export const MAX_LOT_TRAIL=32,MAX_UNPROCESSED_LOTS=96;
 export const GOODS={clay:'泥料',timber:'木材',fiber:'纖維',ceramics:'陶器',furniture:'木器',cloth:'布匹',legacy:'日用雜貨'};
 export const RECIPES=[{input:'clay',output:'ceramics',seconds:14,action:'拉坯、入窯燒製'},{input:'timber',output:'furniture',seconds:12,action:'鋸切、打磨木器'},{input:'fiber',output:'cloth',seconds:16,action:'紡線、上機織布'}];
 export function createEconomy(){return {version:1,nextId:1,imported:0,archived:0,sold:{},lots:[]};}
@@ -5,13 +6,23 @@ export const at=(t,place,good)=>t.economy.lots.filter(l=>l.at===place&&(!good||l
 function add(t,good,place,origin){const e=t.economy,l={id:e.nextId++,good,at:place,origin,trail:[{at:place,time:t.time}]};e.lots.push(l);e.imported++;return l;}
 export function importCargo(t){
  // Bound the unprocessed stock so an unattended town cannot grow its save forever.
- if(t.economy.lots.filter(l=>l.at!=='sold').length>=96)return false;
- for(let i=0;i<12;i++)add(t,RECIPES[i%3].input,'boat',`汴河第 ${t.life.boat.trips+1} 航次`);
+ const capacity=MAX_UNPROCESSED_LOTS-t.economy.lots.filter(l=>l.at!=='sold').length;
+ if(capacity<=0)return false;
+ for(let i=0;i<Math.min(12,capacity);i++)add(t,RECIPES[i%3].input,'boat',`汴河第 ${t.life.boat.trips+1} 航次`);
  syncCargo(t);return true;
+}
+function recordTrail(l,entry){
+ l.trail.push(entry);
+ if(l.trail.length<=MAX_LOT_TRAIL)return;
+ const keep=new Set([0]);
+ if(l.madeAt)for(const kind of ['input','output']){const i=l.trail.findIndex(e=>e.at===`${kind}:${l.madeAt}`);if(i>=0)keep.add(i);}
+ for(let i=l.trail.length-1;keep.size<MAX_LOT_TRAIL;i--)keep.add(i);
+ l.trailOmitted=(l.trailOmitted||0)+l.trail.length-keep.size;
+ l.trail=l.trail.filter((_,i)=>keep.has(i));
 }
 export function transfer(t,from,to,count=1,good){
  const lots=at(t,from,good).slice(0,count);
- for(const l of lots){l.at=to;l.trail.push({at:to,time:t.time});if(to==='sold')t.economy.sold[l.good]=(t.economy.sold[l.good]||0)+1;}
+ for(const l of lots){l.at=to;recordTrail(l,{at:to,time:t.time});if(to==='sold')t.economy.sold[l.good]=(t.economy.sold[l.good]||0)+1;}
  const sold=at(t,'sold');if(sold.length>24){const ids=new Set(sold.slice(0,sold.length-24).map(l=>l.id));t.economy.lots=t.economy.lots.filter(l=>!ids.has(l.id));t.economy.archived+=ids.size;}
  syncCargo(t);return lots.length;
 }
@@ -25,7 +36,7 @@ export function migrateEconomy(t){
  const restore=(count,place)=>{for(let i=0;i<(count||0);i++)add(t,'legacy',place,origin);};
  restore(l.boat.cargo,'boat');restore(l.dock.stock,'dock');
  for(const a of l.porters)restore(a.carrying,`porter:${a.id}`);
- for(const a of l.oxen){restore(a.carrying,`ox:${a.id}`);a.deliveryAt=`shop:${a.target}`;}
+ for(const a of l.oxen){restore(a.carrying,`ox:${a.id}`);a.deliveryAt=t.building(a.target)?.type==='shop'?`shop:${a.target}`:null;}
  for(const b of t.buildings)restore(b.stock,`shop:${b.id}`);
  t.economy.archived=l.dock.sold||0;t.economy.imported+=t.economy.archived;t.economy.sold.legacy=t.economy.archived;syncCargo(t);
 }

@@ -1,0 +1,25 @@
+Browser tab: 610003911, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?storage-test=1".
+0 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?storage-test=1
+	1 container 存檔與復原, ID: save-manager
+		2 container
+			3 heading 存檔與復原, Value: 2, ID: save-title
+				4 text 存檔與復原
+			5 button 關閉存檔管理
+		21 text 另一分頁已儲存較新的小鎮。本頁已暫停自動覆寫；請先匯出本頁或選擇要使用的版本。
+		7 button 匯出目前小鎮, ID: save-export
+		8 button 匯出原始救援檔, ID: save-rescue
+		9 container
+			10 text 匯入城市 JSON（上限 2 MB）
+			11 button 匯入城市 JSON（上限 2 MB）, ID: save-file
+		12 heading 可用版本, Value: 3
+			13 text 可用版本
+		14 container save-candidates
+			22 button 目前共用存檔 · 26 處建築 · 26 位居民 · 2026/9/16 下午3:28:06
+			23 button 上一個有效版本 · 26 處建築 · 26 位居民 · 2026/9/16 下午3:27:54
+			24 button 重置前小鎮 · 0 處建築 · 0 位居民 · 2026/9/16 下午3:27:21
+			25 button 分頁版本 8f4cd19f · 26 處建築 · 26 位居民 · 2026/9/16 下午3:27:42
+			26 button 分頁版本 91a94f52 · 26 處建築 · 26 位居民 · 2026/9/16 下午3:28:06
+			27 button 分頁版本 bfc0bb2d · 26 處建築 · 26 位居民 · 2026/9/16 下午3:28:00
+		20 button 重新建立空小鎮, ID: save-new
+
+The focused UI element is 5 button 關閉存檔管理

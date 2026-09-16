@@ -1,3 +1,6 @@
+import {SaveStore,SAVE_KEY} from './save-store.js';
+import {validateSave} from './save-schema.js';
+import {installSaveUI} from './save-ui.js';
 import {tierOf,MAX_TIER,TIER_NAMES,TIER_DETAILS} from './building-tiers.js';
 import {NEW_DESIGNS} from './variety.js';
 import {marketStalls,marketOpen} from './market.js';
@@ -18,11 +21,17 @@ const icons={explore:'<circle cx="16" cy="16" r="10"/><path d="m20 12-3 7-5 2 3-
 for(const el of document.querySelectorAll('[data-icon]'))el.innerHTML=`<svg viewBox="0 0 32 32" aria-hidden="true">${icons[el.dataset.icon]}</svg>`;
 let town=new Town(),scene,mode='explore',speed=1,paused=false,drag=null,down=null,pinned=null,hovered=null,lastUi=0,lastSave=0,toastTimer,following=null,selectedLot=null;
 const fixtureName=new URLSearchParams(location.search).get('fixture');const fixtureMode=import.meta.env.DEV&&['v4','v5','v6','v7','v8'].includes(fixtureName);
-try{if(fixtureMode)town=Town.restore(await(await fetch(`/tests/fixtures/${fixtureName}-town.json`)).json());else{const saved=localStorage.getItem('bianshui-town-v1');if(saved)town=Town.restore(JSON.parse(saved));}}catch{$('#save-status').textContent='存檔無法讀取 · 已開啟新小鎮';}
+const owner=crypto.randomUUID();
+const storage={getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value),key:i=>localStorage.key(i),get length(){return localStorage.length;}};
+const storageTest=import.meta.env.DEV&&new URLSearchParams(location.search).has('storage-test');
+const saveStore=new SaveStore({storage,validate:validateSave,owner,key:storageTest?'bianshui-town-test-v1':SAVE_KEY});let saveUI;
+try{if(fixtureMode)town=Town.restore(await(await fetch(`/tests/fixtures/${fixtureName}-town.json`)).json());else{const loaded=saveStore.load();if(loaded.data)town=Town.restore(loaded.data);if(loaded.status==='recovery')paused=true;}}catch(error){saveStore.blocked='recovery';saveStore.error=error.message;paused=true;$('#save-status').textContent='存檔無法讀取 · 原檔保留，請開啟存檔管理';}
+
 try{scene=new TownScene(canvas);}catch(error){$('#welcome').innerHTML='<h2>目前無法開啟 3D 場景</h2><p>請使用支援 WebGL 2 的瀏覽器，並開啟硬體加速後重新整理。</p>';console.error(error);throw error;}
 if(town.buildings.length)$('#welcome').hidden=true;
 function toast(text){$('#toast').textContent=text;$('#toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),3200);}
-function save(){if(fixtureMode){$('#save-status').textContent='預覽場景 · 不覆寫小鎮';return;}try{localStorage.setItem('bianshui-town-v1',JSON.stringify(town));$('#save-status').textContent='進度已留存';}catch{$('#save-status').textContent='儲存空間不足 · 本次進度未存';}}
+function save(){if(fixtureMode){$('#save-status').textContent='預覽場景 · 不覆寫小鎮';return;}const result=saveStore.save(town.toJSON());$('#save-status').textContent=result.ok?'進度已留存':result.status==='conflict'?'另一分頁已有更新 · 請開啟存檔管理':result.status==='recovery'?'原存檔保留 · 自動儲存已停止':'儲存失敗 · 請匯出目前小鎮';if(result.status==='conflict'&&!paused){paused=true;saveUI?.open();}}
+
 function setMode(next){editing=null;selectedDesign=null;$('#blueprint-status').hidden=true;scene.showBuildGrid(next!=='explore');if(next!=='explore')stopFollowing();mode=next;drag=null;scene.clearGroup(scene.preview);document.querySelectorAll('[data-mode]').forEach(b=>{b.classList.toggle('active',b.dataset.mode===mode);b.setAttribute('aria-pressed',String(b.dataset.mode===mode));});scene.controls.mouseButtons.LEFT=mode==='explore'?THREE.MOUSE.PAN:undefined;scene.controls.touches.ONE=mode==='explore'?THREE.TOUCH.PAN:undefined;$('#mode-hint').textContent=mode==='explore'?'自由探索 · 拖曳移動畫面，點選屋舍與居民':`${ROAD_TYPES[mode]||TYPES[mode]||'調整街坊'} · 點選放置，橫拉最多四格；斜拉 2 × 2 自動合建；道路只沿街坊外圍形成`;canvas.style.cursor=mode==='explore'?'grab':'crosshair';}
 for(const b of document.querySelectorAll('[data-mode]'))b.onclick=()=>{setMode(b.dataset.mode);$('#welcome').hidden=true;};
 $('#start-btn').onclick=()=>{$('#welcome').hidden=true;setMode('home');toast('在草地上點一下，安放第一間民居');};
@@ -47,7 +56,7 @@ $('#life-panel').onclick=e=>{
 $('#concepts-btn').onclick=()=>$('#gallery').showModal();$('#help-btn').onclick=()=>$('#help').showModal();
 for(const b of document.querySelectorAll('[data-close]'))b.onclick=()=>document.getElementById(b.dataset.close).close();
 $('#new-town').onclick=$('#reset-town').onclick=()=>$('#confirm-reset').showModal();
-$('#confirm-new').onclick=()=>{stopFollowing();undoTown=JSON.parse(JSON.stringify(town));town=new Town();$('#undo-urban').hidden=false;paused=false;speed=1;$('#speed-btn').textContent='1×';$('#pause-btn').textContent='Ⅱ';$('#pause-btn').classList.remove('paused');$('#pause-btn').setAttribute('aria-label','暫停');down=drag=selectedLot=pendingDelete=null;scene.reset();scene.resetView();pinned=hovered=null;journalOpen=false;updateJournal();$('#inspector').hidden=true;$('#welcome').hidden=false;$('#confirm-reset').close();$('#help').close();setMode('explore');save();toast('小鎮已重置；可立即按復原上一步救回');};
+$('#confirm-new').onclick=()=>{const nextTown=new Town();if(!fixtureMode&&saveStore.blocked!=='recovery'){const result=saveStore.checkpoint(town.toJSON());if(!result.ok){toast('無法保留重置復原點，請先匯出小鎮');return;}}if(!fixtureMode){const result=saveStore.replace(nextTown.toJSON());if(!result.ok){toast('重置未完成，原小鎮仍保留；請先匯出進度');return;}}stopFollowing();undoTown=JSON.parse(JSON.stringify(town));town=nextTown;$('#undo-urban').hidden=false;paused=false;speed=1;$('#speed-btn').textContent='1×';$('#pause-btn').textContent='Ⅱ';$('#pause-btn').classList.remove('paused');$('#pause-btn').setAttribute('aria-label','暫停');down=drag=selectedLot=pendingDelete=null;scene.reset();scene.resetView();pinned=hovered=null;journalOpen=false;updateJournal();$('#inspector').hidden=true;$('#welcome').hidden=false;$('#confirm-reset').close();$('#help').close();setMode('explore');save();toast('小鎮已重置；存檔管理保留重置前小鎮');};
 function cellAt(e){const p=scene.atScreen(e.clientX,e.clientY);return p?{x:Math.round(p.x/CELL),z:Math.round(p.z/CELL)}:null;}
 canvas.addEventListener('contextmenu',e=>e.preventDefault());
 canvas.addEventListener('pointerdown',e=>{stopFollowing();if(e.button!==0)return;down={x:e.clientX,y:e.clientY};if(mode!=='explore'){const c=cellAt(e);if(c){const cells=plannedCells(c);drag={start:c,cells};scene.outline(cells,canPlan(cells)?0x668856:0xb5644c);canvas.setPointerCapture(e.pointerId);}}});
@@ -133,7 +142,7 @@ function renderProduction(){
 }
 function renderLot(){
  const l=town.economy.lots.find(l=>l.id===selectedLot);if(!l){$('#lot-detail').innerHTML='';return;}
- $('#lot-detail').innerHTML=`<h3>#${l.id} ${GOODS[l.good]}</h3><p>來源：${escape(l.origin)}${l.madeAt?` · 製作：${escape(town.building(l.madeAt)?.name)}`:''}</p><ol class="cargo-trail">${l.trail.map(step=>`<li>第 ${Math.floor(step.time/24)+1} 日 ${formatTime(step.time)} · ${escape(placeName(town,step.at))}</li>`).join('')}</ol>${locateLot(town,l)?`<button class="primary" data-lot-focus="${l.id}">看這批貨的位置 ↗</button>`:'<p>這件貨已由來客購得。</p>'}`;
+ $('#lot-detail').innerHTML=`<h3>#${l.id} ${GOODS[l.good]}</h3><p>來源：${escape(l.origin)}${l.madeAt?` · 製作：${escape(town.building(l.madeAt)?.name)}`:''}</p><ol class="cargo-trail">${l.trailOmitted?`<li>較早的 ${l.trailOmitted} 筆紀錄已收進摘要；來源與製作紀錄仍保留。</li>`:''}${l.trail.map(step=>`<li>第 ${Math.floor(step.time/24)+1} 日 ${formatTime(step.time)} · ${escape(placeName(town,step.at))}</li>`).join('')}</ol>${locateLot(town,l)?`<button class="primary" data-lot-focus="${l.id}">看這批貨的位置 ↗</button>`:'<p>這件貨已由來客購得。</p>'}`;
 }
 $('#production').onclick=e=>{const select=e.target.closest('[data-lot]');if(select){selectedLot=Number(select.dataset.lot);renderLot();return;}const focus=e.target.closest('[data-lot-focus]');if(!focus)return;const lot=town.economy.lots.find(l=>l.id===Number(focus.dataset.lotFocus)),location=lot&&locateLot(town,lot);if(!location)return;$('#production').close();journalOpen=false;updateJournal();stopFollowing();setMode('explore');pinned=location.ref||null;hovered=null;scene.focusAt(location.point,2.6);toast(`${GOODS[lot.good]} · ${placeName(town,lot.at)}`);};
 let previous=performance.now();function frame(now){const dt=Math.min((now-previous)/1000,.1);previous=now;if(!document.hidden&&!document.querySelector('dialog[open]')&&!paused)town.tick(dt*speed);const day=scene.update(town,dt);sound.update(town,paused||document.hidden||!!document.querySelector('dialog[open]'));if(now-lastUi>180){updateUI(day);updateJournal();lastUi=now;}if(now-lastSave>12000){save();lastSave=now;}requestAnimationFrame(frame);}requestAnimationFrame(frame);
@@ -165,3 +174,5 @@ $('#undo-urban').onclick=()=>{if(!undoTown)return;stopFollowing();town=Town.rest
 
 $('#stalls-btn').onclick=()=>{const stalls=marketStalls(town);$('#stalls-list').innerHTML=stalls.length?stalls.map(s=>`<article class="writer-card"><h3>${s.name}</h3><p>${s.goods} · ${s.venue}</p><button data-stall-focus="${s.id}">到攤前看看 ↗</button></article>`).join(''):'<p>先讓商鋪或說書棚落成，或將道路鋪成 2 × 2 廣場，攤販便會出現。</p>';$('#public-works').close();$('#stalls').showModal();};
 $('#stalls').onclick=e=>{const b=e.target.closest('[data-stall-focus]');if(!b)return;const s=marketStalls(town).find(s=>s.id===b.dataset.stallFocus);if(!s)return;$('#stalls').close();stopFollowing();setMode('explore');pinned={kind:'stall',id:s.id};hovered=null;scene.focusAt([s.x,s.z],2.8);renderInspector();};
+
+if(!fixtureMode)saveUI=installSaveUI({store:saveStore,getTown:()=>town.toJSON(),prepareTown:data=>Town.restore(data),pause:()=>{if(!paused)$('#pause-btn').click();},replaceTown:restored=>{stopFollowing();town=restored;undoTown=null;pinned=hovered=null;selectedLot=null;scene.reset();scene.resetView();setMode('explore');$('#undo-urban').hidden=true;$('#welcome').hidden=!!town.buildings.length;$('#inspector').hidden=true;toast('已讀取選定版本，小鎮暫停中');save();}});else $('#save-manager-btn').onclick=()=>toast('預覽場景不寫入存檔；請使用一般小鎮的存檔管理');

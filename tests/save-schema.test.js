@@ -1,0 +1,22 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {validateSave,parseSave,MAX_SAVE_BYTES} from '../src/save-schema.js';
+const fixture=(v=8)=>JSON.parse(fs.readFileSync(new URL(`./fixtures/v${v}-town.json`,import.meta.url)));
+for(const v of [4,5,6,7,8])test(`接受 v${v} fixture 並深複製`,()=>{const d=fixture(v),c=validateSave(d);assert.deepEqual(c,d);c.economy.lots[0].trail[0].time++;assert.notEqual(c.economy.lots[0].trail[0].time,d.economy.lots[0].trail[0].time);});
+for(const v of [1,2,3])test(`接受 v${v} 舊版`,()=>{const d=fixture(4);d.version=v;delete d.economy;delete d.weather;if(v<3)delete d.stories;if(v<2)delete d.life;assert.equal(validateSave(d).version,v);});
+const bad=[
+ ['tick',d=>d.tick=0],['unexpected',d=>d.unexpected=1],['weather.mode',d=>d.weather.mode='alien'],['life.visitors',d=>delete d.life.visitors],['stories.active',d=>d.stories.active={}],['literati.actors',d=>d.literati.actors='x'],['market.trades',d=>d.market.trades='<img src=x onerror=alert(1)>'],['time',d=>d.time=-1],['elapsed',d=>d.elapsed=Infinity],['variant',d=>d.buildings[0].variant=999],['speed',d=>d.people[0].speed=-1],['nextId',d=>d.nextId=1],['id',d=>d.people.push({...d.people[0]})],['id',d=>d.economy.lots[0].id='<img>'],['blockId',d=>d.buildings[0].blockId=99999],['cells',d=>d.blocks[0].cells[0].x=999],['footprint',d=>d.buildings[0].footprint=[{x:0,z:0}]],['home',d=>d.people[0].home=99999],['route',d=>d.people[0].route=Array(5000).fill([0,0])],['people',d=>d.people=Array(5000).fill(d.people[0])],['cargo',d=>{d.version=3;delete d.economy;d.life.boat.cargo=1e9;}],['constructor',d=>d.weather.constructor={}],['at',d=>d.economy.lots[0].at='shop:99999']
+];
+for(const [label,mutate]of bad)test(`拒絕 ${label}`,()=>{const d=fixture();mutate(d);assert.throws(()=>validateSave(d),e=>e.message.includes(label));});
+test('JSON 原型保留鍵與超大原文',()=>{assert.throws(()=>parseSave('{"__proto__":{}}'),/保留|欄位/);assert.throws(()=>parseSave(' '.repeat(MAX_SAVE_BYTES+1)),/大小/);assert.throws(()=>parseSave('{'),/JSON/);});
+test('負數外來人物 ID 及半格四格中心合法',()=>{const d=fixture(5);d.life.visitors[0].id=-2000;assert.ok(validateSave(d));assert.ok(d.buildings.some(b=>b.footprint&&b.x%1!==0));});
+test('舊歷程保留不存在的建築，新 trailOmitted 可還原',()=>{const d=fixture();d.economy.lots[0].trail.push({at:'shop:99999',time:8});d.economy.lots[0].madeAt=99999;d.economy.lots[0].trailOmitted=100;assert.deepEqual(validateSave(d),d);});
+test('有界展開限制累計舊版貨物',()=>{const d=fixture(4);d.version=3;delete d.economy;d.life.boat.cargo=700;d.life.dock.stock=700;assert.throws(()=>validateSave(d),/cargo/);});
+test('循環與存取器不執行',()=>{const d=fixture();d.weather.self=d;assert.throws(()=>validateSave(d),/循環/);delete d.weather.self;Object.defineProperty(d.weather,'mode',{enumerable:true,get(){throw Error('getter 不應執行');}});assert.throws(()=>validateSave(d),/存取器/);});
+test('版本一舊遷移容許待重建的 life 及歷史 economy',()=>{const d=fixture(4);d.version=1;delete d.life;assert.equal(validateSave(d).version,1);});
+test('額外欄位不悄悄移除，重複貨物 ID 與不正確配置器拒絕',()=>{const d=fixture();d.economy.lots.push(structuredClone(d.economy.lots[0]));assert.throws(()=>validateSave(d),/ID 重複/);d.economy.lots.pop();d.economy.nextId=1;assert.throws(()=>validateSave(d),/economy.nextId/);d.economy.nextId=13;d.people[0].unknown='x';assert.throws(()=>validateSave(d),/unknown/);});
+test('UTF-8 位元組限制與深巢狀資料',()=>{assert.throws(()=>parseSave('好'.repeat(Math.ceil(MAX_SAVE_BYTES/3)+1)),/大小/);let a={};for(let i=0;i<30;i++)a={a};assert.throws(()=>validateSave(a),/資源/);});
+test('道路重疊、建築占地與中心不一致均拒絕',()=>{let d=fixture();d.publicWorks.push({...d.publicWorks[0]});assert.throws(()=>validateSave(d),/publicWorks/);d=fixture(5);const b=d.buildings.find(b=>b.footprint);b.x+=0.5;assert.throws(()=>validateSave(d),/footprint/);d=fixture();d.blocks[1].cells[0]={...d.blocks[0].cells[0]};assert.throws(()=>validateSave(d),/重疊/);});
+test('數值零值保留，NaN、錯型別布林、未來 born 拒絕',()=>{const d=fixture();d.time=0;d.elapsed=0;d.people[0].speed=0;assert.equal(validateSave(d).people[0].speed,0);d.life.boat.mast=NaN;assert.throws(()=>validateSave(d),/mast/);d.life.boat.mast=0;d.weather.raining='false';assert.throws(()=>validateSave(d),/raining/);d.weather.raining=false;d.buildings[0].born=2;assert.throws(()=>validateSave(d),/born/);});
+test('合法活動的參與者引用、文人列舉與 cargo 位置',()=>{const d=fixture();d.literati.collected=[{author:'alien',time:0,venue:'x'}];assert.throws(()=>validateSave(d),/author/);d.literati.collected=[];d.economy.lots[0].at='porter:9999';assert.throws(()=>validateSave(d),/at/);});

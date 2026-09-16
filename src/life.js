@@ -91,10 +91,14 @@ function tickVisitors(t,dt){
   if(a.phase==='home'){a.visible=false;a.phase=day?'choose':'night';a.wait=10+a.id%6;continue;}
   if(a.phase==='choose'){
    if(!day)continue;a.visible=true;const shop=shops.length?shops[a.id%shops.length]:null;
-   const target=shop?shop.entrance:MARKET;a.target=shop?.id||null;send(t,a,target,shop?`趕集，前往${shop.name}`:'前往橋頭市集');a.phase='browse';
+   const target=shop?shop.entrance:MARKET;a.target=shop?.id||null;if(send(t,a,target,shop?`趕集，前往${shop.name}`:'前往橋頭市集'))a.phase='browse';
   }else if(a.phase==='browse'){
+   const shop=t.building(a.target);
+   if(a.target&&(!shop||shop.type!=='shop'||shop.stage<3)){a.phase='choose';continue;}
+   const target=shop?shop.entrance:MARKET;
+   if(Math.hypot(a.x-target[0],a.z-target[1])>.02){send(t,a,target,shop?`趕集，前往${shop.name}`:'前往橋頭市集');continue;}
    a.action=a.kind==='peddler'?'放下擔子，與店家談買賣':'在攤前看貨、喝茶';a.wait=7+a.id%5;a.phase='watch';
-   const shop=t.building(a.target);if(shop?.stock>0){l.dock.sold+=transfer(t,`shop:${shop.id}`,'sold',1);}
+   if(shop?.stock>0){l.dock.sold+=transfer(t,`shop:${shop.id}`,'sold',1);}
   }else if(a.phase==='stall'){
    const stall=marketStalls(t).find(s=>s.id===a.stall);if(stall&&marketOpen(t)&&Math.hypot(a.x-stall.x,a.z-stall.z)>.2){if(send(t,a,[stall.x,stall.z],`前往${stall.name}看貨`))continue;}if(stall&&marketOpen(t)&&Math.hypot(a.x-stall.x,a.z-stall.z)<=.2){a.action=`在${stall.name}選購${stall.goods}`;a.wait=6;t.market.trades++;}a.phase='bridge';
   }else if(a.phase==='watch'){

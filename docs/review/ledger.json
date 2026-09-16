@@ -341,10 +341,16 @@
       "acceptance": [
         "隔離城門與店鋪後推進訪客兩輪，sold 不增加；接通並實際抵達後才成交。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/life.js",
+        "src/production.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md"
+      ],
+      "verifiedBy": "root: focused behavior assertions; independent final review pending",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -1744,9 +1750,18 @@
       "acceptance": [
         "放入非 JSON 後啟動、等待兩次自動儲存及離頁；原字串仍存在，能下載救援。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
+      "status": "implemented",
+      "implementation": [
+        "src/save-schema.js",
+        "src/save-store.js",
+        "src/save-ui.js",
+        "src/simulation.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md"
+      ],
       "verifiedBy": null,
       "reviewSource": "docs/review/engineering.json"
     },
@@ -1767,9 +1782,18 @@
       "acceptance": [
         "主檔損壞或遷移失敗，可還原上一個有效版本；不得以壞主檔污染備份。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
+      "status": "implemented",
+      "implementation": [
+        "src/save-schema.js",
+        "src/save-store.js",
+        "src/save-ui.js",
+        "src/simulation.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md"
+      ],
       "verifiedBy": null,
       "reviewSource": "docs/review/engineering.json"
     },
@@ -1790,9 +1814,18 @@
       "acceptance": [
         "匯出再匯入保留建築、貨物與人物；錯格式及未支援版本回報原因且保持原城。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
+      "status": "implemented",
+      "implementation": [
+        "src/save-schema.js",
+        "src/save-store.js",
+        "src/save-ui.js",
+        "src/simulation.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md"
+      ],
       "verifiedBy": null,
       "reviewSource": "docs/review/engineering.json"
     },
@@ -1813,9 +1846,19 @@
       "acceptance": [
         "兩分頁各編輯一次，後存或關閉舊分頁不得默默覆蓋新版；使用者可保留兩版。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
+      "status": "implemented",
+      "implementation": [
+        "src/save-schema.js",
+        "src/save-store.js",
+        "src/save-ui.js",
+        "src/simulation.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md",
+        "evidence/r1/cross-tab.txt"
+      ],
       "verifiedBy": null,
       "reviewSource": "docs/review/engineering.json"
     },
@@ -1836,10 +1879,19 @@
       "acceptance": [
         "輸入 tick、rebuildRoads、__proto__ 等欄位不能改變 Town prototype 或方法；不接受任意實例欄位。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/save-schema.js",
+        "src/save-store.js",
+        "src/save-ui.js",
+        "src/simulation.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md"
+      ],
+      "verifiedBy": "root: focused behavior assertions; independent final review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -1859,10 +1911,19 @@
       "acceptance": [
         "weather、life、economy、stories、literati 缺欄、錯型別與未知狀態均有定位錯誤，不進 frame。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/save-schema.js",
+        "src/save-store.js",
+        "src/save-ui.js",
+        "src/simulation.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md"
+      ],
+      "verifiedBy": "root: focused behavior assertions; independent final review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -1882,9 +1943,18 @@
       "acceptance": [
         "重複 ID 被拒絕；低 nextId 修復或拒絕；連續新增100筆不產生重複 ID。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
+      "status": "implemented",
+      "implementation": [
+        "src/save-schema.js",
+        "src/save-store.js",
+        "src/save-ui.js",
+        "src/simulation.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md"
+      ],
       "verifiedBy": null,
       "reviewSource": "docs/review/engineering.json"
     },
@@ -1905,10 +1975,19 @@
       "acceptance": [
         "超界、重疊、孤立 blockId、錯 footprint 均拒絕；合法四格中心半整數座標可還原。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/save-schema.js",
+        "src/save-store.js",
+        "src/save-ui.js",
+        "src/simulation.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md"
+      ],
+      "verifiedBy": "root: focused behavior assertions; independent final review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -1928,10 +2007,19 @@
       "acceptance": [
         "負時間、負速度、非有限數及 variant=999 不可進模擬；合法零值不誤判。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/save-schema.js",
+        "src/save-store.js",
+        "src/save-ui.js",
+        "src/simulation.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md"
+      ],
+      "verifiedBy": "root: focused behavior assertions; independent final review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -1951,10 +2039,19 @@
       "acceptance": [
         "超大 people、route 或舊版 cargo=1e9 在有界時間拒絕；主執行緒不長時間卡住。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/save-schema.js",
+        "src/save-store.js",
+        "src/save-ui.js",
+        "src/simulation.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md"
+      ],
+      "verifiedBy": "root: focused behavior assertions; independent final review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -1974,9 +2071,18 @@
       "acceptance": [
         "restore 後模擬、改名、轉移貨物均不修改輸入 JSON 物件，包含巢狀 trail。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
+      "status": "implemented",
+      "implementation": [
+        "src/save-schema.js",
+        "src/save-store.js",
+        "src/save-ui.js",
+        "src/simulation.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md"
+      ],
       "verifiedBy": null,
       "reviewSource": "docs/review/engineering.json"
     },
@@ -1997,10 +2103,19 @@
       "acceptance": [
         "存讀循環不改變路線、位置與目標；下一固定步與未讀檔分支得到相同狀態。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/save-schema.js",
+        "src/save-store.js",
+        "src/save-ui.js",
+        "src/simulation.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md"
+      ],
+      "verifiedBy": "root: focused behavior assertions; independent final review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -2043,10 +2158,19 @@
       "acceptance": [
         "NaN/Infinity/負dt不改任何狀態；超大dt安全拒絕或有界處理。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/save-schema.js",
+        "src/save-store.js",
+        "src/save-ui.js",
+        "src/simulation.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md"
+      ],
+      "verifiedBy": "root: focused behavior assertions; independent final review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -2089,9 +2213,19 @@
       "acceptance": [
         "重置、重新整理後可完整還原原城；建立新城也不立即銷毀唯一復原副本。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
+      "status": "implemented",
+      "implementation": [
+        "src/save-schema.js",
+        "src/save-store.js",
+        "src/save-ui.js",
+        "src/simulation.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md",
+        "evidence/r1/reset-restored.txt"
+      ],
       "verifiedBy": null,
       "reviewSource": "docs/review/engineering.json"
     },
@@ -2250,10 +2384,16 @@
       "acceptance": [
         "同一批貨轉移10000次後存檔大小有界，來源與最近位置仍可追溯，貨物守恆不變。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/life.js",
+        "src/production.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md"
+      ],
+      "verifiedBy": "root: focused behavior assertions; independent final review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -2273,10 +2413,16 @@
       "acceptance": [
         "95件庫存再進貨不超96；96件不再進；imported等於現存與歸檔總和。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/life.js",
+        "src/production.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md"
+      ],
+      "verifiedBy": "root: focused behavior assertions; independent final review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -2296,9 +2442,18 @@
       "acceptance": [
         "惡意market.trades與lot.id被驗證拒絕；渲染防線亦不產生img/script/事件屬性；合法資料顯示正常。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
+      "status": "in_progress",
+      "implementation": [
+        "src/save-schema.js",
+        "src/save-store.js",
+        "src/save-ui.js",
+        "src/simulation.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "evidence/r1/tests.txt",
+        "evidence/r1/README.md"
+      ],
       "verifiedBy": null,
       "reviewSource": "docs/review/engineering.json"
     }
