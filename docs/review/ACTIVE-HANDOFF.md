@@ -1,54 +1,36 @@
-# 城市經營重整 — R1 整合檢查點
+# 城市經營重整 — 下一階段交接
 
-完整目標仍 active：四專家 100 項評量後全數修正、複評、部署。本次只有 R1，不可宣稱全目標完成。
+## 完整目標
+以模擬城市2000為參照，四位 AI 專家（含八角遊戲化）評量100項，全部修正、逐項驗收、四領域複評、部署及正式讀回。目標 active；不得把本里程碑當全部完成。
 
-## 已實作並推送
-- 存檔 schema 白名單、尺寸與參照驗證；42 項聚焦測試。
-- 存檔備份、重置復原點、匯入預覽、損壞隔離及跨分頁衝突 UI。
-- 保留有效行走路線；限制非法 tick；舊版物流目的地遷移修正。
-- 遊客實際到店才成交；貨物軌跡上限 32、未加工貨物上限 96。
-- 重置先成功寫入新存檔，再替換畫面中的小鎮；失敗保留原小鎮。
-- 新增 tests/save-harness.html，僅操作隔離的 bianshui-town-test-v1。
+## 權威檔案
+- ledger.json / LEDGER.md：18 verified、5 implemented（E01/E02/E03/E04/E21）、77 open。
+- IMPLEMENTATION-CONTRACT.md：仍保留財政/需求/就業/物流/服務/文化/遊戲化/UX 全範圍。
+- city / octalysis / ux / engineering 評量檔：四位 AI 已完成，不是四位真人；不要重用舊評量代理做工程。
 
-## 驗證
-- 上次整合 npm test：109/109。修正後完整重跑仍為 109/109。
-- npm run build 成功，既有單包大於 500 kB 警告。
-- Chrome 隔離存檔復原、重置後重載還原、跨分頁衝突已實測，見 evidence/r1。
-- ledger：10 verified / 7 implemented / 1 in_progress / 82 open；未完成契約保留待補驗。
+## 已完成里程碑
+- V10 誇張五級建築與重置鍵已在正式站，source 6e121e3。
+- R1 aa59cf4：schema、存檔復原/隔離/跨頁、真實到店成交、貨物上限與有限歷程。evidence/r1。
+- 固定步進 9e1fe9f：30/60/120Hz、等量1×/4×狀態一致；背景取消畫面。evidence/runtime。
+- 執行錯誤 7c36141：每秒安全快照、例外停止、不覆寫、匯出/讀回。evidence/recovery。
+- 顯示防線 883c0fc：HTML 跳脫、E07/E11/E16 完整資料驗收。evidence/content-safety。
+- 本輪：town-edit.js 草稿交易、main 編輯全接線、復原時間確認；E15/E17 verified。evidence/town-edit。全套138/138，build成功。
 
-## 目前狀態與風險
-- R1 提交 aa59cf4 已推送 GitHub main；正式站仍為 V10。
-- 誇張五級外觀及重置鍵已在 6e121e3 上線，不需重做。
-- r1_save_schema / r1_logistics 已完成有界工作；下一包使用新工作階段。
-- 固定時間步進、GPU 資源、整體城市財政服務與遊戲化均未完成。
-- 每次載入使用獨立 UUID；分頁備份清理介面待規劃。
-- 所有 100 項 verified 才做本次重整的最終部署。
+## 本輪實作注意
+- editTown 先 clone→edit→validate→prepare→persist，成功才發布draft；prepare失敗原城不改，scene reset後重繪原城。
+- main applyUrban 回傳原edit結果（place為block、其他布林），同步新的recovery point，保留undo snapshot。
+- undo按鈕先顯示整城回捲契約與時間，確認後才復原。
+- DEV query edit-fault=refresh 限 fixture/storage-test，正式dist無注入文字。
+- Chrome 已驗新建5→6、確認復原6→5及故障維持5並提示。測試分頁皆已關閉。
 
 ## 下一個有界階段
-先完成 evidence/r1/README.md 所列 R1 餘下驗收與 E25 渲染防線；再處理 E13 固定步進。不要直接展開全部城市系統。正式站 Chrome 本輪可開啟且有重置鍵；CLI 直讀回應 403，未用它判定網站故障。
+1. 補 E01–E04 實際存檔UI驗收：損壞兩次autosave及離頁、遷移失敗backup、匯出再匯入、兩頁各編輯與離頁。
+2. E21 實際 AudioContext 靜音待補（已有背景渲染0/資料不變）。
+3. E18/E19/E20 GPU釋放、WebGL復原、局部場景更新；之後進C-A財政/供需/就業，不可一直只做小UI。
+4. 按剩餘城市、八角、UX契約繼續，最後用新的四領域評量工作階段複評。
 
-## 固定步進里程碑（2026-09-16）
-- src/runtime.js / tests/runtime.test.js / tests/runtime-harness.html 已新增，main.js 改由 runtime 驅動畫面。
-- E13 verified：30/60/120 Hz 及等量 1×/4× 的全城 JSON 一致。
-- E21 implemented：背景取消排程、靜音 callback、回前景不補跑；Chrome 切頁實測渲染 0、資料不變。實際 AudioContext 靜音待補驗。
-- 最新全套 112/112，build 成功，證據 evidence/runtime。
-- 最新 ledger 為 11 verified / 8 implemented / 1 in_progress / 80 open。
-- CUA CDP 讀取遊戲曾 timeout 兩次，改原生 Chrome AX 成功；測試已關閉、焦點模擬已還原。不因此標任務 blocked。
-- 下一階段：R1 剩餘驗收、E25 渲染防線、E22 執行錯誤復原；尚未動城市財政與服務。
-
-## E22 錯誤復原里程碑（2026-09-16）
-- 前一輪分類 progress：9e1fe9f 已推送固定步進；本輪新增 RecoveryPoint / recovery-ui，runtime 例外停止，main save 阻擋故障後寫入。
-- 每秒安全快照；故障顯示不可取消面板，可匯出／寫回安全快照後重新載入。更換 town 時重建 recovery。
-- DEV 限定 ?runtime-fault=tick|render 配合 fixture=v8 或 storage-test=1；正式 dist 無注入文字。
-- Chrome 已實際注入兩種錯誤、匯出實檔驗證與復原 26/26 隔離城；evidence/recovery。
-- 全套 115/115，build 通過；E22 verified。最新 12 verified / 8 implemented / 1 in_progress / 79 open。
-- 下一個有界階段優先 E25 渲染防線與 R1 餘下存檔驗收；之後 E17/E18/E19/E20，城市財政、服務、八角與 UX 仍保留完整契約。
-- 本次未部署，目標 active，不可完成結案。測試分頁已關閉。
-
-## 存檔顯示與契約補驗（2026-09-16）
-- content-html.js：lotButton/lotIdentity/lotFocusButton/stallDetails/stallListItem 使用統一 escapeHTML，main.js 直接使用，非測試替身。
-- Chrome content-harness 實際 DOM 無 img/script/事件屬性，惡意原文以純文字顯示，合法 #12 布匹正常。
-- tests/save-contracts.test.js 補 E07 新增 100 棟後 ID 唯一、E11 模擬/改名/轉貨不改原快照、E16 reset 後 reload + 新城 autosave 完整復原。
-- E07/E11/E16/E25 現在 verified；全套 120/120，build 通過。證據 evidence/content-safety。
-- 最新 ledger：16 verified / 5 implemented / 79 open。測試頁已關閉。
-- 下一個有界階段可集中 E01–E04 真實存檔 UI 補驗，或 E17 編輯交易；勿重跑已完成的全畫風與五級升級。
+## 狀態及規則
+- 專案 /Users/naichengchen/projects/bianshui-town，main，GitHub hk6429/bianshui-town；Cloudflare手動發布，尚未部署本次重整。
+- 正式 https://bianshui-town.pages.dev/；本機127.0.0.1:5173。隔離鍵 bianshui-town-test-v1，勿改正式使用者城鎮。
+- CUA瀏覽器若CDP timeout，可讀原生Chrome AX；不要重開測試。前背景測試要暫時關測試頁focus emulation，結束還原。
+- 每里程碑記錄證據並建立新工作階段；此輪為progress，不需blocked或complete。

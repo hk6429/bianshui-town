@@ -1,0 +1,12 @@
+Browser tab: 610003941, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v8&edit-fault=refresh".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 54-59, 61
++			61 text ☀
++			62 text 巳時 · 日光正好
++			63 text 第 1 日　10:22
++			64 text 8
++			65 text 5
++			66 text 5
++		67 text 操作未完成，原小鎮與進度仍保留。
++			68 text 操作未完成，原小鎮與進度仍保留。
+The focused UI element is 0 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v8&edit-fault=refresh

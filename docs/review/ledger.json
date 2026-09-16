@@ -2203,10 +2203,19 @@
       "acceptance": [
         "搬移後運行60秒再復原，依介面明示契約保留模擬進度，或明確告知整城回到何時。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/town-edit.js",
+        "src/main.js",
+        "index.html"
+      ],
+      "evidence": [
+        "tests/town-edit.test.js",
+        "evidence/town-edit/README.md",
+        "evidence/town-edit/tests.txt",
+        "evidence/town-edit/undo-confirm.txt"
+      ],
+      "verifiedBy": "root: real town failure injection and browser UI; independent final review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -2262,10 +2271,19 @@
       "acceptance": [
         "在refresh注入例外，地塊/居民/貨物/存檔皆與編輯前相同；顯示可理解錯誤。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/town-edit.js",
+        "src/main.js",
+        "index.html"
+      ],
+      "evidence": [
+        "tests/town-edit.test.js",
+        "evidence/town-edit/README.md",
+        "evidence/town-edit/tests.txt",
+        "evidence/town-edit/failed-edit.txt"
+      ],
+      "verifiedBy": "root: real town failure injection and browser UI; independent final review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
