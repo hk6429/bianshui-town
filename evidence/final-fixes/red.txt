@@ -1,0 +1,109 @@
+✔ resident at staffed shop buys one available item, records needs and cannot repeat in same tick (9.383833ms)
+✔ no remote, off-hours, self-purchase, empty-stock or unattended sales (11.34575ms)
+✔ visitor obeys the same staffing rule; arrivals reopen and departures close the shop (1.797083ms)
+✖ sandbox residents do not consume stock or gain new needs state (2.206083ms)
+✔ nearest reachable job wins over earlier building order; reasonable existing job remains (9.546084ms)
+✔ isolated vacancies remain empty; reconnecting fills jobs; lost work receives a grace period (12.08125ms)
+✔ four present craftspeople produce more than one; no workers consume no inputs (9.857208ms)
+✖ sandbox retains full production with one present worker (4.949916ms)
+✔ repeated observations cannot farm familiarity; different daily activities and one completed commission contribute once (4.028ms)
+✔ no idle or offline decay and no automatic world observation; saved relationship round-trips (5.88675ms)
+✔ watch two IDs independently, remove one, retain history and never redirect a departed resident to someone else (1.511709ms)
+✖ activity categories depend on actual state, and merely gathering for a story does not count as hearing it (1.50175ms)
+✔ failed persistence leaves observations and watch flags untouched; names and actions are escaped (1.275875ms)
+✔ save bounds reject duplicate IDs, repeated categories, future observations and more than 16 watched people (3.414709ms)
+✖ active storytelling only credits residents who actually arrived (48.35275ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 11
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 139.47575
+
+✖ failing tests:
+
+test at tests/commerce.test.js:12:1
+✖ sandbox residents do not consume stock or gain new needs state (2.206083ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/commerce.test.js:12:151)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/employment.test.js:12:1
+✖ sandbox retains full production with one present worker (4.949916ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 3
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/employment.test.js:12:76)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/resident-relationships.test.js:21:1
+✖ activity categories depend on actual state, and merely gathering for a story does not count as hearing it (1.50175ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'story' !== 'travel'
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/resident-relationships.test.js:22:216)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'story',
+    expected: 'travel',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/resident-relationships.test.js:33:1
+✖ active storytelling only credits residents who actually arrived (48.35275ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(!residentRecord(t,b.id).seen.includes('story'))
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/resident-relationships.test.js:38:56)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

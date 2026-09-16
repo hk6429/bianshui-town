@@ -1,6 +1,7 @@
 import '../src/resident-relationships-ui.js';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
+import {tickStories} from '../src/stories.js';
 import {Town} from '../src/simulation.js';
 import {validateSave} from '../src/save-schema.js';
 import {commitJourney} from '../src/journey.js';
@@ -18,7 +19,7 @@ test('watch two IDs independently, remove one, retain history and never redirect
  t.people=t.people.filter(p=>p.id!==b.id);assert.equal(watchedResident(t,b.id),null);assert.match(residentWatchHTML(t),/已離鎮/);assert.match(residentWatchHTML(t),/最近已知行程/);assert.match(residentWatchHTML(t),/disabled/);assert.doesNotThrow(()=>validateSave(t.toJSON()));assert(watchResident(t,b.id,false));assert.equal(residentRecord(t,b.id).watched,false);
 });
 test('activity categories depend on actual state, and merely gathering for a story does not count as hearing it',()=>{
- const t=town(),p=t.people[0];p.outside=true;p.route=[[0,0]];t.stories.active={phase:'gathering',type:'story',participants:[p.id]};assert.equal(residentActivity(t,p),'travel');t.stories.active.phase='active';assert.equal(residentActivity(t,p),'story');t.stories.active=null;p.shelter=p.home;assert.equal(residentActivity(t,p),'rain');p.shelter=null;p.socialUntil=t.elapsed+4;assert.equal(residentActivity(t,p),'social');
+ const t=town(),p=t.people[0];p.outside=true;p.route=[[0,0]];t.stories.active={phase:'gathering',type:'story',participants:[p.id]};assert.equal(residentActivity(t,p),'travel');t.stories.active.phase='active';assert.equal(residentActivity(t,p),'travel');p.eventSlot=[p.x,p.z];assert.equal(residentActivity(t,p),'story');t.stories.active=null;p.shelter=p.home;assert.equal(residentActivity(t,p),'rain');p.shelter=null;p.socialUntil=t.elapsed+4;assert.equal(residentActivity(t,p),'social');
 });
 test('failed persistence leaves observations and watch flags untouched; names and actions are escaped',()=>{
  const t=town(),p=t.people[0],before=structuredClone(t.toJSON());assert.equal(commitJourney(t,d=>observeResident(d,p.id),()=>({ok:false})),false);assert.deepEqual(t.toJSON(),before);assert.equal(commitJourney(t,d=>watchResident(d,p.id,true),()=>({ok:false})),false);assert.deepEqual(t.toJSON(),before);
@@ -27,4 +28,13 @@ test('failed persistence leaves observations and watch flags untouched; names an
 test('save bounds reject duplicate IDs, repeated categories, future observations and more than 16 watched people',()=>{
  const t=town();observeResident(t,t.people[0].id);const d=t.toJSON(),r=t.journey.residents[0];for(const residents of [[r,r],[{...r,seen:['home','home']}],[{...r,lastAt:999}],Array.from({length:17},(_,i)=>({...r,resident:100+i,watched:true}))])assert.throws(()=>validateSave({...d,journey:{...d.journey,residents}}));
  const legacy=structuredClone(d);delete legacy.journey.residents;assert.doesNotThrow(()=>Town.restore(legacy));
+});
+
+test('active storytelling only credits residents who actually arrived',()=>{
+ const t=new Town();t.demo();t.time=12;t.weather.raining=false;t.elapsed=t.stories.nextAt;t.stories.sequence=0;tickStories(t);
+ const e=t.stories.active;assert(e);e.type='story';const [a,b]=e.participants.map(id=>t.people.find(p=>p.id===id));assert(a&&b);
+ [a.x,a.z]=a.eventSlot;a.route=[];b.x=b.eventSlot[0]+5;b.z=b.eventSlot[1];b.route=[[...b.eventSlot]];
+ t.elapsed=e.deadline;tickStories(t);assert.equal(e.phase,'active');observeResident(t,a.id);observeResident(t,b.id);
+ assert(residentRecord(t,a.id).seen.includes('story'));assert(!residentRecord(t,b.id).seen.includes('story'));assert(residentRecord(t,b.id).seen.includes('travel'));
+ [b.x,b.z]=b.eventSlot;b.route=[];observeResident(t,b.id);assert(residentRecord(t,b.id).seen.includes('story'));
 });

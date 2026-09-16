@@ -449,3 +449,10 @@
 - E21已有background renders0與城市不變，待真正Soundscape音訊gain。舊evidence/runtime/README記CUA focus emulation需用該測試頁CDP暫時關閉且恢復，已有原契約證據。
 - 已關閉本輪測試分頁；目前Chrome browser id2，historyBrowser binding可用。
 - 本輪只有測試/證據，無須再部署未改的production；下一輪補其餘3項後四專家最終複評。
+
+## E04/E21完成，三位領域專家最終複評進行中
+- 最新HEAD4f47c4a、production8758181。E04真正兩分頁A民居/B工坊保留、關閉B主檔不變；E21真正AudioContext背景26.9sec增frame0、gain0、城市不變、回前景dt0，見evidence/peer-background。帳本99verified/1implemented(E03)。
+- E03有進展：新獨立main tab匯出成功，Downloads/汴水小鎮.json 80964bytes。chooser.setFiles被Not allowed擋，需要Chrome extension允許存取fileURLs，已request_user_input_async請使用者開設定。不得自行擴權或繞過chrome://downloads URL禁止。native fallback未看到相關選檔視窗，未操作使用者其他頁。
+- CUA一次kernel reset，現在selected browser1。currentBrowser為cua wrapper，browserHandle=agent.browsers.get1，exportTab(cua)與exportWeb(browser)是id610004712，URL/?storage-test=1，存檔管理開啟，等待filechooser匯入。舊peerA610004701可能仍在，音訊頁已關。
+- 已派fresh fork none子代理 final_city_review、final_ux_review、final_octalysis_review，各擁有docs/review/final-{domain}.md，只核自己25項證據、評分、不改code/ledger、不碰browser。root需收結果修問題。空出slot後派第四位final_engineering_review，範圍E01–E25，注意E03仍待使用者fileURL設定。
+- 尚未完成目標，不可update_goal complete。

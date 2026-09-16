@@ -14,3 +14,9 @@
 
 ## 未變更正式功能
 本輪新增測試與證據，production仍為8758181。E04兩實際分頁各編輯及舊頁離開、E21真實音訊前背景仍待補驗。
+
+## 最終磁碟匯出補證
+
+真實獨立遊戲介面下載的城市JSON為80964bytes。disk-export.json記錄SHA256及以正式SaveStore.decode、validateSave、Town.restore還原後建築／人物／貨物精確一致。先前直接把帶封裝的JSON交validateSave會拒絕format欄位；改以正式匯入路徑SaveStore.decode解封裝後通過，未修改驗證器。
+
+File/DataTransfer真實onchange流程已覆蓋原E03匯出再匯入契約；原生檔案選擇器仍受Chrome擴充套件fileURL權限限制，未完成跨裝置真人操作。依工程專家評量，不將額外操作限制等同原資料契約失敗。

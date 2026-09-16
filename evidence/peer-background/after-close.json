@@ -1,0 +1,39 @@
+{
+  "owner": "A",
+  "result": "檢查離頁後主檔",
+  "blocked": null,
+  "local": {
+    "buildings": [
+      "home"
+    ],
+    "people": 0,
+    "lots": 12
+  },
+  "versions": [
+    {
+      "id": "current",
+      "buildings": [
+        "home"
+      ],
+      "people": 0,
+      "lots": 12
+    },
+    {
+      "id": "branch:B",
+      "buildings": [
+        "work"
+      ],
+      "people": 0,
+      "lots": 12
+    },
+    {
+      "id": "branch:A",
+      "buildings": [
+        "home"
+      ],
+      "people": 0,
+      "lots": 12
+    }
+  ],
+  "sharedUnchanged": true
+}

@@ -33,9 +33,10 @@
         "tests/city-finance.test.js",
         "evidence/city-finance/tests.txt",
         "evidence/city-finance/README.md",
-        "evidence/city-finance/browser-budget.txt"
+        "evidence/city-finance/browser-budget.txt",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "root: finance execution tests and real browser debit; final independent review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -69,9 +70,10 @@
         "tests/city-finance.test.js",
         "evidence/city-finance/tests.txt",
         "evidence/city-finance/README.md",
-        "evidence/city-finance/browser-budget.txt"
+        "evidence/city-finance/browser-budget.txt",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "root: finance execution tests and real browser debit; final independent review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -115,9 +117,10 @@
         "evidence/city-growth/tests.txt",
         "evidence/city-growth/tax20.txt",
         "evidence/city-growth/population-after.txt",
-        "evidence/city-growth/mobile.png"
+        "evidence/city-growth/mobile.png",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：城市情境測試、Chrome 實際操作與手機面板驗收；最終四領域複評仍待",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -160,9 +163,10 @@
         "evidence/sanitation/tests.txt",
         "evidence/sanitation/debt-stages.txt",
         "evidence/sanitation/debt-recovered.txt",
-        "evidence/sanitation/3d-budget.txt"
+        "evidence/sanitation/3d-budget.txt",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：因果與回歸測試、Chrome逐日模組操作及實際三維讀回；非真人玩家驗收",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -200,9 +204,10 @@
         "evidence/city-growth/tests.txt",
         "evidence/city-growth/tax20.txt",
         "evidence/city-growth/population-after.txt",
-        "evidence/city-growth/mobile.png"
+        "evidence/city-growth/mobile.png",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：城市情境測試、Chrome 實際操作與手機面板驗收；最終四領域複評仍待",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -240,9 +245,10 @@
         "evidence/city-growth/tests.txt",
         "evidence/city-growth/tax20.txt",
         "evidence/city-growth/population-after.txt",
-        "evidence/city-growth/mobile.png"
+        "evidence/city-growth/mobile.png",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：城市情境測試、Chrome 實際操作與手機面板驗收；最終四領域複評仍待",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -280,9 +286,10 @@
         "evidence/city-growth/tests.txt",
         "evidence/city-growth/tax20.txt",
         "evidence/city-growth/population-after.txt",
-        "evidence/city-growth/mobile.png"
+        "evidence/city-growth/mobile.png",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：城市情境測試、Chrome 實際操作與手機面板驗收；最終四領域複評仍待",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -319,9 +326,10 @@
         "evidence/employment/tests.txt",
         "evidence/employment/browser.txt",
         "evidence/employment/browser.png",
-        "evidence/employment/README.md"
+        "evidence/employment/README.md",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：逐項契約測試及 Chrome 隔離模組整合驗收；最終四領域複評尚待完成",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -358,9 +366,13 @@
         "evidence/employment/tests.txt",
         "evidence/employment/browser.txt",
         "evidence/employment/browser.png",
-        "evidence/employment/README.md"
+        "evidence/employment/README.md",
+        "docs/review/final-city.md",
+        "docs/review/final-fixes.md",
+        "evidence/final-fixes/README.md",
+        "evidence/final-fixes/tests.txt"
       ],
-      "verifiedBy": "根代理：逐項契約測試及 Chrome 隔離模組整合驗收；最終四領域複評尚待完成",
+      "verifiedBy": "四專家最終複評發現邊界問題，根代理修正並由獨立有界代理複核通過",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -397,9 +409,13 @@
         "evidence/employment/tests.txt",
         "evidence/employment/browser.txt",
         "evidence/employment/browser.png",
-        "evidence/employment/README.md"
+        "evidence/employment/README.md",
+        "docs/review/final-city.md",
+        "docs/review/final-fixes.md",
+        "evidence/final-fixes/README.md",
+        "evidence/final-fixes/tests.txt"
       ],
-      "verifiedBy": "根代理：逐項契約測試及 Chrome 隔離模組整合驗收；最終四領域複評尚待完成",
+      "verifiedBy": "四專家最終複評發現邊界問題，根代理修正並由獨立有界代理複核通過",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -437,9 +453,10 @@
         "evidence/trade-logistics/tests.txt",
         "evidence/trade-logistics/browser.txt",
         "evidence/trade-logistics/reload.txt",
-        "evidence/trade-logistics/level3.png"
+        "evidence/trade-logistics/level3.png",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：價格分帳／實際運輸情境及 Chrome 升級讀回驗收；最終四領域複評尚待",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -477,9 +494,10 @@
         "evidence/trade-logistics/tests.txt",
         "evidence/trade-logistics/browser.txt",
         "evidence/trade-logistics/reload.txt",
-        "evidence/trade-logistics/level3.png"
+        "evidence/trade-logistics/level3.png",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：價格分帳／實際運輸情境及 Chrome 升級讀回驗收；最終四領域複評尚待",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -521,9 +539,10 @@
         "evidence/road-network/final-focused.txt",
         "evidence/road-network/3d-isolated.txt",
         "evidence/road-network/3d-reconnected.txt",
-        "evidence/road-network/reconnected.txt"
+        "evidence/road-network/reconnected.txt",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：路網/交通/貨運回歸、Chrome 模組與三維實際拆路重鋪驗收；最終四領域複評尚待",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -565,9 +584,10 @@
         "evidence/road-network/final-focused.txt",
         "evidence/road-network/3d-isolated.txt",
         "evidence/road-network/3d-reconnected.txt",
-        "evidence/road-network/reconnected.txt"
+        "evidence/road-network/reconnected.txt",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：路網/交通/貨運回歸、Chrome 模組與三維實際拆路重鋪驗收；最終四領域複評尚待",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -594,9 +614,10 @@
       ],
       "evidence": [
         "evidence/r1/tests.txt",
-        "evidence/r1/README.md"
+        "evidence/r1/README.md",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "root: focused behavior assertions; independent final review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -633,9 +654,10 @@
         "evidence/employment/tests.txt",
         "evidence/employment/browser.txt",
         "evidence/employment/browser.png",
-        "evidence/employment/README.md"
+        "evidence/employment/README.md",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：逐項契約測試及 Chrome 隔離模組整合驗收；最終四領域複評尚待完成",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -673,9 +695,10 @@
         "evidence/water-service/tests.txt",
         "evidence/water-service/3d-home.txt",
         "evidence/water-service/3d-upgraded.txt",
-        "evidence/water-service/3d-construction.txt"
+        "evidence/water-service/3d-construction.txt",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：供水因果測試、181項回歸及 Chrome 實際三維操作（非真人玩家驗收）",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -718,9 +741,10 @@
         "evidence/sanitation/tests.txt",
         "evidence/sanitation/debt-stages.txt",
         "evidence/sanitation/debt-recovered.txt",
-        "evidence/sanitation/3d-budget.txt"
+        "evidence/sanitation/3d-budget.txt",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：因果與回歸測試、Chrome逐日模組操作及實際三維讀回；非真人玩家驗收",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -764,9 +788,10 @@
         "evidence/fire-service/3d-warning.txt",
         "evidence/fire-service/3d-prevented.txt",
         "evidence/fire-service/3d-damaged.txt",
-        "evidence/fire-service/3d-repaired.txt"
+        "evidence/fire-service/3d-repaired.txt",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：8項防火因果測試、197項回歸、Chrome模組對照與實際三維預警/處置/修復；非真人玩家驗收",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -805,9 +830,10 @@
         "evidence/healthcare/no-staff.txt",
         "evidence/healthcare/3d-clinic.txt",
         "evidence/healthcare/3d-returned.txt",
-        "evidence/healthcare/3d-threshold.txt"
+        "evidence/healthcare/3d-threshold.txt",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：醫療/病假因果測試、204項回歸、Chrome實際三維照護與返工日誌讀回；非真人玩家驗收",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -844,9 +870,10 @@
         "evidence/education/progression.txt",
         "evidence/education/production.txt",
         "evidence/education/3d-academy.txt",
-        "evidence/education/3d-after.txt"
+        "evidence/education/3d-after.txt",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：教育/產能因果測試、210項回歸、Chrome三維書院與居民學力增長讀回；非真人玩家驗收",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -883,9 +910,10 @@
         "evidence/pollution/active.txt",
         "evidence/pollution/stopped.txt",
         "evidence/pollution/3d-demolished.txt",
-        "evidence/pollution/3d-recovery.txt"
+        "evidence/pollution/3d-recovery.txt",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：污染距離/產量/停工/需求因果測試、217項回歸、Chrome三維拆除後環境恢復；非真人玩家驗收",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -919,9 +947,10 @@
         "evidence/gardens/isolated.txt",
         "evidence/gardens/first.txt",
         "evidence/gardens/stacked.txt",
-        "evidence/gardens/3d-upgraded.txt"
+        "evidence/gardens/3d-upgraded.txt",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：園景距離/遞減/需求/安置因果測試、222項回歸、Chrome三維實際升級與住宅效益讀回；非真人玩家驗收",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -970,9 +999,10 @@
         "evidence/tier-functions/home-after.txt",
         "evidence/tier-functions/home-five.txt",
         "evidence/tier-functions/work-after.txt",
-        "evidence/tier-functions/shop-after.txt"
+        "evidence/tier-functions/shop-after.txt",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "根代理：全圖錄一至五級能力/報價/封頂、229項回歸、Chrome相同人力產銷與真三維升級扣款驗證；非真人玩家驗收",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -1012,9 +1042,10 @@
         "evidence/wellbeing/README.md",
         "evidence/wellbeing/3d-person.txt",
         "evidence/wellbeing/3d-summary.txt",
-        "evidence/wellbeing/improved.txt"
+        "evidence/wellbeing/improved.txt",
+        "docs/review/final-city.md"
       ],
-      "verifiedBy": "root：固定情境因果測試、235項回歸及Chrome真三維分項/總覽查核",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-city.md",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -1051,9 +1082,10 @@
         "evidence/journey-foundation/regression.txt",
         "evidence/journey-foundation/build.txt",
         "evidence/journey-foundation/browser.txt",
-        "evidence/journey-foundation/mode-off.txt"
+        "evidence/journey-foundation/mode-off.txt",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: real-town simulation tests and native Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1090,9 +1122,10 @@
         "evidence/journey-foundation/regression.txt",
         "evidence/journey-foundation/build.txt",
         "evidence/journey-foundation/browser.txt",
-        "evidence/journey-foundation/mode-off.txt"
+        "evidence/journey-foundation/mode-off.txt",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: real-town simulation tests and native Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1129,9 +1162,10 @@
         "evidence/journey-foundation/regression.txt",
         "evidence/journey-foundation/build.txt",
         "evidence/journey-foundation/browser.txt",
-        "evidence/journey-foundation/mode-off.txt"
+        "evidence/journey-foundation/mode-off.txt",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: real-town simulation tests and native Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1165,9 +1199,10 @@
         "evidence/commissions/build.txt",
         "evidence/commissions/README.md",
         "evidence/commissions/completed.txt",
-        "evidence/commissions/resident-card.txt"
+        "evidence/commissions/resident-card.txt",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: real-town alternative solution tests and Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1201,9 +1236,10 @@
         "evidence/commissions/build.txt",
         "evidence/commissions/README.md",
         "evidence/commissions/completed.txt",
-        "evidence/commissions/resident-card.txt"
+        "evidence/commissions/resident-card.txt",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: real-town alternative solution tests and Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1237,9 +1273,10 @@
         "evidence/commissions/build.txt",
         "evidence/commissions/README.md",
         "evidence/commissions/completed.txt",
-        "evidence/commissions/resident-card.txt"
+        "evidence/commissions/resident-card.txt",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: real-town alternative solution tests and Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1277,9 +1314,10 @@
         "evidence/building-life/blueprints.txt",
         "evidence/building-life/comparison.txt",
         "evidence/building-life/upgrade-gate.txt",
-        "evidence/building-life/README.md"
+        "evidence/building-life/README.md",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: real simulation, transaction tests and Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1317,9 +1355,10 @@
         "evidence/building-life/blueprints.txt",
         "evidence/building-life/comparison.txt",
         "evidence/building-life/upgrade-gate.txt",
-        "evidence/building-life/README.md"
+        "evidence/building-life/README.md",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: real simulation, transaction tests and Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1357,9 +1396,10 @@
         "evidence/building-life/blueprints.txt",
         "evidence/building-life/comparison.txt",
         "evidence/building-life/upgrade-gate.txt",
-        "evidence/building-life/README.md"
+        "evidence/building-life/README.md",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: real simulation, transaction tests and Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1399,9 +1439,10 @@
         "evidence/place-identity/bookmarks.txt",
         "evidence/place-identity/demolished.txt",
         "evidence/place-identity/mobile.png",
-        "evidence/place-identity/README.md"
+        "evidence/place-identity/README.md",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: identity/save/transaction tests and Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1441,9 +1482,10 @@
         "evidence/place-identity/bookmarks.txt",
         "evidence/place-identity/demolished.txt",
         "evidence/place-identity/mobile.png",
-        "evidence/place-identity/README.md"
+        "evidence/place-identity/README.md",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: identity/save/transaction tests and Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1483,9 +1525,10 @@
         "evidence/place-identity/bookmarks.txt",
         "evidence/place-identity/demolished.txt",
         "evidence/place-identity/mobile.png",
-        "evidence/place-identity/README.md"
+        "evidence/place-identity/README.md",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: identity/save/transaction tests and Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1524,9 +1567,10 @@
         "evidence/reading-collection/anthology.txt",
         "evidence/reading-collection/reopened-note.txt",
         "evidence/reading-collection/author-entry.txt",
-        "evidence/reading-collection/README.md"
+        "evidence/reading-collection/README.md",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: real author simulation and collection/schema tests, Chrome reading/pairing/curation UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1565,9 +1609,10 @@
         "evidence/reading-collection/anthology.txt",
         "evidence/reading-collection/reopened-note.txt",
         "evidence/reading-collection/author-entry.txt",
-        "evidence/reading-collection/README.md"
+        "evidence/reading-collection/README.md",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: real author simulation and collection/schema tests, Chrome reading/pairing/curation UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1606,9 +1651,10 @@
         "evidence/reading-collection/anthology.txt",
         "evidence/reading-collection/reopened-note.txt",
         "evidence/reading-collection/author-entry.txt",
-        "evidence/reading-collection/README.md"
+        "evidence/reading-collection/README.md",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: real author simulation and collection/schema tests, Chrome reading/pairing/curation UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1647,9 +1693,10 @@
         "evidence/reading-collection/anthology.txt",
         "evidence/reading-collection/reopened-note.txt",
         "evidence/reading-collection/author-entry.txt",
-        "evidence/reading-collection/README.md"
+        "evidence/reading-collection/README.md",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: real author simulation and collection/schema tests, Chrome reading/pairing/curation UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1687,9 +1734,13 @@
         "evidence/resident-relationships/two-residents.txt",
         "evidence/resident-relationships/follow.txt",
         "evidence/resident-relationships/removed-one.txt",
-        "evidence/resident-relationships/README.md"
+        "evidence/resident-relationships/README.md",
+        "docs/review/final-octalysis.md",
+        "docs/review/final-fixes.md",
+        "evidence/final-fixes/README.md",
+        "evidence/final-fixes/tests.txt"
       ],
-      "verifiedBy": "Codex root: relationship/save tests and Chrome named-resident watch/follow UI, 2026-09-16",
+      "verifiedBy": "四專家最終複評發現邊界問題，根代理修正並由獨立有界代理複核通過",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1727,9 +1778,10 @@
         "evidence/resident-relationships/two-residents.txt",
         "evidence/resident-relationships/follow.txt",
         "evidence/resident-relationships/removed-one.txt",
-        "evidence/resident-relationships/README.md"
+        "evidence/resident-relationships/README.md",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: relationship/save tests and Chrome named-resident watch/follow UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1767,9 +1819,10 @@
         "evidence/journey-summary/tests.txt",
         "evidence/journey-summary/recap.txt",
         "evidence/journey-summary/paused.txt",
-        "evidence/journey-summary/council-complete.txt"
+        "evidence/journey-summary/council-complete.txt",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "根代理：聚焦測試與Chrome完整操作",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1809,9 +1862,10 @@
         "evidence/story-history/exploration-after-visit.txt",
         "evidence/story-history/past-events.txt",
         "evidence/story-history/revisit.txt",
-        "evidence/story-history/past-events.png"
+        "evidence/story-history/past-events.png",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "根代理：實際模擬測試、Chrome 操作與畫面證據",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1846,9 +1900,10 @@
         "evidence/story-history/exploration-after-visit.txt",
         "evidence/story-history/past-events.txt",
         "evidence/story-history/revisit.txt",
-        "evidence/story-history/past-events.png"
+        "evidence/story-history/past-events.png",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "根代理：實際模擬測試、Chrome 操作與畫面證據",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1883,9 +1938,10 @@
         "evidence/story-history/exploration-after-visit.txt",
         "evidence/story-history/past-events.txt",
         "evidence/story-history/revisit.txt",
-        "evidence/story-history/past-events.png"
+        "evidence/story-history/past-events.png",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "根代理：實際模擬測試、Chrome 操作與畫面證據",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1922,9 +1978,10 @@
         "evidence/journey-foundation/regression.txt",
         "evidence/journey-foundation/build.txt",
         "evidence/journey-foundation/browser.txt",
-        "evidence/journey-foundation/mode-off.txt"
+        "evidence/journey-foundation/mode-off.txt",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: real-town simulation tests and native Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1961,9 +2018,10 @@
         "evidence/journey-foundation/regression.txt",
         "evidence/journey-foundation/build.txt",
         "evidence/journey-foundation/browser.txt",
-        "evidence/journey-foundation/mode-off.txt"
+        "evidence/journey-foundation/mode-off.txt",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "Codex root: real-town simulation tests and native Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1995,9 +2053,10 @@
         "evidence/journey-summary/tests.txt",
         "evidence/journey-summary/recap.txt",
         "evidence/journey-summary/paused.txt",
-        "evidence/journey-summary/council-complete.txt"
+        "evidence/journey-summary/council-complete.txt",
+        "docs/review/final-octalysis.md"
       ],
-      "verifiedBy": "根代理：聚焦測試與Chrome完整操作",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-octalysis.md",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -2030,9 +2089,10 @@
         "evidence/keyboard/README.md",
         "evidence/keyboard/focused-tests.txt",
         "evidence/keyboard/tests.txt",
-        "evidence/keyboard/build.txt"
+        "evidence/keyboard/build.txt",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：聚焦及全套測試、Chrome鍵盤操作、390×844取消驗證",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2065,9 +2125,10 @@
         "evidence/keyboard/README.md",
         "evidence/keyboard/focused-tests.txt",
         "evidence/keyboard/tests.txt",
-        "evidence/keyboard/build.txt"
+        "evidence/keyboard/build.txt",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：聚焦及全套測試、Chrome鍵盤操作、390×844取消驗證",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2100,9 +2161,10 @@
         "evidence/keyboard/README.md",
         "evidence/keyboard/focused-tests.txt",
         "evidence/keyboard/tests.txt",
-        "evidence/keyboard/build.txt"
+        "evidence/keyboard/build.txt",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：聚焦及全套測試、Chrome鍵盤操作、390×844取消驗證",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2138,9 +2200,10 @@
         "evidence/touch-plans/pinch-first-up.txt",
         "evidence/touch-plans/pinch-second-up.txt",
         "evidence/touch-plans/mobile-preview.png",
-        "evidence/touch-plans/mobile-confirmed.txt"
+        "evidence/touch-plans/mobile-confirmed.txt",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：指標狀態測試、Chrome原生觸控事件模擬、390×844草稿微調/取消/確認",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2176,9 +2239,10 @@
         "evidence/touch-plans/pinch-first-up.txt",
         "evidence/touch-plans/pinch-second-up.txt",
         "evidence/touch-plans/mobile-preview.png",
-        "evidence/touch-plans/mobile-confirmed.txt"
+        "evidence/touch-plans/mobile-confirmed.txt",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：指標狀態測試、Chrome原生觸控事件模擬、390×844草稿微調/取消/確認",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2220,9 +2284,10 @@
         "evidence/plan-preview/line-built.txt",
         "evidence/plan-preview/occupied.txt",
         "evidence/plan-preview/road-obstacle.txt",
-        "evidence/plan-preview/outside.txt"
+        "evidence/plan-preview/outside.txt",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：全圖錄預覽/實際建造比對、247項回歸、Chrome拖曳與障礙文字查核",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2264,9 +2329,10 @@
         "evidence/plan-preview/line-built.txt",
         "evidence/plan-preview/occupied.txt",
         "evidence/plan-preview/road-obstacle.txt",
-        "evidence/plan-preview/outside.txt"
+        "evidence/plan-preview/outside.txt",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：全圖錄預覽/實際建造比對、247項回歸、Chrome拖曳與障礙文字查核",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2298,9 +2364,10 @@
         "evidence/city-directory/README.md",
         "evidence/city-directory/focused-tests.txt",
         "evidence/city-directory/full-tests.txt",
-        "evidence/city-directory/person-keyboard.txt"
+        "evidence/city-directory/person-keyboard.txt",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：純鍵盤操作、完整無障礙樹、真城市焦點與捲動、Chrome手機尺寸及249項回歸",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2333,9 +2400,10 @@
         "evidence/city-directory/focused-tests.txt",
         "evidence/city-directory/full-tests.txt",
         "evidence/city-directory/panel-patch.txt",
-        "evidence/city-directory/live-focus.json"
+        "evidence/city-directory/live-focus.json",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：純鍵盤操作、完整無障礙樹、真城市焦點與捲動、Chrome手機尺寸及249項回歸",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2368,9 +2436,10 @@
         "evidence/city-directory/focused-tests.txt",
         "evidence/city-directory/full-tests.txt",
         "evidence/city-directory/mobile-close.png",
-        "evidence/city-directory/mobile-closed.txt"
+        "evidence/city-directory/mobile-closed.txt",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：純鍵盤操作、完整無障礙樹、真城市焦點與捲動、Chrome手機尺寸及249項回歸",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2403,9 +2472,10 @@
         "evidence/city-directory/focused-tests.txt",
         "evidence/city-directory/full-tests.txt",
         "evidence/city-directory/person-keyboard.txt",
-        "evidence/city-directory/journal-focus.txt"
+        "evidence/city-directory/journal-focus.txt",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：純鍵盤操作、完整無障礙樹、真城市焦點與捲動、Chrome手機尺寸及249項回歸",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2437,9 +2507,10 @@
         "evidence/selection-dialogs/help.txt",
         "evidence/selection-dialogs/production.txt",
         "evidence/selection-dialogs/blueprints.txt",
-        "evidence/selection-dialogs/literature.txt"
+        "evidence/selection-dialogs/literature.txt",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：Chrome無障礙樹、實際單屋/四格框線、隔離城拆除鄰屋保留及249項回歸",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2473,9 +2544,10 @@
         "evidence/selection-dialogs/four-cell.png",
         "evidence/selection-dialogs/demolish-target.txt",
         "evidence/selection-dialogs/after-demolition.txt",
-        "evidence/selection-dialogs/focused-tests.txt"
+        "evidence/selection-dialogs/focused-tests.txt",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：Chrome無障礙樹、實際單屋/四格框線、隔離城拆除鄰屋保留及249項回歸",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2509,9 +2581,10 @@
         "evidence/readable-ui/390x600-actions.png",
         "evidence/readable-ui/600x390-actions.png",
         "evidence/readable-ui/600x390-upgraded.txt",
-        "evidence/readable-ui/390x600-move.txt"
+        "evidence/readable-ui/390x600-move.txt",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：實測390×600/600×390、200%字級、DOM對比、常用按鈕獨立操作及249項回歸",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2542,9 +2615,10 @@
         "evidence/readable-ui/README.md",
         "evidence/readable-ui/full-tests.txt",
         "evidence/readable-ui/200-percent-card.png",
-        "evidence/readable-ui/200-percent-metrics.json"
+        "evidence/readable-ui/200-percent-metrics.json",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：實測390×600/600×390、200%字級、DOM對比、常用按鈕獨立操作及249項回歸",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2578,9 +2652,10 @@
         "evidence/readable-ui/night-contrast.json",
         "evidence/readable-ui/help-contrast.json",
         "evidence/readable-ui/blueprint-contrast.json",
-        "evidence/readable-ui/card-contrast.json"
+        "evidence/readable-ui/card-contrast.json",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：實測390×600/600×390、200%字級、DOM對比、常用按鈕獨立操作及249項回歸",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2614,9 +2689,10 @@
         "evidence/readable-ui/control-actions.json",
         "evidence/readable-ui/zoom-before.png",
         "evidence/readable-ui/zoom-in.png",
-        "evidence/readable-ui/zoom-out.png"
+        "evidence/readable-ui/zoom-out.png",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：實測390×600/600×390、200%字級、DOM對比、常用按鈕獨立操作及249項回歸",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2654,9 +2730,10 @@
         "evidence/view-preferences/README.md",
         "evidence/view-preferences/system-reduce.txt",
         "evidence/view-preferences/labels-on.png",
-        "evidence/view-preferences/labels-off.png"
+        "evidence/view-preferences/labels-off.png",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "Codex root: focused scene tests and native Chrome UI / system preference emulation, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2689,9 +2766,10 @@
         "evidence/keyboard/README.md",
         "evidence/keyboard/focused-tests.txt",
         "evidence/keyboard/tests.txt",
-        "evidence/keyboard/build.txt"
+        "evidence/keyboard/build.txt",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "root：聚焦及全套測試、Chrome鍵盤操作、390×844取消驗證",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2729,9 +2807,10 @@
         "evidence/view-preferences/README.md",
         "evidence/view-preferences/system-reduce.txt",
         "evidence/view-preferences/labels-on.png",
-        "evidence/view-preferences/labels-off.png"
+        "evidence/view-preferences/labels-off.png",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "Codex root: focused scene tests and native Chrome UI / system preference emulation, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2763,9 +2842,10 @@
         "evidence/operation-state/README.md",
         "evidence/operation-state/focused-tests.txt",
         "evidence/operation-state/build.txt",
-        "evidence/operation-state/construction.txt"
+        "evidence/operation-state/construction.txt",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "Codex root: focused tests and Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2798,9 +2878,10 @@
         "evidence/operation-state/focused-tests.txt",
         "evidence/operation-state/build.txt",
         "evidence/operation-state/cargo-keyboard.txt",
-        "evidence/operation-state/cargo-filter.txt"
+        "evidence/operation-state/cargo-filter.txt",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "Codex root: focused tests and Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2834,9 +2915,10 @@
         "evidence/operation-state/build.txt",
         "evidence/operation-state/mobile-gallery.png",
         "evidence/operation-state/mobile-gallery.txt",
-        "evidence/operation-state/pause-gallery.json"
+        "evidence/operation-state/pause-gallery.json",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "Codex root: focused tests and Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2869,9 +2951,10 @@
         "evidence/operation-state/focused-tests.txt",
         "evidence/operation-state/build.txt",
         "evidence/operation-state/corrected-location.txt",
-        "evidence/operation-state/pause-gallery.json"
+        "evidence/operation-state/pause-gallery.json",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "Codex root: focused tests and Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2904,9 +2987,10 @@
         "evidence/operation-state/focused-tests.txt",
         "evidence/operation-state/build.txt",
         "evidence/operation-state/notices-after-delay.txt",
-        "evidence/operation-state/corrected-location.txt"
+        "evidence/operation-state/corrected-location.txt",
+        "docs/review/final-ux.md"
       ],
-      "verifiedBy": "Codex root: focused tests and Chrome UI, 2026-09-16",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-ux.md",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2940,9 +3024,10 @@
         "tests/save-browser-harness.html",
         "evidence/save-browser/README.md",
         "evidence/save-browser/flow.json",
-        "evidence/save-browser/rescue-file.json"
+        "evidence/save-browser/rescue-file.json",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: real main/save UI, 26-second autosave and unload, original rescue file readback and valid backup restore; final independent review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -2976,9 +3061,10 @@
         "tests/save-browser-harness.html",
         "evidence/save-browser/README.md",
         "evidence/save-browser/flow.json",
-        "evidence/save-browser/rescue-file.json"
+        "evidence/save-browser/rescue-file.json",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: real main/save UI, 26-second autosave and unload, original rescue file readback and valid backup restore; final independent review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -2998,7 +3084,7 @@
       "acceptance": [
         "匯出再匯入保留建築、貨物與人物；錯格式及未支援版本回報原因且保持原城。"
       ],
-      "status": "implemented",
+      "status": "verified",
       "implementation": [
         "src/save-schema.js",
         "src/save-store.js",
@@ -3010,9 +3096,11 @@
         "evidence/r1/tests.txt",
         "evidence/r1/README.md",
         "evidence/save-browser/README.md",
-        "evidence/save-browser/flow.json"
+        "evidence/save-browser/flow.json",
+        "docs/review/final-engineering.md",
+        "evidence/save-browser/disk-export.json"
       ],
-      "verifiedBy": null,
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3032,7 +3120,7 @@
       "acceptance": [
         "兩分頁各編輯一次，後存或關閉舊分頁不得默默覆蓋新版；使用者可保留兩版。"
       ],
-      "status": "implemented",
+      "status": "verified",
       "implementation": [
         "src/save-schema.js",
         "src/save-store.js",
@@ -3043,9 +3131,14 @@
       "evidence": [
         "evidence/r1/tests.txt",
         "evidence/r1/README.md",
-        "evidence/r1/cross-tab.txt"
+        "evidence/r1/cross-tab.txt",
+        "tests/save-peer-harness.html",
+        "evidence/peer-background/conflict.json",
+        "evidence/peer-background/after-close.json",
+        "evidence/peer-background/README.md",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": null,
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3075,9 +3168,10 @@
       ],
       "evidence": [
         "evidence/r1/tests.txt",
-        "evidence/r1/README.md"
+        "evidence/r1/README.md",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: focused behavior assertions; independent final review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3107,9 +3201,10 @@
       ],
       "evidence": [
         "evidence/r1/tests.txt",
-        "evidence/r1/README.md"
+        "evidence/r1/README.md",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: focused behavior assertions; independent final review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3142,9 +3237,10 @@
         "evidence/r1/README.md",
         "tests/save-contracts.test.js",
         "evidence/content-safety/tests.txt",
-        "evidence/content-safety/README.md"
+        "evidence/content-safety/README.md",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: full contract assertions and relevant browser evidence; final independent review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3174,9 +3270,10 @@
       ],
       "evidence": [
         "evidence/r1/tests.txt",
-        "evidence/r1/README.md"
+        "evidence/r1/README.md",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: focused behavior assertions; independent final review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3206,9 +3303,10 @@
       ],
       "evidence": [
         "evidence/r1/tests.txt",
-        "evidence/r1/README.md"
+        "evidence/r1/README.md",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: focused behavior assertions; independent final review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3238,9 +3336,10 @@
       ],
       "evidence": [
         "evidence/r1/tests.txt",
-        "evidence/r1/README.md"
+        "evidence/r1/README.md",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: focused behavior assertions; independent final review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3273,9 +3372,10 @@
         "evidence/r1/README.md",
         "tests/save-contracts.test.js",
         "evidence/content-safety/tests.txt",
-        "evidence/content-safety/README.md"
+        "evidence/content-safety/README.md",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: full contract assertions and relevant browser evidence; final independent review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3305,9 +3405,10 @@
       ],
       "evidence": [
         "evidence/r1/tests.txt",
-        "evidence/r1/README.md"
+        "evidence/r1/README.md",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: focused behavior assertions; independent final review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3335,9 +3436,10 @@
       "evidence": [
         "tests/runtime.test.js",
         "evidence/runtime/tests.txt",
-        "evidence/runtime/README.md"
+        "evidence/runtime/README.md",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: equal-time whole-town snapshot comparison; final independent review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3367,9 +3469,10 @@
       ],
       "evidence": [
         "evidence/r1/tests.txt",
-        "evidence/r1/README.md"
+        "evidence/r1/README.md",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: focused behavior assertions; independent final review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3399,9 +3502,10 @@
         "tests/town-edit.test.js",
         "evidence/town-edit/README.md",
         "evidence/town-edit/tests.txt",
-        "evidence/town-edit/undo-confirm.txt"
+        "evidence/town-edit/undo-confirm.txt",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: real town failure injection and browser UI; independent final review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3435,9 +3539,10 @@
         "evidence/r1/reset-restored.txt",
         "tests/save-contracts.test.js",
         "evidence/content-safety/tests.txt",
-        "evidence/content-safety/README.md"
+        "evidence/content-safety/README.md",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: full contract assertions and relevant browser evidence; final independent review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3467,9 +3572,10 @@
         "tests/town-edit.test.js",
         "evidence/town-edit/README.md",
         "evidence/town-edit/tests.txt",
-        "evidence/town-edit/failed-edit.txt"
+        "evidence/town-edit/failed-edit.txt",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: real town failure injection and browser UI; independent final review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3502,9 +3608,10 @@
         "tests/scene-resources-harness.html",
         "evidence/scene-resources/README.md",
         "evidence/scene-resources/cycles-100.txt",
-        "evidence/scene-resources/disposed.txt"
+        "evidence/scene-resources/disposed.txt",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: real Chrome 100 build/demolish/rain/reset cycles, stable renderer counts and final disposal; final independent review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3536,9 +3643,10 @@
         "tests/context-recovery-harness.html",
         "evidence/context-recovery/browser.txt",
         "evidence/context-recovery/restored.png",
-        "evidence/context-recovery/README.md"
+        "evidence/context-recovery/README.md",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: real WEBGL_lose_context loss, restore, timeout and resumed interaction; final independent review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3569,9 +3677,10 @@
         "tests/scene-sync-harness.html",
         "evidence/scene-sync/README.md",
         "evidence/scene-sync/browser.json",
-        "evidence/scene-sync/tests.txt"
+        "evidence/scene-sync/tests.txt",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: 67-building Chrome transaction and actual construction stage, unchanged model/road identity and timings; final independent review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3591,7 +3700,7 @@
       "acceptance": [
         "背景期間渲染計數不增加、音訊靜音、資料不漂移；回前景沒有大dt追趕。"
       ],
-      "status": "implemented",
+      "status": "verified",
       "implementation": [
         "src/runtime.js",
         "src/main.js"
@@ -3600,9 +3709,14 @@
         "tests/runtime.test.js",
         "evidence/runtime/tests.txt",
         "evidence/runtime/README.md",
-        "evidence/runtime/browser-background.txt"
+        "evidence/runtime/browser-background.txt",
+        "tests/audio-background-harness.html",
+        "evidence/peer-background/audio.json",
+        "evidence/peer-background/audio.png",
+        "evidence/peer-background/README.md",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": null,
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3635,9 +3749,10 @@
         "evidence/recovery/README.md",
         "evidence/recovery/tests.txt",
         "evidence/recovery/restored.txt",
-        "evidence/recovery/fault.png"
+        "evidence/recovery/fault.png",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: injected tick/render faults, browser export and reload; final independent review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3664,9 +3779,10 @@
       ],
       "evidence": [
         "evidence/r1/tests.txt",
-        "evidence/r1/README.md"
+        "evidence/r1/README.md",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: focused behavior assertions; independent final review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3693,9 +3809,10 @@
       ],
       "evidence": [
         "evidence/r1/tests.txt",
-        "evidence/r1/README.md"
+        "evidence/r1/README.md",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: focused behavior assertions; independent final review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -3732,9 +3849,10 @@
         "evidence/content-safety/README.md",
         "tests/content-html.test.js",
         "evidence/content-safety/browser.txt",
-        "evidence/content-safety/browser.png"
+        "evidence/content-safety/browser.png",
+        "docs/review/final-engineering.md"
       ],
-      "verifiedBy": "root: full contract assertions and relevant browser evidence; final independent review pending",
+      "verifiedBy": "四領域獨立AI專家依原契約核對實作、測試與瀏覽器證據；詳見docs/review/final-engineering.md",
       "reviewSource": "docs/review/engineering.json"
     }
   ]

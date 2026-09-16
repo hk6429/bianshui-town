@@ -1,0 +1,42 @@
+{
+  "owner": "B",
+  "result": {
+    "ok": false,
+    "status": "conflict"
+  },
+  "blocked": "conflict",
+  "local": {
+    "buildings": [
+      "work"
+    ],
+    "people": 0,
+    "lots": 12
+  },
+  "versions": [
+    {
+      "id": "current",
+      "buildings": [
+        "home"
+      ],
+      "people": 0,
+      "lots": 12
+    },
+    {
+      "id": "branch:B",
+      "buildings": [
+        "work"
+      ],
+      "people": 0,
+      "lots": 12
+    },
+    {
+      "id": "branch:A",
+      "buildings": [
+        "home"
+      ],
+      "people": 0,
+      "lots": 12
+    }
+  ],
+  "sharedUnchanged": null
+}

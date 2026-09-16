@@ -1,0 +1,10 @@
+{
+  "bytes": 80964,
+  "sha256": "2d0e253a664b871be59cab2ab2461851ff6a3124122b7d0882a6eac69463d6ed",
+  "checks": {
+    "buildings": true,
+    "people": true,
+    "economy": true
+  },
+  "note": "實際UI下載的磁碟JSON經正式SaveStore.decode/schema與Town.restore還原；此為檔案資料驗證，不是原生chooser實測。"
+}

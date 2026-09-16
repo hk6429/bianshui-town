@@ -1,0 +1,23 @@
+✔ resident at staffed shop buys one available item, records needs and cannot repeat in same tick (9.729542ms)
+✔ no remote, off-hours, self-purchase, empty-stock or unattended sales (13.0335ms)
+✔ visitor obeys the same staffing rule; arrivals reopen and departures close the shop (1.982333ms)
+✔ sandbox residents do not consume stock or gain new needs state (3.345875ms)
+✔ nearest reachable job wins over earlier building order; reasonable existing job remains (9.826958ms)
+✔ isolated vacancies remain empty; reconnecting fills jobs; lost work receives a grace period (14.982ms)
+✔ four present craftspeople produce more than one; no workers consume no inputs (14.604209ms)
+✔ sandbox retains full production with one present worker (6.129083ms)
+✔ repeated observations cannot farm familiarity; different daily activities and one completed commission contribute once (4.754042ms)
+✔ no idle or offline decay and no automatic world observation; saved relationship round-trips (6.330625ms)
+✔ watch two IDs independently, remove one, retain history and never redirect a departed resident to someone else (1.490708ms)
+✔ activity categories depend on actual state, and merely gathering for a story does not count as hearing it (1.021834ms)
+✔ failed persistence leaves observations and watch flags untouched; names and actions are escaped (1.341375ms)
+✔ save bounds reject duplicate IDs, repeated categories, future observations and more than 16 watched people (3.127125ms)
+✔ active storytelling only credits residents who actually arrived (52.010208ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 144.933666

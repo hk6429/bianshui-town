@@ -1,0 +1,9 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>雙分頁存檔保護</title><h1>雙分頁存檔保護</h1><p>獨立測試鍵，不讀寫遊戲存檔。兩頁各建立一棟建築後，檢查共用主檔與本頁分支。</p><button id="home">本頁建立民居並儲存</button><button id="work">本頁建立工坊並儲存</button><button id="capture">記錄共用版本</button><button id="verify">檢查舊頁離開後版本</button><pre id="status"></pre>
+<script type="module">
+import {Town} from '/src/simulation.js';import {SaveStore} from '/src/save-store.js';import {validateSave} from '/src/save-schema.js';
+const params=new URLSearchParams(location.search),key='bianshui-peer-proof-'+params.get('run'),owner=params.get('peer'),store=new SaveStore({storage:localStorage,validate:validateSave,key,owner});let town=new Town(),baseline=null;const loaded=store.load();if(loaded.data)town=Town.restore(loaded.data);
+const output=document.querySelector('#status');function show(result){const candidates=store.candidates(),summary=d=>({buildings:d.buildings.map(b=>b.type),people:d.people.length,lots:d.economy.lots.length});output.textContent=JSON.stringify({owner,result,blocked:store.blocked,local:summary(town),versions:candidates.map(c=>({id:c.id,...summary(c.data)})),sharedUnchanged:baseline===null?null:localStorage.getItem(key)===baseline},null,2);}
+for(const [id,type,x]of [['home','home',-4],['work','work',-2]])document.querySelector('#'+id).onclick=()=>{town.place(type,[{x,z:0}],true);show(store.save(town.toJSON()));};
+document.querySelector('#capture').onclick=()=>{baseline=localStorage.getItem(key);show('已記錄共用主檔');};document.querySelector('#verify').onclick=()=>show('檢查離頁後主檔');
+window.addEventListener('storage',e=>{if(e.key===key){store.externalChange();show('偵測到其他分頁儲存');}});window.addEventListener('beforeunload',()=>store.save(town.toJSON()));show('已載入');
+</script></html>

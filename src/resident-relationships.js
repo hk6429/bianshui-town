@@ -2,7 +2,7 @@ import {escapeHTML as esc} from './content-html.js';
 import {DAILY_ACTIVITIES} from './resident-relationships-data.js';
 export {DAILY_ACTIVITIES} from './resident-relationships-data.js';
 export function residentActivity(t,p){
- const event=t.stories.active;if(event?.phase==='active'&&event.type==='story'&&event.participants.includes(p.id))return 'story';
+ const event=t.stories.active;if(event?.phase==='active'&&event.type==='story'&&event.participants.includes(p.id)&&p.eventSlot&&Math.hypot(p.x-p.eventSlot[0],p.z-p.eventSlot[1])<.1)return 'story';
  if((p.socialUntil||0)>t.elapsed)return 'social';if(p.shelter)return 'rain';if(p.outside)return p.route.length?'travel':'street';
  const b=t.buildings.find(b=>b.id===p.current);if(!b)return 'street';
  if(b.type==='home')return t.time%24>=21||t.time%24<6?'rest':'home';
