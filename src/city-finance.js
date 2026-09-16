@@ -5,7 +5,7 @@ export const ROAD_COST={lane:20,avenue:45};
 export const LOGISTICS_UPKEEP=6;
 export const UPKEEP={home:2,shop:4,work:6,garden:3,lane:1,avenue:2};
 export const GOODS_VALUE={clay:10,timber:12,fiber:10,ceramics:45,furniture:60,cloth:40,legacy:20};
-export const createCity=(mode='sandbox',time=8)=>({version:1,mode,logisticsLevel:1,trade:createTrade(),treasury:2400,taxRate:10,day:Math.floor(time/24),sanitationDay:Math.floor(time/24),ledger:[],taxIncome:0,spent:0,maintenancePaid:0,deficitDays:0});
+export const createCity=(mode='sandbox',time=8)=>({version:1,mode,logisticsLevel:1,trade:createTrade(),treasury:2400,taxRate:10,day:Math.floor(time/24),sanitationDay:Math.floor(time/24),fireDay:Math.floor(time/24),ledger:[],taxIncome:0,spent:0,maintenancePaid:0,deficitDays:0});
 export const managed=t=>t.city?.mode==='managed';
 export const buildCost=(type,cells)=>BUILD_COST[type]*cells.length;
 export const moveCost=b=>30*(b.footprint?.length||1);
@@ -20,4 +20,4 @@ export const householdTax=t=>Math.floor(t.people.filter(p=>p.home&&t.building(p.
 export const taxDemand=t=>managed(t)?Math.max(0,100+(10-t.city.taxRate)*5):100;
 export function saleTax(t,good){if(!managed(t))return 0;const tax=Math.floor((GOODS_VALUE[good]||0)*t.city.taxRate/100);if(tax){t.city.treasury+=tax;t.city.taxIncome+=tax;record(t,'商品成交稅',tax);}return tax;}
 export function settleBudget(t){const c=t.city,day=Math.floor(t.time/24);if(day<=c.day)return;if(!managed(t)){c.day=day;return;}const days=day-c.day,income=householdTax(t)*days,expense=dailyUpkeep(t)*days,before=c.treasury,net=(income-expense)/days;c.day=day;c.treasury+=income-expense;c.taxIncome+=income;c.maintenancePaid+=expense;c.deficitDays=c.treasury>=0?0:before<0?c.deficitDays+days:days-Math.floor(before/-net);record(t,`${days} 日人口稅 ${income}／維護費 ${expense}`,income-expense);}
-export function setCityPolicy(t,{mode=t.city.mode,taxRate=t.city.taxRate}){if(!['managed','sandbox'].includes(mode)||!Number.isInteger(taxRate)||taxRate<0||taxRate>20)return false;const changed=t.city.mode!==mode;t.city.mode=mode;t.city.taxRate=taxRate;t.city.day=Math.floor(t.time/24);if(changed){t.city.sanitationDay=Math.floor(t.time/24);for(const b of t.buildings)delete b.pendingWaste;}if(changed){t.rebuildRoads();t.revision++;}return true;}
+export function setCityPolicy(t,{mode=t.city.mode,taxRate=t.city.taxRate}){if(!['managed','sandbox'].includes(mode)||!Number.isInteger(taxRate)||taxRate<0||taxRate>20)return false;const changed=t.city.mode!==mode;t.city.mode=mode;t.city.taxRate=taxRate;t.city.day=Math.floor(t.time/24);if(changed){t.city.fireDay=Math.floor(t.time/24);t.city.sanitationDay=Math.floor(t.time/24);for(const b of t.buildings)delete b.pendingWaste;}if(changed){t.rebuildRoads();t.revision++;}return true;}

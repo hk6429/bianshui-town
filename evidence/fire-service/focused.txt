@@ -1,0 +1,16 @@
+✔ kilns and dense wooden buildings increase risk; posts require reachable paths, capacity and funding (2.952084ms)
+✔ same injected draw yields lower loss with patrol and never deletes buildings or cargo (0.620583ms)
+✔ a patrol built during the warning reduces damage, paid warning intervention cancels the incident (0.683916ms)
+✔ damage stops actual production and sales; free countdown repair resumes them even with no funds (1.24025ms)
+✔ daily draws are deterministic; no reroll after reload, first two days safe, at most one warning per day (2.067208ms)
+✔ valid warning and repair state round-trip, invalid/incomplete state and future cursor are rejected (2.3665ms)
+✔ normal daily seed creates the same real event history across save/reload, without injected random values (16.936709ms)
+✔ patrol capacity cannot cover unlimited homes; a residential incident preserves residents and their home (2.196959ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 93.354958

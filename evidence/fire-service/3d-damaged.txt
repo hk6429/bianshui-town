@@ -1,0 +1,78 @@
+- main:
+  - generic "汴水小鎮互動三維場景"
+  - button "查看火警與整修" [active]: 整修中：精製窯坊 · 點此查看
+  - generic: 汴
+  - heading "汴水小鎮" [level=1]
+  - paragraph: 一城煙火，慢慢生長
+  - generic: ☾
+  - strong: 子時 · 萬籟俱寂
+  - generic: 第 3 日 00:05
+  - button "切換白晝與夜晚": ☀
+  - button "天候：晴天，自然模式": 晴天 · 自然
+  - button "市井見聞"
+  - button "開啟環境音": ♪
+  - button "畫卷"
+  - button "重置小鎮"
+  - button "操作說明": "?"
+  - region "小鎮概況":
+    - strong: "0"
+    - text: 位居民
+    - strong: "1"
+    - text: 處建築園景
+    - strong: "1"
+    - text: 處街坊
+  - complementary:
+    - generic: 作坊 · 1 格街坊
+    - heading "精製窯坊" [level=2]
+    - generic: 生活漸豐 · 已固定檢視
+    - separator
+    - generic: 在此工作
+    - generic: 等候新朋友到來
+    - generic: 作坊進度
+    - paragraph: 火警後整修中，暫停生產 · 原料 0 份 · 成品 0 件
+    - generic: 此刻在場 · 0 人
+    - paragraph: 目前無人在此停留
+    - paragraph: 街坊未接外路：請由門前步道鋪路至東側引道，才能接貨與迎接新住戶。
+    - generic: 衛生清運
+    - paragraph: 積存髒污 0 份；今日生產待結算 0 份。每日結算，增建清運院並接通道路可逐日清除。
+    - generic: 防火巡守
+    - paragraph: 受損 60／100，營業與生產暫停；119 秒後免費整修完成，或付 60 文立即修復。住戶、貨物與建築保留。
+    - button "立即修復 · 60文"
+    - separator
+    - generic: 建築 1／5 級 · 初築 · 加工 1.5 倍
+    - paragraph: 下級：加蓋整層樓閣、大牌樓與燈籠
+    - button "搬移 30文"
+    - button "拆除"
+    - button "升至 2 級 · 240文"
+    - button "四格擴建 · 720文 ↘"
+    - separator
+    - generic: 點選空地取消固定
+  - generic: 汴 水
+  - text: 風過河岸，日子悠長
+  - status
+  - button "＋ 宋韻營造"
+  - button "公共營造"
+  - button "文人行旅"
+  - button "金庫 2146 文 · 需求"
+  - button "存檔管理"
+  - generic: 自由探索 · 拖曳移動畫面，點選屋舍與居民
+  - navigation "建造與探索":
+    - button "自由探索 1" [pressed]:
+      - generic: 自由探索
+      - generic: "1"
+    - button "民居 2":
+      - generic: 民居
+      - generic: "2"
+    - button "商鋪 3":
+      - generic: 商鋪
+      - generic: "3"
+    - button "作坊 4":
+      - generic: 作坊
+      - generic: "4"
+    - button "繼續": ▶
+    - button "1×"
+  - generic: 滾輪縮放 · 右鍵拖曳平移 · Q / E 旋轉
+  - generic: 進度自動留存
+  - button "放大": ＋
+  - button "縮小": −
+  - button "回到初始視角": ⌖

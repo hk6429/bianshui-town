@@ -1,3 +1,4 @@
+import {damaged} from './fire-service.js';
 import {roadReachable,roadAnchor} from './road-network.js';
 import {purchaseImports,recordSale} from './trade.js';
 import {staffingRatio,jobCapacity} from './employment.js';
@@ -55,6 +56,7 @@ export function deliveryPlan(t){
 }
 export function tickProduction(t,dt){
  for(const b of t.buildings.filter(b=>b.type==='work'&&b.stage>=3)){
+  if(damaged(b)){b.productionStatus='火警後整修中，暫停生產';continue;}
   const r=RECIPES[b.variant],lot=at(t,`input:${b.id}`,r.input)[0];
   const workers=t.workers(b).filter(p=>!p.outside&&p.current===b.id);
   b.productionStatus=!workers.length?'等工匠到坊':!lot?'等候原料':at(t,`output:${b.id}`).length>=6?'成品待運':`${r.action} · 到場 ${workers.length}／${jobCapacity(b)} 人`;

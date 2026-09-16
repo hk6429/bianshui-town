@@ -740,10 +740,33 @@
       "acceptance": [
         "固定種子或可注入事件下，無服務受損高於有服務；事件有明確復原條件且不無預警全城清空。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/fire-service.js",
+        "src/fire-scene.js",
+        "src/public-services.js",
+        "src/production.js",
+        "src/commerce.js",
+        "src/simulation.js",
+        "src/save-schema.js",
+        "src/scene.js",
+        "src/heritage.js",
+        "src/song-buildings.js",
+        "src/main.js",
+        "src/finance-ui.js",
+        "index.html"
+      ],
+      "evidence": [
+        "tests/fire-service.test.js",
+        "evidence/fire-service/README.md",
+        "evidence/fire-service/tests.txt",
+        "evidence/fire-service/patrol-comparison.txt",
+        "evidence/fire-service/3d-warning.txt",
+        "evidence/fire-service/3d-prevented.txt",
+        "evidence/fire-service/3d-damaged.txt",
+        "evidence/fire-service/3d-repaired.txt"
+      ],
+      "verifiedBy": "根代理：8項防火因果測試、197項回歸、Chrome模組對照與實際三維預警/處置/修復；非真人玩家驗收",
       "reviewSource": "docs/review/city.json"
     },
     {

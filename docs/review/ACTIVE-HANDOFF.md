@@ -127,3 +127,17 @@
 - settleBudget多日負餘額計數修正為真正連續欠款日，避免高估；新測試涵蓋。
 - 下一獨立階段C19防火：固定種子/可注入事件、窯坊密度風險、可達巡守容量、受損/停工與明確恢復。沿用serviceEfficiency讓赤字影響巡守。勿讓火災無預警清空城市。
 - 後續C20藥鋪容量/員工/健康與缺勤、C21教育、C22污染、C23園景、C24全建築分級、C25幸福度；全部O/U/E待辦和最終四領域複評仍必要，百項完整完成後才部署。
+
+## 新階段起點：C19 防火巡守
+- 基準14af813，前輪C18/C04為progress。本輪根代理直接完成C19，保留百項與最終複評範圍。
+- 日與建築ID決定的可重現抽樣；30秒預警、一日最多一處，前兩日免事件。巡守範圍/容量受道路、級數與欠款影響。
+- 非毀城事件：受損停工/停業，住戶貨物保留；可付費處置或倒數免費整修。待因果測試與Chrome操作證據。
+
+## 最新交接：C19 防火巡守里程碑（2026-09-16）
+- 36 verified / 5 implemented / 59 open，197/197全套、8/8聚焦、build、Chrome真3D預警定位/付費排除/修復已驗證。evidence/fire-service；未部署。
+- fire-service.js：fireRisk由近鄰與窯坊數計，固定fireDraw(day,id)，前兩日免、一日最多一處30秒預警。patrolCoverage按風險排序/commuteDistance/8或32×tier×serviceEfficiency有限容量；受巡守概率×.25、損害12，無巡守60。
+- 受損停tickProduction、shopIsOpen；住宅健康扣2/10。保留資產/貨物/居民。damage×2秒免費修復，或damage×占地文立即修；預警處置20文。sandbox凍結事件且免費修復，UI明示。
+- fire-scene.js在scene.sync模型上加預警標記/受損灰煙，signature加fireWarningAt/fireDamage。全域fire-alert可定位事件；inspect卡與收支摘要顯示巡守/修復；公共營造新增firePost，一格/四格/5級。
+- city.fireDay、building.fireWarningAt/fireDamage/fireRepairAt可選v9欄位；schema要求damage與repairAt成對且不同時warning。restore舊檔從當日開始。clearFire即時清除作坊停工文字（真瀏覽器發現並修正）。
+- 下一獨立階段C20醫療：沿用person.health，營業且到場員工的herbShop才供醫療，有限容量+可達範圍，在同衛生下更快恢復，健康影響缺勤與真產能；參考commerce.shopIsOpen與employment.presentWorkers，避免醫療自我依賴造成停擺。
+- C21教育/C22污染/C23園景/C24全類型分級/C25幸福度，以及所有O/U/E待辦與最後四領域複評仍未完成；百項全部完成後才部署。

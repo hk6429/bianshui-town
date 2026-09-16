@@ -34,7 +34,9 @@ function baseBuilding(b,api){
   if(b.stage===2&&design!=='pond')roof(g,size-.5,size-.5,.9,2.1,tile);
   return g;
  }
- if(design==='cleaningYard'){
+ if(design==='firePost'){
+  const h=large?4:3;hall(0,-size*.18,large?3.2:1.9,large?2.2:1.5,h);for(const x of [-size*.32,size*.32]){box(g,.13,h*.75,.13,wood,x,h*.375+.2,size*.22);cyl(g,.28,.22,.4,0xb9984b,x,h*.6,size*.22,10);for(const z of [size*.22,size*.38])cyl(g,.22,.18,.45,wood,x,.45,z);}roof(g,large?4:2.5,large?3:2,h*.12,h+.45,0x8e4c3d);box(g,.08,1,.08,wood,0,h+1.15,0);box(g,.75,.5,.07,0xb14a3c,.3,h+1.5,0);if(large)for(const x of [-2.9,2.9])hall(x,-1,1.2,3.6,1.5);
+ }else if(design==='cleaningYard'){
   hall(0,-size*.22,size*.78,size*.33,1.8);const xs=large?[-2,0,2]:[-.65,.65];for(const x of xs){cyl(g,.31,.27,.7,0x65775a,x,.55,.25,10);cyl(g,.34,.34,.06,wood,x,.94,.25,10);box(g,.6,.5,.05,wall,x,1.02,-size*.03);}
   box(g,large?2.5:1.6,.55,.85,wood,0,.7,size*.3);for(const x of [-.8,.8]){const wheel=cyl(g,.3,.3,.12,0x454536,x,.4,size*.3,10);wheel.rotation.z=Math.PI/2;}beam(g,[.7,.6,size*.3],[1.25,.75,size*.43],.07,wood);
  }else if(design==='well'){

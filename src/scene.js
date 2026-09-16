@@ -1,3 +1,4 @@
+import {markFire} from './fire-scene.js';
 import {MarketScene} from './market-scene.js';
 import {publicSquares} from './urban.js';
 import {LiteratiScene} from './literati-scene.js';
@@ -79,7 +80,7 @@ export class TownScene {
   if(town.revision!==this.lastRevision){
    for(const [id,m] of this.buildingModels)if(!town.building(id)){this.scene.remove(m);this.clearGroup(m);this.buildingModels.delete(id);}
    for(const [id,m] of this.cartModels)if(!town.carts.some(c=>c.id===id)){this.scene.remove(m);this.clearGroup(m);this.cartModels.delete(id);}
-   for(const b of town.buildings){const signature=JSON.stringify([b.stage,b.x,b.z,b.blockId,b.level,b.tier,b.design,b.facing]);const existing=this.buildingModels.get(b.id);if(existing&&existing.userData.signature===signature)continue;if(existing){this.scene.remove(existing);this.clearGroup(existing);}const model=this.buildHouse(b,town);model.userData={...model.userData,buildingId:b.id,stage:b.stage,signature};model.traverse(o=>{o.userData.buildingId=b.id;});this.buildingModels.set(b.id,model);this.scene.add(model);}
+   for(const b of town.buildings){const signature=JSON.stringify([b.stage,b.x,b.z,b.blockId,b.level,b.tier,b.design,b.facing,b.fireWarningAt,b.fireDamage]);const existing=this.buildingModels.get(b.id);if(existing&&existing.userData.signature===signature)continue;if(existing){this.scene.remove(existing);this.clearGroup(existing);}const model=markFire(this.buildHouse(b,town),b,{box,ball,cyl});model.userData={...model.userData,buildingId:b.id,stage:b.stage,signature};model.traverse(o=>{o.userData.buildingId=b.id;});this.buildingModels.set(b.id,model);this.scene.add(model);}
    this.clearGroup(this.roads);const raw=new THREE.Group();
    for(const k of town.roads){const [x,z]=point(k);if((z===-16&&x>=12&&x<=24)||(z===8&&x>=12&&x<=16))continue;box(raw,.76,.025,.76,palette.road,x,streetHeight(x,z)-.025,z);for(const [dx,dz] of [[1,0],[0,1]])if(town.roads.has(key(x+dx,z+dz)))box(raw,dx?1:.76,.025,dz?1:.76,palette.road,x+dx*.5,streetHeight(x+dx*.5,z+dz*.5)-.025,z+dz*.5);}
    const squares=publicSquares(town),inSquare=new Set(squares.flatMap(q=>q.cells.map(c=>key(c.x,c.z))));for(const q of squares){const x=q.x*4+2,z=q.z*4+2;box(raw,7.9,.04,7.9,0xaaa992,x,.03,z);for(let i=-3;i<=3;i++){box(raw,7.8,.012,.028,0x92957f,x,.058,z+i);box(raw,.028,.012,7.8,0x92957f,x+i,.058,z);}for(const dx of [-3.2,3.2]){box(raw,.6,.35,1.4,0x876e4d,x+dx,.22,z);cyl(raw,.28,.25,.35,0x947f63,x+dx,.22,z+2.8,8);ball(raw,.35,0x839763,x+dx,.65,z+2.8);}}
