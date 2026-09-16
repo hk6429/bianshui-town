@@ -95,7 +95,7 @@ function tickVisitors(t,dt){
    a.action=a.kind==='peddler'?'放下擔子，與店家談買賣':'在攤前看貨、喝茶';a.wait=7+a.id%5;a.phase='watch';
    const shop=t.building(a.target);if(shop?.stock>0){l.dock.sold+=transfer(t,`shop:${shop.id}`,'sold',1);}
   }else if(a.phase==='watch'){
-   send(t,a,[18+(a.id%3),-16],'走到虹橋看船');a.phase='bridge';
+   const walk=t.publicWorks?.length?t.publicWorks[a.id%t.publicWorks.length]:null;const reached=walk&&send(t,a,[walk.x*4,walk.z*4],'沿新闢街道散步');if(!reached)send(t,a,[18+(a.id%3),-16],'走到虹橋看船');a.phase='bridge';
   }else if(a.phase==='bridge'){
    a.action=Math.abs(l.boat.z+16)<7?'倚橋看船家收桅過橋':'倚橋看水，與同行閒談';a.wait=6+a.id%5;a.phase='leave';
   }else{send(t,a,GATE,'逛完市集，往城門歸去');a.phase='home';}

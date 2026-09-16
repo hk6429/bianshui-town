@@ -6,6 +6,16 @@ export const SOURCES={
  academy:{author:'朱熹',title:'〈觀書有感〉其一',era:'南宋 · 讀書的譬喻',quote:'半畝方塘一鑑開，天光雲影共徘徊。',url:'https://zh.wikisource.org/zh-hant/觀書有感',note:'以方塘與活水比喻讀書所得。遊戲把書齋與方塘組成書院，並非詩中建築的考據復原。'}
 };
 export const DESIGNS={
+ residence:{name:'雅居小樓',type:'home',variant:0,mark:'居',sizes:[1],source:null,detail:'雙層民居、木欄與花窗；可住四人。'},
+ mansion:{name:'四合雅宅',type:'home',variant:0,mark:'宅',sizes:[4],source:null,detail:'四格特殊民居，正廳與雙翼廂房圍合花木中庭；可住八人。'},
+ kiln:{name:'精製窯坊',type:'work',variant:0,mark:'陶',sizes:[1],source:null,detail:'窯爐、煙囪與晾坯架；陶器加工加快。'},
+ woodshop:{name:'精製木作坊',type:'work',variant:1,mark:'木',sizes:[1],source:null,detail:'鋸木棚、堆料與長工作檯；木器加工加快。'},
+ weavery:{name:'精製織坊',type:'work',variant:2,mark:'織',sizes:[1],source:null,detail:'織機、彩線與曬布架；布匹加工加快。'},
+ kilnHall:{name:'瓷窯大院',type:'work',variant:0,mark:'窯',sizes:[4],source:null,detail:'四格雙窯、晾坯庭與倉房；可容六名工匠，加工速度兩倍。'},
+ woodshopHall:{name:'木作營造院',type:'work',variant:1,mark:'木',sizes:[4],source:null,detail:'四格木作大廳、堆料場與鋸架；可容六名工匠，加工速度兩倍。'},
+ weaveryHall:{name:'織錦大院',type:'work',variant:2,mark:'錦',sizes:[4],source:null,detail:'四格織機廳、染布架與曬場；可容六名工匠，加工速度兩倍。'},
+ garden:{name:'百花公園',type:'garden',variant:0,mark:'園',sizes:[1,4],source:'pond',detail:'公共花圃、石徑與歇腳長椅；四格為中央花壇大花園。'},
+
  tea:{name:'臨街茶坊',type:'shop',variant:0,mark:'茶',sizes:[1,4],source:'city',detail:'開敞茶棚、圓桌與矮凳；四格變成環廊茶院。'},
  food:{name:'炊煙食肆',type:'shop',variant:1,mark:'食',sizes:[1,4],source:'city',detail:'高灶煙囪、蒸籠與暖色雨棚；四格擴為前店後廚。'},
  textile:{name:'錦色布莊',type:'shop',variant:2,mark:'布',sizes:[1,4],source:'city',detail:'高挑倉閣、彩布垂簾與布架；四格成為雙翼布行。'},

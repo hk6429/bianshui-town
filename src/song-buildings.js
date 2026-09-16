@@ -30,7 +30,17 @@ export function songBuilding(b,api){
   if(b.stage===2&&design!=='pond')roof(g,size-.5,size-.5,.9,2.1,tile);
   return g;
  }
- if(design==='pond'){
+ if(design==='garden'){
+  box(g,size-.5,.06,.65,0xc1b79a,0,.22,0);box(g,.65,.06,size-.5,0xc1b79a,0,.22,0);
+  for(const x of [-size*.26,size*.26])for(const z of [-size*.26,size*.26]){cyl(g,size*.17,size*.18,.2,0x778358,x,.28,z,10);for(let i=0;i<7;i++){const xx=x+Math.sin(i*3)*size*.12,zz=z+Math.cos(i*2)*size*.12;cyl(g,.015,.015,.25,0x54815c,xx,.45,zz);ball(g,.1,[0xdbaa96,0xd9c97d,0xa8aed0][i%3],xx,.6,zz);}}
+  for(const x of [-size*.35,size*.35]){box(g,.85,.1,.4,wood,x,.55,0);box(g,.85,.4,.08,wood,x,.7,-.18);}if(large){tree(g,-3,-3,.5,true);tree(g,3,3,.5,true);}
+ }else if(b.type==='home'){
+  if(large){hall(0,-2,6,2.4,2.1);for(const x of [-2.6,2.6])hall(x,.55,1.3,2.7,1.7);tree(g,0,.5,.5,true);rail(0,3,4,.2);box(g,1,.12,1.8,stone,0,.23,2.7);}
+  else{hall(0,-.25,2.7,2.5,1.65);hall(0,-.4,2.35,2.1,1.35,1.9);box(g,2.8,.12,.65,wood,0,1.92,1);rail(0,1.2,2.7,1.95);}
+ }else if(b.type==='work'){
+  if(large){hall(0,-2,6.1,2.5,2);for(const x of [-2.8,2.8])hall(x,.4,1.1,2.4,1.5);}else hall(0,-.6,2.8,1.7,1.8);
+  const spots=large?[-1.4,1.4]:[0];for(const x of spots){if(b.variant===0){cyl(g,.65,.85,.95,0x9b7459,x,.7,.5,10);box(g,.4,2.3,.4,0x806858,x,.95,-.05);box(g,.45,.5,.06,0x3d3932,x,.45,1.23);for(let i=0;i<3;i++)cyl(g,.12,.1,.18,0xc6baa0,x-.45+i*.4,.35,1.6,8);}else if(b.variant===1){box(g,1.6,.14,.8,wood,x,.85,.65);for(const dx of [-.65,.65])box(g,.09,.75,.09,wood,x+dx,.45,.65);for(let i=0;i<3;i++)box(g,1.5,.13,.18,0xb58d5e,x,.3+i*.13,1.45);}else{for(const dx of [-.65,.65])box(g,.08,1.55,.08,wood,x+dx,.9,.55);box(g,1.5,.09,.09,wood,x,1.7,.55);box(g,1.1,1.15,.04,0xb67c86,x,1.02,.55);for(let i=0;i<6;i++)box(g,.018,1.1,.02,0xdbcba5,x-.46+i*.18,1.05,.59);}}
+ }else if(design==='pond'){
   water(size-.6,size-.6);
   for(let i=0;i<(large?16:6);i++){
    const x=Math.sin(i*2.4)*size*.32,z=Math.cos(i*1.7)*size*.3;

@@ -1,0 +1,59 @@
+
+> bianshui-town@0.7.0 test
+> node --test tests/*.test.js
+
+✔ follow camera tracks a moving resident and holds the actual house when indoors (76.458292ms)
+✔ street focus cancels following and centers the exact event venue while preserving view angle (0.577708ms)
+✔ courtyard view looks down without moving the camera into the far fog (0.12075ms)
+✔ author follow tracks the author model without confusing resident IDs (0.34225ms)
+✔ bridge and dock connect to town without crossing building interiors (93.084583ms)
+✔ boat lowers mast at bridge and porters unload actual cargo (204.725125ms)
+✔ ox cart delivers cargo to shops with conservation over several voyages (343.353125ms)
+✔ visitors cross bridge, browse a shop and depart at night (145.358833ms)
+✔ chat has a bounded pause then residents resume their schedule (143.928083ms)
+✔ pause freezes people, freight, boat and dialogue timers (37.8005ms)
+✔ version one progress migrates and version two preserves cargo (115.718ms)
+✔ five named authors arrive, walk real roads, stop to write and collect unique originals (398.068042ms)
+✔ rain pauses writing, zero dt pauses everything, and night hides the visitors (87.401084ms)
+✔ v5 migration and v6 reload preserve freight, literature and road changes do not strand authors (280.57ms)
+✔ all five entries have attributed original texts, form labels and HTTPS source links (0.252417ms)
+✔ roof surfaces survive merging with indexed tile ribs (35.200334ms)
+✔ drag limits to three orthogonally connected cells (0.534834ms)
+✔ three cells share only an exterior road perimeter (0.196375ms)
+✔ invalid, overlapping, out-of-bounds and disconnected placements are atomic (2.205833ms)
+✔ auto roads connect distant blocks without entering any building (8.35875ms)
+✔ construction, population, work assignment and real arrival occur over time (10.025208ms)
+✔ paused simulation does not advance and night returns residents home (76.044916ms)
+✔ save restores connected roads, shared blocks and residents (89.355541ms)
+✔ street events gather real residents, finish and release everyone (389.940875ms)
+✔ resident diary follows actual work, meals and return home; rolls over by day (16.231917ms)
+✔ v1/v2 saves migrate diaries and v3 survives active events without stranded residents (234.174833ms)
+✔ pedestrian yields to oncoming ox, resumes after passing and uses side of road (0.204959ms)
+✔ same-direction followers maintain headway; opposite lanes and bridge crowding make progress (0.158041ms)
+✔ three event types cycle over multiple days while freight remains conserved (706.931958ms)
+✔ stationary residents are not described as yielding or blocked (0.229042ms)
+✔ public streets connect to doors, block construction, persist and can be removed (6.167167ms)
+✔ moving one connected house preserves occupants and leaves its neighbour intact (60.952625ms)
+✔ demolition conserves cargo, residents survive and are rehoused without dangling references (535.80825ms)
+✔ home and workshop upgrades expand capacity, preserve variants and reject occupied four-grid expansion (14.508ms)
+✔ editing roads while a loaded cart is moving never delivers to a missing shop (531.219125ms)
+✔ visitors actually walk onto a connected public street (117.979ms)
+✔ rain cancels outdoor events, shelters residents, and clear weather releases them (199.253875ms)
+✔ two and three connected cells have private courtyards, without internal roads (2.629583ms)
+✔ all raw materials are physically processed, delivered and sold with provenance and conservation (1230.74875ms)
+✔ a workshop without a present worker or raw input produces nothing (13.259ms)
+✔ v3 freight migrates without loss; v4 restores weather, lots and manufacturing progress (61.180584ms)
+✔ four plots form one complex with an exterior entrance and no internal streets (26.684041ms)
+✔ invalid blueprints and occupied or out-of-bounds four plots are rejected atomically (5.001833ms)
+✔ pond is an occupied landscape; people visit but are not assigned garden jobs (33.178167ms)
+✔ v4 restores unchanged IDs and freight; v5 round trip preserves all blueprint footprints (128.633625ms)
+✔ all blueprint meshes are finite, distinct in silhouette, and pond water is above its base (81.103167ms)
+✔ a pond is not a rain shelter, including for a resident already visiting it (8.2625ms)
+ℹ tests 47
+ℹ suites 0
+ℹ pass 47
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1584.476416

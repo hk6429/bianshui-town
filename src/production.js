@@ -42,7 +42,7 @@ export function tickProduction(t,dt){
   const workers=t.workers(b).filter(p=>!p.outside&&p.current===b.id);
   b.productionStatus=!workers.length?'等工匠到坊':!lot?'等候原料':at(t,`output:${b.id}`).length>=6?'成品待運':r.action;
   if(!lot||!workers.length||at(t,`output:${b.id}`).length>=6)continue;
-  lot.progress=(lot.progress||0)+dt;
+  lot.progress=(lot.progress||0)+dt*(b.footprint?2:b.level>=2?1.5:1);
   if(lot.progress>=r.seconds){lot.good=r.output;lot.madeAt=b.id;lot.progress=0;transfer(t,`input:${b.id}`,`output:${b.id}`,1,r.output);t.log(`${b.name}製成一件${GOODS[r.output]}，等推車送往商鋪`);}
  }
 }

@@ -75,9 +75,12 @@ export class TownScene {
  clearGroup(group){group.traverse(o=>{if(o.isMesh)o.geometry.dispose();});group.clear();}
  sync(town){
   if(town.revision!==this.lastRevision){
-   for(const b of town.buildings){const existing=this.buildingModels.get(b.id);if(existing&&existing.userData.stage===b.stage)continue;if(existing){this.scene.remove(existing);this.clearGroup(existing);}const model=this.buildHouse(b,town);model.userData={...model.userData,buildingId:b.id,stage:b.stage};model.traverse(o=>{o.userData.buildingId=b.id;});this.buildingModels.set(b.id,model);this.scene.add(model);}
+   for(const [id,m] of this.buildingModels)if(!town.building(id)){this.scene.remove(m);this.clearGroup(m);this.buildingModels.delete(id);}
+   for(const [id,m] of this.cartModels)if(!town.carts.some(c=>c.id===id)){this.scene.remove(m);this.clearGroup(m);this.cartModels.delete(id);}
+   for(const b of town.buildings){const signature=JSON.stringify([b.stage,b.x,b.z,b.blockId,b.level,b.design,b.facing]);const existing=this.buildingModels.get(b.id);if(existing&&existing.userData.signature===signature)continue;if(existing){this.scene.remove(existing);this.clearGroup(existing);}const model=this.buildHouse(b,town);model.userData={...model.userData,buildingId:b.id,stage:b.stage,signature};model.traverse(o=>{o.userData.buildingId=b.id;});this.buildingModels.set(b.id,model);this.scene.add(model);}
    this.clearGroup(this.roads);const raw=new THREE.Group();
    for(const k of town.roads){const [x,z]=point(k);if((z===-16&&x>=12&&x<=24)||(z===8&&x>=12&&x<=16))continue;box(raw,.76,.025,.76,palette.road,x,streetHeight(x,z)-.025,z);for(const [dx,dz] of [[1,0],[0,1]])if(town.roads.has(key(x+dx,z+dz)))box(raw,dx?1:.76,.025,dz?1:.76,palette.road,x+dx*.5,streetHeight(x+dx*.5,z+dz*.5)-.025,z+dz*.5);}
+   for(const c of town.publicWorks){const w=c.type==='avenue'?2.3:.95,color=c.type==='avenue'?0x89948d:0xa19d87;box(raw,4,.04,w,color,c.x*4,.015,c.z*4);box(raw,w,.04,4,color,c.x*4,.015,c.z*4);}
    this.roads.add(batch(raw));
    for(const d of this.decorations)d.group.visible=!town.buildings.some(b=>Math.abs(b.x*4-d.x)<(b.footprint?4.3:2.3)&&Math.abs(b.z*4-d.z)<(b.footprint?4.3:2.3))&&![...town.roads].some(k=>{const [x,z]=point(k);return Math.abs(x-d.x)<.5&&Math.abs(z-d.z)<.5;});
    this.clearGroup(this.meadow);const flowers=new THREE.Group();for(const d of this.decorations){if(d.group.visible){const copy=d.group.clone(true);copy.traverse(o=>{if(o.isMesh)o.geometry=o.geometry.clone();});flowers.add(copy);}d.group.visible=false;}this.meadow.add(batch(flowers));this.lastRevision=town.revision;
@@ -86,7 +89,7 @@ export class TownScene {
   for(const c of town.carts){if(!this.cartModels.has(c.id)){const g=new THREE.Group();box(g,.7,.12,.95,0x94724b,0,.43,0);for(const x of [-.38,.38]){box(g,.08,.34,1,0x896945,x,.61,0);const wheel=cyl(g,.24,.24,.07,0x4e4635,x,.25,0,10);wheel.rotation.z=Math.PI/2;}box(g,.65,.35,.08,0x896945,0,.61,-.45);for(const x of [-.25,.25])box(g,.04,.04,.8,0x745b3e,x,.48,.7);const cargo=new THREE.Group();cargo.position.set(0,.55,-.2);cargo.position.y=.65;g.add(cargo);g.userData.cargo=cargo;const porter=this.person(c.id);porter.position.z=1.1;g.add(porter);this.cartModels.set(c.id,g);this.scene.add(g);}}
  }
  buildHouse(b,town={blocks:[]}){
-  if(b.type==='shop'||b.type==='garden'||b.footprint){const raw=songBuilding(b,{box,cyl,ball,beam,roof,tree,mat}),warm=raw.userData.warm,model=batch(raw);model.userData.warm=warm;return model;}
+  if(b.design||b.type==='shop'||b.type==='garden'||b.footprint){const raw=songBuilding(b,{box,cyl,ball,beam,roof,tree,mat}),warm=raw.userData.warm,model=batch(raw);model.userData.warm=warm;return model;}
   const g=new THREE.Group(),stage=b.stage,w=3.15,d=2.6,h=1.72+(b.variant===1?.22:0);g.position.set(b.x*4,0,b.z*4);g.rotation.y=b.facing;if(courtyardFor(town,b))g.scale.set(.72,.8,.72);
   box(g,3.8,.16,3.8,0xc4b58f,0,.03,0);box(g,w,.2,d,palette.stone,0,.16,-.2);
   if(stage===0){for(const x of [-1.3,1.3])for(const z of [-1.2,1.2])box(g,.22,.22,.22,0x9e9377,x,.3,z);for(let i=0;i<5;i++)box(g,1.2,.07,.1,palette.wood,-.5,.32+i*.08,.4);return batch(g);}
