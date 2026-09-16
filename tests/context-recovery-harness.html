@@ -1,0 +1,27 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>繪圖中斷復原測試</title>
+<style>body{font:16px system-ui;background:#eee8da}iframe{width:100%;height:620px;border:0}pre{white-space:pre-wrap}button{padding:12px}</style>
+<h1>繪圖中斷與復原</h1><button id="run">執行真實 WebGL 中斷測試</button><pre id="result">使用示範場景，不讀寫正式存檔。</pre><iframe src="/?fixture=v8"></iframe>
+<script type="module">
+const frame=document.querySelector('iframe'),result=document.querySelector('#result'),button=document.querySelector('#run');
+const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+const event=(target,name)=>new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error(name+' 逾時')),15000);target.addEventListener(name,()=>{clearTimeout(timer);resolve();},{once:true});});
+button.onclick=async()=>{button.disabled=true;const rows=[];const check=(name,ok)=>{rows.push({name,ok});result.textContent=JSON.stringify(rows,null,2);if(!ok)throw Error(name);};
+try{
+ const win=frame.contentWindow,doc=win.document,debug=win.__townDebug,canvas=doc.querySelector('#world'),gl=canvas.getContext('webgl2'),extension=gl.getExtension('WEBGL_lose_context');
+ check('瀏覽器支援真實中斷擴充',!!extension);const snapshot=()=>JSON.stringify(debug.snapshot());
+ let lost=event(canvas,'webglcontextlost');extension.loseContext();await lost;const before=snapshot(),renders=debug.renderInfo().frame;
+ check('中斷對話顯示且場景禁止編輯',doc.querySelector('#graphics-recovery').open&&doc.querySelector('#app').inert);
+ await wait(1200);check('中斷期間城市及畫面提交均未變',snapshot()===before&&debug.renderInfo().frame===renders);
+ let restored=event(canvas,'webglcontextrestored');extension.restoreContext();await restored;
+ check('恢復當下城市資料完全相同',snapshot()===before);check('對話關閉且操作恢復',!doc.querySelector('#graphics-recovery').open&&!doc.querySelector('#app').inert);
+ await wait(400);check('恢復後模擬與畫面繼續',snapshot()!==before&&debug.renderInfo().calls>0);
+ doc.querySelector('#pause-btn').click();const paused=snapshot();await wait(150);check('恢復後暫停按鈕仍可操作',snapshot()===paused);
+ lost=event(canvas,'webglcontextlost');extension.loseContext();await lost;const second=snapshot();await wait(10500);
+ check('逾時顯示匯出與重新載入選項',doc.querySelector('#graphics-recovery p').textContent.includes('尚未恢復')&&doc.querySelector('#graphics-recovery [data-export]')&&doc.querySelector('#graphics-recovery [data-reload]'));
+ check('逾時仍保留完整資料',snapshot()===second);
+ restored=event(canvas,'webglcontextrestored');extension.restoreContext();await restored;
+ check('逾時後仍可恢復且保留使用者暫停',snapshot()===second&&!doc.querySelector('#graphics-recovery').open);await wait(200);check('原本暫停狀態不被強制解除',snapshot()===second);
+ result.textContent=JSON.stringify({passed:rows.length,checks:rows},null,2);
+}catch(error){result.textContent+='\n失敗：'+error.message;}finally{button.disabled=false;}
+};
+</script></html>

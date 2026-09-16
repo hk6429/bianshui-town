@@ -1,0 +1,16 @@
+✔ actual runtime freezes on context loss, ignores stale frames, restores once without catchup (1.255542ms)
+✔ timeout remains paused but permits late restoration; rebuild failure never resumes (0.253083ms)
+✔ tick failure stops once and preserves a loadable snapshot despite partial mutation (62.548917ms)
+✔ render failure stops once and preserves a loadable snapshot despite partial mutation (50.558166ms)
+✔ successful checkpoints advance at most once per second and returned copies cannot corrupt recovery (46.873458ms)
+✔ 60 seconds of a real town are identical at 30/60/120Hz and equivalent 4x time (1034.772584ms)
+✔ pause discards partial time; resume and long stalls have bounded work (0.222417ms)
+✔ background cancels scheduled rendering, mutes once, preserves town and does not catch up (32.22175ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1138.479125

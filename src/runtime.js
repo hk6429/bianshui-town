@@ -15,10 +15,10 @@ export class SimulationClock {
 
 // Exactly one scheduled frame while visible; no background simulation or render work.
 export function createRuntime({request,cancel,hidden,options,tick,render,mute,onHide=()=>{},onError=()=>{}}){
- const clock=new SimulationClock();let frameId=null,stopped=false;
- function schedule(){if(!stopped&&!hidden()&&frameId===null)frameId=request(frame);}
+ const clock=new SimulationClock();let frameId=null,stopped=false,suspended=false;
+ function schedule(){if(!stopped&&!suspended&&!hidden()&&frameId===null)frameId=request(frame);}
  function fail(error){if(stopped)return;stopped=true;if(frameId!==null)cancel(frameId);frameId=null;clock.reset();try{mute();}catch{}onError(error);}
- function frame(now){frameId=null;if(stopped||hidden())return;try{const settings=options();const dt=clock.advance(now,{...settings,tick});render(dt,now,settings.paused);schedule();}catch(error){fail(error);}}
+ function frame(now){frameId=null;if(stopped||suspended||hidden())return;try{const settings=options();const dt=clock.advance(now,{...settings,tick});render(dt,now,settings.paused);schedule();}catch(error){fail(error);}}
  function visibility(){if(stopped)return;try{if(hidden()){if(frameId!==null)cancel(frameId);frameId=null;clock.reset();mute();onHide();}else{clock.reset();schedule();}}catch(error){fail(error);}}
- schedule();return {visibility,reset:()=>clock.reset(),stop(){stopped=true;if(frameId!==null)cancel(frameId);frameId=null;clock.reset();mute();}};
+ schedule();return {visibility,suspend(){if(stopped||suspended)return;suspended=true;if(frameId!==null)cancel(frameId);frameId=null;clock.reset();mute();},resume(){if(stopped||!suspended)return;suspended=false;clock.reset();schedule();},reset:()=>clock.reset(),stop(){stopped=true;if(frameId!==null)cancel(frameId);frameId=null;clock.reset();mute();}};
 }

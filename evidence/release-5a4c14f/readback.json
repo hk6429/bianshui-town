@@ -1,0 +1,21 @@
+{
+  "commit": "5a4c14f",
+  "at": "2026-09-16T21:45:52.701812",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "matches_dist": true
+    },
+    {
+      "path": "/assets/index-yE756avZ.js",
+      "status": 200,
+      "matches_dist": true
+    },
+    {
+      "path": "/assets/index-CDuQgbai.css",
+      "status": 200,
+      "matches_dist": true
+    }
+  ]
+}

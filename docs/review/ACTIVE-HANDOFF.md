@@ -422,3 +422,8 @@
 - 12聚焦、308全套、build成功；Chrome同鏡頭對照民居/工坊/商鋪/園景及一格。第四級被遮擋已移前側，最終圖保存evidence/tier-identity。
 - tests/tier-identity-gallery.html使用單一WebGLRenderer逐列畫至2D canvas，避免多context過量；不要以過期「已顯示」字串判斷換類完成。
 - 本次不改百項數字：92/5/3。視覺需求新增已處理；下一段回到E18–20，E01–04/E21待補驗與四領域最終複評。
+
+## E19 繪圖中斷復原完成，準備部署
+- 上一輪特色外觀 5a4c14f 已部署，正式站回讀證據 evidence/release-5a4c14f。
+- 本輪 E19 真實 WEBGL_lose_context Chrome 11 項、Node 聚焦 8 項通過；CPU 場景保留，由 Three 重建 GPU，無城市資料變更。10 秒逾時、晚到復原、原暫停狀態及 throw 邊界皆處理。
+- 帳本 93 verified / 5 implemented / 2 open；E18、E20 尚未改。下一輪處理 GPU 物件生命週期與局部更新，再補 E01–04、E21 證據及最終四領域評量。

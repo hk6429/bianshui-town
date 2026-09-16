@@ -39,6 +39,8 @@ import {escapeHTML as escape,constructionProgress,lotIdentity,lotButton,lotFocus
 import {RecoveryPoint} from './recovery.js';
 import {installRuntimeRecovery} from './recovery-ui.js';
 import {createRuntime} from './runtime.js';
+import {installContextRecovery} from './context-recovery.js';
+import {installContextRecoveryUI} from './context-recovery-ui.js';
 import {SaveStore,SAVE_KEY} from './save-store.js';
 import {validateSave} from './save-schema.js';
 import {installSaveUI} from './save-ui.js';
@@ -310,6 +312,12 @@ const runtime=createRuntime({
  render:(dt,now,isPaused)=>{const day=scene.update(town,dt);buildingLabels.update(town,scene);if(faultInjection==='render')throw Error('測試：畫面更新中斷');sound.update(town,isPaused);if(now-lastUi>180){updateUI(day);updateJournal();lastUi=now;}recovery.checkpoint(now);if(now-lastSave>12000){save();lastSave=now;}}
 });
 // Read-only diagnostics allow reproducible interaction checks without modifying simulation state.
+let graphicsSnapshot=null;
+const graphicsNotice=installContextRecoveryUI({snapshot:()=>structuredClone(graphicsSnapshot),exportSave:data=>saveStore.export(data),toast,reload:data=>{
+ if(!fixtureMode&&!saveStore.save(data).ok)return false;location.reload();return true;
+}});
+installContextRecovery({canvas,runtime,capture:()=>{if(recovery.fault)throw recovery.fault;discardPointerDraft();graphicsSnapshot=validateSave(town.toJSON());},
+ rebuild:()=>{scene.resize();scene.renderer.render(scene.scene,scene.camera);},notify:graphicsNotice,onError:showRuntimeError});
 window.__townDebug={follow:()=>({id:following,target:scene.controls.target.toArray()}),screenPerson:id=>{const model=scene.personModels.get(id);if(!model?.visible)return null;const p=model.position.clone().add(new THREE.Vector3(0,.55,0)).project(scene.camera);return {x:(p.x+1)/2*innerWidth,y:(1-p.y)/2*innerHeight};},snapshot:()=>JSON.parse(JSON.stringify(town)),screenCell:(x,z)=>{const p=new THREE.Vector3(x*4,0,z*4).project(scene.camera);return {x:(p.x+1)/2*innerWidth,y:(1-p.y)/2*innerHeight};},screenBuilding:id=>{const b=town.building(id);if(!b)return null;const p=new THREE.Vector3(b.x*4,1,b.z*4).project(scene.camera);return {x:(p.x+1)/2*innerWidth,y:(1-p.y)/2*innerHeight};},renderInfo:()=>({...scene.renderer.info.render}),mode:()=>mode,sound:()=>({enabled:sound.enabled,state:sound.ctx?.state||'not-started',gain:sound.master?.gain.value||0,volume:sound.volume}),screenLife:id=>{const a=[...town.life.visitors,...town.life.porters,...town.life.oxen].find(a=>a.id===id);if(!a)return null;const p=new THREE.Vector3(a.x,1,a.z).project(scene.camera);return {x:(p.x+1)/2*innerWidth,y:(1-p.y)/2*innerHeight};}};
 
 function plannedCells(c){if(editing?.kind==='move')return town.building(editing.id)?.footprint?squareCells(c):[c];if(editing)return [c];return selectedDesign&&plotSize===4?squareCells(c):[c];}

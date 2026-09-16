@@ -1,0 +1,51 @@
+- heading "繪圖中斷與復原" [level=1]
+- button "執行真實 WebGL 中斷測試"
+- generic: "{ \"passed\": 11, \"checks\": [ { \"name\": \"瀏覽器支援真實中斷擴充\", \"ok\": true }, { \"name\": \"中斷對話顯示且場景禁止編輯\", \"ok\": true }, { \"name\": \"中斷期間城市及畫面提交均未變\", \"ok\": true }, { \"name\": \"恢復當下城市資料完全相同\", \"ok\": true }, { \"name\": \"對話關閉且操作恢復\", \"ok\": true }, { \"name\": \"恢復後模擬與畫面繼續\", \"ok\": true }, { \"name\": \"恢復後暫停按鈕仍可操作\", \"ok\": true }, { \"name\": \"逾時顯示匯出與重新載入選項\", \"ok\": { \"_ariaRef\": { \"role\": \"button\", \"name\": \"保留進度並重新載入\", \"ref\": \"e73\" } } }, { \"name\": \"逾時仍保留完整資料\", \"ok\": true }, { \"name\": \"逾時後仍可恢復且保留使用者暫停\", \"ok\": true }, { \"name\": \"原本暫停狀態不被強制解除\", \"ok\": true } ] }"
+- iframe [active]:
+  - main:
+    - generic "汴水小鎮互動三維場景"
+    - generic: 汴
+    - heading "汴水小鎮" [level=1]
+    - generic: ☀
+    - strong: 巳時 · 日光正好
+    - generic: 第 1 日 10:18
+    - button "切換白晝與夜晚": ☾
+    - button "天候：晴天，自然模式": 晴天 · 自然
+    - button "市井見聞"
+    - button "開啟環境音": ♪
+    - button "畫卷"
+    - button "重置小鎮"
+    - button "操作說明": "?"
+    - region "小鎮概況":
+      - strong: 汴水小鎮
+      - text: 我的城鎮
+      - strong: "8"
+      - text: 位居民
+      - strong: "5"
+      - text: 處建築園景
+      - strong: "5"
+      - text: 處街坊
+    - generic: 汴 水
+    - text: 風過河岸，日子悠長
+    - generic: 居 · 民居
+    - generic: 商 · 商鋪
+    - generic: 園 · 園景／公設
+    - generic: 園 · 園景／公設
+    - generic: 工 · 作坊
+    - generic: 居 民居 · 商 商鋪 · 工 作坊 · 園 園景／公設
+    - status: 畫面已恢復，小鎮進度完整保留
+    - button "營造與工具"
+    - navigation "建造與探索":
+      - button "自由探索" [pressed]:
+        - generic: 自由探索
+      - button "民居":
+        - generic: 民居
+      - button "商鋪":
+        - generic: 商鋪
+      - button "作坊":
+        - generic: 作坊
+      - button "繼續時間" [pressed]: ▶
+      - button "1×"
+    - button "放大": ＋
+    - button "縮小": −
+    - button "回到初始視角": ⌖

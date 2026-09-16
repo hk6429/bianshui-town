@@ -3502,10 +3502,21 @@
       "acceptance": [
         "以WEBGL_lose_context測試遺失與恢復，不改城市資料，恢復後可繼續互動；失敗有明確提示。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/runtime.js",
+        "src/context-recovery.js",
+        "src/context-recovery-ui.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "tests/context-recovery.test.js",
+        "tests/context-recovery-harness.html",
+        "evidence/context-recovery/browser.txt",
+        "evidence/context-recovery/restored.png",
+        "evidence/context-recovery/README.md"
+      ],
+      "verifiedBy": "root: real WEBGL_lose_context loss, restore, timeout and resumed interaction; final independent review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
