@@ -1,8 +1,10 @@
+import {decorateTier} from './tier-scene.js';
 import {varietyBuilding} from './variety-scene.js';
 import * as THREE from 'three';
 import {designFor} from './heritage.js';
 // The shared primitives also serve the original village; each plan has its own silhouette.
-export function songBuilding(b,api){
+export function songBuilding(b,api){return decorateTier(baseBuilding(b,api),b,api);}
+function baseBuilding(b,api){
  const varied=varietyBuilding(b,api);if(varied)return varied;
  const {box,cyl,ball,beam,roof,tree,mat}=api,g=new THREE.Group();
  const design=designFor(b),large=!!b.footprint,size=large?7.6:3.7;

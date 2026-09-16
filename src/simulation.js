@@ -1,3 +1,4 @@
+import {tierOf} from './building-tiers.js';
 import {roadNodes,mergeGardens} from './urban.js';
 import {createLiterati,tickLiterati,rerouteLiterati} from './literati.js';
 import {DESIGNS,isSquare,gardenActivity} from './heritage.js';
@@ -56,7 +57,7 @@ export class Town {
   const combined=isSquare(cells);
   const block={id:this.nextId++,type,combined,cells:cells.map(c=>({...c}))};this.blocks.push(block);
   const plots=combined?[{x:cells.reduce((s,c)=>s+c.x,0)/4,z:cells.reduce((s,c)=>s+c.z,0)/4,footprint:cells.map(c=>({...c}))}]:cells;
-  for(const c of plots){const id=this.nextId++;this.buildings.push({id,blockId:block.id,type,...c,level:spec&&['home','work'].includes(type)?2:1,design:design||(combined&&type==='shop'?'wine':null),born:ready?this.elapsed-100:this.elapsed,variant:spec?spec.variant:id%3,stage:ready?4:0,entrance:null,name:spec?(combined&&spec.largeName?spec.largeName:spec.name):combined?(type==='shop'?'夢華酒樓':type==='home'?'合院人家':'合院工坊'):type==='home'?`${['柳蔭','汴水','杏花'][id%3]}人家 ${id}`:type==='shop'?['春水茶坊','陳記食肆','錦色布莊'][id%3]:['青瓷作坊','木作小院','織雲坊'][id%3]});}
+  for(const c of plots){const id=this.nextId++;this.buildings.push({id,blockId:block.id,type,...c,tier:1,level:spec&&['home','work'].includes(type)?2:1,design:design||(combined&&type==='shop'?'wine':null),born:ready?this.elapsed-100:this.elapsed,variant:spec?spec.variant:id%3,stage:ready?4:0,entrance:null,name:spec?(combined&&spec.largeName?spec.largeName:spec.name):combined?(type==='shop'?'夢華酒樓':type==='home'?'合院人家':'合院工坊'):type==='home'?`${['柳蔭','汴水','杏花'][id%3]}人家 ${id}`:type==='shop'?['春水茶坊','陳記食肆','錦色布莊'][id%3]:['青瓷作坊','木作小院','織雲坊'][id%3]});}
   const merged=type==='garden'?mergeGardens(this):null;syncCargo(this);this.rebuildRoads();this.revision++;this.log(`一處${combined?'四格合建的':cells.length===1?'新':cells.length+'間相連的'}${TYPES[type]}${ready?'已落成':'開始動工'}`);
   return merged||block;
  }
@@ -164,6 +165,6 @@ export class Town {
  static restore(data){
   if(![1,2,3,4,5,6,7,8].includes(data?.version)||!Array.isArray(data.blocks)||!Array.isArray(data.buildings)||!Array.isArray(data.people)||!Array.isArray(data.carts))throw new Error('存檔格式不相容');
   if(data.buildings.length>143||!Number.isFinite(data.time)||!Number.isFinite(data.elapsed))throw new Error('存檔內容無效');
-  const town=new Town();Object.assign(town,data);town.market=data.version>=8&&data.market?data.market:{trades:0};town.publicWorks=data.version>=7&&Array.isArray(data.publicWorks)?data.publicWorks:[];town.literati=data.version>=6&&data.literati?data.literati:{...createLiterati(),nextAt:town.elapsed+3};town.life=data.version>=2&&data.life?data.life:createLife();town.stories=data.version>=3&&data.stories?data.stories:createStories();town.weather=data.version>=4&&data.weather?data.weather:createWeather();if(data.version<4||!data.economy)migrateEconomy(town);else syncCargo(town);town.rebuildRoads();town.revision++;return town;
+  const town=new Town();Object.assign(town,data);town.buildings=town.buildings.map(b=>({...b,tier:tierOf(b)}));town.market=data.version>=8&&data.market?data.market:{trades:0};town.publicWorks=data.version>=7&&Array.isArray(data.publicWorks)?data.publicWorks:[];town.literati=data.version>=6&&data.literati?data.literati:{...createLiterati(),nextAt:town.elapsed+3};town.life=data.version>=2&&data.life?data.life:createLife();town.stories=data.version>=3&&data.stories?data.stories:createStories();town.weather=data.version>=4&&data.weather?data.weather:createWeather();if(data.version<4||!data.economy)migrateEconomy(town);else syncCargo(town);town.rebuildRoads();town.revision++;return town;
  }
 }
