@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {Town,perimeter,key,pathfind,dragCells} from '../src/simulation.js';
-test('drag limits to three orthogonally connected cells',()=>{const c=dragCells({x:0,z:0},{x:8,z:8});assert.equal(c.length,3);for(let i=1;i<c.length;i++)assert.equal(Math.abs(c[i].x-c[i-1].x)+Math.abs(c[i].z-c[i-1].z),1);});
+test('straight drag allows four orthogonally connected cells',()=>{const c=dragCells({x:0,z:0},{x:8,z:0});assert.equal(c.length,4);for(let i=1;i<c.length;i++)assert.equal(Math.abs(c[i].x-c[i-1].x)+Math.abs(c[i].z-c[i-1].z),1);});
 test('three cells share only an exterior road perimeter',()=>{const ring=perimeter([{x:0,z:0},{x:1,z:0},{x:2,z:0}]);assert(!ring.has(key(2,0)));assert(!ring.has(key(6,0)));assert(ring.has(key(4,2)));assert(ring.has(key(-2,0)));});
 test('invalid, overlapping, out-of-bounds and disconnected placements are atomic',()=>{const t=new Town();assert(t.place('home',[{x:0,z:0}]));const before=t.buildings.length;for(const cells of [[{x:0,z:0},{x:1,z:0}],[{x:3,z:0}],[{x:-2,z:0},{x:1,z:0}]])assert.equal(t.place('shop',cells),null);assert.equal(t.buildings.length,before);});
 test('auto roads connect distant blocks without entering any building',()=>{const t=new Town();t.place('home',[{x:-6,z:0},{x:-5,z:0},{x:-4,z:0}],true);t.place('work',[{x:1,z:3}],true);for(const r of t.roads){const [x,z]=r.split(',').map(Number);assert(!t.isInterior(x,z));}const p=pathfind(t.roads,key(...t.buildings[0].entrance),key(...t.buildings[3].entrance));assert(p.length>0);for(let i=1;i<p.length;i++)assert.equal(Math.abs(p[i][0]-p[i-1][0])+Math.abs(p[i][1]-p[i-1][1]),1);});

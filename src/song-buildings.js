@@ -1,7 +1,9 @@
+import {varietyBuilding} from './variety-scene.js';
 import * as THREE from 'three';
 import {designFor} from './heritage.js';
 // The shared primitives also serve the original village; each plan has its own silhouette.
 export function songBuilding(b,api){
+ const varied=varietyBuilding(b,api);if(varied)return varied;
  const {box,cyl,ball,beam,roof,tree,mat}=api,g=new THREE.Group();
  const design=designFor(b),large=!!b.footprint,size=large?7.6:3.7;
  g.position.set(b.x*4,0,b.z*4);g.rotation.y=b.facing||0;
@@ -30,7 +32,13 @@ export function songBuilding(b,api){
   if(b.stage===2&&design!=='pond')roof(g,size-.5,size-.5,.9,2.1,tile);
   return g;
  }
- if(design==='garden'){
+ if(design==='scholarGarden'){
+  water(5.8,1.7,0,.3);box(g,.85,.12,2.4,wood,0,.4,.3);for(let i=0;i<5;i++){const rock=ball(g,.45+i*.08,0x8e9589,-2.2+Math.sin(i)*.3,.6+i*.15,-1.5+Math.cos(i)*.3);rock.scale.y=1.6;}for(const x of [1.6,2.8])for(const z of [-2.7,-1.5])box(g,.08,1.5,.08,wood,x,1,z);const rr=new THREE.Group();rr.position.set(2.2,0,-2.1);g.add(rr);roof(rr,2,2,.65,1.9,tile);tree(g,-2.4,2.5,.6,true);tree(g,2.6,2.3,.4);
+ }else if(design==='orchard'){
+  for(const x of [-size*.27,size*.27])for(const z of [-size*.27,size*.27]){tree(g,x,z,large?.48:.25);for(let i=0;i<3;i++)ball(g,.09,0xc2a15b,x+Math.sin(i*2)*.25,large?1.25:.75,z+Math.cos(i*2)*.25);}box(g,.55,.06,size-.3,stone,0,.22,0);if(large){water(.55,6,-3,0);hall(2,-2,1.6,1.5,1.2);}for(let i=0;i<8;i++)box(g,.045,.55,.045,wood,-size*.45+i*size*.13,.4,size*.45);
+ }else if(design==='wazi'){
+  const w=large?5:2.5;box(g,w,.45,large?2.3:1.2,wood,0,.4,-size*.2);for(const x of [-w/2,w/2])box(g,.12,2,.12,wood,x,1.2,-size*.2);const rr=new THREE.Group();rr.position.z=-size*.2;g.add(rr);roof(rr,w+.5,large?3:1.8,.6,2.3,tile);box(g,.7,.7,.4,wood,0,.9,-size*.2+.3);for(const z of [size*.1,size*.3])for(const x of [-size*.22,size*.22])box(g,large?1.5:.65,.35,.3,wood,x,.4,z);if(large)for(const x of [-3.1,3.1])hall(x,0,1,5,1.35);
+ }else if(design==='garden'){
   box(g,size-.5,.06,.65,0xc1b79a,0,.22,0);box(g,.65,.06,size-.5,0xc1b79a,0,.22,0);
   for(const x of [-size*.26,size*.26])for(const z of [-size*.26,size*.26]){cyl(g,size*.17,size*.18,.2,0x778358,x,.28,z,10);for(let i=0;i<7;i++){const xx=x+Math.sin(i*3)*size*.12,zz=z+Math.cos(i*2)*size*.12;cyl(g,.015,.015,.25,0x54815c,xx,.45,zz);ball(g,.1,[0xdbaa96,0xd9c97d,0xa8aed0][i%3],xx,.6,zz);}}
   for(const x of [-size*.35,size*.35]){box(g,.85,.1,.4,wood,x,.55,0);box(g,.85,.4,.08,wood,x,.7,-.18);}if(large){tree(g,-3,-3,.5,true);tree(g,3,3,.5,true);}

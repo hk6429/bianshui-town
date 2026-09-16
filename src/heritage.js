@@ -1,11 +1,19 @@
+import {NEW_DESIGNS} from './variety.js';
 // Public-domain Song texts; the buildings are literary interpretations, not reconstructions.
 export const SOURCES={
+ wazi:{author:'孟元老',title:'《東京夢華錄》卷五〈京瓦伎藝〉',era:'南宋追記北宋汴京',quote:'霍四究，說《三分》。尹常賣，《五代史》。',url:'https://zh.wikisource.org/zh-hant/東京夢華錄/卷五',note:'卷二記桑家瓦子與勾欄，卷五記講史、小說等伎藝。遊戲說書內容為汴河生活故事，並非史料原有演出腳本。'},
+
  city:{author:'孟元老',title:'《東京夢華錄》卷二〈酒樓〉',era:'南宋追記北宋汴京',quote:'凡京師酒店，門首皆縛綵樓歡門。',url:'https://zh.wikisource.org/zh-hant/東京夢華錄/卷二',note:'書中記錄汴京酒樓的歡門、廊道與夜間燈火。此處取其市井空間意象，並非特定酒樓復原。'},
  pond:{author:'楊萬里',title:'〈小池〉',era:'南宋 · 詩中小池',quote:'小荷才露尖尖角，早有蜻蜓立上頭。',url:'https://zh.wikisource.org/zh-hant/小池',note:'把小荷、樹陰與蜻蜓轉成可觀察的園景。詩未在此指定汴京地點。'},
  pavilion:{author:'歐陽修',title:'〈醉翁亭記〉',era:'北宋 · 滁州琅琊山',quote:'有亭翼然臨於泉上者，醉翁亭也。',url:'https://zh.wikisource.org/zh-hant/醉翁亭記',note:'取臨泉亭榭與遊人共樂的意象；滁州不在汴京，本亭為跨地域的文學轉譯。'},
  academy:{author:'朱熹',title:'〈觀書有感〉其一',era:'南宋 · 讀書的譬喻',quote:'半畝方塘一鑑開，天光雲影共徘徊。',url:'https://zh.wikisource.org/zh-hant/觀書有感',note:'以方塘與活水比喻讀書所得。遊戲把書齋與方塘組成書院，並非詩中建築的考據復原。'}
 };
 export const DESIGNS={
+ ...NEW_DESIGNS,
+ wazi:{name:'街巷說書棚',largeName:'瓦舍勾欄',type:'garden',variant:0,mark:'說',sizes:[1,4],source:'wazi',detail:'說書臺、篷頂與聽眾長凳；四格成帶圍廊的瓦舍勾欄，定期聚眾聽書。'},
+ orchard:{name:'桑柳果圃',largeName:'桑柳田園',type:'garden',variant:0,mark:'圃',sizes:[1,4],source:null,detail:'果樹、竹籬與田間小徑；四格增添水渠與農舍，屬田園意象設計。'},
+ scholarGarden:{name:'曲水疊石園',type:'garden',variant:0,mark:'景',sizes:[4],source:null,detail:'四格花園合成曲水、疊石、亭榭與花木的完整園景。'},
+
  residence:{name:'雅居小樓',type:'home',variant:0,mark:'居',sizes:[1],source:null,detail:'雙層民居、木欄與花窗；可住四人。'},
  mansion:{name:'四合雅宅',type:'home',variant:0,mark:'宅',sizes:[4],source:null,detail:'四格特殊民居，正廳與雙翼廂房圍合花木中庭；可住八人。'},
  kiln:{name:'精製窯坊',type:'work',variant:0,mark:'陶',sizes:[1],source:null,detail:'窯爐、煙囪與晾坯架；陶器加工加快。'},
@@ -27,4 +35,4 @@ export const DESIGNS={
 export const designFor=b=>b.design|| (b.type==='shop'?['tea','food','textile'][b.variant]:null);
 export function squareCells(c){return [{x:c.x,z:c.z},{x:c.x+1,z:c.z},{x:c.x,z:c.z+1},{x:c.x+1,z:c.z+1}];}
 export function isSquare(cells){return cells.length===4&&new Set(cells.map(c=>`${c.x},${c.z}`)).size===4&&Math.max(...cells.map(c=>c.x))-Math.min(...cells.map(c=>c.x))===1&&Math.max(...cells.map(c=>c.z))-Math.min(...cells.map(c=>c.z))===1;}
-export const gardenActivity=b=>({pond:'沿池賞荷、看蜻蜓',pavilion:'在亭中歇腳、賞景',academy:'在書院讀書、觀方塘'})[b.design]||'在園中散步';
+export const gardenActivity=b=>({wazi:'在瓦舍聽書、看表演',orchard:'沿田間小徑看果樹',scholarGarden:'在曲水疊石間遊園',pond:'沿池賞荷、看蜻蜓',pavilion:'在亭中歇腳、賞景',academy:'在書院讀書、觀方塘'})[b.design]||'在園中散步';

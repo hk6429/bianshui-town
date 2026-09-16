@@ -1,0 +1,16 @@
+Browser tab: 610003843, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v8".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 96-107
++			131 text ☀
++			132 text 申時 · 炊煙漸起
++			133 text 第 1 日　16:58
++			134 text 8
++			135 text 6
++			136 text 6
++			137 text 卸貨完成，貨船離岸
++			138 text 10
++			139 text 11
++			140 text 0
++				141 text 攤前看新貨
++				142 text 瓦舍勾欄 · 正在相聚
+The focused UI element is 88 button Description: 繼續, Help: 暫停或繼續（空白鍵）, ID: pause-btn

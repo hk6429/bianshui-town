@@ -37,9 +37,9 @@ export function tickStories(t){
   return;
  }
  if(!day||t.elapsed<s.nextAt||t.people.length<3)return;
- const shops=t.buildings.filter(b=>b.type==='shop'&&b.stage>=3);if(!shops.length)return;
+ const shops=t.buildings.filter(b=>(b.type==='shop'||b.design==='wazi')&&b.stage>=3);if(!shops.length)return;
  const spec=STORY_TYPES[s.sequence%STORY_TYPES.length];
- const shop=(spec.type==='tea'?shops.find(b=>b.variant===0):null)||shops[s.sequence%shops.length];
+ const regular=shops.filter(b=>b.type==='shop'),pool=regular.length?regular:shops;const shop=(spec.type==='story'?shops.find(b=>b.design==='wazi'):null)||(spec.type==='tea'?regular.find(b=>b.variant===0):null)||pool[s.sequence%pool.length];
  const center=shop.entrance;
  // Distinct, connected roadside positions make gathering visible without stacking people.
  const slots=[...t.roads].map(point).filter(([x,z])=>Math.abs(x-center[0])+Math.abs(z-center[1])<=4).sort((a,b)=>Math.hypot(a[0]-center[0],a[1]-center[1])-Math.hypot(b[0]-center[0],b[1]-center[1]));
