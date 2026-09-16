@@ -36,3 +36,5 @@
 #trade-ledger{max-height:200px;overflow:auto;font-size:14px;line-height:1.8}#city-budget button:disabled{opacity:.55;cursor:default}
 
 #fire-alert{position:fixed;top:105px;left:50%;transform:translateX(-50%);z-index:20;max-width:90vw;padding:12px 18px;background:#913e30;color:#fff4d8;border:2px solid #e3bd71;border-radius:12px;box-shadow:0 3px 12px #0003}#fire-alert[hidden]{display:none}
+
+.scene-keyboard-tools{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:6px 0;pointer-events:auto}.scene-keyboard-tools button{min-height:44px;padding:8px 12px;background:#f7f4e7;border:1px solid #9d9e83;border-radius:7px;color:#34452f;font-size:14px}#scene-instructions{background:#f7f4e7;color:#34452f;padding:6px 10px;border-radius:7px;font-size:14px;max-width:540px;line-height:1.5}#world:focus-visible{outline:3px solid #715224;outline-offset:-4px}@media(max-width:600px){#scene-instructions{width:100%;font-size:12px}.scene-keyboard-tools{gap:4px}.scene-keyboard-tools button{font-size:12px}}

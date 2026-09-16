@@ -1,0 +1,17 @@
+✔ native controls, shortcuts with modifiers, and IME never change the scene (0.866042ms)
+✔ keyboard cursor traverses all four axes and stays inside the buildable map (0.206583ms)
+✔ camera pan preserves viewing offset, clamps edges and leaves city state untouched (0.355708ms)
+✔ public streets connect to doors, block construction, persist and can be removed (6.607208ms)
+✔ moving one connected house preserves occupants and leaves its neighbour intact (36.04125ms)
+✔ demolition conserves cargo, residents survive and are rehoused without dangling references (500.5565ms)
+✔ home and workshop upgrades expand capacity, preserve variants and reject occupied four-grid expansion (15.018083ms)
+✔ editing roads while a loaded cart is moving never delivers to a missing shop (600.28225ms)
+✔ visitors actually walk onto a connected public street (127.5885ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1354.690541

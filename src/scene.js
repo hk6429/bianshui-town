@@ -151,6 +151,10 @@ export class TownScene {
   const delta=target.sub(this.controls.target).multiplyScalar(1-Math.exp(-dt*7));this.controls.target.add(delta);this.camera.position.add(delta);
  }
  showBuildGrid(visible){if(!this.plotGrid){this.plotGrid=new THREE.Group();this.scene.add(this.plotGrid);const material=new THREE.LineBasicMaterial({color:0x5e7354,transparent:true,opacity:.36});for(let x=-34;x<=10;x+=4)this.plotGrid.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x,.11,-26),new THREE.Vector3(x,.11,26)]),material));for(let z=-26;z<=26;z+=4)this.plotGrid.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-34,.11,z),new THREE.Vector3(10,.11,z)]),material));}this.plotGrid.visible=visible;}
+ pan(dx,dz){
+  const target=this.controls.target,next=target.clone();next.x=THREE.MathUtils.clamp(target.x+dx*4,-45,40);next.z=THREE.MathUtils.clamp(target.z+dz*4,-45,45);
+  this.camera.position.add(next.clone().sub(target));target.copy(next);this.controls.update();
+ }
  resetView(){this.controls.target.set(-7,0,0);this.camera.position.set(41,53,65);this.camera.zoom=1;this.camera.updateProjectionMatrix();}
  rotate(angle){const offset=this.camera.position.clone().sub(this.controls.target);offset.applyAxisAngle(new THREE.Vector3(0,1,0),angle);this.camera.position.copy(this.controls.target).add(offset);}
 }

@@ -1,0 +1,11 @@
+Browser tab: 610004065, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?storage-test=1".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 8-10, 19, 21, 23, 54
++			59 text ☀
++			60 text 未時 · 日光正好
++			61 text 第 1 日　13:26
++			62 text 2
++			63 text 4
++			64 text 4
++			65 text 進度已留存
+The focused UI element is 29 button ＋ 宋韻營造, ID: blueprints-btn

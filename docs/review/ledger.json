@@ -1609,10 +1609,22 @@
       "acceptance": [
         "純鍵盤選民居、移動兩格、預覽並建造成功，Esc 退出。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/scene-keyboard.js",
+        "src/main.js",
+        "src/scene.js",
+        "index.html",
+        "src/style.css"
+      ],
+      "evidence": [
+        "tests/scene-keyboard.test.js",
+        "evidence/keyboard/README.md",
+        "evidence/keyboard/focused-tests.txt",
+        "evidence/keyboard/tests.txt",
+        "evidence/keyboard/build.txt"
+      ],
+      "verifiedBy": "root：聚焦及全套測試、Chrome鍵盤操作、390×844取消驗證",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -1632,10 +1644,22 @@
       "acceptance": [
         "探索模式純鍵盤可向四方移動且不改變小鎮。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/scene-keyboard.js",
+        "src/main.js",
+        "src/scene.js",
+        "index.html",
+        "src/style.css"
+      ],
+      "evidence": [
+        "tests/scene-keyboard.test.js",
+        "evidence/keyboard/README.md",
+        "evidence/keyboard/focused-tests.txt",
+        "evidence/keyboard/tests.txt",
+        "evidence/keyboard/build.txt"
+      ],
+      "verifiedBy": "root：聚焦及全套測試、Chrome鍵盤操作、390×844取消驗證",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -1655,10 +1679,22 @@
       "acceptance": [
         "Tab 到宋韻營造後按 Space 開圖錄且不切換暫停。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/scene-keyboard.js",
+        "src/main.js",
+        "src/scene.js",
+        "index.html",
+        "src/style.css"
+      ],
+      "evidence": [
+        "tests/scene-keyboard.test.js",
+        "evidence/keyboard/README.md",
+        "evidence/keyboard/focused-tests.txt",
+        "evidence/keyboard/tests.txt",
+        "evidence/keyboard/build.txt"
+      ],
+      "verifiedBy": "root：聚焦及全套測試、Chrome鍵盤操作、390×844取消驗證",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2023,10 +2059,22 @@
       "acceptance": [
         "手機可一按取消道路或搬移，無資料變動且預覽消失。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/scene-keyboard.js",
+        "src/main.js",
+        "src/scene.js",
+        "index.html",
+        "src/style.css"
+      ],
+      "evidence": [
+        "tests/scene-keyboard.test.js",
+        "evidence/keyboard/README.md",
+        "evidence/keyboard/focused-tests.txt",
+        "evidence/keyboard/tests.txt",
+        "evidence/keyboard/build.txt"
+      ],
+      "verifiedBy": "root：聚焦及全套測試、Chrome鍵盤操作、390×844取消驗證",
       "reviewSource": "docs/review/ux.json"
     },
     {

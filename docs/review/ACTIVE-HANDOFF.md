@@ -255,3 +255,13 @@
 - 校正舊交接：空城中立65；round((average-65)*.6)。控制低57.5修正-4，補水67.5修正+2；39次到585，再一次未改善遷出1/改善保留2倒數0。真三維正常污染衰減後68.4，個人卡與總覽一致。
 - 41聚焦/235全套/build已通過；本階段只補Chrome與文件。evidence/wellbeing。外觀追加已獨立提交e863a14，本C25收尾另提交。
 - 下一階段由ledger選O/U/E待辦；保留全部100項與最後四專家複評後部署條件。未部署。
+
+## 新階段：U01/U02/U03/U19 鍵盤與取消
+- 基準3ccf3b1；加入可聚焦場景、格點游標、Enter提交、探索平移，滑鼠與鍵盤共用提交。快捷鍵僅場景焦點生效，提供可見取消按鈕。驗證包含邊界/非法放置、原生按鈕Space及真瀏覽器純鍵盤營造。
+
+## 最新交接：U01/U02/U03/U19鍵盤與取消完成（2026-09-16）
+- 46 verified / 5 implemented / 49 open。9聚焦/238全套/build、Chrome鍵盤移2格Enter建屋、占地阻擋不扣款、Esc及390×844取消、Tab+Space開圖錄且不切暫停已驗證。evidence/keyboard。
+- src/scene-keyboard.js純輸入路由和stepCursor；場景外快捷鍵不攔截。canvas tabindex0+描述，主畫面入口與取消鈕。Enter/Space重複keydown不反覆提交；方向鍵/WASD在營造移格，探索pan，界限保留。
+- main原pointerup提交提取submitPlan供滑鼠與鍵盤共用。焦點模式鍵盤移格scene.focusAt，選圖錄/road/搬移後focusScene；pointerdown切回滑鼠控制。cancelBuild清drag/down/pinned/hovered、探索、預覽，僅UI不改城。
+- 已完成C25提交3ccf3b1。未部署；仍須O01–25、其餘U及E開放項和最後四專家複評。
+- 下一獨立階段建議U04/U05：觸控多指取消草稿、單指抬起先預覽/確認/取消，再與鍵盤共享commit。需先查pointerdown/move/up與OrbitControls觸控機制；不可把手機尺寸測試當實機多指驗證。亦須處理取消後pointerup不得提交。
