@@ -1,0 +1,16 @@
+Browser tab: 610004270, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v8&storage-test".
+0 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v8&storage-test
+	1 container 街頭往事, ID: story-history
+		2 heading 街頭往事, Value: 2, ID: story-history-heading
+			3 text 街頭往事
+		4 button 關閉街頭往事
+		5 container story-history-content
+			6 text 保留最近24場摘要；以下均已散場或取消。補訪只帶你回到當時地點，不重演活動，也不計入親眼見過。
+			7 container
+				8 heading 勾欄長篇評話 · 已取消, Value: 3
+					9 text 勾欄長篇評話 · 已取消
+				10 image 瓦舍勾欄的歷史地點示意
+				11 text 地點：瓦舍勾欄 集合未完成，活動取消。 發生原因：本次在落成瓦舍相聚，採用勾欄長篇評話。 實際到場：無到場活動紀錄
+				12 button 補訪當時地點（已散場）
+
+The focused UI element is 4 button 關閉街頭往事

@@ -1,3 +1,4 @@
+import {installStoryHistoryUI} from './story-history.js';
 import {observeStory} from './council-exploration.js';
 import {observeResident,watchResident,residentRecord,familiarityText} from './resident-relationships.js';
 import {installResidentRelationshipsUI} from './resident-relationships-ui.js';
@@ -89,6 +90,7 @@ function changeJourney(action){
 const identityUI=installPlaceIdentityUI({getTown:()=>town,change:changeJourney,edit:fn=>applyUrban(fn,{record:false}),focus:b=>{stopFollowing();setMode('explore');pinned={kind:'building',id:b.id};hovered=null;scene.focusAt([b.x*CELL,b.z*CELL],2.3);focusInspector();}});
 const readingUI=installReadingCollectionUI({getTown:()=>town,change:changeJourney,openWork:id=>{const w=WORKS[id];if(w.authorId)showAuthorWork(w.authorId);else showLiterature(w.source);}});
 installResidentRelationshipsUI({getTown:()=>town,change:changeJourney,focus:(p,follow)=>{stopFollowing();setMode('explore');pinned={kind:'person',id:p.id};hovered=null;const b=town.building(p.current)||town.building(p.home);scene.focusAt(!p.outside&&b?[b.x*CELL,b.z*CELL]:[p.x,p.z],2.3);if(follow){following=p.id;scene.follow(p.id);$('#following-name').textContent=`跟著${p.name}過一天`;$('#follow-status').hidden=false;}focusInspector();}});
+const storyHistoryUI=installStoryHistoryUI({getTown:()=>town,visit:e=>{stopFollowing();pinned=hovered=null;setMode('explore');scene.focusAt(e.center);toast(`${e.title} · ${e.venue}（已散場，此處為歷史地點）`);}});
 const journeyUI=installJourneyUI({getTown:()=>town,change:changeJourney,toast});
 function save(){if(recovery?.fault){$('#save-status').textContent='執行錯誤 · 已停止自動儲存';return;}if(fixtureMode){$('#save-status').textContent='預覽場景 · 不覆寫小鎮';return;}const result=saveStore.save(town.toJSON());$('#save-status').textContent=result.ok?'進度已留存':result.status==='conflict'?'另一分頁已有更新 · 請開啟存檔管理':result.status==='recovery'?'原存檔保留 · 自動儲存已停止':'儲存失敗 · 請匯出目前小鎮';if(result.status==='conflict'&&!paused){paused=true;saveUI?.open();}}
 
@@ -118,6 +120,7 @@ $('#sound-btn').onclick=async()=>{try{const on=await sound.toggle();$('#sound-bt
 $('#volume').oninput=e=>sound.setVolume(Number(e.target.value)/100);
 $('#life-btn').onclick=()=>{journalOpen=!journalOpen;if(journalOpen&&compactUI())pinned=hovered=null;$('#life-btn').setAttribute('aria-expanded',String(journalOpen));updateJournal();if(journalOpen)focusHeading($('#life-panel'));};
 $('#life-panel').onclick=e=>{
+ if(e.target.closest('[data-story-history]')){storyHistoryUI.open();return;}
  if(e.target.closest('[data-close-life]')){journalOpen=false;updateJournal();$('#life-btn').focus();return;}
  if(e.target.closest('[data-production]')){renderProduction();$('#production').showModal();return;}
  if(e.target.closest('[data-story-focus]')){
@@ -273,7 +276,7 @@ function updateUI(day){syncPauseButton();const incident=town.buildings.find(b=>b
 function boatStatus(){const b=town.life.boat;return b.state==='approach'?(b.mast?'貨船沿汴河駛來':'船家收桅，緩緩穿過虹橋'):({mooring:'船家正在靠岸繫纜',unloading:'腳夫往返船邊卸貨',depart:'卸貨完成，貨船離岸',away:'等候下一艘來船'})[b.state];}
 function updateJournal(){
  const panel=$('#life-panel');$('#life-btn').setAttribute('aria-expanded',String(journalOpen));panel.hidden=!journalOpen;if(!journalOpen)return;const l=town.life;
- if(!panel.querySelector('.watch-buttons'))panel.innerHTML=`<div class="eyebrow">此時此地 · 活著的市井</div><button class="panel-close" data-close-life>關閉市井見聞</button><h2 id="life-heading" tabindex="-1">汴水有消息</h2><p class="boat-status"></p><div class="life-numbers"><span><b id="j-visitors"></b> 來客</span><span><b id="j-stock"></b> 件待運</span><span><b id="j-delivered"></b> 件送達</span></div><div class="watch-buttons"><button data-focus="bridge">虹橋看船 ↗</button><button data-focus="dock">碼頭卸貨 ↗</button><button data-focus="town">回到街坊 ↗</button></div><button class="production-link" data-production>物產流轉 · 追蹤貨物 ↗</button><div id="street-story"><strong id="story-title"></strong><p id="story-description"></p><button data-story-focus>去街口看看 ↗</button></div><ol class="life-events"></ol>`;
+ if(!panel.querySelector('.watch-buttons'))panel.innerHTML=`<div class="eyebrow">此時此地 · 活著的市井</div><button class="panel-close" data-close-life>關閉市井見聞</button><h2 id="life-heading" tabindex="-1">汴水有消息</h2><p class="boat-status"></p><div class="life-numbers"><span><b id="j-visitors"></b> 來客</span><span><b id="j-stock"></b> 件待運</span><span><b id="j-delivered"></b> 件送達</span></div><div class="watch-buttons"><button data-focus="bridge">虹橋看船 ↗</button><button data-focus="dock">碼頭卸貨 ↗</button><button data-focus="town">回到街坊 ↗</button></div><button class="production-link" data-production>物產流轉 · 追蹤貨物 ↗</button><div id="street-story"><strong id="story-title"></strong><p id="story-description"></p><button data-story-focus>去街口看看 ↗</button></div><button data-story-history>街頭往事 · 散場補訪</button><ol class="life-events"></ol>`;
  panel.querySelector('.boat-status').textContent=town.buildings.length?boatStatus():'先安放街坊，等市井生活長出來';
  $('#j-visitors').textContent=l.visitors.filter(a=>a.visible).length;$('#j-stock').textContent=l.dock.stock;$('#j-delivered').textContent=l.dock.delivered;
  const event=town.stories.active||town.stories.last;

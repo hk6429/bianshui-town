@@ -1,0 +1,24 @@
+✔ missing garden generates proposal; adoption needs actual finished construction; ignore has no penalty (5.0775ms)
+✔ work proposal and garden proposal are independent; unfinished and damaged facilities do not fulfill requests (0.714875ms)
+✔ real world event remains unseen until explicitly viewed while active and someone has arrived (104.427958ms)
+✔ save rejects duplicate proposals, missing completion details, future records and nonexistent event IDs (0.922667ms)
+✔ failed persistence never publishes adoption and historical venue text is escaped (0.492292ms)
+✔ street events gather real residents, finish and release everyone (329.339625ms)
+✔ resident diary follows actual work, meals and return home; rolls over by day (18.414416ms)
+✔ v1/v2 saves migrate diaries and v3 survives active events without stranded residents (280.727125ms)
+✔ pedestrian yields to oncoming ox, resumes after passing and uses side of road (0.274042ms)
+✔ same-direction followers maintain headway; opposite lanes and bridge crowding make progress (0.130291ms)
+✔ three event types cycle over multiple days while freight remains conserved (833.755375ms)
+✔ stationary residents are not described as yielding or blocked (0.224542ms)
+✔ real venue changes story branch, narration and duration; ended record explains each cause (241.80475ms)
+✔ arrival history contains actual attendees only and remains after the residents depart (82.781666ms)
+✔ history keeps newest 24 only; cancelled gathering has no fictional participants; legacy lacks fabricated history (78.268792ms)
+✔ strict archive bounds reject duplicate IDs, future time, impossible participants and malformed branches; text escaped (79.109042ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1539.319709

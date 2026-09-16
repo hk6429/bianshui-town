@@ -1783,22 +1783,30 @@
       "acceptance": [
         "沒看過說書時顯示條件；僅世界發生但玩家未查看不標已見；實際查看後才更新。"
       ],
-      "status": "implemented",
+      "status": "verified",
       "implementation": [
         "src/council-exploration.js",
         "src/journey-ui.js",
         "src/main.js",
         "src/save-schema.js",
-        "src/story-data.js"
+        "src/story-data.js",
+        "src/stories.js",
+        "src/story-history.js"
       ],
       "evidence": [
         "tests/council-exploration.test.js",
         "evidence/council-exploration/tests.txt",
-        "evidence/council-exploration/panel.txt"
+        "evidence/council-exploration/panel.txt",
+        "tests/story-history.test.js",
+        "evidence/story-history/focused.txt",
+        "evidence/story-history/tests.txt",
+        "evidence/story-history/exploration-after-visit.txt",
+        "evidence/story-history/past-events.txt",
+        "evidence/story-history/revisit.txt",
+        "evidence/story-history/past-events.png"
       ],
-      "verifiedBy": null,
-      "reviewSource": "docs/review/octalysis.json",
-      "remaining": "待補完整瀏覽器操作：缺園景採納到落成回應；活動進行中街口跳轉後探索冊更新。"
+      "verifiedBy": "根代理：實際模擬測試、Chrome 操作與畫面證據",
+      "reviewSource": "docs/review/octalysis.json"
     },
     {
       "id": "O21",
@@ -1817,10 +1825,24 @@
       "acceptance": [
         "在不同條件或選擇下出現兩個可辨識結果；回看能說明觸發原因，無付費抽取。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/stories.js",
+        "src/story-data.js",
+        "src/story-history.js",
+        "src/main.js",
+        "src/save-schema.js"
+      ],
+      "evidence": [
+        "tests/story-history.test.js",
+        "evidence/story-history/focused.txt",
+        "evidence/story-history/tests.txt",
+        "evidence/story-history/exploration-after-visit.txt",
+        "evidence/story-history/past-events.txt",
+        "evidence/story-history/revisit.txt",
+        "evidence/story-history/past-events.png"
+      ],
+      "verifiedBy": "根代理：實際模擬測試、Chrome 操作與畫面證據",
       "reviewSource": "docs/review/octalysis.json"
     },
     {
@@ -1840,10 +1862,24 @@
       "acceptance": [
         "事件散場後仍可讀摘要及已發生參與者；補訪不冒稱人群仍在現場。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/stories.js",
+        "src/story-data.js",
+        "src/story-history.js",
+        "src/main.js",
+        "src/save-schema.js"
+      ],
+      "evidence": [
+        "tests/story-history.test.js",
+        "evidence/story-history/focused.txt",
+        "evidence/story-history/tests.txt",
+        "evidence/story-history/exploration-after-visit.txt",
+        "evidence/story-history/past-events.txt",
+        "evidence/story-history/revisit.txt",
+        "evidence/story-history/past-events.png"
+      ],
+      "verifiedBy": "根代理：實際模擬測試、Chrome 操作與畫面證據",
       "reviewSource": "docs/review/octalysis.json"
     },
     {

@@ -395,3 +395,10 @@
 - story-data純資料供schema，stories共用storyDay/storyVenues與探索冊。journey可選council最多2、seenStories最多3，時間/唯一/完成欄位驗證；commitJourney持久化失敗不發布。
 - 19聚焦通過；Chrome確認面板與未見三類正常。完整UI採納到建成、街口跳轉後更新仍待補，故87 verified /7 implemented /6 open。未假稱O19/O20已完整驗收。
 - 下一獨立里程碑O21/O22事件分歧與補訪，可一起補此處街口UI；之後O25與E18–20，E01–04/E21待補驗和最後四領域複評。百項goal保持active。
+
+## 最新交接：O20–O22完成（2026-09-16）
+- 前輪638bc52部署https://420eac69.bianshui-town.pages.dev，正式讀回相符，分類progress。
+- O21說書依瓦舍stage／商鋪street分支，實際activity及28／12秒不同；結束記理由。O22最近24場history含摘要、地點、實際attendees，取消不捏造到場，圖文與補訪入口，歷史存檔不需參與者仍在鎮。
+- 16聚焦、303全套、build通過。Chrome v8首場瓦舍無人到場取消；第二場攤前新貨active時跳轉，探索冊確實親自見過，其餘未見；摘要李/周/陳/王四位到場，回訪明示已散場歷史地點。evidence/story-history，測試頁已關閉。
+- 90 verified /6 implemented /4 open；O19仍待完整UI採納建成驗證，E01–04/E21待補驗。剩餘實作O25階段結語、E18–20工程。最後四領域複評仍需完成，百項goal active。
+- 下一有界階段O25，順便補O19；再集中處理E18–20與相關工程待驗。

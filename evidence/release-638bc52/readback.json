@@ -1,0 +1,24 @@
+{
+  "commit": "638bc52",
+  "deployment": "https://420eac69.bianshui-town.pages.dev",
+  "files": [
+    {
+      "path": "/",
+      "status": 200,
+      "matchesBuild": true,
+      "sha256": "aea2b796a56087cca5a0095b9974160f1ef2753c948bd863f85c24f32f5958b6"
+    },
+    {
+      "path": "/assets/index-BSG5Fify.js",
+      "status": 200,
+      "matchesBuild": true,
+      "sha256": "c409ace3c735f84e95a4d593a28305276ab8f748d5b511e63ec558d06baa1ca2"
+    },
+    {
+      "path": "/assets/index-CDuQgbai.css",
+      "status": 200,
+      "matchesBuild": true,
+      "sha256": "073ddefbcd12d86cb51a8ab0c0200826f204b98f09341a8361d4460cc4407532"
+    }
+  ]
+}
