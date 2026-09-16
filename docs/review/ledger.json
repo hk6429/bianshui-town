@@ -2309,10 +2309,21 @@
       "acceptance": [
         "輔助技術讀得目前工程百分比且不每180ms大量播報。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "index.html",
+        "src/main.js",
+        "src/content-html.js",
+        "src/notices.js",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "evidence/operation-state/README.md",
+        "evidence/operation-state/focused-tests.txt",
+        "evidence/operation-state/build.txt",
+        "evidence/operation-state/construction.txt"
+      ],
+      "verifiedBy": "Codex root: focused tests and Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2332,10 +2343,22 @@
       "acceptance": [
         "點第2批貨後列表與詳細內容同指一筆，鍵盤/讀屏可辨認。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "index.html",
+        "src/main.js",
+        "src/content-html.js",
+        "src/notices.js",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "evidence/operation-state/README.md",
+        "evidence/operation-state/focused-tests.txt",
+        "evidence/operation-state/build.txt",
+        "evidence/operation-state/cargo-keyboard.txt",
+        "evidence/operation-state/cargo-filter.txt"
+      ],
+      "verifiedBy": "Codex root: focused tests and Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2355,10 +2378,23 @@
       "acceptance": [
         "390px 下能找到並開關畫卷，不需旋轉螢幕。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "index.html",
+        "src/main.js",
+        "src/content-html.js",
+        "src/notices.js",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "evidence/operation-state/README.md",
+        "evidence/operation-state/focused-tests.txt",
+        "evidence/operation-state/build.txt",
+        "evidence/operation-state/mobile-gallery.png",
+        "evidence/operation-state/mobile-gallery.txt",
+        "evidence/operation-state/pause-gallery.json"
+      ],
+      "verifiedBy": "Codex root: focused tests and Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2378,10 +2414,22 @@
       "acceptance": [
         "主動暫停時讀屏可辨識，關閉 dialog 不意外解除原先暫停。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "index.html",
+        "src/main.js",
+        "src/content-html.js",
+        "src/notices.js",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "evidence/operation-state/README.md",
+        "evidence/operation-state/focused-tests.txt",
+        "evidence/operation-state/build.txt",
+        "evidence/operation-state/corrected-location.txt",
+        "evidence/operation-state/pause-gallery.json"
+      ],
+      "verifiedBy": "Codex root: focused tests and Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -2401,10 +2449,22 @@
       "acceptance": [
         "慢速閱讀使用者在5秒後仍可找回最後失敗原因且能修正。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "index.html",
+        "src/main.js",
+        "src/content-html.js",
+        "src/notices.js",
+        "src/readable-ui.css"
+      ],
+      "evidence": [
+        "evidence/operation-state/README.md",
+        "evidence/operation-state/focused-tests.txt",
+        "evidence/operation-state/build.txt",
+        "evidence/operation-state/notices-after-delay.txt",
+        "evidence/operation-state/corrected-location.txt"
+      ],
+      "verifiedBy": "Codex root: focused tests and Chrome UI, 2026-09-16",
       "reviewSource": "docs/review/ux.json"
     },
     {

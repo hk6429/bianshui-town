@@ -1,0 +1,22 @@
+{
+  "commit": "0d004d3e5a9bffd39ab6b15bb07c62f79a73902c",
+  "production": "https://bianshui-town.pages.dev",
+  "deployment": "https://306b6ae3.bianshui-town.pages.dev",
+  "checks": [
+    {
+      "path": "/",
+      "status": "200",
+      "matchesBuild": true
+    },
+    {
+      "path": "/assets/index-gY-7rq2G.js",
+      "status": "200",
+      "matchesBuild": true
+    },
+    {
+      "path": "/assets/index-BrvKnZiT.css",
+      "status": "200",
+      "matchesBuild": true
+    }
+  ]
+}

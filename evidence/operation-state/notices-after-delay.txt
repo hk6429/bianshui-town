@@ -1,0 +1,18 @@
+{"elapsedMs":13165}
+Browser tab: 610004135, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v8&storage-test".
+0 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v8&storage-test
+	1 container 通知紀錄, ID: notices
+		2 container
+			3 heading 通知紀錄, Value: 2, ID: notices-title
+				4 text 通知紀錄
+			5 button 關閉通知紀錄
+		6 text 保留這次開啟小鎮後最近30則操作結果，最新在上；重新載入頁面後清空。
+		7 content list notice-list
+			8 container
+				9 AXListMarker 1. 
+				10 text 19:55:39 ✕ 不可營造：X 0、Z 0 已有「柳蔭人家 21」 · 杏花人家 23 · 占地1格 · 1棟 · 自由營造 · 本次不扣款
+			11 container
+				12 AXListMarker 2. 
+				13 text 19:55:39 柳蔭人家 21開始動工
+
+The focused UI element is 5 button 關閉通知紀錄

@@ -1,0 +1,88 @@
+Browser tab: 610004135, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v8&storage-test".
+0 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v8&storage-test
+	1 container app
+		2 image Description: 汴水小鎮互動三維場景, ID: world
+		3 container
+			4 text 汴
+			5 heading 汴水小鎮, Value: 1
+				6 text 汴水小鎮
+			7 text 一城煙火，慢慢生長
+			8 text ☀
+			9 text 巳時 · 晨光初醒
+			10 text 第 1 日　09:51
+			11 button Description: 切換白晝與夜晚, ID: light-toggle
+			12 button Description: 天候：晴天，自然模式, Help: 切換自然天候、細雨、晴天, ID: weather-btn
+			13 button (collapsed) 市井見聞, ID: life-btn, Secondary Actions: Expand
+			14 checkbox Description: 開啟環境音, Help: 環境音, Value: 0, ID: sound-btn
+			15 button 畫卷, ID: concepts-btn
+			16 button Description: 重置小鎮, ID: reset-town
+			17 button Description: 操作說明, ID: help-btn
+		18 container 小鎮概況
+			19 text 8
+			20 text 位居民
+			21 text 6
+			22 text 處建築園景
+			23 text 6
+			24 text 處街坊
+		25 container 柳蔭人家 21, ID: inspector
+			26 button 關閉資訊小卡, ID: close-inspector
+			27 container inspector-content
+				28 text 民居 · 選取此棟 · 一格占地（所屬街坊 1 格）
+				29 heading 柳蔭人家 21, Value: 2, ID: inspector-title
+					30 text 柳蔭人家 21
+				31 text 整地打基礎 · 已固定檢視
+				32 progress indicator Description: 柳蔭人家 21施工進度, Value: 0
+				33 text 施工進度 0%
+				34 text 工匠正在整地打基礎，靜候落成。
+				35 container
+					36 text 街坊供水 供水：住宅落成後開始分配
+				37 container
+					38 text 衛生清運 積存髒污 0 份；住戶每日新增 0 份。每日結算，增建清運院並接通道路可逐日清除。
+				39 container
+					40 text 生產污染與居住環境 此處污染 0.0／100，居住環境 100.0／100。自由營造保留既有污染，不新增、不衰減，也不降低需求。清運處理固體髒污，不能立即清掉生產污染。
+				41 container
+					42 text 園景宜居 可達園景 0 處，宜居加成 0.0／20。依門前步道路程遞減；效益由高到低排列，第二處折半、第三處四分之一，總加成最高20。自由營造僅供參考，不提高入住需求。
+				43 text 點選空地取消固定
+		44 container
+			45 text 汴 水 風過河岸，日子悠長
+		46 text ✕ 不可營造：X 0、Z 0 已有「柳蔭人家 21」 · 杏花人家 23 · 占地1格 · 1棟 · 自由營造 · 本次不扣款
+		47 container town-tools
+			48 container extra-tools
+				49 button ＋ 宋韻營造, ID: blueprints-btn
+				50 button 公共營造, ID: public-btn
+				51 button 復原上一步, ID: undo-urban
+				52 button 城市清單, ID: city-list-btn
+				53 button 文人行旅, ID: writers-btn
+				54 button 自由營造 · 收支, ID: budget-btn
+				55 button 存檔管理, ID: save-manager-btn
+				56 button 概念畫卷, ID: gallery-entry
+				57 button Description: 通知紀錄, ID: notices-btn
+				58 button 操作場景（鍵盤）, ID: keyboard-scene
+				59 button Description: 文字大小：100%, ID: text-size
+				60 checkbox (settable, integer) Description: 放開後先預覽, Value: 0, ID: precise-build
+				61 text 營造游標 X 0、Z 0 · 1 格 · 不可放置，請移動至空地或確認金庫 · 方向鍵移格，Esc 取消
+			62 text 自由探索 · 拖曳移動畫面，點選屋舍與居民
+			63 container 建造與探索
+				64 checkbox 自由探索 1, Value: 1
+					65 text 自由探索
+					66 text 1
+				67 checkbox 民居 2, Value: 0
+					68 text 民居
+					69 text 2
+				70 checkbox 商鋪 3, Value: 0
+					71 text 商鋪
+					72 text 3
+				73 checkbox 作坊 4, Value: 0
+					74 text 作坊
+					75 text 4
+				76 checkbox Description: 繼續時間, Help: 暫停或繼續（空白鍵）, Value: 1, ID: pause-btn
+				77 button 1×, Help: 調整時間速度, ID: speed-btn
+			78 text 滾輪縮放 · 右鍵拖曳平移 · Q / E 旋轉
+			79 text 時間已由你暫停
+			80 text 預覽場景 · 不覆寫小鎮
+		81 container
+			82 button Description: 放大, ID: zoom-in
+			83 button Description: 縮小, ID: zoom-out
+			84 button Description: 回到初始視角, ID: reset-view
+
+The focused UI element is 29 heading 柳蔭人家 21, Value: 2, ID: inspector-title

@@ -1,0 +1,13 @@
+✔ unvalidated cargo and market values are escaped in text and quoted attributes (0.613584ms)
+✔ ordinary cargo labels and market counters keep readable content (0.128708ms)
+✔ notices retain failure reasons past the toast timeout, in newest-first bounded order (0.55275ms)
+✔ construction semantics match the visible percentage and do not create a live announcement stream (0.245291ms)
+✔ each cargo selector exposes a toggled state and the controlled detail region (0.120542ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 70.428083

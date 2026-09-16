@@ -1,0 +1,69 @@
+Browser tab: 610004135, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v8&storage-test".
+0 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v8&storage-test
+	1 container app
+		2 image Description: 汴水小鎮互動三維場景, ID: world
+		3 container
+			4 text 汴
+			5 heading 汴水小鎮, Value: 1
+				6 text 汴水小鎮
+			7 text 一城煙火，慢慢生長
+			8 text ☀
+			9 text 巳時 · 晨光初醒
+			10 text 第 1 日　09:51
+			11 button Description: 切換白晝與夜晚, ID: light-toggle
+			12 button Description: 天候：晴天，自然模式, Help: 切換自然天候、細雨、晴天, ID: weather-btn
+			13 button (collapsed) 市井見聞, ID: life-btn, Secondary Actions: Expand
+			14 checkbox Description: 開啟環境音, Help: 環境音, Value: 0, ID: sound-btn
+			15 button 畫卷, ID: concepts-btn
+			16 button Description: 重置小鎮, ID: reset-town
+			17 button Description: 操作說明, ID: help-btn
+		18 container 小鎮概況
+			19 text 8
+			20 text 位居民
+			21 text 7
+			22 text 處建築園景
+			23 text 7
+			24 text 處街坊
+		25 container
+			26 text 汴 水 風過河岸，日子悠長
+		27 text 杏花人家 23開始動工
+		28 container town-tools
+			29 container extra-tools
+				30 button ＋ 宋韻營造, ID: blueprints-btn
+				31 button 公共營造, ID: public-btn
+				32 button 復原上一步, ID: undo-urban
+				33 button 城市清單, ID: city-list-btn
+				34 button 文人行旅, ID: writers-btn
+				35 button 自由營造 · 收支, ID: budget-btn
+				36 button 存檔管理, ID: save-manager-btn
+				37 button 概念畫卷, ID: gallery-entry
+				38 button Description: 通知紀錄, ID: notices-btn
+				39 button 操作場景（鍵盤）, ID: keyboard-scene
+				40 button Description: 文字大小：100%, ID: text-size
+				41 checkbox (settable, integer) Description: 放開後先預覽, Value: 0, ID: precise-build
+				42 text 探索：方向鍵或 WASD 平移，Q／E 旋轉；2 民居、3 商鋪、4 作坊。
+			43 text 自由探索 · 拖曳移動畫面，點選屋舍與居民
+			44 container 建造與探索
+				45 checkbox 自由探索 1, Value: 1
+					46 text 自由探索
+					47 text 1
+				48 checkbox 民居 2, Value: 0
+					49 text 民居
+					50 text 2
+				51 checkbox 商鋪 3, Value: 0
+					52 text 商鋪
+					53 text 3
+				54 checkbox 作坊 4, Value: 0
+					55 text 作坊
+					56 text 4
+				57 checkbox Description: 繼續時間, Help: 暫停或繼續（空白鍵）, Value: 1, ID: pause-btn
+				58 button 1×, Help: 調整時間速度, ID: speed-btn
+			59 text 滾輪縮放 · 右鍵拖曳平移 · Q / E 旋轉
+			60 text 時間已由你暫停
+			61 text 預覽場景 · 不覆寫小鎮
+		62 container
+			63 button Description: 放大, ID: zoom-in
+			64 button Description: 縮小, ID: zoom-out
+			65 button Description: 回到初始視角, ID: reset-view
+
+The focused UI element is 2 image Description: 汴水小鎮互動三維場景, ID: world

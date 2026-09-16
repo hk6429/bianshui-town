@@ -1,0 +1,52 @@
+Browser tab: 610004135, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v8&storage-test".
+0 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v8&storage-test
+	1 container 物產流轉, ID: production
+		2 container
+			3 text 從一船原料，到一件日用之物
+			4 heading 物產流轉, Value: 2, ID: production-title
+				5 text 物產流轉
+			6 button 關閉物產流轉
+		7 text 原料卸貨 → 牛車送坊 → 工匠加工 → 推車送店 → 來客採買。查看時暫停時間；每份原料簡化為一件成品。
+		8 container production-overview
+			49 container
+				50 heading 泥料 → 陶器, Value: 3
+					51 text 泥料 → 陶器
+				52 text 原料 4 份 · 成品 0 件 · 售出 0 件 先安放對應作坊，再等工匠到來
+			53 container
+				54 heading 木材 → 木器, Value: 3
+					55 text 木材 → 木器
+				56 text 原料 4 份 · 成品 0 件 · 售出 0 件 先安放對應作坊，再等工匠到來
+			57 container
+				58 heading 纖維 → 布匹, Value: 3
+					59 text 纖維 → 布匹
+				60 text 原料 4 份 · 成品 0 件 · 售出 0 件 曬布染坊：等工匠到坊
+		21 heading 追蹤一批貨, Value: 3
+			22 text 追蹤一批貨
+		23 container
+			24 text 貨物種類
+			25 pop up button (collapsed, settable) Description: 篩選貨物種類, Value: 泥料, ID: goods-filter, Secondary Actions: Expand
+				26 menu
+					27 全部貨物
+					28 (selected) 泥料
+					29 木材
+					30 纖維
+					31 陶器
+					32 木器
+					33 布匹
+					34 日用雜貨
+		35 container Description: 貨物批次, ID: lot-list
+			61 checkbox ✓ #10 泥料 · 漕船, Value: 1
+			62 checkbox #7 泥料 · 漕船, Value: 0
+			63 checkbox #4 泥料 · 漕船, Value: 0
+			64 checkbox #1 泥料 · 漕船, Value: 0
+		48 container #10 泥料, ID: lot-detail
+			65 heading #10 泥料, Value: 3, ID: lot-detail-title
+				66 text #10 泥料
+			67 text 來源：汴河第 1 航次
+			68 content list
+				69 container
+					70 AXListMarker 1. 
+					71 text 第 1 日 08:00 · 漕船
+			72 button 看這批貨的位置 ↗
+
+The focused UI element is 0 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v8&storage-test

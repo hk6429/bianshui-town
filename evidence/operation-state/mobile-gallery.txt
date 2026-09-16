@@ -1,0 +1,22 @@
+Browser tab: 610004131, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v8".
+0 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v8
+	1 container 一座小鎮，四段光景, ID: gallery
+		2 text 視覺提案 · 概念畫卷
+		3 heading 一座小鎮，四段光景, Value: 2, ID: gallery-title
+			4 text 一座小鎮，四段光景
+		5 button 關閉畫卷
+		6 text 開發前生成的美術方向參考；實際遊戲使用簡化的 3D 模型。
+		7 container
+			8 image 河畔初建概念圖
+			9 text 壹 · 河畔初建
+		10 container
+			11 image 白日市井概念圖
+			12 text 貳 · 白日市井
+		13 container
+			14 image 入夜街坊概念圖
+			15 text 參 · 入夜街坊
+		16 container
+			17 image 三格共享街坊概念圖
+			18 text 肆 · 街坊相連
+
+The focused UI element is 5 button 關閉畫卷
