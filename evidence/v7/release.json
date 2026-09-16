@@ -1,0 +1,44 @@
+{
+  "url": "https://bianshui-town.pages.dev/",
+  "deployment": "efef5b3e",
+  "source_commit": "1064d7c",
+  "tests": "47/47",
+  "files": [
+    {
+      "path": "index.html",
+      "sha256": "a174cab9f832860a3ccc402ff88ad3b1ada9624f8de435481db02ca73ce90bd8",
+      "matches": true
+    },
+    {
+      "path": "concepts/04-block.png",
+      "sha256": "e49c66da2d8d72c4189d5c5c6464662c08a51beb50270dd26cc294ea2e4d1344",
+      "matches": true
+    },
+    {
+      "path": "concepts/02-daytime.png",
+      "sha256": "7d54c7268a7816cb0aa7fdef7605a5146624389e43b512517c3c782c3d7b9504",
+      "matches": true
+    },
+    {
+      "path": "concepts/01-settlement.png",
+      "sha256": "ee570aa255fcc632b64a6d1bb3a949fb1b7f1ec37e24aec9b96741e2c7a44043",
+      "matches": true
+    },
+    {
+      "path": "concepts/03-nighttime.png",
+      "sha256": "a7942c78da90692268bae66348474f279fdc76323e7af726e957aa05bad71f41",
+      "matches": true
+    },
+    {
+      "path": "assets/index-Dolo8dLA.js",
+      "sha256": "876cb2493f1378e6d363cd2435689ce744d5274196e34ff63dc70a79e2ba6bf3",
+      "matches": true
+    },
+    {
+      "path": "assets/index-CISPySQw.css",
+      "sha256": "a3a133cb08e1c378b36bc83be59caec67ee5b1f834eecbbb85c3266f379f02fc",
+      "matches": true
+    }
+  ],
+  "verified_at": "2026-09-16T02:25:57.211678+00:00"
+}
