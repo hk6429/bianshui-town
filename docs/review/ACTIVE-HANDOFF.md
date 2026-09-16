@@ -389,3 +389,9 @@
 - focusInspector(person)在一次commitJourney同時observeResident與inspectResident，日常只記主動開卡或點觀察，不由tick/follow自動刷。熟識=不同日常數＋該居民完成委託一次；0初見、1眼熟、3相識、5熟識，離線不衰退。
 - 名冊按ID開卡/定位/跟隨，離鎮停用且保留lastAction；取消關注不刪熟識。Chrome李/周分別關注與跳轉、重複同類不加分、移除一人保留另一人。62聚焦、294全套、build成功，evidence/resident-relationships，測試頁關閉。
 - 下批O19–O22：議事兩案、未見活動線索、事件分歧與補訪；可拆成O19/O20、O21/O22兩個有界階段。之後O25階段結語、E18–20與E01–04/E21待補驗、最終四領域複評。完整goal active。
+
+## 最新交接：O19/O20已實作（2026-09-16）
+- 上一輪只有正式站重讀，分類no progress；本輪直接新增council-exploration.js，兩案缺設施才出現、採納/擱置/完成，完成保留場所歷史。三種活動只在主動街口跳轉且active且有人到場時記初見；tick不記。
+- story-data純資料供schema，stories共用storyDay/storyVenues與探索冊。journey可選council最多2、seenStories最多3，時間/唯一/完成欄位驗證；commitJourney持久化失敗不發布。
+- 19聚焦通過；Chrome確認面板與未見三類正常。完整UI採納到建成、街口跳轉後更新仍待補，故87 verified /7 implemented /6 open。未假稱O19/O20已完整驗收。
+- 下一獨立里程碑O21/O22事件分歧與補訪，可一起補此處街口UI；之後O25與E18–20，E01–04/E21待補驗和最後四領域複評。百項goal保持active。

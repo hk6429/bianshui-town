@@ -1,3 +1,4 @@
+import {observeStory} from './council-exploration.js';
 import {observeResident,watchResident,residentRecord,familiarityText} from './resident-relationships.js';
 import {installResidentRelationshipsUI} from './resident-relationships-ui.js';
 import {installReadingCollectionUI} from './reading-collection-ui.js';
@@ -120,7 +121,7 @@ $('#life-panel').onclick=e=>{
  if(e.target.closest('[data-close-life]')){journalOpen=false;updateJournal();$('#life-btn').focus();return;}
  if(e.target.closest('[data-production]')){renderProduction();$('#production').showModal();return;}
  if(e.target.closest('[data-story-focus]')){
-  const event=town.stories.active||town.stories.last;if(!event)return;stopFollowing();pinned=hovered=null;setMode('explore');scene.focusAt(event.center);toast(`${event.title} · ${event.venue}${town.stories.active?'':'（已散場）'}`);
+  const event=town.stories.active||town.stories.last;if(!event)return;stopFollowing();pinned=hovered=null;setMode('explore');scene.focusAt(event.center);changeJourney(observeStory);toast(`${event.title} · ${event.venue}${town.stories.active?'':'（已散場）'}`);
  }else{const btn=e.target.closest('[data-focus]');if(!btn)return;stopFollowing();pinned=hovered=null;setMode('explore');scene.focusAt({bridge:[18,-16],dock:[12,8],town:[-7,0]}[btn.dataset.focus],1.8);}
  if(compactUI()) {journalOpen=false;updateJournal();}
 };

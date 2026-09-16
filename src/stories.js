@@ -1,9 +1,8 @@
 import {key,point,pathfind} from './simulation.js';
-export const STORY_TYPES=[
- {type:'story',title:'巷口聽說書',gather:'趕去聽一段說書',activity:'聽說書人講汴河趣事',end:'說書告一段落，街坊各自散去'},
- {type:'market',title:'攤前看新貨',gather:'應聲到攤前看看',activity:'在攤前聽行商介紹新貨',end:'攤前招呼歇下，人們繼續趕路'},
- {type:'tea',title:'茶坊遇熟客',gather:'赴茶坊與熟客碰面',activity:'和熟客聊一盞茶的工夫',end:'茶敘散席，熟客相約改日再會'}
-];
+import {STORY_TYPES} from './story-data.js';
+export {STORY_TYPES} from './story-data.js';
+export const storyVenues=t=>t.buildings.filter(b=>(b.type==='shop'||b.design==='wazi')&&b.stage>=3);
+export const storyDay=t=>t.time%24>=8&&t.time%24<19&&!t.weather.raining;
 export const createStories=()=>({nextAt:24,sequence:0,completed:0,active:null});
 export function remember(t,p,text){
  const day=Math.floor(t.time/24);if(p.diaryDay!==day){p.diary=[];p.diaryDay=day;}p.diary??=[];
@@ -26,7 +25,7 @@ function finish(t){
  t.stories.active=null;t.stories.nextAt=t.elapsed+35;
 }
 export function tickStories(t){
- const s=t.stories,h=t.time%24,day=h>=8&&h<19&&!t.weather.raining;
+ const s=t.stories,day=storyDay(t);
  if(s.active){
   const e=s.active;if(!day){finish(t);return;}
   const arrived=e.participants.filter(id=>{const p=t.people.find(p=>p.id===id);return p&&Math.hypot(p.x-p.eventSlot[0],p.z-p.eventSlot[1])<.1;});
@@ -37,7 +36,7 @@ export function tickStories(t){
   return;
  }
  if(!day||t.elapsed<s.nextAt||t.people.length<3)return;
- const shops=t.buildings.filter(b=>(b.type==='shop'||b.design==='wazi')&&b.stage>=3);if(!shops.length)return;
+ const shops=storyVenues(t);if(!shops.length)return;
  const spec=STORY_TYPES[s.sequence%STORY_TYPES.length];
  const regular=shops.filter(b=>b.type==='shop'),pool=regular.length?regular:shops;const shop=(spec.type==='story'?shops.find(b=>b.design==='wazi'):null)||(spec.type==='tea'?regular.find(b=>b.variant===0):null)||pool[s.sequence%pool.length];
  const center=shop.entrance;

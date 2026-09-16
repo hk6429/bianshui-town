@@ -1749,11 +1749,22 @@
       "acceptance": [
         "無園景時能出現相關提案；接受後建造對應設施才回應達成；可忽略無懲罰。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
+      "status": "implemented",
+      "implementation": [
+        "src/council-exploration.js",
+        "src/journey-ui.js",
+        "src/main.js",
+        "src/save-schema.js",
+        "src/story-data.js"
+      ],
+      "evidence": [
+        "tests/council-exploration.test.js",
+        "evidence/council-exploration/tests.txt",
+        "evidence/council-exploration/panel.txt"
+      ],
       "verifiedBy": null,
-      "reviewSource": "docs/review/octalysis.json"
+      "reviewSource": "docs/review/octalysis.json",
+      "remaining": "待補完整瀏覽器操作：缺園景採納到落成回應；活動進行中街口跳轉後探索冊更新。"
     },
     {
       "id": "O20",
@@ -1772,11 +1783,22 @@
       "acceptance": [
         "沒看過說書時顯示條件；僅世界發生但玩家未查看不標已見；實際查看後才更新。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
+      "status": "implemented",
+      "implementation": [
+        "src/council-exploration.js",
+        "src/journey-ui.js",
+        "src/main.js",
+        "src/save-schema.js",
+        "src/story-data.js"
+      ],
+      "evidence": [
+        "tests/council-exploration.test.js",
+        "evidence/council-exploration/tests.txt",
+        "evidence/council-exploration/panel.txt"
+      ],
       "verifiedBy": null,
-      "reviewSource": "docs/review/octalysis.json"
+      "reviewSource": "docs/review/octalysis.json",
+      "remaining": "待補完整瀏覽器操作：缺園景採納到落成回應；活動進行中街口跳轉後探索冊更新。"
     },
     {
       "id": "O21",

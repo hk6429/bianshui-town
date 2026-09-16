@@ -1,0 +1,171 @@
+Browser tab: 610004261, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?fixture=v8&storage-test".
+0 AXWebArea 汴水小鎮｜一城煙火，慢慢生長, URL: 127.0.0.1:5173/?fixture=v8&storage-test
+	1 container 城鎮旅程, ID: journey
+		2 heading 城鎮旅程, Value: 2, ID: journey-title
+			3 text 城鎮旅程
+		4 button 關閉城鎮旅程
+		5 text 依自己的步調營造，沒有現實時間期限。此處的引導挑戰獨立於金庫的城市經營／自由營造模式。
+		6 checkbox (settable, integer) Description:  開啟引導挑戰（關閉即自由觀察）, Value: 0, ID: journey-enabled
+		7 text 我的城鎮願景
+		8 pop up button (collapsed, settable) 我的城鎮願景, Value: 安居, ID: journey-vision, Secondary Actions: Expand
+			9 menu
+				10 (selected) 安居
+				11 工藝
+				12 文風
+		13 container journey-content
+			14 container
+				15 heading 城鎮議事, Value: 3
+					16 text 城鎮議事
+				17 text 兩項自願提案依目前設施提出；可擱置或放下，不扣資源、不設期限。採納後須完成建設，再回來回應。
+				18 heading 留一處歇腳園景, Value: 4
+					19 text 留一處歇腳園景
+				20 text 落成一處園景（公設與瓦舍不計），且未受損。目前符合：1處。
+				21 text 已有相應設施，暫無新增提案。
+				22 heading 添一間百工作坊, Value: 4
+					23 text 添一間百工作坊
+				24 text 落成一間作坊，且未受損。目前符合：1處。
+				25 text 已有相應設施，暫無新增提案。
+			26 container
+				27 heading 活動探索冊, Value: 3
+					28 text 活動探索冊
+				29 text 活動輪流出現：晴天08:00–19:00、至少3位居民、落成商鋪或瓦舍。附近須有可達道路與可參與居民；集合最久30遊戲秒，無人到場就取消，散場後至少等35遊戲秒。說書優先瓦舍、茶敘優先茶鋪，沒有時可在其他商鋪相聚。 目前：天候時段符合；居民8人；場所2處。下一類：攤前看新貨。 打開街坊日常，在活動進行時按「去街口看看」才記為親自見過；集合中與回看散場地點不計。
+				30 heading 巷口聽說書 · 尚未看過, Value: 4
+					31 text 巷口聽說書 · 尚未看過
+				32 text 依上述條件，等待輪到這類活動。
+				33 heading 攤前看新貨 · 尚未看過, Value: 4
+					34 text 攤前看新貨 · 尚未看過
+				35 text 依上述條件，等待輪到這類活動。
+				36 heading 茶坊遇熟客 · 尚未看過, Value: 4
+					37 text 茶坊遇熟客 · 尚未看過
+				38 text 依上述條件，等待輪到這類活動。
+			39 container
+				40 heading 營造成果對照, Value: 3
+					41 text 營造成果對照
+				42 text 汴水小鎮 · 完成一次新建、搬移、擴建、升級或拆除後，這裡會留下最近一次營造的對照。
+			43 container
+				44 heading 居民委託, Value: 3
+					45 text 居民委託
+				46 text 不設期限，婉拒或放下不扣分。可從居民卡接取；此處列出已回應者及前八位居民。最多保留64份委託紀錄。
+				47 heading 李小滿 · 街坊歇腳處, Value: 4
+					48 text 李小滿 · 街坊歇腳處
+				49 text 想找一處離家近、沿路可達的茶坊或園景，與街坊歇腳聊天。
+				50 text 兩案擇一：茶坊供街坊喝茶小聚；園景供散步歇腳。皆須距住處六格內、道路相通且落成；既有場所也可使用，不要求消費或等天候。
+				51 checkbox (disabled) 接取茶坊小聚, Value: 0
+				52 checkbox (disabled) 接取園中歇腳, Value: 0
+				53 button (disabled) 婉拒
+				54 heading 周小滿 · 街坊歇腳處, Value: 4
+					55 text 周小滿 · 街坊歇腳處
+				56 text 想找一處離家近、沿路可達的茶坊或園景，與街坊歇腳聊天。
+				57 text 兩案擇一：茶坊供街坊喝茶小聚；園景供散步歇腳。皆須距住處六格內、道路相通且落成；既有場所也可使用，不要求消費或等天候。
+				58 checkbox (disabled) 接取茶坊小聚, Value: 0
+				59 checkbox (disabled) 接取園中歇腳, Value: 0
+				60 button (disabled) 婉拒
+				61 heading 陳小滿 · 街坊歇腳處, Value: 4
+					62 text 陳小滿 · 街坊歇腳處
+				63 text 想找一處離家近、沿路可達的茶坊或園景，與街坊歇腳聊天。
+				64 text 兩案擇一：茶坊供街坊喝茶小聚；園景供散步歇腳。皆須距住處六格內、道路相通且落成；既有場所也可使用，不要求消費或等天候。
+				65 checkbox (disabled) 接取茶坊小聚, Value: 0
+				66 checkbox (disabled) 接取園中歇腳, Value: 0
+				67 button (disabled) 婉拒
+				68 heading 柳小滿 · 街坊歇腳處, Value: 4
+					69 text 柳小滿 · 街坊歇腳處
+				70 text 想找一處離家近、沿路可達的茶坊或園景，與街坊歇腳聊天。
+				71 text 兩案擇一：茶坊供街坊喝茶小聚；園景供散步歇腳。皆須距住處六格內、道路相通且落成；既有場所也可使用，不要求消費或等天候。
+				72 checkbox (disabled) 接取茶坊小聚, Value: 0
+				73 checkbox (disabled) 接取園中歇腳, Value: 0
+				74 button (disabled) 婉拒
+				75 heading 王小滿 · 街坊歇腳處, Value: 4
+					76 text 王小滿 · 街坊歇腳處
+				77 text 想找一處離家近、沿路可達的茶坊或園景，與街坊歇腳聊天。
+				78 text 兩案擇一：茶坊供街坊喝茶小聚；園景供散步歇腳。皆須距住處六格內、道路相通且落成；既有場所也可使用，不要求消費或等天候。
+				79 checkbox (disabled) 接取茶坊小聚, Value: 0
+				80 checkbox (disabled) 接取園中歇腳, Value: 0
+				81 button (disabled) 婉拒
+				82 heading 趙小滿 · 街坊歇腳處, Value: 4
+					83 text 趙小滿 · 街坊歇腳處
+				84 text 想找一處離家近、沿路可達的茶坊或園景，與街坊歇腳聊天。
+				85 text 兩案擇一：茶坊供街坊喝茶小聚；園景供散步歇腳。皆須距住處六格內、道路相通且落成；既有場所也可使用，不要求消費或等天候。
+				86 checkbox (disabled) 接取茶坊小聚, Value: 0
+				87 checkbox (disabled) 接取園中歇腳, Value: 0
+				88 button (disabled) 婉拒
+				89 heading 何小滿 · 街坊歇腳處, Value: 4
+					90 text 何小滿 · 街坊歇腳處
+				91 text 想找一處離家近、沿路可達的茶坊或園景，與街坊歇腳聊天。
+				92 text 兩案擇一：茶坊供街坊喝茶小聚；園景供散步歇腳。皆須距住處六格內、道路相通且落成；既有場所也可使用，不要求消費或等天候。
+				93 checkbox (disabled) 接取茶坊小聚, Value: 0
+				94 checkbox (disabled) 接取園中歇腳, Value: 0
+				95 button (disabled) 婉拒
+				96 heading 蘇小滿 · 街坊歇腳處, Value: 4
+					97 text 蘇小滿 · 街坊歇腳處
+				98 text 想找一處離家近、沿路可達的茶坊或園景，與街坊歇腳聊天。
+				99 text 兩案擇一：茶坊供街坊喝茶小聚；園景供散步歇腳。皆須距住處六格內、道路相通且落成；既有場所也可使用，不要求消費或等天候。
+				100 checkbox (disabled) 接取茶坊小聚, Value: 0
+				101 checkbox (disabled) 接取園中歇腳, Value: 0
+				102 button (disabled) 婉拒
+			103 text 自由觀察中：自願目標暫停，既有紀念章與進度保留。
+			104 container
+				105 heading 安居願景, Value: 3
+					106 text 安居願景
+				107 content list
+					108 container
+						109 AXListMarker • 
+						110 text ✓ 落成民居：1／1
+					111 container
+						112 AXListMarker • 
+						113 text ✓ 實際入住居民：8／4
+				114 text 更換願景不拆建物，也不清除其他紀念章。
+			115 container
+				116 heading 第一輪城市循環 · 0／4, Value: 3
+					117 text 第一輪城市循環 · 0／4
+				118 text 安放第一間民居，等候落成與入住 需遊戲時間：施工約18秒，入住依城市條件決定。
+				119 button 略過引導
+				120 button 打開城市清單
+			121 container
+				122 heading 城鎮里程碑, Value: 3
+					123 text 城鎮里程碑
+				124 text 達標可領取一枚紀念章；每種僅一次，不扣資源，也不要求每日登入。
+				125 heading 煙火初起 · 可領取, Value: 4
+					126 text 煙火初起 · 可領取
+				127 content list
+					128 container
+						129 AXListMarker • 
+						130 text ✓ 落成民居：1／1
+					131 container
+						132 AXListMarker • 
+						133 text ✓ 實際入住居民：8／2
+				134 button (disabled) 領取紀念章
+				135 heading 百工初成 · 未達成, Value: 4
+					136 text 百工初成 · 未達成
+				137 content list
+					138 container
+						139 AXListMarker • 
+						140 text ✓ 落成作坊：1／1
+					141 container
+						142 AXListMarker • 
+						143 text ○ 實際製成或售出一件工藝品：0／1
+				144 button (disabled) 領取紀念章
+				145 heading 汴水文韻 · 未達成, Value: 4
+					146 text 汴水文韻 · 未達成
+				147 content list
+					148 container
+						149 AXListMarker • 
+						150 text ✓ 落成一處有作品來源的文化地景：1／1
+					151 container
+						152 AXListMarker • 
+						153 text ○ 文人實際落筆作品：0／1
+				154 button (disabled) 領取紀念章
+			155 container
+				156 heading 選一個短程目標, Value: 3
+					157 text 選一個短程目標
+				158 heading 認識一位街坊居民 · 目前選擇, Value: 4
+					159 text 認識一位街坊居民 · 目前選擇
+				160 text 從城市清單打開一位居民的小卡。
+				161 text 已有居民時不需等待天候或遊戲時間；空城須先迎接住戶。
+				162 checkbox 追蹤這個目標, Value: 1
+				163 heading 完成一處民居 · 已完成, Value: 4
+					164 text 完成一處民居 · 已完成
+				165 text 安放民居，等工匠完成施工。
+				166 text 需等約18遊戲秒，不限制現實時間。
+				167 checkbox 追蹤這個目標, Value: 0
+
+The focused UI element is 4 button 關閉城鎮旅程
