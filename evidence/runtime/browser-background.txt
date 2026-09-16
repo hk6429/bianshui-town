@@ -1,0 +1,26 @@
+The following is a diff from the previous accessibility tree for Window: "前背景執行驗證" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 164-206
+~0 標準視窗 前背景執行驗證 - 屬於「⏱️ 模擬步進驗證」群組 - Google Chrome - 乃誠 (大乃), URL: 127.0.0.1:5173/tests/runtime-harness.html, Secondary Actions: Raise
+~	1 container 前背景執行驗證 - 屬於「⏱️ 模擬步進驗證」群組 - Google Chrome - 乃誠 (大乃), URL: 127.0.0.1:5173/tests/runtime-harness.html
+~					9 文字欄位 (settable) Description: 網址與搜尋列, Value: 127.0.0.1:5173/tests/runtime-harness.html, Placeholder: 問問 Google 或輸入網址
+~				161 HTML 內容 前背景執行驗證, URL: 127.0.0.1:5173/tests/runtime-harness.html
+~					162 標題 前背景執行驗證, Value: 1
+~						163 文字 前背景執行驗證
++					164 文字 使用正式 runtime 與 Town；不使用任何小鎮存檔。
++					165 按鈕 暫停／繼續
++					166 文字 畫面更新：2882
+模擬秒數：119.810
+靜音呼叫：1
++					167 文字 背景畫面更新：0
+背景城市資料不變：true
+背景靜音呼叫：1
+離開前模擬秒數：119.660
+返回時模擬秒數：119.660
++				168 container 資訊列
++					169 container
++						170 文字 「ChatGPT」已開始為這個瀏覽器偵錯
++						171 按鈕 取消
++					172 按鈕 關閉
+~					141 標籤頁 (selected, settable, boolean) Description: 前背景執行驗證 - 屬於「⏱️ 模擬步進驗證」群組, Value: on
+~					143 標籤頁 (settable, boolean) Description: 汴水小鎮｜一城煙火，慢慢生長 - 屬於「⏱️ 模擬步進驗證」群組, Value: off
+The focused UI element is 161 HTML 內容 前背景執行驗證, URL: 127.0.0.1:5173/tests/runtime-harness.html

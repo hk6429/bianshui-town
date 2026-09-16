@@ -26,3 +26,12 @@
 
 ## 下一個有界階段
 先完成 evidence/r1/README.md 所列 R1 餘下驗收與 E25 渲染防線；再處理 E13 固定步進。不要直接展開全部城市系統。正式站 Chrome 本輪可開啟且有重置鍵；CLI 直讀回應 403，未用它判定網站故障。
+
+## 固定步進里程碑（2026-09-16）
+- src/runtime.js / tests/runtime.test.js / tests/runtime-harness.html 已新增，main.js 改由 runtime 驅動畫面。
+- E13 verified：30/60/120 Hz 及等量 1×/4× 的全城 JSON 一致。
+- E21 implemented：背景取消排程、靜音 callback、回前景不補跑；Chrome 切頁實測渲染 0、資料不變。實際 AudioContext 靜音待補驗。
+- 最新全套 112/112，build 成功，證據 evidence/runtime。
+- 最新 ledger 為 11 verified / 8 implemented / 1 in_progress / 80 open。
+- CUA CDP 讀取遊戲曾 timeout 兩次，改原生 Chrome AX 成功；測試已關閉、焦點模擬已還原。不因此標任務 blocked。
+- 下一階段：R1 剩餘驗收、E25 渲染防線、E22 執行錯誤復原；尚未動城市財政與服務。

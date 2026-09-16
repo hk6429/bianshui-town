@@ -1,0 +1,7 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>前背景執行驗證</title><h1>前背景執行驗證</h1><p>使用正式 runtime 與 Town；不使用任何小鎮存檔。</p><button id="pause">暫停／繼續</button><pre id="status"></pre><pre id="result">切換到其他分頁後再回來檢查。</pre><script type="module">
+import {createRuntime} from '/src/runtime.js';import {Town} from '/src/simulation.js';
+const town=new Town();town.demo();let frames=0,mutes=0,paused=false,checkpoint=null;
+const runtime=createRuntime({request:fn=>requestAnimationFrame(fn),cancel:id=>cancelAnimationFrame(id),hidden:()=>document.hidden,options:()=>({speed:1,paused}),tick:dt=>town.tick(dt),render:()=>{frames++;document.querySelector('#status').textContent=`畫面更新：${frames}\n模擬秒數：${town.elapsed.toFixed(3)}\n靜音呼叫：${mutes}`;},mute:()=>mutes++,onHide:()=>{checkpoint={frames,data:JSON.stringify(town),elapsed:town.elapsed};}});
+document.querySelector('#pause').onclick=()=>paused=!paused;
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&checkpoint){document.querySelector('#result').textContent=`背景畫面更新：${frames-checkpoint.frames}\n背景城市資料不變：${JSON.stringify(town)===checkpoint.data}\n背景靜音呼叫：${mutes}\n離開前模擬秒數：${checkpoint.elapsed.toFixed(3)}\n返回時模擬秒數：${town.elapsed.toFixed(3)}`;}runtime.visibility();});
+</script></html>

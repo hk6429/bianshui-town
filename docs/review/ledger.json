@@ -2135,10 +2135,17 @@
       "acceptance": [
         "30/60/120Hz相同輸入與60秒前景時間，模擬快照一致；1×/4×的等量模擬時間一致。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/runtime.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "tests/runtime.test.js",
+        "evidence/runtime/tests.txt",
+        "evidence/runtime/README.md"
+      ],
+      "verifiedBy": "root: equal-time whole-town snapshot comparison; final independent review pending",
       "reviewSource": "docs/review/engineering.json"
     },
     {
@@ -2338,9 +2345,17 @@
       "acceptance": [
         "背景期間渲染計數不增加、音訊靜音、資料不漂移；回前景沒有大dt追趕。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
+      "status": "implemented",
+      "implementation": [
+        "src/runtime.js",
+        "src/main.js"
+      ],
+      "evidence": [
+        "tests/runtime.test.js",
+        "evidence/runtime/tests.txt",
+        "evidence/runtime/README.md",
+        "evidence/runtime/browser-background.txt"
+      ],
       "verifiedBy": null,
       "reviewSource": "docs/review/engineering.json"
     },
