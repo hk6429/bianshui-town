@@ -1,0 +1,76 @@
+- main:
+  - generic "汴水小鎮互動三維場景"
+  - generic: 汴
+  - heading "汴水小鎮" [level=1]
+  - paragraph: 一城煙火，慢慢生長
+  - generic: ☀
+  - strong: 辰時 · 晨光初醒
+  - generic: 第 1 日 08:04
+  - button "切換白晝與夜晚": ☾
+  - button "天候：晴天，自然模式": 晴天 · 自然
+  - button "市井見聞"
+  - button "開啟環境音": ♪
+  - button "畫卷"
+  - button "重置小鎮"
+  - button "操作說明": "?"
+  - region "小鎮概況":
+    - strong: "4"
+    - text: 位居民
+    - strong: "3"
+    - text: 處建築園景
+    - strong: "3"
+    - text: 處街坊
+  - complementary:
+    - generic: 園景 · 四格合建 · 一處園景
+    - heading "方塘書院" [level=2]
+    - generic: 生活漸豐 · 已固定檢視
+    - separator
+    - generic: 園中漫步
+    - generic: 等候新朋友到來
+    - generic: 此刻在場 · 0 人
+    - paragraph: 目前無人在此停留
+    - paragraph: 道路已接通河岸貨棧
+    - generic: 防火巡守
+    - paragraph: 火警風險最高 1.5％／日；尚無可達且有容量的巡守服務。前兩日免事件，每日最多一處預警。
+    - generic: 書院教育
+    - paragraph: 街坊教育：受教 4／8 人，住家沿路 24 步內可涵蓋；優先學力較低者，病假暫停。持續受教一遊戲日增加10點，最高100點；道路中斷、書院受損或拆除即停止累積，既有學力保留。到場工匠平均學力每10點提高2％產能，上限20％。
+    - separator
+    - generic: 建築 1／5 級 · 初築
+    - paragraph: 下級：加蓋整層樓閣、大牌樓與燈籠
+    - button "搬移 120文"
+    - button "拆除"
+    - button "升至 2 級 · 400文"
+    - text: 朱熹 · 〈觀書有感〉其一
+    - blockquote: 半畝方塘一鑑開，天光雲影共徘徊。
+    - button "讀作品與地景 ↗"
+    - separator
+    - generic: 點選空地取消固定
+  - generic: 汴 水
+  - text: 風過河岸，日子悠長
+  - status
+  - button "＋ 宋韻營造"
+  - button "公共營造"
+  - button "文人行旅"
+  - button "金庫 1640 文 · 需求"
+  - button "存檔管理"
+  - generic: 自由探索 · 拖曳移動畫面，點選屋舍與居民
+  - navigation "建造與探索":
+    - button "自由探索 1" [pressed]:
+      - generic: 自由探索
+      - generic: "1"
+    - button "民居 2":
+      - generic: 民居
+      - generic: "2"
+    - button "商鋪 3":
+      - generic: 商鋪
+      - generic: "3"
+    - button "作坊 4":
+      - generic: 作坊
+      - generic: "4"
+    - button "繼續": ▶
+    - button "1×"
+  - generic: 滾輪縮放 · 右鍵拖曳平移 · Q / E 旋轉
+  - generic: 進度自動留存
+  - button "放大": ＋
+  - button "縮小": −
+  - button "回到初始視角": ⌖

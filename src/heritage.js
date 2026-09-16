@@ -31,7 +31,7 @@ export const DESIGNS={
  food:{name:'炊煙食肆',type:'shop',variant:1,mark:'食',sizes:[1,4],source:'city',detail:'高灶煙囪、蒸籠與暖色雨棚；四格擴為前店後廚。'},
  textile:{name:'錦色布莊',type:'shop',variant:2,mark:'布',sizes:[1,4],source:'city',detail:'高挑倉閣、彩布垂簾與布架；四格成為雙翼布行。'},
  wine:{name:'夢華酒樓',type:'shop',variant:1,mark:'酒',sizes:[4],source:'city',detail:'四格合院、雙層樓閣、綵樓歡門與酒甕。'},
- academy:{name:'方塘書院',type:'garden',variant:0,mark:'書',sizes:[4],source:'academy',detail:'講堂、兩側廊房、中央方塘；居民閒時來此讀書。'},
+ academy:{name:'方塘書院',type:'garden',variant:0,mark:'書',sizes:[4],source:'academy',detail:'講堂、兩側廊房、中央方塘；每級提供8個街坊教育名額，學力逐日累積並小幅提升工匠產能。'},
  pavilion:{name:'臨泉亭',type:'garden',variant:0,mark:'亭',sizes:[1,4],source:'pavilion',detail:'開敞六角亭、石徑與泉池；四格增添迴廊與樹蔭。'},
  pond:{name:'小荷池塘',type:'garden',variant:0,mark:'荷',sizes:[1,4],source:'pond',detail:'挖出池床，注水後長出荷葉、荷花；蜻蜓在池面盤旋。'}
 };

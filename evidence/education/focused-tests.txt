@@ -1,0 +1,17 @@
+✔ road-covered residents acquire 10 points per game day gradually; no coverage grants none (5.053833ms)
+✔ capacity is finite, low attainment has priority, and overlapping academies never duplicate education (1.36475ms)
+✔ disconnecting a road, construction, damage and sick leave stop learning without deleting attainment (2.0105ms)
+✔ education is bounded, fractional, saved and independent of time-step size when coverage is unchanged (5.887625ms)
+✔ trained present workers finish a real item sooner, absent or sick experts confer no benefit (1.131167ms)
+✔ sandbox preserves saved education without learning or bonus; invalid dt never grants points (0.248667ms)
+✔ nearest reachable job wins over earlier building order; reasonable existing job remains (10.175792ms)
+✔ isolated vacancies remain empty; reconnecting fills jobs; lost work receives a grace period (13.290458ms)
+✔ four present craftspeople produce more than one; no workers consume no inputs (6.975958ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 96.192958

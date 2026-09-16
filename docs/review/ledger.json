@@ -827,10 +827,26 @@
       "acceptance": [
         "受教育居民經遊戲日逐步增加能力，未覆蓋者不增加；能力對實際產能有可測影響且有上限。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/education.js",
+        "src/production.js",
+        "src/simulation.js",
+        "src/save-schema.js",
+        "src/main.js",
+        "src/finance-ui.js",
+        "src/heritage.js"
+      ],
+      "evidence": [
+        "tests/education.test.js",
+        "evidence/education/README.md",
+        "evidence/education/tests.txt",
+        "evidence/education/progression.txt",
+        "evidence/education/production.txt",
+        "evidence/education/3d-academy.txt",
+        "evidence/education/3d-after.txt"
+      ],
+      "verifiedBy": "根代理：教育/產能因果測試、210項回歸、Chrome三維書院與居民學力增長讀回；非真人玩家驗收",
       "reviewSource": "docs/review/city.json"
     },
     {

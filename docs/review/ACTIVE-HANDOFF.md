@@ -163,3 +163,14 @@
 - 3/3分級聚焦測試、build通過；Chrome同尺度五級對照、取消/重置/重整後復原通過，evidence/tier-emphasis。
 - 四級雙側重簷塔，五級三重簷金瓦雙塔與加大長幡。reset既有功能無須重寫。
 - 百項進度不變37 verified / 5 implemented / 58 open，未部署。下一獨立階段回C21書院教育。
+
+## 新階段起點：C21書院教育
+- 基準6d78f7f。沿住家道路覆蓋、每級8個同時受教名額，低學力優先；每360遊戲秒增加10點，上限100。受損/斷路/病假停止，欠款減少名額。
+- person.education可選欄位保存小數；不補離線日、不重置舊學力。到場健康工匠的平均學力提供0–20％真產能加成，自由營造不累積/不套用。待測試與Chrome驗證。
+
+## 最新交接：C21書院教育里程碑（2026-09-16）
+- 38 verified / 5 implemented / 57 open；9/9聚焦、210/210全套、build、Chrome因果對照與真三維學力增長通過，evidence/education。沒有部署。
+- education.js涵蓋落成未受損academy，每級8slots、range24+4tier、欠款縮容；低學力優先augmenting assignment，病假/無家/斷路/已滿100排除。tickEducation每dt加10/360，持久education小數，不補離線。自由營造不結算。
+- presentWorkers平均學力/100×.2乘入真production進度；離場與病假不加成。UI居民、作坊、書院、finance-summary已接。v9 person.education可選0–100；舊檔不需改版本。
+- Chrome控制0→0.833→10.833→100；無覆蓋0。8.5秒滿學力陶器已完成，基準泥料12.75。正常三維蘇安10.9→12.7，4/8名額。
+- 下一獨立階段C22污染：先讀ledger的fix與acceptance，新增工坊污染與距離暴露對健康/住宅需求的因果關係；避免與waste衛生重複計算/空有色塊。C23/C24/C25、其餘O/U/E及最終四領域複評仍必要。百項完成後才部署。

@@ -1,3 +1,4 @@
+import {craftEducationMultiplier} from './education.js';
 import {damaged} from './fire-service.js';
 import {roadReachable,roadAnchor} from './road-network.js';
 import {purchaseImports,recordSale} from './trade.js';
@@ -59,9 +60,9 @@ export function tickProduction(t,dt){
   if(damaged(b)){b.productionStatus='火警後整修中，暫停生產';continue;}
   const r=RECIPES[b.variant],lot=at(t,`input:${b.id}`,r.input)[0];
   const workers=presentWorkers(t,b);
-  b.productionStatus=!workers.length?'等工匠到坊':!lot?'等候原料':at(t,`output:${b.id}`).length>=6?'成品待運':`${r.action} · 到場 ${workers.length}／${jobCapacity(b)} 人`;
+  b.productionStatus=!workers.length?'等工匠到坊':!lot?'等候原料':at(t,`output:${b.id}`).length>=6?'成品待運':`${r.action} · 到場 ${workers.length}／${jobCapacity(b)} 人 · 學力加成 ${Math.round((craftEducationMultiplier(t,b)-1)*100)}％`;
   if(!lot||!workers.length||at(t,`output:${b.id}`).length>=6)continue;
-  lot.progress=(lot.progress||0)+dt*(b.footprint?2:b.level>=2?1.5:1)*staffingRatio(t,b);
+  lot.progress=(lot.progress||0)+dt*(b.footprint?2:b.level>=2?1.5:1)*staffingRatio(t,b)*craftEducationMultiplier(t,b);
   if(lot.progress>=r.seconds){if(managed(t))b.pendingWaste=Math.min(1000000,(b.pendingWaste||0)+2);lot.good=r.output;lot.madeAt=b.id;lot.progress=0;transfer(t,`input:${b.id}`,`output:${b.id}`,1,r.output);t.log(`${b.name}製成一件${GOODS[r.output]}，等推車送往商鋪`);}
  }
 }

@@ -1,3 +1,4 @@
+import {tickEducation} from './education.js';
 import {STARTER_ROAD,roadAnchor} from './road-network.js';
 import {createTrade} from './trade.js';
 import {createDemography,tickPopulation} from './city-growth.js';
@@ -152,7 +153,7 @@ export class Town {
   }
   for(const p of this.people)residentPurchase(this,p);
   tickProduction(this,dt);tickCraftCarts(this,dt);
-  tickLife(this,dt);tickLiterati(this,dt);settleBudget(this);tickSanitation(this);tickFire(this);tickHealthcare(this,dt);
+  tickLife(this,dt);tickLiterati(this,dt);settleBudget(this);tickSanitation(this);tickFire(this);tickHealthcare(this,dt);tickEducation(this,dt);
   for(const p of this.people){if(this.weather.raining&&p.outside&&!p.shelter&&!p.action.startsWith('撐傘'))p.action='撐傘 · '+p.action;remember(this,p,p.action);}
  }
  move(p,dt){
