@@ -1,8 +1,9 @@
+import {STARTER_ROAD,roadAnchor} from './road-network.js';
 import {createTrade} from './trade.js';
 import {createDemography,tickPopulation} from './city-growth.js';
 import {residentPurchase} from './commerce.js';
 import {assignJobs} from './employment.js';
-import {createCity,charge,buildCost,settleBudget} from './city-finance.js';
+import {createCity,charge,buildCost,settleBudget,managed} from './city-finance.js';
 import {validateSave} from './save-schema.js';
 import {tierOf} from './building-tiers.js';
 import {roadNodes,mergeGardens} from './urban.js';
@@ -48,7 +49,7 @@ export function pathfind(nodes,start,goal){
  return [];
 }
 export class Town {
- constructor({mode='sandbox'}={}){this.demography=createDemography();this.city=createCity(mode);this.market={trades:0};this.publicWorks=[];this.buildings=[];this.blocks=[];this.people=[];this.carts=[];this.roads=new Set();this.time=8;this.elapsed=0;this.nextId=1;this.revision=0;this.events=[];this.life=createLife();this.stories=createStories();this.weather=createWeather();this.literati=createLiterati();this.economy=createEconomy();importCargo(this);}
+ constructor({mode='sandbox'}={}){this.demography=createDemography();this.city=createCity(mode);this.market={trades:0};this.publicWorks=mode==='managed'?[{...STARTER_ROAD}]:[];this.buildings=[];this.blocks=[];this.people=[];this.carts=[];this.roads=new Set();this.time=8;this.elapsed=0;this.nextId=1;this.revision=0;this.events=[];this.life=createLife();this.stories=createStories();this.weather=createWeather();this.literati=createLiterati();this.economy=createEconomy();importCargo(this);if(this.publicWorks.length)this.rebuildRoads();}
  canPlace(cells){
   if(!cells.length||cells.length>4||new Set(cells.map(c=>key(c.x,c.z))).size!==cells.length)return false;
   const connected=new Set([key(cells[0].x,cells[0].z)]);
@@ -73,7 +74,7 @@ export class Town {
   this.roads=this.buildings.length||this.publicWorks.length?publicRoads():new Set();for(const block of this.blocks)for(const k of perimeter(block.cells))this.roads.add(k);
   // Join each exterior loop to the existing street network through free ground.
   let connected=this.buildings.length?publicRoads():new Set();
-  for(const block of this.blocks){
+  for(const block of managed(this)?[]:this.blocks){
    const loop=perimeter(block.cells);
    if(!connected.size){connected=new Set(loop);continue;}
    const queue=[...loop],parent=new Map(queue.map(k=>[k,null]));let hit=null;
@@ -99,7 +100,7 @@ export class Town {
    return;
   }
   for(const p of [...this.people,...this.carts]){
-   if(p.outside){const nearest=this.nearestRoad(p.x,p.z);if(nearest){[p.x,p.z]=point(nearest);p.route=[];p.destination=null;}}
+   if(p.outside){const nearest=roadAnchor(this,p.x,p.z);if(nearest)[p.x,p.z]=point(nearest);p.route=[];p.destination=null;}
   }
   rerouteLife(this);rerouteStories(this);rerouteLiterati(this);
  }
@@ -114,8 +115,8 @@ export class Town {
   if(!p.outside&&p.current===target){p.destination=target;return true;}
   const current=this.building(p.current)||this.building(p.home);
   if(!p.outside){if(current)[p.x,p.z]=current.entrance;else p.outside=true;}
-  const from=this.nearestRoad(p.x,p.z);const path=pathfind(this.roads,from,key(...dest.entrance));
-  if(!path.length){p.action='等候道路連通';return false;}
+  const from=roadAnchor(this,p.x,p.z);const path=pathfind(this.roads,from,key(...dest.entrance));
+  if(!path.length){p.route=[];p.action='等候道路連通';return false;}
   p.route=path.slice(1);p.destination=target;p.outside=true;p.current=null;p.action=`前往${dest.name}`;return true;
  }
  tick(dt){
@@ -150,9 +151,10 @@ export class Town {
  }
  move(p,dt){
   if(!p.outside)return;
+  if(p.route.some(([x,z])=>!this.roads.has(key(x,z)))){p.route=[];p.action='等候道路連通';return;}
   let remaining=dt*p.speed*applyTraffic(this,p);
   while(p.route.length&&remaining>0){const [x,z]=p.route[0],dx=x-p.x,dz=z-p.z,d=Math.hypot(dx,dz);p.angle=Math.atan2(dx,dz);if(d<=remaining){p.x=x;p.z=z;p.route.shift();remaining-=d;}else{p.x+=dx/d*remaining;p.z+=dz/d*remaining;remaining=0;}}
-  if(!p.route.length){p.outside=false;p.current=p.destination;}
+  if(!p.route.length){const dest=this.building(p.destination);if(dest&&Math.hypot(p.x-dest.entrance[0],p.z-dest.entrance[1])<.02){p.outside=false;p.current=p.destination;}}
  }
  demo(){
   this.place('home',[{x:-4,z:0},{x:-3,z:0},{x:-2,z:0}],true);

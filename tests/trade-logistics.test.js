@@ -1,3 +1,4 @@
+import {layRoad} from '../src/urban.js';
 import {test} from 'node:test';import assert from 'node:assert/strict';
 import {Town} from '../src/simulation.js';import {importCargo,transfer,goodsBalance,syncCargo} from '../src/production.js';
 import {logistics,upgradeLogistics} from '../src/logistics.js';import {dailyUpkeep} from '../src/city-finance.js';import {tickLife} from '../src/life.js';import {prepareTraffic} from '../src/traffic.js';
@@ -19,7 +20,7 @@ test('logistics investment has finite levels, atomic affordability and daily upk
  const t=new Town({mode:'managed'}),base=dailyUpkeep(t);const q=logistics(t);assert.equal(q.level,1);t.city.treasury=299;const before=JSON.stringify(t);assert(!upgradeLogistics(t));assert.equal(JSON.stringify(t),before);
  t.city.treasury=2000;assert(upgradeLogistics(t));assert.equal(t.city.treasury,1700);assert.equal(dailyUpkeep(t),base+6);assert(upgradeLogistics(t));assert.equal(t.city.treasury,1100);assert.equal(dailyUpkeep(t),base+12);const full=JSON.stringify(t);assert(!upgradeLogistics(t));assert.equal(JSON.stringify(t),full);assert.equal(Town.restore(t.toJSON()).city.logisticsLevel,3);
 });
-function delivery(level){const t=new Town({mode:'managed'});t.place('shop',[{x:0,z:0}],true);for(let i=1;i<level;i++)assert(upgradeLogistics(t));for(const l of t.economy.lots)l.good='legacy';syncCargo(t);t.life.boat.state='unloading';let seconds=0;
+function delivery(level){const t=new Town({mode:'managed'});t.place('shop',[{x:0,z:0}],true);layRoad(t,'lane',[{x:0,z:1},{x:0,z:2},{x:1,z:2}]);for(let i=1;i<level;i++)assert(upgradeLogistics(t));for(const l of t.economy.lots)l.good='legacy';syncCargo(t);t.life.boat.state='unloading';let seconds=0;
  for(;seconds<600&&t.life.dock.delivered<12;seconds+=.05){t.elapsed+=.05;t.time+=.05/15;prepareTraffic(t);tickLife(t,.05);}
  assert.equal(t.life.dock.delivered,12);assert.equal(t.life.porters.length,logistics(t).porters);assert.equal(t.life.oxen.length,logistics(t).oxen);assert.equal(new Set([...t.life.porters,...t.life.oxen,...t.life.visitors].map(a=>a.id)).size,t.life.porters.length+t.life.oxen.length+t.life.visitors.length);assert.equal(goodsBalance(t).imported,goodsBalance(t).accounted);return {seconds,t};}
 test('upgraded real transport delivers the same 12 goods sooner without duplicate carriers',()=>{const one=delivery(1),three=delivery(3);assert(three.seconds<one.seconds*.8,`${three.seconds} vs ${one.seconds}`);assert(three.t.city.spent>one.t.city.spent);assert(dailyUpkeep(three.t)>dailyUpkeep(one.t));assert.doesNotThrow(()=>Town.restore(three.t.toJSON()));console.log(`物流實測：一級 ${one.seconds.toFixed(2)} 秒，三級 ${three.seconds.toFixed(2)} 秒`);});

@@ -1,3 +1,4 @@
+import {roadAnchor} from './road-network.js';
 import {logistics} from './logistics.js';
 import {shopIsOpen} from './commerce.js';
 import {marketStalls,marketOpen} from './market.js';
@@ -16,7 +17,7 @@ export function streetHeight(x,z){
 export function publicRoads(){
  const road=new Set();for(let z=-16;z<=20;z++)road.add(key(12,z));
  for(let x=10;x<=33;x++)road.add(key(x,-16));
- for(let x=12;x<=16;x++)road.add(key(x,8));
+ for(let x=10;x<=16;x++)road.add(key(x,8));
  for(let z=-16;z<=-8;z++)road.add(key(26,z));
  for(let x=24;x<=29;x++)road.add(key(x,-8));
  return road;
@@ -25,8 +26,8 @@ export function createLife(){return {version:1,visitors:[],porters:[],oxen:[],do
 const names=['顧行舟','杜望春','孟青山','姚阿蘭','許長安','江雲','丁禾','彭小橋','朱常順','余小溪'];
 function actor(id,kind,x,z){return {id,kind,x,z,angle:0,route:[],walking:false,visible:true,wait:0,phase:'outbound',speed:kind==='ox'?.68:.95,name:names[id%names.length],action:'停留片刻',carrying:0};}
 export function send(t,a,target,action){
- const start=t.nearestRoad(a.x,a.z),path=pathfind(t.roads,start,key(...target));
- if(!path.length){a.action='等候道路連通';a.walking=false;return false;}
+ const start=roadAnchor(t,a.x,a.z),path=pathfind(t.roads,start,key(...target));
+ if(!path.length){a.route=[];a.goal=[...target];a.action='等候道路連通';a.walking=false;return false;}
  a.route=path;if(Math.hypot(a.x-path[0][0],a.z-path[0][1])<.02)a.route.shift();
  a.goal=[...target];a.walking=a.route.length>0;a.action=action;return true;
 }
@@ -60,11 +61,12 @@ function tickPorters(t,dt){
   if(p.walking){advance(p,dt,t);if(p.walking)continue;}
   p.wait-=dt;if(p.wait>0)continue;
   if(p.phase==='fetch'){
-   if(l.boat.state==='unloading'&&l.boat.cargo>0){send(t,p,BERTH,'走向船邊接貨');p.phase='load';}
+   if(l.boat.state==='unloading'&&l.boat.cargo>0){if(send(t,p,BERTH,'走向船邊接貨'))p.phase='load';}
    else p.action='在碼頭候船';
   }else if(p.phase==='load'){
+   if(Math.hypot(p.x-BERTH[0],p.z-BERTH[1])>.02){send(t,p,BERTH,'走向船邊接貨');continue;}
    if(l.boat.cargo>0){transfer(t,'boat',`porter:${p.id}`,capacity.porterLoad);send(t,p,DOCK,'扛貨送往岸邊貨棧');p.phase='store';}else {send(t,p,DOCK,'返回岸邊');p.phase='fetch';}
-  }else{const n=transfer(t,`porter:${p.id}`,'dock',Infinity);l.dock.received+=n;p.wait=2;p.phase='fetch';p.action='把貨物放入貨棧';}
+  }else{if(Math.hypot(p.x-DOCK[0],p.z-DOCK[1])>.02){send(t,p,DOCK,'扛貨送往岸邊貨棧');continue;}const n=transfer(t,`porter:${p.id}`,'dock',Infinity);l.dock.received+=n;p.wait=2;p.phase='fetch';p.action='把貨物放入貨棧';}
  }
 }
 function tickOxen(t,dt){
@@ -74,10 +76,11 @@ function tickOxen(t,dt){
   if(a.walking){advance(a,dt,t);if(a.walking)continue;}
   a.wait-=dt;if(a.wait>0)continue;
   if(a.phase==='load'){
+   if(Math.hypot(a.x-DOCK[0],a.z-DOCK[1])>.02){send(t,a,DOCK,'返回貨棧取貨');continue;}
    const plan=deliveryPlan(t);
    if(plan&&send(t,a,plan.building.entrance,`運送${GOODS[plan.good]}前往${plan.building.name}`)){transfer(t,'dock',`ox:${a.id}`,capacity.oxLoad,plan.good);a.target=plan.building.id;a.deliveryAt=plan.to;a.phase='deliver';}else a.action='牛車等候原料與作坊接貨';
   }else if(a.phase==='deliver'){
-   const target=t.building(a.target);if(target){const lots=at(t,`ox:${a.id}`),label=GOODS[lots[0]?.good]||'貨物';const n=transfer(t,`ox:${a.id}`,a.deliveryAt||`shop:${target.id}`,Infinity);if(target.type==='shop')l.dock.delivered+=n;else target.lastSupply=t.elapsed;t.log(`牛車送抵${target.name}，補入 ${n} 件${label}`);}a.phase='return';a.wait=5;a.action='卸貨，讓牛歇歇腳';
+   const target=t.building(a.target);if(target&&Math.hypot(a.x-target.entrance[0],a.z-target.entrance[1])>.02){send(t,a,target.entrance,'等待道路連通後送貨');continue;}if(target){const lots=at(t,`ox:${a.id}`),label=GOODS[lots[0]?.good]||'貨物';const n=transfer(t,`ox:${a.id}`,a.deliveryAt||`shop:${target.id}`,Infinity);if(target.type==='shop')l.dock.delivered+=n;else target.lastSupply=t.elapsed;t.log(`牛車送抵${target.name}，補入 ${n} 件${label}`);}a.phase='return';a.wait=5;a.action='卸貨，讓牛歇歇腳';
   }else if(send(t,a,DOCK,'空車返回碼頭'))a.phase='load';
  }
 }

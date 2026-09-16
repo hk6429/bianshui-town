@@ -1,3 +1,4 @@
+import {roadAnchor} from './road-network.js';
 import {charge,roadCost,moveCost,upgradeCost,refundBuilding} from './city-finance.js';
 import {NEW_DESIGNS} from './variety.js';
 import {tierOf,MAX_TIER} from './building-tiers.js';
@@ -28,9 +29,9 @@ export function demolishBuilding(t,id){const b=t.building(id);if(!b)return false
  refresh(t);t.log(`${b.name}已拆除；貨物退回貨棧，住戶等候新居`);return true;}
 function refresh(t){
  t.stories.active=null;t.stories.nextAt=t.elapsed+20;for(const p of t.people){p.streetEvent=null;p.socialUntil=0;p.shelter=null;}
- t.rebuildRoads();
- for(const a of [...t.life.visitors,...t.life.porters,...t.life.oxen]){const nearest=t.nearestRoad(a.x,a.z);if(nearest)[a.x,a.z]=point(nearest);if(a.target&&t.building(a.target)&&['deliver','browse'].includes(a.phase))send(t,a,t.building(a.target).entrance,a.action);else if(a.walking&&a.goal){const goal=t.nearestRoad(...a.goal);if(goal)send(t,a,point(goal),a.action);}}
- for(const c of t.carts){const home=t.building(c.home);if(!home)continue;c.current=c.home;c.destination=c.home;c.outside=false;c.route=[];[c.x,c.z]=home.entrance;if(c.carrying){const shop=t.buildings.find(b=>b.type==='shop'&&b.stage>=3);if(shop)t.travel(c,shop.id);else transfer(t,`cart:${c.id}`,'dock',Infinity);}}
+ const cartTargets=new Map(t.carts.map(c=>[c.id,c.destination]));t.rebuildRoads();
+ for(const a of [...t.life.visitors,...t.life.porters,...t.life.oxen]){const nearest=roadAnchor(t,a.x,a.z);if(nearest)[a.x,a.z]=point(nearest);if(a.target&&t.building(a.target)&&['deliver','browse'].includes(a.phase))send(t,a,t.building(a.target).entrance,a.action);else if(a.walking&&a.goal){send(t,a,a.goal,a.action);}}
+ for(const c of t.carts){if(!t.building(c.home))continue;if(c.outside){c.destination=cartTargets.get(c.id)||c.home;if(c.destination)t.travel(c,c.destination);}}
 
  syncCargo(t);t.revision++;
 }

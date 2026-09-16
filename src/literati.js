@@ -1,3 +1,4 @@
+import {roadAnchor,roadReachable} from './road-network.js';
 import {AUTHORS,authorById} from './literati-data.js';
 import {designFor} from './heritage.js';
 import {send,advance} from './life.js';
@@ -6,15 +7,17 @@ export const createLiterati=()=>({actors:[],collected:[],nextAt:3});
 export function authorStatus(t,a){
  if(!a)return '等街坊落成，文人將陸續到訪';
  if(!a.visible)return '夜深暫歇，天明再來';
+ if(a.action==='等候道路連通')return '等候道路連通';
  if(t.weather.raining)return a.walking?'撐傘沿街慢行':'收筆聽雨，待晴續寫';
  return a.phase==='writing'?`在${a.venue}停步落筆` :a.phase==='reading'?`在${a.venue}展卷吟讀`:`沿街漫步，前往${a.venue}`;
 }
 function nextDestination(t,a){
- const spec=authorById(a.author),places=t.buildings.filter(b=>b.stage>=3),fav=places.filter(b=>spec.preferred.includes(designFor(b))),pool=fav.length?fav:places;
+ const origin=roadAnchor(t,a.x,a.z)?.split(',').map(Number),spec=authorById(a.author),places=t.buildings.filter(b=>b.stage>=3&&roadReachable(t,origin,b.entrance)),fav=places.filter(b=>spec.preferred.includes(designFor(b))),pool=fav.length?fav:places;
+ if(!pool.length){a.route=[];a.walking=false;a.phase='walking';a.action='等候道路連通';return;}
  const b=pool[(a.visits+AUTHORS.indexOf(spec))%pool.length];
  // Every other leg goes back through the riverside streets, even with one favourite venue.
- const center=a.visits%2?[12,-16]:b.entrance,slots=[...t.roads].map(point).filter(p=>Math.abs(p[0]-center[0])+Math.abs(p[1]-center[1])<=3).sort((p,q)=>Math.hypot(p[0]-center[0],p[1]-center[1])-Math.hypot(q[0]-center[0],q[1]-center[1])||p[0]-q[0]||p[1]-q[1]);const goal=slots[AUTHORS.indexOf(spec)%slots.length]||center;a.venue=a.visits%2?'虹橋街口':b.name;
- if(send(t,a,goal,'')){a.phase='walking';a.visits++;a.progress=0;}
+ const riverside=a.visits%2&&roadReachable(t,origin,[12,-16]),center=riverside?[12,-16]:b.entrance,slots=[...t.roads].map(point).filter(p=>Math.abs(p[0]-center[0])+Math.abs(p[1]-center[1])<=3&&roadReachable(t,origin,p)).sort((p,q)=>Math.hypot(p[0]-center[0],p[1]-center[1])-Math.hypot(q[0]-center[0],q[1]-center[1])||p[0]-q[0]||p[1]-q[1]);const goal=slots[AUTHORS.indexOf(spec)%slots.length]||center;a.venue=riverside?'虹橋街口':b.name;
+ if(send(t,a,goal,'')){a.phase=a.walking?'walking':'writing';a.visits++;a.progress=0;}
 }
 export function tickLiterati(t,dt){
  const l=t.literati,day=t.time%24>=6&&t.time%24<23;
@@ -35,8 +38,8 @@ export function tickLiterati(t,dt){
 }
 export function rerouteLiterati(t){
  for(const a of t.literati.actors){
-  const nearest=t.nearestRoad(a.x,a.z);if(!nearest)continue;
+  const nearest=roadAnchor(t,a.x,a.z);if(!nearest){a.route=[];a.walking=false;a.phase='walking';a.action='等候道路連通';continue;}
   if(!t.roads.has(key(a.x,a.z))&&!a.walking){[a.x,a.z]=point(nearest);}
-  if(a.walking){const goal=a.goal&&t.nearestRoad(...a.goal);if(goal)send(t,a,point(goal),'');}
+  if(a.phase==='walking'&&a.goal)send(t,a,a.goal,'');
  }
 }

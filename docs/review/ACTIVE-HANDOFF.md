@@ -78,3 +78,23 @@
 - 注意道路幾何：地塊中心c*4，建築門前perimeter在±2；roadNodes十字半徑2，publicRoads主幹x12，最右可建地x2中心8，外緣10距主幹2單位。需要明確公共接點，不可用任意最近路瞬移跨隔離。
 - production.deliveryPlan目前不篩可達，首選孤立點可能卡整輛牛車；tickCraftCarts可能遇返家失敗仍帶貨，C13階段一起驗。
 - 正式仍V10；百項全部修正、逐項驗收及四領域複評後才部署。
+
+## 立即交接：C13/C14 道路整合，工作樹尚未提交（2026-09-16）
+- HEAD7337a0a；本輪為progress，新增road-network.js/tests/roads.test.js，多個simulation/production/life/urban/traffic/UI檔修改。帳本30 verified / 7 implemented / 1 in_progress / 62 open。
+- managed新城publicWorks初始(2,2)lane；公共支線(10,8)→(16,8)銜接，street blocks只perimeter，跨街坊不自動BFS。sandbox自動連通仍保留。setCityPolicy切換mode立即重建路網。
+- roadAnchor managed只取1.01單位內道路，roadReachable連通分量WeakMap按Set identity/revision/size快取，避免每個貨車每tick完整BFS。publicAccess接貨棧(12,8)；新移入必須publicAccess。
+- move空route僅在實際門口才到站；send失敗clearroute；deliveryPlan跳隔離；牛車/腳夫實際到站才卸；loaded cart找可達shop、失敗保留貨。urban.refresh不再將所有cart瞬移home，保存destination重新規劃。
+- 大路同向行人按ID分兩列，原基礎速度不變；roadCapacity讀publicWorks avenue；道路grade升級差額25/格，11秒12人小路5人大路10人通過。
+- 第一次整合失敗是舊managed fixture未鋪必要道路、初始道路維護增加1；已更新相關fixtures及明確費用斷言。第二次僅rehousing fixture拆home後work也失聯；補work connector(-5,1)，最新city-growth+roads 14/14通過。依兩次整合失敗規則，此處建立handoff換下一工作階段，不在此輪繼續全套。
+- tests/city-growth helper now為-6..1,z2鋪橫路及(-6,1)豎路；tests/trade-logistics送店情境明確鋪(0,1),(0,2),(1,2)，更新後一級267.25秒/三級93.10秒，先前373/128為舊路線歷史，不要混用。
+- 下一階段先處理兩個已知風險：src/literati.js rerouteLiterati仍全域nearestRoad/nearestgoal可能跨隔離；trafficMotion遇vehicle時offset=.85覆蓋wide雙列可能重疊。以roadAnchor/實際goal與分列offset修正並加聚焦驗證。
+- 然後補公共營造UI對大路容量/經營需自鋪的說明，跑完整tests/build、Chrome或正式模組harness斷路→隔離→重鋪與大路吞吐，才把C13/C14標verified並commit/push。
+- 證據evidence/road-network。沒有部署；完整100項及最終4領域複評目標active，不可標complete/blocked。
+
+## 最新交接：C13/C14 道路里程碑放行（2026-09-16）
+- 上段未提交／未完成驗收為歷史。這輪修好literati改道與wide會車offset，20/20聚焦、174/174全套、build及Chrome模組+實際三維拆路重鋪皆通過。
+- literati nextDestination只選可達場所；斷路無roadAnchor不移動、不收作品；重鋪恢復。寬路遇車仍維持.65/.95兩列。玩家公共營造明示手動接路、價格/差額、雙列。
+- 實際3D：點唯一外聯路拆除→住宅標未接外路；重鋪扣20→住宅恢復接通。evidence/road-network/3d-* 與 reconnected* 保存。測試tab已關閉、未改正式存檔。
+- 最新帳本32 verified / 5 implemented / 1 in_progress / 62 open。完整goal仍active，不部署重整版。
+- C01–03/C05–16 已verified，城市剩C04+C17–25；下一個有界階段讀ledger並做公共服務/宜居，優先供水、衛生與防火（C17–19），把C04赤字服務衰退接到真實效率。之後醫療/教育/污染/公園/分級等；不要遺漏O/U與E01–04/E18–21。
+- managed新Town預設一格publicWorks(2,2)lane，不能再假設空城道路0或維護0。新版v9存檔fields沿用，模式切換重建道路；舊v1–8仍sandbox，不追扣舊城成本。

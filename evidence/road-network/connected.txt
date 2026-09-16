@@ -1,0 +1,11 @@
+- heading "玩家道路驗收" [level=1]
+- paragraph: 隔離城鎮，使用正式道路、交通與營造模組。下圖為路網示意，不是正式三維場景。
+- button "鋪路接通住宅" [active]
+- button "拆除唯一外聯路"
+- button "重鋪外聯路"
+- button "比較小路與大路"
+- button "存入隔離測試城"
+- link "開啟三維隔離小鎮":
+  - /url: /?storage-test=1
+- paragraph: 住宅已接通河岸貨棧；金庫 2220 文；玩家道路 4 格。
+- img "住宅與河岸引道路網"

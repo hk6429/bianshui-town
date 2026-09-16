@@ -490,10 +490,31 @@
       "acceptance": [
         "移除唯一外聯道路後街坊被判斷隔離；重鋪後恢復；新局起始區域可正常通行。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/road-network.js",
+        "src/simulation.js",
+        "src/urban.js",
+        "src/traffic.js",
+        "src/production.js",
+        "src/life.js",
+        "src/city-growth.js",
+        "src/main.js",
+        "src/literati.js",
+        "src/finance-ui.js",
+        "index.html"
+      ],
+      "evidence": [
+        "tests/roads.test.js",
+        "tests/roads-harness.html",
+        "evidence/road-network/README.md",
+        "evidence/road-network/tests.txt",
+        "evidence/road-network/final-focused.txt",
+        "evidence/road-network/3d-isolated.txt",
+        "evidence/road-network/3d-reconnected.txt",
+        "evidence/road-network/reconnected.txt"
+      ],
+      "verifiedBy": "根代理：路網/交通/貨運回歸、Chrome 模組與三維實際拆路重鋪驗收；最終四領域複評尚待",
       "reviewSource": "docs/review/city.json"
     },
     {
@@ -513,10 +534,31 @@
       "acceptance": [
         "同流量同路徑下寬路的通行量高於小路；升級不改建物占地；實際移動採用道路屬性。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/road-network.js",
+        "src/simulation.js",
+        "src/urban.js",
+        "src/traffic.js",
+        "src/production.js",
+        "src/life.js",
+        "src/city-growth.js",
+        "src/main.js",
+        "src/literati.js",
+        "src/finance-ui.js",
+        "index.html"
+      ],
+      "evidence": [
+        "tests/roads.test.js",
+        "tests/roads-harness.html",
+        "evidence/road-network/README.md",
+        "evidence/road-network/tests.txt",
+        "evidence/road-network/final-focused.txt",
+        "evidence/road-network/3d-isolated.txt",
+        "evidence/road-network/3d-reconnected.txt",
+        "evidence/road-network/reconnected.txt"
+      ],
+      "verifiedBy": "根代理：路網/交通/貨運回歸、Chrome 模組與三維實際拆路重鋪驗收；最終四領域複評尚待",
       "reviewSource": "docs/review/city.json"
     },
     {

@@ -1,0 +1,18 @@
+
+> bianshui-town@0.10.0 build
+> vite build
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 47 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                  17.62 kB │ gzip:   6.98 kB
+dist/assets/index-DMoPS936.css   20.86 kB │ gzip:   5.42 kB
+dist/assets/index-COKpV2b2.js   691.75 kB │ gzip: 197.60 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 811ms

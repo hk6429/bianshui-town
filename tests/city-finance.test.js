@@ -15,7 +15,7 @@ test('roads, moves, upgrades and expansion debit once; insufficient funds preser
 test('failed refresh does not commit construction fees or ledger entries',()=>{const t=new Town({mode:'managed'}),before=JSON.stringify(t);const result=editTown(t,d=>d.place('home',[{x:0,z:0}],true),{prepare:()=>{throw Error('renderer');}});assert(!result.ok);assert.equal(JSON.stringify(t),before);});
 test('daily upkeep depends on active facilities, is independent of tick sizes and settles once',()=>{
  const run=dt=>{const t=new Town({mode:'managed'});t.city.taxRate=0;t.place('home',[{x:0,z:0}],true);for(let i=0;i<720/dt;i++)t.tick(dt);return t;};
- const a=run(.25),b=run(1);assert.equal(a.city.maintenancePaid,b.city.maintenancePaid);assert.equal(a.city.maintenancePaid,4);const before=a.city.treasury;settleBudget(a);assert.equal(a.city.treasury,before);
+ const a=run(.25),b=run(1);assert.equal(a.city.maintenancePaid,b.city.maintenancePaid);assert.equal(a.city.maintenancePaid,6);const before=a.city.treasury;settleBudget(a);assert.equal(a.city.treasury,before);
  const one=dailyUpkeep(a);a.place('shop',[{x:-3,z:0}],true);assert(dailyUpkeep(a)>one);const active=dailyUpkeep(a);a.place('work',[{x:2,z:4}],false);assert.equal(dailyUpkeep(a),active);
 });
 test('only housed residents and new actual sales pay tax; policy range and tax pressure are bounded',()=>{
@@ -27,6 +27,6 @@ test('old saves migrate to sandbox without back-charging; mode toggles never ref
  const t=new Town();t.demo();const old=t.toJSON();old.version=8;delete old.city;const r=Town.restore(old);assert.equal(r.city.mode,'sandbox');const n=r.buildings.length;assert.equal(r.city.ledger.length,0);assert(setCityPolicy(r,{mode:'managed'}));r.city.treasury=500;assert(setCityPolicy(r,{mode:'sandbox'}));r.time+=24;settleBudget(r);assert.equal(r.city.treasury,500);assert(setCityPolicy(r,{mode:'managed'}));assert.equal(r.city.treasury,500);assert.equal(r.buildings.length,n);assert.doesNotThrow(()=>Town.restore(r.toJSON()));
 });
 test('debt blocks paid construction but permits demolition and policy changes',()=>{
- const t=new Town({mode:'managed'});t.place('garden',[{x:0,z:0}],true,'garden');t.city.treasury=0;t.time+=24;settleBudget(t);assert(t.city.treasury<0);assert.equal(t.city.deficitDays,1);assert(!t.place('home',[{x:-3,z:0}],true));assert(demolishBuilding(t,t.buildings[0].id));assert(t.city.treasury>0);assert.equal(dailyUpkeep(t),0);assert(setCityPolicy(t,{taxRate:12}));
+ const t=new Town({mode:'managed'});t.place('garden',[{x:0,z:0}],true,'garden');t.city.treasury=0;t.time+=24;settleBudget(t);assert(t.city.treasury<0);assert.equal(t.city.deficitDays,1);assert(!t.place('home',[{x:-3,z:0}],true));assert(demolishBuilding(t,t.buildings[0].id));assert(t.city.treasury>0);assert.equal(dailyUpkeep(t),1);assert(setCityPolicy(t,{taxRate:12}));
 });
 test('city schema rejects invalid policy, missing v9 budget and future settlement cursor',()=>{const t=new Town({mode:'managed'});for(const mutate of [d=>d.city.taxRate=99,d=>d.city.treasury=NaN,d=>d.city.day=100,d=>delete d.city]){const d=structuredClone(t.toJSON());mutate(d);assert.throws(()=>validateSave(d));}});

@@ -1,3 +1,4 @@
+import {publicAccess} from './road-network.js';
 import {jobCapacity,commuteDistance,assignJobs} from './employment.js';
 import {managed,taxDemand} from './city-finance.js';
 export const CENSUS_SECONDS=15;
@@ -64,7 +65,7 @@ export function tickPopulation(t){
   if(rehoused||departing||demand.home.score<=0||demand.population>=demand.targetPopulation){d.credit=0;continue;}
   // Fractional attraction credit is saved, so reloads and frame rates cannot reset it.
   d.credit=Math.min(1,d.credit+Math.min(1,demand.home.score/40));
-  const home=homes.find(b=>!t.people.length||t.people.length<2||t.buildings.some(j=>jobCapacity(j)&&j.stage>=3&&reachable(t,b,j)));
+  const home=homes.find(b=>publicAccess(t,b)&&(!t.people.length||t.people.length<2||t.buildings.some(j=>jobCapacity(j)&&j.stage>=3&&reachable(t,b,j))));
   if(d.credit>=1-1e-8&&home){addResident(t,home);d.credit=0;d.arrived++;assignJobs(t);t.log(`${home.name}迎來一位新住戶`);}
  }
 }

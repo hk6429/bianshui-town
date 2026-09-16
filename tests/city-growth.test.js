@@ -2,9 +2,9 @@ import {test} from 'node:test';import assert from 'node:assert/strict';
 import {Town} from '../src/simulation.js';
 import {cityDemand,addResident,tickPopulation,GRACE,residentCondition} from '../src/city-growth.js';
 import {setCityPolicy,householdTax} from '../src/city-finance.js';
-import {demolishBuilding} from '../src/urban.js';
+import {demolishBuilding,layRoad} from '../src/urban.js';
 const advance=(t,seconds,dt=.25)=>{for(let i=0;i<Math.round(seconds/dt);i++)t.tick(dt);};
-function city(types){const t=new Town({mode:'managed'});types.forEach((type,i)=>assert(t.place(type,[{x:i-6,z:0}],true)));return t;}
+function city(types){const t=new Town({mode:'managed'});types.forEach((type,i)=>assert(t.place(type,[{x:i-6,z:0}],true)));assert(layRoad(t,'lane',[{x:-6,z:1},...Array.from({length:8},(_,i)=>({x:i-6,z:2}))]));return t;}
 test('RCI responds differently to housing, retail, workshops and balance; excess supply reduces its own demand',()=>{
  const homes=city(['home','home']),shops=city(['shop','shop']),works=city(['work','work']),balanced=city(['home','home','shop','work']);
  for(const t of [homes,balanced])for(const b of t.buildings.filter(b=>b.type==='home'))for(let i=0;i<2;i++)addResident(t,b);
@@ -31,8 +31,8 @@ test('long-term homelessness causes bounded exits, clears chat/story references 
  advance(t,15);assert.equal(t.people.length,0);assert.equal(t.demography.departed,2);
 });
 test('rehousing has priority over immigration; restoring home and job ends hardship before departure',()=>{
- const t=city(['home','work']);const old=t.buildings[0],p=addResident(t,old);p.needsSatisfiedUntil=1e6;demolishBuilding(t,old.id);advance(t,60);assert.equal(t.people.length,1);
- assert(t.place('home',[{x:0,z:0}],true));advance(t,15);assert.equal(t.people.length,1);assert(p.home);assert(p.work);assert.equal(p.hardship.unhoused,0);assert.equal(p.hardship.unemployed,0);
+ const t=city(['home','work']);const old=t.buildings[0],p=addResident(t,old);p.needsSatisfiedUntil=1e6;demolishBuilding(t,old.id);assert(layRoad(t,'lane',[{x:-5,z:1}]));advance(t,60);assert.equal(t.people.length,1);
+ assert(t.place('home',[{x:0,z:0}],true));assert(layRoad(t,'lane',[{x:0,z:1}]));advance(t,15);assert.equal(t.people.length,1);assert(p.home);assert(p.work);assert.equal(p.hardship.unhoused,0);assert.equal(p.hardship.unemployed,0);
  advance(t,60);assert(t.people.some(q=>q.id===p.id));assert.equal(t.demography.departed,0);assert.doesNotThrow(()=>Town.restore(t.toJSON()));
 });
 test('unemployment and unmet goods each have their own grace, relief cancels only the relevant timer',()=>{

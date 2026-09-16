@@ -1,3 +1,4 @@
+import {roadReachable,roadAnchor} from './road-network.js';
 import {purchaseImports,recordSale} from './trade.js';
 import {staffingRatio,jobCapacity} from './employment.js';
 import {saleTax} from './city-finance.js';
@@ -46,9 +47,9 @@ export function migrateEconomy(t){
  t.economy.archived=l.dock.sold||0;t.economy.imported+=t.economy.archived;t.economy.sold.legacy=t.economy.archived;syncCargo(t);
 }
 export function deliveryPlan(t){
- const works=t.buildings.filter(b=>b.type==='work'&&b.stage>=3&&t.workers(b).length).sort((a,b)=>(a.lastSupply??-1)-(b.lastSupply??-1)||at(t,`input:${a.id}`).length-at(t,`input:${b.id}`).length||a.id-b.id);
+ const works=t.buildings.filter(b=>b.type==='work'&&b.stage>=3&&t.workers(b).length&&roadReachable(t,[12,8],b.entrance)).sort((a,b)=>(a.lastSupply??-1)-(b.lastSupply??-1)||at(t,`input:${a.id}`).length-at(t,`input:${b.id}`).length||a.id-b.id);
  for(const b of works){const r=RECIPES[b.variant];if(at(t,'dock',r.input).length&&at(t,`input:${b.id}`).length<3&&at(t,`output:${b.id}`).length<6)return {building:b,good:r.input,to:`input:${b.id}`};}
- const shops=t.buildings.filter(b=>b.type==='shop'&&b.stage>=3).sort((a,b)=>a.stock-b.stock||a.id-b.id);
+ const shops=t.buildings.filter(b=>b.type==='shop'&&b.stage>=3&&roadReachable(t,[12,8],b.entrance)).sort((a,b)=>a.stock-b.stock||a.id-b.id);
  if(shops.length&&at(t,'dock','legacy').length)return {building:shops[0],good:'legacy',to:`shop:${shops[0].id}`};
  return null;
 }
@@ -65,13 +66,14 @@ export function tickProduction(t,dt){
 export function tickCraftCarts(t,dt){
  const shops=t.buildings.filter(b=>b.type==='shop'&&b.stage>=3);
  for(const c of t.carts){
-  if(c.outside){t.move(c,dt);continue;}
-  if(c.carrying){const n=transfer(t,`cart:${c.id}`,`shop:${c.current}`,3);t.life.dock.delivered+=n;t.log(`推車把 ${n} 件成品送到${t.building(c.current)?.name}`);c.wait=3;}
+  if(c.outside){if(!c.route.length&&c.destination)t.travel(c,c.destination);t.move(c,dt);continue;}
+  if(c.carrying&&t.building(c.current)?.type==='shop'){const n=transfer(t,`cart:${c.id}`,`shop:${c.current}`,3);t.life.dock.delivered+=n;t.log(`推車把 ${n} 件成品送到${t.building(c.current)?.name}`);c.wait=3;}
+  if(c.carrying){const origin=roadAnchor(t,c.x,c.z)?.split(',').map(Number),shop=shops.find(b=>roadReachable(t,origin,b.entrance));if(shop)t.travel(c,shop.id);else c.action='載貨等候道路連通';continue;}
   c.wait=(c.wait||0)-dt;if(c.wait>0)continue;
   if(c.current!==c.home){t.travel(c,c.home);continue;}
   const lot=at(t,`output:${c.home}`)[0];if(!lot||!shops.length){c.action='在作坊等候成品';continue;}
-  const shop=[...shops].sort((a,b)=>(lot.good==='cloth'?(b.variant===2)-(a.variant===2):0)||a.stock-b.stock||a.id-b.id)[0];
-  if(t.travel(c,shop.id)){transfer(t,`output:${c.home}`,`cart:${c.id}`,3);c.action=`運送${GOODS[lot.good]}至${shop.name}`;}
+  const shop=shops.filter(b=>roadReachable(t,t.building(c.home)?.entrance,b.entrance)).sort((a,b)=>(lot.good==='cloth'?(b.variant===2)-(a.variant===2):0)||a.stock-b.stock||a.id-b.id)[0];
+  if(shop&&t.travel(c,shop.id)){transfer(t,`output:${c.home}`,`cart:${c.id}`,3);c.action=`運送${GOODS[lot.good]}至${shop.name}`;}
  }
 }
 export function goodsBalance(t){return {imported:t.economy.imported,accounted:t.economy.lots.length+t.economy.archived};}

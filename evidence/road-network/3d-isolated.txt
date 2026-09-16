@@ -1,0 +1,71 @@
+- main:
+  - generic "汴水小鎮互動三維場景"
+  - generic: 汴
+  - heading "汴水小鎮" [level=1]
+  - paragraph: 一城煙火，慢慢生長
+  - generic: ☀
+  - strong: 午時 · 日光正好
+  - generic: 第 1 日 12:44
+  - button "切換白晝與夜晚": ☾
+  - button "天候：晴天，自然模式": 晴天 · 自然
+  - button "市井見聞"
+  - button "開啟環境音": ♪
+  - button "畫卷"
+  - button "重置小鎮"
+  - button "操作說明": "?"
+  - region "小鎮概況":
+    - strong: "1"
+    - text: 位居民
+    - strong: "1"
+    - text: 處建築園景
+    - strong: "1"
+    - text: 處街坊
+  - complementary:
+    - generic: 民居 · 1 格街坊
+    - heading "杏花人家 2" [level=2]
+    - generic: 生活漸豐 · 已固定檢視
+    - separator
+    - generic: 住在這裡
+    - button "陳安 ↗"
+    - generic: 此刻在場 · 1 人
+    - paragraph: 陳安 · 在院裡整理花草
+    - paragraph: 街坊未接外路：請由門前步道鋪路至東側引道，才能接貨與迎接新住戶。
+    - separator
+    - generic: 建築 1／5 級 · 初築 · 可住 2 人
+    - paragraph: 下級：加蓋整層樓閣、大牌樓與燈籠
+    - button "搬移 30文"
+    - button "拆除"
+    - button "升至 2 級 · 120文"
+    - button "四格擴建 · 360文 ↘"
+    - separator
+    - generic: 點選空地取消固定
+  - generic: 汴 水
+  - text: 風過河岸，日子悠長
+  - status: 公共道路已更新；可按復原撤銷
+  - button "＋ 宋韻營造"
+  - button "公共營造"
+  - button "復原上一步"
+  - button "文人行旅"
+  - button "金庫 2200 文 · 需求"
+  - button "存檔管理"
+  - generic: 自由探索 · 拖曳移動畫面，點選屋舍與居民
+  - navigation "建造與探索":
+    - button "自由探索 1" [pressed]:
+      - generic: 自由探索
+      - generic: "1"
+    - button "民居 2":
+      - generic: 民居
+      - generic: "2"
+    - button "商鋪 3":
+      - generic: 商鋪
+      - generic: "3"
+    - button "作坊 4":
+      - generic: 作坊
+      - generic: "4"
+    - button "暫停": Ⅱ
+    - button "1×"
+  - generic: 滾輪縮放 · 右鍵拖曳平移 · Q / E 旋轉
+  - generic: 進度已留存
+  - button "放大": ＋
+  - button "縮小": −
+  - button "回到初始視角": ⌖

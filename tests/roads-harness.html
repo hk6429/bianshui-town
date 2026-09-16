@@ -1,0 +1,15 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>玩家道路驗收</title>
+<style>body{font:18px/1.7 sans-serif;margin:24px;max-width:850px}button{padding:12px;margin:4px}svg{max-width:100%;border:1px solid #888;background:#e5ecd9}pre{white-space:pre-wrap}</style>
+<h1>玩家道路驗收</h1><p>隔離城鎮，使用正式道路、交通與營造模組。下圖為路網示意，不是正式三維場景。</p>
+<button id="connect">鋪路接通住宅</button><button id="cut">拆除唯一外聯路</button><button id="restore">重鋪外聯路</button><button id="flow">比較小路與大路</button><button id="save">存入隔離測試城</button><a href="/?storage-test=1">開啟三維隔離小鎮</a>
+<p id="status"></p><svg id="map" width="700" height="420" viewBox="0 0 700 420" aria-label="住宅與河岸引道路網"></svg><pre id="result"></pre>
+<script type="module">
+import {Town} from '/src/simulation.js';import {layRoad,removeRoad} from '/src/urban.js';import {publicAccess} from '/src/road-network.js';import {prepareTraffic} from '/src/traffic.js';
+const t=new Town({mode:'managed'});t.place('home',[{x:0,z:0}],true);const b=t.buildings[0],cells=[{x:0,z:1},{x:0,z:2},{x:1,z:2}];
+function render(){document.querySelector('#status').textContent=`住宅${publicAccess(t,b)?'已接通河岸貨棧':'未接外路，移入暫停'}；金庫 ${t.city.treasury} 文；玩家道路 ${t.publicWorks.length} 格。`;
+ const svg=document.querySelector('#map');svg.replaceChildren();for(const k of t.roads){const [x,z]=k.split(',').map(Number);if(x<-3||x>17||z<-3||z>11)continue;const q=document.createElementNS('http://www.w3.org/2000/svg','rect');for(const [key,value]of Object.entries({x:(x+3)*30,y:(z+3)*27,width:22,height:20,fill:'#9c9784'}))q.setAttribute(key,value);svg.append(q);}
+ const home=document.createElementNS('http://www.w3.org/2000/svg','rect');for(const [key,value]of Object.entries({x:42,y:36,width:105,height:90,fill:publicAccess(t,b)?'#47775b':'#bb664c'}))home.setAttribute(key,value);svg.append(home);}
+document.querySelector('#connect').onclick=()=>{layRoad(t,'lane',cells);render();};document.querySelector('#cut').onclick=()=>{removeRoad(t,[cells[0]]);render();};document.querySelector('#restore').onclick=()=>{layRoad(t,'lane',[cells[0]]);render();};
+document.querySelector('#flow').onclick=()=>{const counts=[];for(const type of ['lane','avenue']){const a=new Town();layRoad(a,type,[{x:-1,z:0},{x:0,z:0},{x:1,z:0}]);for(let i=0;i<12;i++){const x=-2-i*.15;a.people.push({id:100+i,x,z:0,route:Array.from({length:6-Math.ceil(x)+1},(_,n)=>[Math.ceil(x)+n,0]),outside:true,speed:1,current:null,destination:null});}for(let i=0;i<220;i++){prepareTraffic(a);for(const p of a.people)a.move(p,.05);}counts.push(a.people.filter(p=>p.x>=6).length);}document.querySelector('#result').textContent=`同樣 12 位行人、相同路徑、11 秒：小路 ${counts[0]} 人到達，大路 ${counts[1]} 人到達。實際使用 Town.move 與 trafficMotion。`;};
+document.querySelector('#save').onclick=()=>{localStorage.setItem('bianshui-town-test-v1',JSON.stringify(t));document.querySelector('#result').textContent='已儲存隔離測試城；正式玩家存檔未變更。';};render();
+</script></html>
