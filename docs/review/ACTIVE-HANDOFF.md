@@ -186,3 +186,13 @@
 - main home/work小卡與finance-summary已接；README公開規則。舊v9無pollution默認0，無需升版本。
 - Chrome控制3陶器近40.5/遠0，停90秒20.25；真三維UI拆窯仍40.2，正常遊戲08:04→13:17降22，4人保留。中途修改測試HTML造成Vite重載（未重啟服務），污染持久化仍保留。不要在實測期間修改HTML以免干擾UI。
 - 下一獨立階段C23園景效益：讀ledger契約，避免僅全圖有園即加成；需要有限距離/容量、重複園景遞減與實際宜居/造訪效果。C24/C25及O/U/E全部保留，最後四領域複評後才能部署。
+
+## 新階段起點：C23園景宜居
+- 基準2a7cd45。按住家步道可達距離、級數、維護效率計算各園景效益，再以1/2遞減權重與總20上限防堆疊。需求、人口目標與入住候選接上空間效益。無新增存檔欄位，待聚焦/Chrome驗證。
+
+## 最新交接：C23園景宜居里程碑（2026-09-16）
+- 40 verified / 5 implemented / 55 open；13/13聚焦、222/222全套、build、Chrome控制距離/疊園與真三維升級效益已驗證。evidence/gardens，未部署。
+- garden-services.js：home→garden commuteDistance，range24+4×(tier-1)、base8+2×(tier-1)、linear distance falloff、serviceEfficiency；非utility、ready且未damaged。對每home按效益降序/(2**i)累加，cap20。
+- gardenReport依住戶max1權重平均，managed需求round(avg)；targetPopulation改成2+jobs+min4,floor(avg/5)，取代舊任意遠園gardenHomes計數。homes安置/入住排序pollutionAt-gardenBenefit。sandbox不套用demandModifier。
+- main home/garden小卡與finance-summary，無新存檔欄位。控制首近園6.667、第二10、第三11.333，隔離0；ChromeUI花100升一園二級，range24→28、住宅11.3→13.2。
+- 下一獨立階段C24五級功能：先讀ledger與現有tierOf/jobCapacity/homeCapacity/production/commerce契約，將外觀級數接到全類型實際功能、成本與可驗證上限。C25及O/U/E全部保留，最後四領域複評後才部署。

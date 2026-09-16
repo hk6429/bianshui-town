@@ -905,10 +905,23 @@
       "acceptance": [
         "住宅附近第一座公園提升宜居；遠端隔離公園無同等加成；同地大量堆疊不能無限增加。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/garden-services.js",
+        "src/city-growth.js",
+        "src/main.js",
+        "src/finance-ui.js"
+      ],
+      "evidence": [
+        "tests/garden-services.test.js",
+        "evidence/gardens/README.md",
+        "evidence/gardens/tests.txt",
+        "evidence/gardens/isolated.txt",
+        "evidence/gardens/first.txt",
+        "evidence/gardens/stacked.txt",
+        "evidence/gardens/3d-upgraded.txt"
+      ],
+      "verifiedBy": "根代理：園景距離/遞減/需求/安置因果測試、222項回歸、Chrome三維實際升級與住宅效益讀回；非真人玩家驗收",
       "reviewSource": "docs/review/city.json"
     },
     {

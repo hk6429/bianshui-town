@@ -1,0 +1,21 @@
+✔ RCI responds differently to housing, retail, workshops and balance; excess supply reduces its own demand (11.419792ms)
+✔ tax increases reduce all three real demand scores, delay arrivals and empty homes pay no tax (30.983791ms)
+✔ managed arrivals are gradual, frame-step independent and cannot accumulate a burst behind low demand (86.916375ms)
+✔ long-term homelessness causes bounded exits, clears chat/story references and preserves valid saves (12.951125ms)
+✔ rehousing has priority over immigration; restoring home and job ends hardship before departure (57.290459ms)
+✔ unemployment and unmet goods each have their own grace, relief cancels only the relevant timer (75.6095ms)
+✔ census credit and hardship round-trip without replay; sandbox remains explicitly unconstrained (62.520958ms)
+✔ removing the last story participant cancels the event without orphan references (0.542208ms)
+✔ first nearby garden raises actual demand; isolated or reachable but distant gardens do not give the same benefit (3.99675ms)
+✔ additional parks have diminishing returns, order does not matter and the total stays bounded (1.5405ms)
+✔ road cuts, damage and incomplete parks remove the bonus; utilities do not count as leisure gardens (0.902167ms)
+✔ upgrading a park improves its reach/benefit; debt reduces upkeep effects and demolition removes them (0.649041ms)
+✔ rehousing uses local amenity quality, coverage survives loading, sandbox imposes no demand bonus (2.83175ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 407.844333
