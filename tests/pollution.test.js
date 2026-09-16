@@ -1,3 +1,4 @@
+import {wellbeingReport} from '../src/wellbeing.js';
 import {test} from 'node:test';import assert from 'node:assert/strict';
 import {Town} from '../src/simulation.js';import {addResident,cityDemand} from '../src/city-growth.js';
 import {transfer,tickProduction} from '../src/production.js';import {demolishBuilding,moveBuilding} from '../src/urban.js';
@@ -31,5 +32,5 @@ test('pollution survives save and reload, decays without timestep drift, and rej
 });
 test('sandbox preserves pollution but does not emit, decay or penalize demand; invalid dt has no effect',()=>{
  const x=fixture();tickProduction(x.t,20);const initial=JSON.stringify(x.t.city.pollution);for(const dt of [-1,0,61,NaN,Infinity])tickPollution(x.t,dt);assert.equal(JSON.stringify(x.t.city.pollution),initial);
- x.t.city.mode='sandbox';tickProduction(x.t,20);tickPollution(x.t,30);assert.equal(JSON.stringify(x.t.city.pollution),initial);assert.equal(pollutionReport(x.t).demandModifier,0);
+ x.t.city.mode='sandbox';tickProduction(x.t,20);tickPollution(x.t,30);assert.equal(JSON.stringify(x.t.city.pollution),initial);assert.equal(wellbeingReport(x.t).demandModifier,0);
 });

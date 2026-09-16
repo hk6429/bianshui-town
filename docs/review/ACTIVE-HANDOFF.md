@@ -221,3 +221,37 @@
 - 控制頁相同4工匠6.5秒二級未完成、三級1陶器；相同2店員20秒二級5售、三級6售。公設能力bindings與所有圖錄級數已用節點測試核對。
 - README新增共用五級能力表並校正歷史版本容量敘述。僅新增測試HTML與文件，未再改上一階段通過229項的runtime。
 - 下一獨立階段C25整體幸福度/宜居：先讀ledger契約，再整合已存在水/衛生/健康/教育/污染/園景/就業/供貨/稅率的可解釋指標與實際生活結果，不能僅新顯示數字。所有O/U/E及最後四領域複評保留，全100完成後才部署。
+
+## 新階段起點：C25民生滿意
+- 基準efbead7。住房20/就業15/採買15/服務25/環境25加權0–100，保留分項原因；住宅需求使用共同滿意分數一次，取代原先各服務直接需求加減。
+- 低於65連續600秒進入遷出候選，改善即清除，沿用每人口評估最多一人；hardship.dissatisfied可選保存。待因果測試、既有契約回歸與Chrome。
+
+## C25核心回歸交接
+- 共用滿意門檻原放wellbeing.js導致某些入口循環依賴TDZ，已移至不依賴其他模組的wellbeing-rules.js。新遷入測試也補上實際公共道路，原失敗是測試城未接外路。
+- 下一收尾階段須聚焦測試成功後才跑全套，再做Chrome個人展開分項/改善服務/取消低滿意倒數。舊pollution/garden直接demandModifier已移除，服務只透過滿意度進入住宅需求。
+
+## 最新交接：C25核心完成、瀏覽器收尾待驗（2026-09-16）
+- 工作樹基於efbead7，尚未commit；41 verified / 6 implemented / 53 open。41/41聚焦、235/235全套、build通過，evidence/wellbeing。不要標記C25 verified，還缺UI證據、README與推送。
+- wellbeing.js：各居民parts保留key/name/score/weight/reason。住房20（容量/住戶）、就業15（工作落成未受損且路可達）、採買15（needsSatisfiedUntil）、服務25、環境25。服務=供水40+衛生20+健康20+醫療10+教育5+巡守5；醫療健康100代表無需照護，否則須assigned。環境clamp(80-pollution*.8+garden)。空城中立50。
+- 報告avg與managed demandModifier=round((avg-50)*.6)；cityDemand只套此共同服務分數，不再重複加water/hygiene/pollution/garden modifiers，稅率與基本住房/工作壓力仍獨立。garden平均仍參與有限targetPopulation。
+- GRACE.dissatisfied=600，閾值65放leaf wellbeing-rules.js避循環初始化。tickPopulation每15秒，低於65累加，>=65清0；600秒可遷出且每census至多1人。與其他住房/就業/供貨hardship共享流程。save-schema hardship.dissatisfied optional0..600，舊檔從0累加。
+- 個人卡新增details，summary顯示滿意分數，展開有五分項分數/權重/原因；不要把所有文字塞person-action。finance-summary顯示全城滿意與低分人數。
+- 已刪pollutionReport/gardenReport的舊demandModifier避免假修正值；同步相關tests與pollution-harness文字。舊README還有直接扣30與園景加需求等敘述，下一階段必須更新為納入共用滿意分數。
+- 固定情境：乾淨有住家/工作/日用品、無水服務=50、環境80→總82.5；home.waste40、pollution100→57.5。600秒在其他三項hardship均0時確實遷出；585秒補水提升至67.5，下一census清倒數且不遷出。相同人口/職缺/供水，較好滿意在15秒有新住戶、不良組仍2人。
+- 初次回歸揭露WELLBEING_GRACE循環TDZ與新移入fixture缺公共道路，已修，initial-regression.txt保留。不要改變import順序掩蓋TDZ，leaf已解決。
+- 下一階段建立wellbeing-harness：兩固定不良城先推進39次census到585秒，一座補井一座不補，下一census對照遷出/倒數清除；個人details在真三維卡展開、總覽分數讀回，存隔離鍵避免動正式存檔。完成後README/evidence/ledger/handoff、commit/push。
+- 原100與最終四領域複評範圍不變，未部署；C25之後接O/U/E待辦，需要從ledger選下一 bounded milestone。
+
+## 使用者追加：升級外觀再誇張與重置鍵
+- 基準 efbead7；保留未提交 C25 工作樹，這個有界階段只改外觀、級數說明與驗證。C25 的最新需求中立基準已改為65（不是舊交接的50），41聚焦/235全套/build通過，尚待UI收尾。
+- 追加金邊寬簷、分級牌樓與高階連廊；確認既有重置確認/復原流程。百項總目標保持，未達發布門檻不得部署。
+
+## 外觀追加里程碑完成
+- evidence/grand-tiers：三級金邊雙重牌樓、四級雙塔連廊、五級三重金瓦牌樓及金柱冠球。既有外觀聚焦3/3、build、Chrome同視角比較通過。
+- 重置取消1棟16人；確認0棟0人；重新整理再由存檔管理救回1棟16人。未碰正式存檔、未部署。C25未提交改動保留；下一階段回C25 UI及README收尾，不可將百項標完成。
+
+## 最新交接：C25民生滿意完成（2026-09-16）
+- 42 verified / 5 implemented / 53 open。五分項及共同需求/遷出規則已驗證，完整城市領域C01–C25通過各自驗收，並非整個百項完成。
+- 校正舊交接：空城中立65；round((average-65)*.6)。控制低57.5修正-4，補水67.5修正+2；39次到585，再一次未改善遷出1/改善保留2倒數0。真三維正常污染衰減後68.4，個人卡與總覽一致。
+- 41聚焦/235全套/build已通過；本階段只補Chrome與文件。evidence/wellbeing。外觀追加已獨立提交e863a14，本C25收尾另提交。
+- 下一階段由ledger選O/U/E待辦；保留全部100項與最後四專家複評後部署條件。未部署。

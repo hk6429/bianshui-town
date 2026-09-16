@@ -1,3 +1,5 @@
+import {wellbeingReport} from './wellbeing.js';
+import {LOW_WELLBEING,WELLBEING_GRACE} from './wellbeing-rules.js';
 import {buildingStats} from './building-tiers.js';
 import {gardenReport,gardenBenefit} from './garden-services.js';
 import {pollutionReport,pollutionAt} from './pollution.js';
@@ -7,7 +9,7 @@ import {publicAccess} from './road-network.js';
 import {jobCapacity,commuteDistance,assignJobs} from './employment.js';
 import {managed,taxDemand} from './city-finance.js';
 export const CENSUS_SECONDS=15;
-export const GRACE={unhoused:90,unemployed:180,unserved:360};
+export const GRACE={unhoused:90,unemployed:180,unserved:360,dissatisfied:WELLBEING_GRACE};
 export const homeCapacity=b=>b.type==='home'&&b.stage>=3?buildingStats(b).housing:0;
 export const createDemography=(elapsed=0)=>({lastAt:elapsed,credit:0,arrived:0,departed:0});
 const bounded=n=>Math.round(Math.max(-100,Math.min(100,n)));
@@ -25,11 +27,11 @@ export function cityDemand(t){
  let housingPressure=(targetPopulation-population)*12-vacant*4;
  // A new settlement can attract its first two residents without prebuilt jobs.
  if(population<2)housingPressure=Math.max(12,housingPressure);
- const water=waterReport(t),waterModifier=managed(t)&&population>=2?Math.round(((water.satisfaction??0)/100-.5)*24):0;
- const pollution=pollutionReport(t);
- const hygiene=sanitationReport(t),hygieneModifier=managed(t)?Math.round((hygiene.hygiene-100)/5):0;
+ const water=waterReport(t);
+ const pollution=pollutionReport(t),wellbeing=wellbeingReport(t);
+ const hygiene=sanitationReport(t);
  return {
-  home:{score:bounded(housingPressure+tax+waterModifier+hygieneModifier+pollution.demandModifier+garden.demandModifier),reasons:[`居住環境 ${pollution.environment.toFixed(1)}／100，污染需求修正 ${pollution.demandModifier}`,`空位 ${vacant}／容量 ${housing} 人`,`衛生 ${hygiene.hygiene}／100，需求修正 ${hygieneModifier}`,`供水 ${water.served}／${water.residents} 人；有水空位 ${water.available} 席；供水需求修正 ${waterModifier>=0?'+':''}${waterModifier}`,`可達工作 ${jobs} 席，失業 ${unemployed} 人`,`有可達園景的住宅 ${gardenHomes} 處，宜居加成 ${garden.average.toFixed(1)}／20，需求修正 +${garden.demandModifier}`,`稅率需求修正 ${tax>=0?'+':''}${tax}`]},
+  home:{score:bounded(housingPressure+tax+wellbeing.demandModifier),reasons:[`民生滿意 ${wellbeing.average.toFixed(1)}／100，綜合需求修正 ${wellbeing.demandModifier}`,`居住環境 ${pollution.environment.toFixed(1)}／100，納入滿意環境分項`,`空位 ${vacant}／容量 ${housing} 人`,`衛生 ${hygiene.hygiene}／100，納入滿意服務分項`,`供水 ${water.served}／${water.residents} 人；有水空位 ${water.available} 席；納入滿意服務分項`,`可達工作 ${jobs} 席，失業 ${unemployed} 人`,`有可達園景的住宅 ${gardenHomes} 處，宜居加成 ${garden.average.toFixed(1)}／20，納入滿意環境分項`,`稅率需求修正 ${tax>=0?'+':''}${tax}`]},
   shop:{score:bounded(population*14+unmet*5-retail*10-stock*2+tax),reasons:[`居民 ${population} 人，日用品待補 ${unmet} 人`,`商業服務容量 ${retail} 人，現有存貨 ${stock} 件`,`稅率需求修正 ${tax>=0?'+':''}${tax}`]},
   work:{score:bounded(orders*8+unemployed*8-industrial*12+tax),reasons:[`商鋪補貨缺口 ${orders} 件`,`失業 ${unemployed} 人，作坊工作容量 ${industrial} 席`,`稅率需求修正 ${tax>=0?'+':''}${tax}`]},
   population,housing,vacant,jobs,unemployed,unmet,targetPopulation
@@ -45,7 +47,7 @@ function leaveTown(t,p,reason){
  const e=t.stories.active;if(e){e.participants=e.participants.filter(id=>id!==p.id);if(!e.participants.length){t.stories.active=null;t.stories.nextAt=t.elapsed+35;}}
  t.demography.departed++;t.log(`${p.name}因${reason}遷離小鎮`);
 }
-export function residentCondition(p){const h=p.hardship||{},issues=[['unhoused','無家'],['unemployed','失業'],['unserved','日用品不足']].filter(([key])=>h[key]>0).map(([key,label])=>`${label} ${h[key]} 秒／寬限 ${GRACE[key]} 秒`);if((p.health??100)<40)issues.push('健康偏低，需休養');return issues.join('；')||'生活狀況穩定';}
+export function residentCondition(p){const h=p.hardship||{},issues=[['unhoused','無家'],['unemployed','失業'],['unserved','日用品不足'],['dissatisfied','民生滿意偏低']].filter(([key])=>h[key]>0).map(([key,label])=>`${label} ${h[key]} 秒／寬限 ${GRACE[key]} 秒`);if((p.health??100)<40)issues.push('健康偏低，需休養');return issues.join('；')||'生活狀況穩定';}
 export function tickPopulation(t){
  const d=t.demography;
  if(!managed(t)){
@@ -61,12 +63,12 @@ export function tickPopulation(t){
   d.lastAt+=CENSUS_SECONDS;assignJobs(t);
   const homes=t.buildings.filter(b=>homeCapacity(b)>t.residents(b).length).sort((a,b)=>(pollutionAt(t,a)-gardenBenefit(t,a).score)-(pollutionAt(t,b)-gardenBenefit(t,b).score)||a.id-b.id),waiting=t.people.find(p=>!p.home);
   let rehoused=false;if(waiting&&homes.length){const b=homes.find(b=>!waiting.work||Number.isFinite(commuteDistance(t,{home:b.id},t.building(waiting.work))));if(b){waiting.home=b.id;waiting.destination=null;waiting.outside=true;waiting.action='前往新居';rehoused=true;t.log(`${waiting.name}已安置到${b.name}`);}}
-  let departing=null;
+  const wellbeing=wellbeingReport(t);let departing=null;
   for(const p of t.people){
    const h=p.hardship??={unhoused:0,unemployed:0,unserved:0};
-   const flags={unhoused:!t.building(p.home),unemployed:!t.building(p.work)||!Number.isFinite(commuteDistance(t,p,t.building(p.work))),unserved:!(p.needsSatisfiedUntil>d.lastAt)};
-   for(const key of Object.keys(GRACE))h[key]=flags[key]?Math.min(GRACE[key],h[key]+CENSUS_SECONDS):0;
-   if(!departing){const reason=Object.keys(GRACE).find(key=>h[key]>=GRACE[key]);if(reason)departing={p,reason:{unhoused:'長期無家可歸',unemployed:'長期失業',unserved:'長期缺乏日用品'}[reason]};}
+   const flags={unhoused:!t.building(p.home),unemployed:!t.building(p.work)||!Number.isFinite(commuteDistance(t,p,t.building(p.work))),unserved:!(p.needsSatisfiedUntil>d.lastAt),dissatisfied:(wellbeing.residents.get(p.id)?.score??50)<LOW_WELLBEING};
+   for(const key of Object.keys(GRACE))h[key]=flags[key]?Math.min(GRACE[key],(h[key]||0)+CENSUS_SECONDS):0;
+   if(!departing){const reason=Object.keys(GRACE).find(key=>h[key]>=GRACE[key]);if(reason)departing={p,reason:{unhoused:'長期無家可歸',unemployed:'長期失業',unserved:'長期缺乏日用品',dissatisfied:'長期民生滿意偏低'}[reason]};}
   }
   if(departing)leaveTown(t,departing.p,departing.reason);
   const demand=cityDemand(t);

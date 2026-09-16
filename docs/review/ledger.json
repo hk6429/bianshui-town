@@ -992,10 +992,29 @@
       "acceptance": [
         "單獨改善其中一項可改善該分項；停服務或污染上升會下降；所有分項和總分可用固定情境重算，非裝飾數字。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/wellbeing.js",
+        "src/wellbeing-rules.js",
+        "src/city-growth.js",
+        "src/save-schema.js",
+        "src/main.js",
+        "src/finance-ui.js",
+        "src/pollution.js",
+        "src/garden-services.js"
+      ],
+      "evidence": [
+        "tests/wellbeing.test.js",
+        "evidence/wellbeing/focused-tests.txt",
+        "evidence/wellbeing/tests.txt",
+        "evidence/wellbeing/build.txt",
+        "tests/wellbeing-harness.html",
+        "evidence/wellbeing/README.md",
+        "evidence/wellbeing/3d-person.txt",
+        "evidence/wellbeing/3d-summary.txt",
+        "evidence/wellbeing/improved.txt"
+      ],
+      "verifiedBy": "root：固定情境因果測試、235項回歸及Chrome真三維分項/總覽查核",
       "reviewSource": "docs/review/city.json"
     },
     {

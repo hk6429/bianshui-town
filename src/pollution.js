@@ -24,7 +24,7 @@ export function pollutionAt(t,b){
 export function pollutionReport(t){
  const homes=t.buildings.filter(b=>b.type==='home'&&b.stage>=3).map(b=>({id:b.id,pollution:pollutionAt(t,b),residents:t.people.filter(p=>p.home===b.id).length}));
  const weight=homes.reduce((sum,h)=>sum+Math.max(1,h.residents),0),exposure=weight?homes.reduce((sum,h)=>sum+h.pollution*Math.max(1,h.residents),0)/weight:0;
- return {homes,exposure,environment:100-exposure,demandModifier:managed(t)?-Math.round(exposure*.3):0,affected:(t.city.pollution||[]).length};
+ return {homes,exposure,environment:100-exposure,affected:(t.city.pollution||[]).length};
 }
 export function pollutionStatus(t,b){
  if(!['home','work'].includes(b.type))return '';

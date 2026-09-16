@@ -15,7 +15,7 @@ export function gardenBenefit(t,home){
 export function gardenReport(t){
  const homes=t.buildings.filter(b=>b.type==='home'&&b.stage>=3).map(b=>({id:b.id,residents:t.people.filter(p=>p.home===b.id).length,...gardenBenefit(t,b)}));
  const weight=homes.reduce((n,h)=>n+Math.max(1,h.residents),0),average=weight?homes.reduce((n,h)=>n+h.score*Math.max(1,h.residents),0)/weight:0;
- return {homes,average,demandModifier:managed(t)?Math.round(average):0,covered:homes.filter(h=>h.score>0).length,gardens:t.buildings.filter(isLeisureGarden).length};
+ return {homes,average,covered:homes.filter(h=>h.score>0).length,gardens:t.buildings.filter(isLeisureGarden).length};
 }
 export function gardenStatus(t,b){
  if(b.type==='home'){const r=gardenBenefit(t,b);return `可達園景 ${r.sources.length} 處，宜居加成 ${r.score.toFixed(1)}／20。依門前步道路程遞減；效益由高到低排列，第二處折半、第三處四分之一，總加成最高20。${managed(t)?'影響住宅需求，入住優先考量園景與污染。':'自由營造僅供參考，不提高入住需求。'}`;}

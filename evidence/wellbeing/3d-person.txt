@@ -1,0 +1,29 @@
+Browser tab: 610004061, Title: "汴水小鎮｜一城煙火，慢慢生長", URL: "http://127.0.0.1:5173/?storage-test=1".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 113-120, 123-126
++			128 text ☀
++			129 text 午時 · 日光正好
++			130 text 第 1 日　12:24
++			131 text 2
++			132 text 3
++			133 text 3
++				134 text 蘇安
++			135 text 招呼客人 · 日用品已備妥 · 生活狀況穩定 · 學力 0.0／100 · 健康 100／100
++					136 text 民生滿意 68.4／100 · 查看分項
++				137 text 住房 100.0／100（占20％）
+2 位住戶／容量 4
+
+就業 100.0／100（占15％）
+有可達且可運作的工作場所
+
+採買 100.0／100（占15％）
+日用品已備妥
+
+公共服務 70.0／100（占25％）
+供水 100％、衛生 0、健康 100；醫療 無需照護、教育 不足、巡守 未涵蓋
+
+環境 3.7／100（占25％）
+基礎80－污染 95.4×0.8＋園景 0.0，限制0至100
++			138 text 雅居小樓 · 臨街茶坊
++			139 text 雅居小樓
+The focused UI element is 122 button (expanded) 民生滿意 68.4／100 · 查看分項, ID: person-wellbeing-title, Secondary Actions: Collapse

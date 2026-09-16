@@ -1,3 +1,4 @@
+import {wellbeingReport} from './wellbeing.js';
 import {gardenStatus} from './garden-services.js';
 import {pollutionStatus} from './pollution.js';
 import {educationStatus,educationOf} from './education.js';
@@ -127,8 +128,9 @@ function renderInspector(){
  }else{
   const p=town.people.find(p=>p.id===ref.id);if(!p){panel.hidden=true;return;}const home=town.building(p.home),work=town.building(p.work),dest=town.building(p.destination);
   if(panel.dataset.person!==String(p.id)){
-   panel.innerHTML=`<div class="eyebrow">街巷人物 · 一個人的日常</div><h2 id="person-name"></h2><p id="person-action"></p><button class="primary" id="follow-btn" data-follow="${escape(p.id)}"></button><hr><label>住處 · 工作場所</label><p id="person-place"></p><label>當下目的地</label><p id="person-goal"></p><label>今日記事 · 最新在上</label><ol id="person-diary" class="life-events"></ol>`;panel.dataset.person=String(p.id);delete panel.dataset.author;delete panel.dataset.content;
+   panel.innerHTML=`<div class="eyebrow">街巷人物 · 一個人的日常</div><h2 id="person-name"></h2><p id="person-action"></p><details><summary id="person-wellbeing-title">民生滿意分項</summary><p id="person-wellbeing" style="white-space:pre-line"></p></details><button class="primary" id="follow-btn" data-follow="${escape(p.id)}"></button><hr><label>住處 · 工作場所</label><p id="person-place"></p><label>當下目的地</label><p id="person-goal"></p><label>今日記事 · 最新在上</label><ol id="person-diary" class="life-events"></ol>`;panel.dataset.person=String(p.id);delete panel.dataset.author;delete panel.dataset.content;
   }
+  const happiness=wellbeingReport(town).residents.get(p.id);$('#person-wellbeing-title').textContent=`民生滿意 ${happiness.score.toFixed(1)}／100 · 查看分項`;$('#person-wellbeing').textContent=happiness.parts.map(x=>`${x.name} ${x.score.toFixed(1)}／100（占${x.weight}％）\n${x.reason}`).join('\n\n');
   $('#person-name').textContent=p.name;$('#person-action').textContent=(p.traffic||p.action)+((p.needsSatisfiedUntil||0)>town.elapsed?' · 日用品已備妥':'')+' · '+residentCondition(p)+` · 學力 ${educationOf(p).toFixed(1)}／100 · 健康 ${Math.floor(p.health??100)}／100${onSickLeave(town,p)?' · 病假休養':''}${healthcareReport(town).assigned.has(p.id)?' · 接受藥鋪照護':''}`;
   $('#person-place').textContent=`${home?.name||'尚未安排'} · ${work?.name||'尚待安排'}`;
   $('#person-goal').textContent=p.streetEvent?`${town.stories.active?.venue||'街口'} · ${town.stories.active?.title||'街坊相聚'}`:dest?.name||'暫無目的地';

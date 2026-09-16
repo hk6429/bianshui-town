@@ -1,3 +1,4 @@
+import {wellbeingReport} from '../src/wellbeing.js';
 import {test} from 'node:test';import assert from 'node:assert/strict';
 import {Town} from '../src/simulation.js';import {gardenBenefit,gardenReport} from '../src/garden-services.js';
 import {cityDemand,addResident,tickPopulation} from '../src/city-growth.js';import {layRoad,removeRoad,demolishBuilding,upgradeBuilding} from '../src/urban.js';
@@ -24,5 +25,5 @@ test('upgrading a park improves its reach/benefit; debt reduces upkeep effects a
 });
 test('rehousing uses local amenity quality, coverage survives loading, sandbox imposes no demand bonus',()=>{
  const x=fixture();assert(x.t.place('home',[{x:-4,z:0}],true,'residence'));const distant=x.t.buildings.at(-1);garden(x.t,-5,0);const p=addResident(x.t,x.home);p.home=null;p.current=null;p.outside=true;x.t.elapsed=15;tickPopulation(x.t);assert.equal(p.home,distant.id);
- const report=gardenReport(x.t),restored=Town.restore(x.t.toJSON());assert.deepEqual(gardenReport(restored),report);x.t.city.mode='sandbox';assert.equal(gardenReport(x.t).demandModifier,0);
+ const report=gardenReport(x.t),restored=Town.restore(x.t.toJSON());assert.deepEqual(gardenReport(restored),report);x.t.city.mode='sandbox';assert.equal(wellbeingReport(x.t).demandModifier,0);
 });

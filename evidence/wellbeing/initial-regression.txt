@@ -1,0 +1,92 @@
+✔ RCI responds differently to housing, retail, workshops and balance; excess supply reduces its own demand (12.426708ms)
+✔ tax increases reduce all three real demand scores, delay arrivals and empty homes pay no tax (37.005333ms)
+✔ managed arrivals are gradual, frame-step independent and cannot accumulate a burst behind low demand (90.805667ms)
+✔ long-term homelessness causes bounded exits, clears chat/story references and preserves valid saves (13.466167ms)
+✔ rehousing has priority over immigration; restoring home and job ends hardship before departure (59.308792ms)
+✔ unemployment and unmet goods each have their own grace, relief cancels only the relevant timer (79.906834ms)
+✔ census credit and hardship round-trip without replay; sandbox remains explicitly unconstrained (67.863375ms)
+✔ removing the last story participant cancels the event without orphan references (0.645625ms)
+file:///Users/naichengchen/projects/bianshui-town/src/city-growth.js:11
+export const GRACE={unhoused:90,unemployed:180,unserved:360,dissatisfied:WELLBEING_GRACE};
+                                                                         ^
+
+ReferenceError: Cannot access 'WELLBEING_GRACE' before initialization
+    at file:///Users/naichengchen/projects/bianshui-town/src/city-growth.js:11:74
+    at ModuleJob.run (node:internal/modules/esm/module_job:569:25)
+    at async node:internal/modules/esm/loader:650:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.5.0
+✖ tests/garden-services.test.js (57.259125ms)
+file:///Users/naichengchen/projects/bianshui-town/src/city-growth.js:11
+export const GRACE={unhoused:90,unemployed:180,unserved:360,dissatisfied:WELLBEING_GRACE};
+                                                                         ^
+
+ReferenceError: Cannot access 'WELLBEING_GRACE' before initialization
+    at file:///Users/naichengchen/projects/bianshui-town/src/city-growth.js:11:74
+    at ModuleJob.run (node:internal/modules/esm/module_job:569:25)
+    at async node:internal/modules/esm/loader:650:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.5.0
+✖ tests/pollution.test.js (56.919791ms)
+✔ population causes proportional daily waste, gradual health decline and real demand loss (3.452916ms)
+✔ reachable finite-capacity cleaning stabilises waste, disconnection gradually worsens and restoration heals (1.822375ms)
+✔ only actual completed production adds pending waste, settled once and preserved across reload (2.6655ms)
+✔ debt progressively cuts both water and cleaning; real tax receipts restore services and paid building access (1.531125ms)
+✔ old saves start today, malformed state is rejected, sandbox and mode switches do not back-charge sanitation (2.963375ms)
+✔ daily health/waste settlement is independent of tick size and resumes without replay (51.103833ms)
+✔ overlapping yards share capacity without leaving avoidable waste in a single-covered street (0.481625ms)
+✔ settling several days counts only consecutive actual deficit days, not earlier solvent days (0.132291ms)
+✔ completed wells supply residents through roads; cut, rebuild, move and demolition recompute coverage (3.474166ms)
+✔ capacity is finite, existing residents have priority, a second well and tier upgrade restore water (2.344625ms)
+✔ coverage uses walking distance rather than straight-line distance; incomplete wells do not serve (0.893458ms)
+✔ water changes housing demand and actual new arrivals without pretending wells are recreation gardens (5.989583ms)
+✔ well construction and daily upkeep are real charges, tiers and four-cell capacity remain consistent (0.975ms)
+✔ no double supply: overlapping wells report only actual residents and reserved housing seats (0.486792ms)
+✔ overlapping coverage reallocates flexible households so a constrained household is not starved (9.794792ms)
+✔ five factors have bounded, deterministic, independently traceable scores and exact weighted total (6.055791ms)
+✔ turning off water or raising pollution lowers shared satisfaction and real housing demand (1.602208ms)
+✔ persistent low satisfaction alone causes bounded departures, while basic needs remain met (3.668792ms)
+✔ a single service improvement resets the low-satisfaction departure clock before expiry (2.579ms)
+✔ saved dissatisfaction resumes, legacy hardship works, no residents uses neutral score, sandbox never expels (3.476916ms)
+✖ same vacancies jobs and water: higher satisfaction accelerates an actual new arrival (1.724125ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 28
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 435.293166
+
+✖ failing tests:
+
+test at tests/garden-services.test.js:1:1
+✖ tests/garden-services.test.js (57.259125ms)
+  'test failed'
+
+test at tests/pollution.test.js:1:1
+✖ tests/pollution.test.js (56.919791ms)
+  'test failed'
+
+test at tests/wellbeing.test.js:34:1
+✖ same vacancies jobs and water: higher satisfaction accelerates an actual new arrival (1.724125ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 3
+  
+      at TestContext.<anonymous> (file:///Users/naichengchen/projects/bianshui-town/tests/wellbeing.test.js:36:149)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
