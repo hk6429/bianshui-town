@@ -1714,10 +1714,25 @@
       "acceptance": [
         "建造模式雙指縮放及交錯抬指均零新增，單指仍正常放置。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/pointer-gesture.js",
+        "src/main.js",
+        "index.html",
+        "src/style.css"
+      ],
+      "evidence": [
+        "tests/pointer-gesture.test.js",
+        "evidence/touch-plans/README.md",
+        "evidence/touch-plans/focused-tests.txt",
+        "evidence/touch-plans/tests.txt",
+        "evidence/touch-plans/build.txt",
+        "evidence/touch-plans/pinch-first-up.txt",
+        "evidence/touch-plans/pinch-second-up.txt",
+        "evidence/touch-plans/mobile-preview.png",
+        "evidence/touch-plans/mobile-confirmed.txt"
+      ],
+      "verifiedBy": "root：指標狀態測試、Chrome原生觸控事件模擬、390×844草稿微調/取消/確認",
       "reviewSource": "docs/review/ux.json"
     },
     {
@@ -1737,10 +1752,25 @@
       "acceptance": [
         "手指離開後可看完整占地、移動草稿並明確確認一次。"
       ],
-      "status": "open",
-      "implementation": [],
-      "evidence": [],
-      "verifiedBy": null,
+      "status": "verified",
+      "implementation": [
+        "src/pointer-gesture.js",
+        "src/main.js",
+        "index.html",
+        "src/style.css"
+      ],
+      "evidence": [
+        "tests/pointer-gesture.test.js",
+        "evidence/touch-plans/README.md",
+        "evidence/touch-plans/focused-tests.txt",
+        "evidence/touch-plans/tests.txt",
+        "evidence/touch-plans/build.txt",
+        "evidence/touch-plans/pinch-first-up.txt",
+        "evidence/touch-plans/pinch-second-up.txt",
+        "evidence/touch-plans/mobile-preview.png",
+        "evidence/touch-plans/mobile-confirmed.txt"
+      ],
+      "verifiedBy": "root：指標狀態測試、Chrome原生觸控事件模擬、390×844草稿微調/取消/確認",
       "reviewSource": "docs/review/ux.json"
     },
     {

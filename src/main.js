@@ -1,3 +1,4 @@
+import {PointerGesture,shiftDraft} from './pointer-gesture.js';
 import {sceneCommand,stepCursor} from './scene-keyboard.js';
 import {wellbeingReport} from './wellbeing.js';
 import {gardenStatus} from './garden-services.js';
@@ -40,6 +41,7 @@ import {Town,TYPES,dragCells,CELL,bounds} from './simulation.js';
 const $=s=>document.querySelector(s),canvas=$('#world'),sound=new Soundscape();let designFilter='all';let editing=null,undoTown=null,pendingDelete=null,editFailure='';let journalOpen=false,selectedDesign=null,plotSize=1;
 const icons={explore:'<circle cx="16" cy="16" r="10"/><path d="m20 12-3 7-5 2 3-7 5-2Z"/>',home:'<path d="m3 14 13-9 13 9M6 14v13h20V14M12 27v-9h8v9M2 16h28M8 11v-4h4"/>',shop:'<path d="M5 14v13h22V14M3 13l3-7h20l3 7M3 13c0 5 7 5 7 0 0 5 6 5 6 0 0 5 6 5 6 0 0 5 7 5 7 0M10 27v-8h6v8M21 19h3"/>',work:'<path d="m7 5 6 1 4 5-5 5-5-4-2-5 3 3 4-4-5-1ZM15 14l12 12-3 3-12-12M21 4l6 6-5 5M21 6l-5 6M7 21l-4 5 3 3 5-4"/>'};
 for(const el of document.querySelectorAll('[data-icon]'))el.innerHTML=`<svg viewBox="0 0 32 32" aria-hidden="true">${icons[el.dataset.icon]}</svg>`;
+const pointerGesture=new PointerGesture();let pendingPlan=null;
 let keyboardCursor={x:0,z:0},keyboardActive=false;
 let town=new Town({mode:'managed'}),scene,mode='explore',speed=1,paused=false,drag=null,down=null,pinned=null,hovered=null,lastUi=0,lastSave=0,toastTimer,following=null,selectedLot=null;
 const fixtureName=new URLSearchParams(location.search).get('fixture');const fixtureMode=import.meta.env.DEV&&['v4','v5','v6','v7','v8'].includes(fixtureName);
@@ -54,7 +56,7 @@ if(town.buildings.length)$('#welcome').hidden=true;
 function toast(text){$('#toast').textContent=text;$('#toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),3200);}
 function save(){if(recovery?.fault){$('#save-status').textContent='執行錯誤 · 已停止自動儲存';return;}if(fixtureMode){$('#save-status').textContent='預覽場景 · 不覆寫小鎮';return;}const result=saveStore.save(town.toJSON());$('#save-status').textContent=result.ok?'進度已留存':result.status==='conflict'?'另一分頁已有更新 · 請開啟存檔管理':result.status==='recovery'?'原存檔保留 · 自動儲存已停止':'儲存失敗 · 請匯出目前小鎮';if(result.status==='conflict'&&!paused){paused=true;saveUI?.open();}}
 
-function setMode(next){editing=null;selectedDesign=null;$('#blueprint-status').hidden=true;scene.showBuildGrid(next!=='explore');if(next!=='explore')stopFollowing();mode=next;drag=down=null;keyboardActive=false;$('#cancel-build').hidden=next==='explore';scene.clearGroup(scene.preview);document.querySelectorAll('[data-mode]').forEach(b=>{b.classList.toggle('active',b.dataset.mode===mode);b.setAttribute('aria-pressed',String(b.dataset.mode===mode));});scene.controls.mouseButtons.LEFT=mode==='explore'?THREE.MOUSE.PAN:undefined;scene.controls.touches.ONE=mode==='explore'?THREE.TOUCH.PAN:undefined;$('#mode-hint').textContent=mode==='explore'?'自由探索 · 拖曳移動畫面，點選屋舍與居民':`${ROAD_TYPES[mode]||TYPES[mode]||'調整街坊'} · 點選放置，橫拉最多四格；斜拉 2 × 2 自動合建；門前步道須以道路接至東側引道`;canvas.style.cursor=mode==='explore'?'grab':'crosshair';}
+function setMode(next){discardPointerDraft();editing=null;selectedDesign=null;$('#blueprint-status').hidden=true;scene.showBuildGrid(next!=='explore');if(next!=='explore')stopFollowing();mode=next;drag=down=null;keyboardActive=false;$('#cancel-build').hidden=next==='explore';scene.clearGroup(scene.preview);document.querySelectorAll('[data-mode]').forEach(b=>{b.classList.toggle('active',b.dataset.mode===mode);b.setAttribute('aria-pressed',String(b.dataset.mode===mode));});scene.controls.mouseButtons.LEFT=mode==='explore'?THREE.MOUSE.PAN:undefined;scene.controls.touches.ONE=mode==='explore'?THREE.TOUCH.PAN:undefined;$('#mode-hint').textContent=mode==='explore'?'自由探索 · 拖曳移動畫面，點選屋舍與居民':`${ROAD_TYPES[mode]||TYPES[mode]||'調整街坊'} · 點選放置，橫拉最多四格；斜拉 2 × 2 自動合建；門前步道須以道路接至東側引道`;canvas.style.cursor=mode==='explore'?'grab':'crosshair';}
 for(const b of document.querySelectorAll('[data-mode]'))b.onclick=()=>{setMode(b.dataset.mode);$('#welcome').hidden=true;focusScene();};
 $('#start-btn').onclick=()=>{$('#welcome').hidden=true;setMode('home');toast('在草地上點一下，安放第一間民居');};
 $('#demo-btn').onclick=()=>{if(!applyUrban(draft=>{draft.city.mode='sandbox';draft.demo();return true;}))return;$('#welcome').hidden=true;setMode('explore');save();toast('歡迎來到汴水小鎮，點選屋舍看看誰在裡面');};
@@ -81,8 +83,28 @@ $('#new-town').onclick=$('#reset-town').onclick=()=>$('#confirm-reset').showModa
 $('#confirm-new').onclick=()=>{const nextTown=new Town({mode:'managed'});if(!fixtureMode&&saveStore.blocked!=='recovery'){const result=saveStore.checkpoint(town.toJSON());if(!result.ok){toast('無法保留重置復原點，請先匯出小鎮');return;}}if(!fixtureMode){const result=saveStore.replace(nextTown.toJSON());if(!result.ok){toast('重置未完成，原小鎮仍保留；請先匯出進度');return;}}stopFollowing();undoTown=JSON.parse(JSON.stringify(town));town=nextTown;runtime.reset();recovery=new RecoveryPoint({read:()=>town.toJSON(),validate:validateSave});$('#undo-urban').hidden=false;paused=false;speed=1;$('#speed-btn').textContent='1×';$('#pause-btn').textContent='Ⅱ';$('#pause-btn').classList.remove('paused');$('#pause-btn').setAttribute('aria-label','暫停');down=drag=selectedLot=pendingDelete=null;scene.reset();scene.resetView();pinned=hovered=null;journalOpen=false;updateJournal();$('#inspector').hidden=true;$('#welcome').hidden=false;$('#confirm-reset').close();$('#help').close();setMode('explore');save();toast('小鎮已重置；存檔管理保留重置前小鎮');};
 function cellAt(e){const p=scene.atScreen(e.clientX,e.clientY);return p?{x:Math.round(p.x/CELL),z:Math.round(p.z/CELL)}:null;}
 canvas.addEventListener('contextmenu',e=>e.preventDefault());
-canvas.addEventListener('pointerdown',e=>{stopFollowing();if(e.button!==0)return;keyboardActive=false;canvas.focus({preventScroll:true});down={x:e.clientX,y:e.clientY};if(mode!=='explore'){const c=cellAt(e);if(c){const cells=plannedCells(c);drag={start:c,cells};scene.outline(cells,canPlan(cells)?0x668856:0xb5644c);canvas.setPointerCapture(e.pointerId);}}});
-canvas.addEventListener('pointermove',e=>{if(keyboardActive)return;if(mode!=='explore'){const c=cellAt(e);if(!c)return;const cells=editing?.kind==='road'?streetCells(drag?.start||c,c):editing?plannedCells(c):selectedDesign&&plotSize===4?plannedCells(c):drag?dragCells(drag.start,c):[c];if(drag)drag.cells=cells;scene.outline(cells,canPlan(cells)?0x668856:0xb5644c);return;}if(!down)hovered=scene.pick(e.clientX,e.clientY);});
+function discardPointerDraft(){pointerGesture.cancel();$('#scene-instructions').hidden=false;pendingPlan=null;drag=down=null;$('#touch-plan').hidden=true;if(scene)scene.clearGroup(scene.preview);}
+function showPendingPlan(){
+ if(!pendingPlan)return;const valid=canPlan(pendingPlan);scene.outline(pendingPlan,valid?0x668856:0xb5644c);
+ $('#touch-plan').hidden=false;$('#scene-instructions').hidden=true;$('#confirm-plan').disabled=!valid;
+ $('#touch-plan-status').textContent=`待確認：${pendingPlan.length} 格，起點 X ${pendingPlan[0].x}、Z ${pendingPlan[0].z} · ${valid?'可營造':'目前不可營造，請移動草稿或確認金庫'}。按方向鈕微調，確認才扣款。`;
+}
+function confirmPendingPlan(){if(!pendingPlan)return;const cells=pendingPlan.map(c=>({...c}));if(!canPlan(cells)){showPendingPlan();return;}if(submitPlan(cells)){keyboardCursor={...cells[0]};pendingPlan=null;$('#touch-plan').hidden=true;scene.clearGroup(scene.preview);$('#mode-hint').textContent='本次營造已完成';$('#scene-instructions').hidden=false;$('#scene-instructions').textContent='營造已確認；可重新選地，或按取消營造返回探索。';}else showPendingPlan();}
+$('#confirm-plan').onclick=confirmPendingPlan;
+for(const button of document.querySelectorAll('[data-draft-shift]'))button.onclick=()=>{if(!pendingPlan)return;const [dx,dz]=button.dataset.draftShift.split(',').map(Number);pendingPlan=shiftDraft(pendingPlan,dx,dz);showPendingPlan();};
+canvas.addEventListener('pointerdown',e=>{
+ const action=pointerGesture.start(e);if(action==='ignore')return;
+ canvas.setPointerCapture(e.pointerId);stopFollowing();keyboardActive=false;
+ if(action==='cancel'){discardPointerDraft();$('#scene-instructions').textContent='多指手勢：草稿已取消，全部放開後可重新營造。';return;}
+ pendingPlan=null;$('#touch-plan').hidden=true;$('#scene-instructions').hidden=false;$('#scene-instructions').textContent='拖曳選擇占地；觸控抬起後先預覽，再明確確認。';canvas.focus({preventScroll:true});down={x:e.clientX,y:e.clientY};
+ if(mode!=='explore'){const c=cellAt(e);if(c){const cells=plannedCells(c);drag={start:c,cells};scene.outline(cells,canPlan(cells)?0x668856:0xb5644c);}}
+});
+canvas.addEventListener('pointermove',e=>{
+ if(pointerGesture.active.size&&!pointerGesture.owns(e.pointerId))return;
+ if(keyboardActive||pendingPlan)return;
+ if(mode!=='explore'){const c=cellAt(e);if(!c)return;const cells=editing?.kind==='road'?streetCells(drag?.start||c,c):editing?plannedCells(c):selectedDesign&&plotSize===4?plannedCells(c):drag?dragCells(drag.start,c):[c];if(drag)drag.cells=cells;scene.outline(cells,canPlan(cells)?0x668856:0xb5644c);return;}
+ if(!down)hovered=scene.pick(e.clientX,e.clientY);
+});
 function submitPlan(cells){
  if(editing){const op=editing,squareCount=publicSquares(town).length;const success=applyUrban(draft=>op.kind==='move'?moveBuilding(draft,op.id,cells[0]):op.type==='erase'?removeRoad(draft,cells):layRoad(draft,op.type,cells));toast(success?(op.kind==='move'?'建築已搬移，住戶與貨物保留':publicSquares(town).length>squareCount?'四格道路已合成街坊廣場；可按復原撤銷':'公共道路已更新；可按復原撤銷'):editFailure||'這裡無法操作，請避開建築及範圍外地面');if(success&&op.kind==='move'){setMode('explore');pinned={kind:'building',id:op.id};}return success;}
  const placed=applyUrban(draft=>draft.place(mode,cells,false,selectedDesign));
@@ -90,15 +112,24 @@ function submitPlan(cells){
  else toast(editFailure||'這裡放不下，請選擇範圍內的空地；四格須完整空出 2 × 2');
  return !!placed;
 }
-canvas.addEventListener('pointerup',e=>{if(e.button!==0)return;if(drag){submitPlan(drag.cells);drag=null;scene.clearGroup(scene.preview);}else if(down&&Math.hypot(e.clientX-down.x,e.clientY-down.y)<5){pinned=scene.pick(e.clientX,e.clientY);hovered=pinned;}down=null;});
-canvas.addEventListener('pointercancel',()=>{drag=null;down=null;scene.clearGroup(scene.preview);});
-canvas.addEventListener('pointerleave',()=>{hovered=null;if(!drag&&!keyboardActive)scene.clearGroup(scene.preview);});
+canvas.addEventListener('pointerup',e=>{
+ if(!pointerGesture.end(e.pointerId))return;
+ if(drag){const cells=drag.cells.map(c=>({...c}));drag=null;
+  if(e.pointerType!=='mouse'||$('#precise-build').checked){pendingPlan=cells;showPendingPlan();}
+  else{submitPlan(cells);scene.clearGroup(scene.preview);}
+ }else if(down&&Math.hypot(e.clientX-down.x,e.clientY-down.y)<5){pinned=scene.pick(e.clientX,e.clientY);hovered=pinned;}
+ down=null;
+});
+const cancelPointer=e=>{if(!pointerGesture.active.has(e.pointerId))return;pointerGesture.end(e.pointerId,true);discardPointerDraft();};
+canvas.addEventListener('pointercancel',cancelPointer);canvas.addEventListener('lostpointercapture',cancelPointer);
+canvas.addEventListener('pointerleave',()=>{hovered=null;if(!drag&&!pendingPlan&&!keyboardActive)scene.clearGroup(scene.preview);});
+window.addEventListener('blur',()=>{if(drag||pendingPlan)discardPointerDraft();});
 function keyboardPreview(){
  if(mode==='explore'){ $('#scene-instructions').textContent='探索：方向鍵或 WASD 平移，Q／E 旋轉；2 民居、3 商鋪、4 作坊。';return;}
  const cells=plannedCells(keyboardCursor),valid=canPlan(cells);scene.outline(cells,valid?0x668856:0xb5644c);
  $('#scene-instructions').textContent=`營造游標 X ${keyboardCursor.x}、Z ${keyboardCursor.z} · ${cells.length} 格 · ${valid?'可放置，Enter 確認':'不可放置，請移動至空地或確認金庫'} · 方向鍵移格，Esc 取消`;
 }
-function focusScene(){canvas.focus({preventScroll:true});keyboardActive=true;keyboardPreview();}
+function focusScene(){canvas.focus({preventScroll:true});keyboardActive=true;if(pendingPlan)showPendingPlan();else keyboardPreview();}
 function cancelBuild(){stopFollowing();setMode('explore');pinned=hovered=null;focusScene();}
 $('#keyboard-scene').onclick=focusScene;$('#cancel-build').onclick=cancelBuild;
 window.addEventListener('keydown',e=>{
@@ -109,15 +140,18 @@ window.addEventListener('keydown',e=>{
  if(command.type==='rotate'){stopFollowing();scene.rotate(command.angle);return;}
  if(command.type==='direction'){
   stopFollowing();keyboardActive=true;
+  if(pendingPlan){pendingPlan=shiftDraft(pendingPlan,...command.direction);showPendingPlan();return;}
   if(mode==='explore'){scene.pan(...command.direction);$('#scene-instructions').textContent=`視角中心 X ${scene.controls.target.x.toFixed(0)}、Z ${scene.controls.target.z.toFixed(0)} · 方向鍵平移，2 民居、3 商鋪、4 作坊`;}
   else{keyboardCursor=stepCursor(keyboardCursor,command.direction,bounds);keyboardPreview();scene.focusAt([keyboardCursor.x*CELL,keyboardCursor.z*CELL],scene.camera.zoom);}
  }
  if(command.type==='submit'&&mode!=='explore'){
+  if(pendingPlan){confirmPendingPlan();return;}
+  if(pointerGesture.active.size)return;
   if(canPlan(plannedCells(keyboardCursor)))submitPlan(plannedCells(keyboardCursor));else toast('這裡不可放置，請移動游標或確認金庫。');
   drag=down=null;keyboardActive=true;keyboardPreview();
  }
 });
-window.addEventListener('resize',()=>scene.resize());window.addEventListener('beforeunload',save);document.addEventListener('visibilitychange',()=>runtime.visibility());
+window.addEventListener('resize',()=>scene.resize());window.addEventListener('beforeunload',save);document.addEventListener('visibilitychange',()=>{if(document.hidden)discardPointerDraft();runtime.visibility();});
 function formatTime(time){return `${String(Math.floor(time%24)).padStart(2,'0')}:${String(Math.floor(time%1*60)).padStart(2,'0')}`;}
 function inspectorContent(panel,html){delete panel.dataset.person;delete panel.dataset.author;if(panel.dataset.content!==html){panel.innerHTML=html;panel.dataset.content=html;}}
 function stopFollowing(){following=null;if(scene)scene.follow(null);$('#follow-status').hidden=true;}

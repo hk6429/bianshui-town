@@ -1,0 +1,21 @@
+✔ single pointer owns edits and can finish only once; unrelated and right-button releases cannot submit (0.521167ms)
+✔ both release orders and interleaved third fingers suppress the entire pinch gesture (0.113292ms)
+✔ cancellation or mode changes suppress late releases and recover on next clean gesture (0.098ms)
+✔ moving a four-cell draft preserves its footprint and leaves original coordinates unchanged (0.782625ms)
+✔ native controls, shortcuts with modifiers, and IME never change the scene (0.850542ms)
+✔ keyboard cursor traverses all four axes and stays inside the buildable map (0.198791ms)
+✔ camera pan preserves viewing offset, clamps edges and leaves city state untouched (0.330708ms)
+✔ public streets connect to doors, block construction, persist and can be removed (6.739375ms)
+✔ moving one connected house preserves occupants and leaves its neighbour intact (34.731625ms)
+✔ demolition conserves cargo, residents survive and are rehoused without dangling references (497.327083ms)
+✔ home and workshop upgrades expand capacity, preserve variants and reject occupied four-grid expansion (15.156792ms)
+✔ editing roads while a loaded cart is moving never delivers to a missing shop (591.468375ms)
+✔ visitors actually walk onto a connected public street (124.639792ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1342.789042

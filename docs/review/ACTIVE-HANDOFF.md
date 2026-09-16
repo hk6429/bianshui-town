@@ -265,3 +265,15 @@
 - main原pointerup提交提取submitPlan供滑鼠與鍵盤共用。焦點模式鍵盤移格scene.focusAt，選圖錄/road/搬移後focusScene；pointerdown切回滑鼠控制。cancelBuild清drag/down/pinned/hovered、探索、預覽，僅UI不改城。
 - 已完成C25提交3ccf3b1。未部署；仍須O01–25、其餘U及E開放項和最後四專家複評。
 - 下一獨立階段建議U04/U05：觸控多指取消草稿、單指抬起先預覽/確認/取消，再與鍵盤共享commit。需先查pointerdown/move/up與OrbitControls觸控機制；不可把手機尺寸測試當實機多指驗證。亦須處理取消後pointerup不得提交。
+
+## 新階段U04/U05觸控草稿
+- 基準00cca8f。PointerGesture追蹤主指標及多指封鎖，全部抬起前不得重啟；touch/pen抬起保留草稿，方向鈕微調、確認時重新驗證再共用submitPlan。桌面可選同一預覽模式。待因果測試及瀏覽器驗收。
+
+## 最新交接：U04/U05觸控草稿完成（2026-09-16）
+- 48 verified / 5 implemented / 47 open。13聚焦/242全套/build、Chrome觸控事件兩種抬指順序零新增、單指草稿微調/取消/確認及390×844版面通過。evidence/touch-plans。
+- PointerGesture primary/active/blocked：第二指加入封鎖至所有抬起；cancel保留active以擋晚到up；lostcapture若已正常end則無效。canvas所有主鍵指標capture，保留OrbitControls雙指縮放。
+- main pendingPlan暫存占地，touch/pen或勾precise-build的mouse在up後預覽，方向鈕或鍵盤箭頭微調，confirmPendingPlan重新canPlan再submitPlan。確認完成清pending並更新keyboardCursor，阻止重複確認；模式切換/失焦/隱藏取消。
+- 待確認隱藏舊scene-instructions，完成後不用舊金庫提示。手機CSS :has待確認時隱藏view-controls避免遮字，取消/完成自動恢復。
+- CUA的CDP.send允許Input.dispatchTouchEvent，已查官方protocol JSON參數。可在專用隔離頁以已見空地座標發touchStart/touchMove/touchEnd；touchMove保留單一touchPoint會釋放另一指。測試不是實機人工手勢，切勿混稱。
+- 下一獨立階段U06/U07：統一營造預覽的禁止原因及實際合建名稱/格數/棟數，需對照Town.place/dragCells/DESIGNS sizes及四格自動轉換；目前canPlan只回布林及generic原因，仍有待修。
+- 仍未部署，O01–25及其餘U/E全部保留，最後四領域複評條件不變。
