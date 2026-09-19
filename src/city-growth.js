@@ -8,6 +8,7 @@ import {sanitationReport} from './sanitation.js';
 import {publicAccess} from './road-network.js';
 import {jobCapacity,commuteDistance,assignJobs} from './employment.js';
 import {managed,taxDemand} from './city-finance.js';
+import {reviewRank} from './milestones.js';
 export const CENSUS_SECONDS=15;
 export const GRACE={unhoused:90,unemployed:180,unserved:360,dissatisfied:WELLBEING_GRACE};
 export const homeCapacity=b=>b.type==='home'&&b.stage>=3?buildingStats(b).housing:0;
@@ -60,7 +61,7 @@ export function tickPopulation(t){
  // Do not replay an unbounded stale census after externally advanced/imported time.
  d.lastAt=Math.max(d.lastAt,t.elapsed-60);
  while(t.elapsed-d.lastAt>=CENSUS_SECONDS-1e-8){
-  d.lastAt+=CENSUS_SECONDS;assignJobs(t);
+  d.lastAt+=CENSUS_SECONDS;assignJobs(t);reviewRank(t);
   const homes=t.buildings.filter(b=>homeCapacity(b)>t.residents(b).length).sort((a,b)=>(pollutionAt(t,a)-gardenBenefit(t,a).score)-(pollutionAt(t,b)-gardenBenefit(t,b).score)||a.id-b.id),waiting=t.people.find(p=>!p.home);
   let rehoused=false;if(waiting&&homes.length){const b=homes.find(b=>!waiting.work||Number.isFinite(commuteDistance(t,{home:b.id},t.building(waiting.work))));if(b){waiting.home=b.id;waiting.destination=null;waiting.outside=true;waiting.action='前往新居';rehoused=true;t.log(`${waiting.name}已安置到${b.name}`);}}
   const wellbeing=wellbeingReport(t);let departing=null;

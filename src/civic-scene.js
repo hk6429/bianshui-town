@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 // 官署、學堂、祠廟與水運建築的外觀。造型為遊戲轉譯，不是歷史建築復原。
-export const CIVIC_DESIGNS=['townOffice','taxOffice','wineOffice','postStation','villageSchool','townSchool','earthShrine','cityGodTemple','dock','granary','watermill'];
+export const CIVIC_DESIGNS=['townOffice','taxOffice','wineOffice','postStation','villageSchool','townSchool','earthShrine','cityGodTemple','dock','granary','watermill','countyOffice','countySchool','cityWall','zhengdian'];
 export function civicBuilding(b,api){
  if(!CIVIC_DESIGNS.includes(b.design))return null;
  const {box,cyl,ball,beam,roof,tree}=api,g=new THREE.Group(),large=!!b.footprint,R=large?3.8:1.85;
@@ -92,6 +92,42 @@ export function civicBuilding(b,api){
   for(let i=0;i<8;i++){const a=i*Math.PI/4;box(g,.14,.5,.34,0x6b5030,1.15+Math.cos(a)*.85,.95+Math.sin(a)*.85,1.25);}
   cyl(g,.13,.13,1.9,wood,.35,.95,1.25,8).rotation.z=Math.PI/2;
   cyl(g,.62,.62,.22,stone,-.45,.85,.55,14);                   // 石碾
+ }else if(b.design==='countyOffice'){
+  // 儀門、大堂與東西六房，堂前戒石與鳴冤鼓。
+  box(g,4.8,1.9,.26,wall,0,1.15,R-.3);
+  const gate=new THREE.Group();gate.position.set(0,0,R-.3);g.add(gate);roof(gate,5.4,1,.55,2.2,tile);
+  hall(0,-R*.5,5.4,2.6,2.7);
+  for(const x of [-R*.66,R*.66])hall(x,.6,1.6,2.8,1.7);
+  box(g,.5,.9,.34,stone,0,.65,R-1.5);                        // 戒石
+  cyl(g,.42,.42,.62,red,1.5,.72,R-1.4,14).rotation.z=Math.PI/2; // 鳴冤鼓
+  for(const x of [-1.4,1.4])pole(x,R-.95,4,red);
+ }else if(b.design==='countySchool'){
+  // 大成殿、明倫堂、兩廡齋舍與泮池。
+  hall(0,-R*.55,4.6,2.4,2.8,red);
+  hall(0,.9,3.6,1.8,2);
+  for(const x of [-R*.66,R*.66])hall(x,.2,1.2,3,1.5);
+  cyl(g,1.1,1.1,.14,0x5f8a84,0,.24,R*.6,18);                 // 泮池
+  for(const x of [-.9,.9])box(g,.14,1.5,.14,stone,x,.95,R*.75);
+  tree(g,-R*.75,R*.5,.5,true);tree(g,R*.75,R*.5,.5,true);
+ }else if(b.design==='cityWall'){
+  // 夯土包磚的城垣、馬面與垛口。
+  const w=large?R*2:R*1.9;
+  box(g,w,2.4,large?1.6:1.2,0xa79379,0,1.4,0);
+  box(g,large?1.5:1,2.8,large?2.4:1.8,0x9b876d,large?-R*.5:0,1.6,0);   // 馬面
+  for(let i=0;i<(large?9:5);i++)box(g,.42,.5,large?1.7:1.3,0x8d7a60,-w/2+.5+i*(w-1)/(large?8:4),2.85,0);
+  box(g,w,.2,large?2:1.5,0x8f8368,0,2.6,0);
+  if(large)box(g,1.5,1.6,1.7,0x5b4a35,R*.55,1,0);            // 城門洞
+ }else if(b.design==='zhengdian'){
+  // 綵樓歡門、二層樓閣與酒旗。
+  box(g,4.4,2.4,2.6,wall,0,1.4,-.5);
+  box(g,3.6,1.7,2,wall,0,3.35,-.5);
+  const upper=new THREE.Group();upper.position.set(0,0,-.5);g.add(upper);roof(upper,4.2,2.6,.8,4.2,tile);
+  for(const x of [-1.9,1.9])box(g,.16,4.2,.16,wood,x,2.3,.8);
+  beam(g,[-1.9,4.4,.8],[1.9,4.4,.8],.12,wood);
+  for(let i=0;i<5;i++)box(g,.5,1,.06,i%2?red:gold,-1.6+i*.8,3.9,.8);   // 綵樓歡門
+  for(const x of [-1.2,0,1.2])box(g,.42,.62,.05,0xe7d9ae,x,2.5,.72);
+  pole(2.4,1.5,3.6,0x9d7136);
+  for(const x of [-1.4,-.7])urn(x,1.6,0xa9763f);
  }
  if(large){box(g,.9,.08,1.4,stone,0,.22,3.05);}
  return g;

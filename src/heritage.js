@@ -10,7 +10,11 @@ export const SOURCES={
 };
 export const DESIGNS={
  ...NEW_DESIGNS,
- // 文教：村塾→鎮學→書院三層，教育名額逐層增加。
+ // 文教：村塾→鎮學→書院三層，教育名額逐層增加。 // 升縣後才解鎖的縣級建置。
+ countyOffice:{cat:'civic',name:'縣衙',type:'garden',variant:0,mark:'縣',sizes:[4],cost:30000,rank:4,source:null,detail:'四格縣衙：儀門、大堂與六房。奉旨升縣後才能營造；與監鎮廨同樣開啟鎮政議事，規制更高。每格 30 貫。'},
+ countySchool:{cat:'school',name:'縣學',type:'garden',variant:0,mark:'庠',sizes:[4],cost:27000,rank:4,source:null,detail:'四格縣學：大成殿、明倫堂與齋舍。教育名額為書院的一又四分之一，是全鎮最高學府。升縣後解鎖，每格 27 貫。'},
+ cityWall:{cat:'civic',name:'城垣',type:'garden',variant:0,mark:'城',sizes:[1,4],cost:21000,rank:4,source:null,detail:'夯土包磚的城垣與馬面：每段可抵擋一次災害，與義倉相加計算。升縣後解鎖，每格 21 貫。'},
+ zhengdian:{cat:'shop',name:'正店',type:'shop',variant:1,mark:'正',sizes:[4],cost:36000,rank:4,source:null,detail:'四格正店：綵樓歡門、樓閣雅座，自釀自沽。零售量與酒樓同級，並計入酒務榷酤。升縣後解鎖，每格 36 貫。'},
  villageSchool:{cat:'school',name:'村塾',type:'garden',variant:0,mark:'塾',sizes:[1],cost:12000,source:null,detail:'一格村塾：一位塾師、一間講堂與幾張矮案。教育名額為書院的一半，沿路覆蓋較短，是小鎮最早能負擔的文教設施。每格 12 貫。'},
  townSchool:{cat:'school',name:'鎮學',type:'garden',variant:0,mark:'學',sizes:[1,4],cost:21000,source:null,detail:'鎮學：講堂、齋舍與小庭；教育名額為書院的四分之三，四格再加廊房與射圃。每格 21 貫。'},
  // 公設：宋代鎮級沒有「市政廳」，只設監鎮官與其屬務。
@@ -51,7 +55,7 @@ export const DESIGNS={
  pond:{cat:'garden',name:'小荷池塘',type:'garden',variant:0,mark:'荷',sizes:[1,4],source:'pond',detail:'挖出池床，注水後長出荷葉、荷花；蜻蜓在池面盤旋。'}
 };
 // 文教三層：名額倍率依村塾→鎮學→書院遞增。
-export const SCHOOL_FACTOR={villageSchool:.5,townSchool:.75,academy:1};
+export const SCHOOL_FACTOR={villageSchool:.5,townSchool:.75,academy:1,countySchool:1.25};
 export const isSchool=b=>!!SCHOOL_FACTOR[b?.design];
 export const categoryOf=b=>DESIGNS[designFor(b)]?.cat||b.type||'garden';
 export const designCategory=id=>DESIGNS[id]?.cat||DESIGNS[id]?.type||'garden';

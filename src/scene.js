@@ -51,7 +51,7 @@ export class TownScene {
   this.controls=new OrbitControls(this.camera,canvas);this.controls.target.set(-7,0,0);this.controls.enableDamping=true;this.controls.dampingFactor=.12;this.controls.minZoom=.6;this.controls.maxZoom=3.2;this.controls.maxPolarAngle=Math.PI*.37;this.controls.minPolarAngle=Math.PI*.2;this.controls.enableRotate=false;this.controls.screenSpacePanning=false;this.controls.mouseButtons.LEFT=THREE.MOUSE.PAN;this.controls.mouseButtons.RIGHT=THREE.MOUSE.PAN;this.controls.touches.ONE=THREE.TOUCH.PAN;
   this.ambient=new THREE.HemisphereLight(0xfff5d7,0x6f8060,2.5);this.scene.add(this.ambient);
   this.sun=new THREE.DirectionalLight(0xffe8c0,3);this.sun.position.set(-30,45,10);this.sun.castShadow=true;this.sun.shadow.mapSize.set(2048,2048);Object.assign(this.sun.shadow.camera,{left:-48,right:48,top:42,bottom:-42,near:1,far:130});this.sun.shadow.normalBias=.055;this.sun.shadow.bias=-.0002;this.scene.add(this.sun);
-  this.land=new THREE.Group();this.scene.add(this.land);this.meadow=new THREE.Group();this.scene.add(this.meadow);this.decorations=[];this.buildingModels=new Map();this.personModels=new Map();this.cartModels=new Map();this.glows=[];this.roads=new THREE.Group();this.scene.add(this.roads);this.preview=new THREE.Group();this.scene.add(this.preview);this.selection=new THREE.Group();this.scene.add(this.selection);this.dataLayer=new THREE.Group();this.scene.add(this.dataLayer);this.raycaster=new THREE.Raycaster();this.groundPlane=new THREE.Plane(new THREE.Vector3(0,1,0),0);this.pointer=new THREE.Vector2();
+  this.land=new THREE.Group();this.scene.add(this.land);this.meadow=new THREE.Group();this.scene.add(this.meadow);this.decorations=[];this.buildingModels=new Map();this.personModels=new Map();this.cartModels=new Map();this.glows=[];this.roads=new THREE.Group();this.scene.add(this.roads);this.preview=new THREE.Group();this.scene.add(this.preview);this.selection=new THREE.Group();this.scene.add(this.selection);this.dataLayer=new THREE.Group();this.scene.add(this.dataLayer);this.gateway=new THREE.Group();this.gateway.visible=false;this.scene.add(this.gateway);this.raycaster=new THREE.Raycaster();this.groundPlane=new THREE.Plane(new THREE.Vector3(0,1,0),0);this.pointer=new THREE.Vector2();
   this.buildLandscape();this.lifeScene=new LivingScene(this);this.weatherScene=new WeatherScene(this);this.authorScene=new LiteratiScene(this);this.marketScene=new MarketScene(this);this.lastRevision=-1;this.resize();
  }
  resize(){const w=window.innerWidth,h=window.innerHeight;this.renderer.setSize(w,h);const aspect=w/h;this.camera.left=-31*aspect;this.camera.right=31*aspect;this.camera.top=31;this.camera.bottom=-31;this.camera.updateProjectionMatrix();}
@@ -169,6 +169,20 @@ export class TownScene {
   if(this.dataLayer.userData.signature===signature)return;
   this.clearGroup(this.dataLayer);this.dataLayer.userData.signature=signature;
   for(const tile of tiles){const mesh=box(this.dataLayer,3.9,.02,3.9,new THREE.MeshBasicMaterial({color:tile.color,transparent:true,opacity:tile.opacity,depthWrite:false}),tile.x*4,.16,tile.z*4);mesh.castShadow=false;mesh.receiveShadow=false;}
+ }
+ // 街坊未接外路時，於東側河岸引道閃動指路。
+ showGateway(visible,elapsed=0){
+  if(!this.gateway.children.length){
+   const [gx,gz]=[12,8];
+   const ring=new THREE.Mesh(new THREE.RingGeometry(1.5,2.4,32),new THREE.MeshBasicMaterial({color:0xe8b55a,transparent:true,opacity:.7,side:THREE.DoubleSide,depthWrite:false}));
+   ring.rotation.x=-Math.PI/2;ring.position.set(gx*4,.18,gz*4);this.gateway.add(ring);
+   const beam=new THREE.Mesh(new THREE.CylinderGeometry(.3,.3,7,12),new THREE.MeshBasicMaterial({color:0xe8b55a,transparent:true,opacity:.35,depthWrite:false}));
+   beam.position.set(gx*4,3.5,gz*4);this.gateway.add(beam);
+  }
+  this.gateway.visible=!!visible;
+  if(!visible)return;
+  const pulse=this.reducedMotion?.8:.55+.45*Math.abs(Math.sin(elapsed*1.6));
+  for(const child of this.gateway.children)child.material.opacity=child.geometry.type==='RingGeometry'?pulse*.8:pulse*.4;
  }
  showBuildGrid(visible){if(!this.plotGrid){this.plotGrid=new THREE.Group();this.scene.add(this.plotGrid);const material=new THREE.LineBasicMaterial({color:0x5e7354,transparent:true,opacity:.36});for(let x=-62;x<=10;x+=4)this.plotGrid.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x,.11,-42),new THREE.Vector3(x,.11,42)]),material));for(let z=-42;z<=42;z+=4)this.plotGrid.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-62,.11,z),new THREE.Vector3(10,.11,z)]),material));}this.plotGrid.visible=visible;}
  pan(dx,dz){

@@ -13,7 +13,7 @@ export const transitTaxRate=t=>hasCivic(t,'taxOffice')?TRANSIT_TAX:0;
 
 // 榷酤：酒務按鎮上酒樓與食肆數目抽錢，每處每日 2250 文。
 export const WINE_EXCISE_PER_SHOP=2250;
-export const wineShops=t=>t.buildings.filter(b=>b.type==='shop'&&working(b)&&['wine','food','cakeShop','tea'].includes(b.design)).length;
+export const wineShops=t=>t.buildings.filter(b=>b.type==='shop'&&working(b)&&['wine','food','cakeShop','tea','zhengdian'].includes(b.design)).length;
 export const wineExcise=t=>hasCivic(t,'wineOffice')?Math.floor(wineShops(t)*WINE_EXCISE_PER_SHOP*serviceEfficiency(t)):0;
 
 // 河津碼頭：每處讓腳夫每趟多搬一件，四格算兩件，最多加三件。
@@ -28,7 +28,7 @@ export function millMultiplier(t,b){
 }
 
 // 義倉：每處儲糧可抵銷一次災害，四格算兩次。
-export const granaryStores=t=>civicBuildings(t,'granary').reduce((n,b)=>n+(b.footprint?2:1),0);
+export const granaryStores=t=>[...civicBuildings(t,'granary'),...civicBuildings(t,'cityWall')].reduce((n,b)=>n+(b.footprint?2:1),0);
 
-export const hasGovernment=t=>hasCivic(t,'townOffice');
+export const hasGovernment=t=>hasCivic(t,'townOffice')||hasCivic(t,'countyOffice');
 export const hasPost=t=>hasCivic(t,'postStation');

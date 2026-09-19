@@ -8,6 +8,7 @@ import {tickEducation} from './education.js';
 import {STARTER_ROAD,roadAnchor} from './road-network.js';
 import {createTrade} from './trade.js';
 import {createDemography,tickPopulation} from './city-growth.js';
+import {lockedReason} from './milestones.js';
 import {residentPurchase} from './commerce.js';
 import {assignJobs} from './employment.js';
 import {createCity,charge,buildCost,settleBudget,managed} from './city-finance.js';
@@ -75,6 +76,7 @@ export class Town {
   if(!TYPES[type]||!this.canPlace(cells))return null;
   const plan=constructionPlan(type,cells,design,this.nextId);if(plan.reason)return null;
   const {spec,combined}=plan;design=plan.design;
+  if(lockedReason(this,design))return null;
   if(!charge(this,buildCost(type,cells,plan.design),'建設'))return null;
   const block={id:this.nextId++,type,combined,cells:cells.map(c=>({...c}))};this.blocks.push(block);
   for(const planned of plan.buildings){const id=this.nextId++;this.buildings.push({...planned,id,blockId:block.id,tier:1,level:spec&&['home','work'].includes(type)?2:1,born:ready?this.elapsed-100:this.elapsed,variant:spec?spec.variant:id%3,stage:ready?4:0,entrance:null});}

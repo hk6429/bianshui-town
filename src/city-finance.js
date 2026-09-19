@@ -9,7 +9,7 @@ export const ROAD_COST={lane:3000,avenue:6750};
 export const LOGISTICS_UPKEEP=900;
 export const UPKEEP={...BUILDING_UPKEEP,lane:150,avenue:300};
 export const GOODS_VALUE={clay:1500,timber:1800,fiber:1500,ceramics:6750,furniture:9000,cloth:6000,legacy:3000};
-export const createCity=(mode='sandbox',time=8)=>({version:2,mode,logisticsLevel:1,trade:createTrade(),treasury:300000,expansion:0,taxRate:10,day:Math.floor(time/24),sanitationDay:Math.floor(time/24),fireDay:Math.floor(time/24),ledger:[],taxIncome:0,spent:0,maintenancePaid:0,deficitDays:0});
+export const createCity=(mode='sandbox',time=8)=>({version:2,mode,logisticsLevel:1,trade:createTrade(),treasury:300000,expansion:0,rank:0,taxRate:10,day:Math.floor(time/24),sanitationDay:Math.floor(time/24),fireDay:Math.floor(time/24),ledger:[],taxIncome:0,spent:0,maintenancePaid:0,deficitDays:0});
 export const managed=t=>t.city?.mode==='managed';
 // 圖樣可自訂每格造價（官署、祠廟、水運各有價），未指定者回到該類基準價。
 export const cellCost=(type,design=null)=>DESIGNS[design]?.cost??BUILD_COST[type];

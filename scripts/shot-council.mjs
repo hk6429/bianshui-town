@@ -1,0 +1,26 @@
+import {chromium} from '@playwright/test';
+const [,,out]=process.argv;
+const b=await chromium.launch({channel:'chrome'});
+const p=await b.newPage({viewport:{width:1280,height:900}});
+const errs=[];p.on('pageerror',e=>errs.push(String(e)));p.on('console',m=>{if(m.type()==='error')errs.push(m.text());});
+await p.goto('http://127.0.0.1:4173/?storage-test=1',{waitUntil:'networkidle'});
+await p.waitForTimeout(2200);
+await p.click('#demo-btn');await p.waitForTimeout(2500);
+const info={};
+info.rankLabel=await p.textContent('#town-rank-label');
+await p.screenshot({path:`${out}/20-hud-rank.png`});
+await p.click('#hud-treasury');await p.waitForTimeout(500);
+await p.click('#tab-council');await p.waitForTimeout(400);
+info.rank=await p.textContent('#council-rank');
+info.next=await p.textContent('#council-next');
+info.note=await p.textContent('#council-note');
+info.advisors=await p.$$eval('.advisor h4',e=>e.map(x=>x.textContent));
+await p.screenshot({path:`${out}/21-council.png`});
+// build a townOffice so advisors come on duty
+await p.evaluate(()=>{window.__townDebug.town().city.rank=2;});
+await p.click('#tab-money');await p.waitForTimeout(200);
+await p.click('#tab-council');await p.waitForTimeout(300);
+info.rank2=await p.textContent('#council-rank');
+info.errs=errs;
+console.log(JSON.stringify(info,null,1));
+await b.close();
