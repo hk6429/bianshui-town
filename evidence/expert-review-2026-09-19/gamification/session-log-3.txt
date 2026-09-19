@@ -1,0 +1,4 @@
+build1 toast=杏花人家 2開始動工
+build2 toast=汴水人家 4開始動工
+build3 toast=柳蔭人家 6開始動工
+stats pop=0 buildings=3 budget=金庫 2040 文 · 需求

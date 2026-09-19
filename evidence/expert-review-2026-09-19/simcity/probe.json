@@ -1,0 +1,332 @@
+[
+ {
+  "step": "default budget-btn",
+  "vis": {
+   "text": "金庫 2400 文 · 需求",
+   "rect": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "display": "block",
+   "visibility": "visible",
+   "opacity": "1",
+   "extraDisplay": "none",
+   "extraHeight": 0,
+   "extraOverflow": "auto",
+   "welcome": true
+  }
+ },
+ {
+  "step": "after start budget-btn",
+  "vis2": {
+   "rect": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "extraHeight": 0,
+   "tools": "false",
+   "mode": 0
+  }
+ },
+ {
+  "step": "expanded budget-btn",
+  "vis3": {
+   "text": "金庫 2400 文 · 需求",
+   "rect": [
+    961,
+    584.625,
+    144,
+    44
+   ]
+  }
+ },
+ {
+  "budgetSummary": "城市經營 · 金庫 2400 文。每日人口稅預估 0 文；目前每日維護費 1 文。經營模式另依實際成交計稅。累計稅收 0 文、已付維護費 0 文。"
+ },
+ {
+  "grid1": [
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "使用四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "一格營造 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "使用四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "一格營造 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "一格營造 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "一格營造 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "使用四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "使用四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "使用四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "使用四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "使用四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 · 挖池塘 ↗",
+    "disabled": false,
+    "hidden": false
+   }
+  ]
+ },
+ {
+  "gridGarden1": [
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "使用四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "使用四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "點蓋／拖曳合建 · 挖池塘 ↗",
+    "disabled": false,
+    "hidden": false
+   }
+  ]
+ },
+ {
+  "gridGarden4": [
+   {
+    "t": "四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "四格合建 ↗",
+    "disabled": false,
+    "hidden": false
+   },
+   {
+    "t": "四格合建 · 挖池塘 ↗",
+    "disabled": false,
+    "hidden": false
+   }
+  ]
+ },
+ {
+  "demo": {
+   "pop": "26",
+   "bld": "24",
+   "budget": "自由營造 · 收支",
+   "clock": "第 1 日　08:57"
+  }
+ }
+]
+{"gardenOrder4":["街坊巡守所","街坊清運院","街坊水井","街巷說書棚","桑柳果圃","曲水疊石園","百花公園","方塘書院","臨泉亭","小荷池塘"]}
+{"allOrder4":["竹籬小築","望河閣居","梅窗人家","坡頂陶坊","鋸木棚坊","曬布染坊","街角書肆","清芬香鋪","百草藥鋪","蒸香餅店","街坊巡守所","街坊清運院","街坊水井","街巷說書棚","桑柳果圃","曲水疊石園","雅居小樓","四合雅宅","精製窯坊","精製木作坊","精製織坊","瓷窯大院","木作營造院","織錦大院","百花公園","臨街茶坊","炊煙食肆","錦色布莊","夢華酒樓","方塘書院","臨泉亭","小荷池塘"]}
