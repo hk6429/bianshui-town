@@ -22,7 +22,7 @@ export const WELLBEING_TARGET=70;
 const LEARNING=['academy','countySchool'],OFFICE=['taxOffice','wineOffice','postStation'],RELIEF=['granary','firePost','cleaningYard'];
 
 export const ENDGAME=[
- {key:'rank',name:'升為望縣',hint:'照升格鏈一階一階升上去。',todo:t=>{const n=nextMilestone(t);return n?[`現在是「${RANKS[rankOf(t)].name}」，下一階是「${n.name}」`,`還差：${n.text}`,'把上面缺的東西補齊，人口夠了就會自己升級']:['已經是望縣了'];},
+ {key:'rank',name:'升為望縣',hint:'照升格鏈一階一階升上去。',todo:t=>{const n=nextMilestone(t);if(!n)return ['已經是望縣了'];return n.ok?[`現在是「${RANKS[rankOf(t)].name}」，下一階是「${n.name}」`,'條件已經夠了！再等十幾秒，下一次人口普查就會自動升格']:[`現在是「${RANKS[rankOf(t)].name}」，下一階是「${n.name}」`,`還缺：${n.text}（數字寫成「已有／需要」）`,'把還缺的東西蓋起來，湊齊就會自動升格'];},
   ok:t=>rankOf(t)>=MAX_RANK,state:t=>`現為${RANKS[rankOf(t)].name}（第 ${rankOf(t)+1}／${MAX_RANK+1} 階）`},
  {key:'learning',name:'文教昌明',hint:'方塘書院與縣學各建一座。',
   ok:t=>tally(t,LEARNING).length===LEARNING.length,state:t=>list(t,LEARNING),

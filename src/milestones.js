@@ -16,7 +16,9 @@ export const RANKS=[
   need:t=>{const people=t.people.length;return {ok:people>=20&&hasGovernment(t)&&hasCivic(t,'taxOffice'),text:`居民 ${people}／20、監鎮廨 ${hasGovernment(t)?'已立':'未立'}、商稅務 ${hasCivic(t,'taxOffice')?'已立':'未立'}`};}},
  {key:'dazhen',name:'大鎮',title:'一方大鎮',note:'巡守與學堂齊備，鎮庫有餘。',
   need:t=>{const people=t.people.length,school=count(t,isSchool),patrol=count(t,b=>b.design==='firePost');
-   return {ok:people>=35&&school>=1&&patrol>=1&&t.city.treasury>=200000,text:`居民 ${people}／35、學堂 ${school}／1、軍巡鋪 ${patrol}／1、鎮庫 ${Math.floor(t.city.treasury/1000)}／200 貫`};}},
+   // 自由營造沒有鎮庫，這一條只在城市經營模式要求。
+   const purse=!managed(t)||t.city.treasury>=200000;
+   return {ok:people>=35&&school>=1&&patrol>=1&&purse,text:`居民 ${people}／35、學堂 ${school}／1、軍巡鋪 ${patrol}／1${managed(t)?`、鎮庫 ${Math.floor(t.city.treasury/1000)}／200 貫`:''}`};}},
  {key:'xian',name:'奉旨升縣',title:'奉旨升縣',note:'遞鋪送到詔書，鎮升為縣，可建縣衙、縣學、城垣與正店。',
   need:t=>{const people=t.people.length,temple=hasCivic(t,'cityGodTemple')||count(t,b=>b.design==='cityGodTemple')>0,higher=count(t,b=>['townSchool','academy'].includes(b.design));
    return {ok:people>=60&&hasPost(t)&&temple&&higher>=1,text:`居民 ${people}／60、遞鋪 ${hasPost(t)?'已立':'未立'}、城隍廟 ${temple?'已立':'未立'}、鎮學或書院 ${higher}／1`};}},
@@ -35,7 +37,6 @@ export function nextMilestone(t){
 }
 // 每次人口普查後檢查；只在城市經營模式升格，一次升一級。
 export function reviewRank(t){
- if(!managed(t))return false;
  const next=nextMilestone(t);
  if(!next||!next.ok)return false;
  t.city.rank=rankOf(t)+1;

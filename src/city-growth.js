@@ -53,6 +53,7 @@ export function tickPopulation(t){
  const d=t.demography;
  if(!managed(t)){
   d.lastAt=t.elapsed;d.credit=0;
+  while(reviewRank(t));   // 自由營造也要能升格，否則永遠停在草市
   for(const p of t.people)delete p.hardship;
   for(const b of t.buildings.filter(b=>homeCapacity(b))){let missing=homeCapacity(b)-t.residents(b).length;const changed=missing>0;for(const p of t.people.filter(p=>!p.home).slice(0,missing)){p.home=b.id;p.destination=null;p.outside=true;p.action='前往新居';missing--;}
    while(missing-->0)addResident(t,b);if(changed)t.log(`${b.name}迎來新住戶`);
@@ -61,7 +62,7 @@ export function tickPopulation(t){
  // Do not replay an unbounded stale census after externally advanced/imported time.
  d.lastAt=Math.max(d.lastAt,t.elapsed-60);
  while(t.elapsed-d.lastAt>=CENSUS_SECONDS-1e-8){
-  d.lastAt+=CENSUS_SECONDS;assignJobs(t);reviewRank(t);
+  d.lastAt+=CENSUS_SECONDS;assignJobs(t);while(reviewRank(t));
   const homes=t.buildings.filter(b=>homeCapacity(b)>t.residents(b).length).sort((a,b)=>(pollutionAt(t,a)-gardenBenefit(t,a).score)-(pollutionAt(t,b)-gardenBenefit(t,b).score)||a.id-b.id),waiting=t.people.find(p=>!p.home);
   let rehoused=false;if(waiting&&homes.length){const b=homes.find(b=>!waiting.work||Number.isFinite(commuteDistance(t,{home:b.id},t.building(waiting.work))));if(b){waiting.home=b.id;waiting.destination=null;waiting.outside=true;waiting.action='前往新居';rehoused=true;t.log(`${waiting.name}已安置到${b.name}`);}}
   const wellbeing=wellbeingReport(t);let departing=null;
