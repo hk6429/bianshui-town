@@ -4,3 +4,6 @@ dist/
 .env*
 playwright-report/
 test-results/
+
+# Local Netlify folder
+.netlify

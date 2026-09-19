@@ -360,7 +360,7 @@ Three.js 使用方式參考官方文件：https://threejs.org/docs/ 。
 
 ## 部署
 
-Pages 專案 `bianshui-town`，正式分支 `main`，目前手動發布。執行 `npm run build` 後執行 `wrangler pages deploy dist --project-name bianshui-town --branch main`。需要回復時，重新發布已驗證提交的 build，或從 Pages 部署紀錄回復先前正式部署。
+Pages 專案 `bianshui-town`，正式分支 `main`，目前手動發布。執行 `npm run build` 後執行 `wrangler pages deploy dist --project-name bianshui-town --branch main`。另有 Netlify 備援站 `bianshui-town`（https://bianshui-town.netlify.app ），以 `netlify deploy --prod --dir dist --site dfb98ba5-c7a1-49ca-bbb8-8db8f2bf1f52` 同步發布。兩站發布後都要 curl 回讀線上檔案比對 md5（Netlify 會另外注入自家 meta 與 HUD script，比對以 `assets/index-*.js` 為準）。需要回復時，重新發布已驗證提交的 build，或從 Pages 部署紀錄回復先前正式部署。
 
 ## 城市清單與資訊小卡
 

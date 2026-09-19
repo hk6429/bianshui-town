@@ -1,0 +1,14 @@
+import {chromium} from '@playwright/test';
+const [,,url]=process.argv;
+const b=await chromium.launch({channel:'chrome'});
+const p=await b.newPage({viewport:{width:1280,height:900}});
+const errs=[];p.on('pageerror',e=>errs.push(String(e)));p.on('console',m=>{if(m.type()==='error')errs.push(m.text());});
+await p.goto(url+'?storage-test=1',{waitUntil:'networkidle'});
+await p.waitForTimeout(2500);
+await p.click('#demo-btn');await p.waitForTimeout(2500);
+const info={url,period:await p.textContent('#period'),rank:await p.textContent('#town-rank-label')};
+await p.click('#hud-treasury');await p.waitForTimeout(500);
+await p.click('#tab-council');await p.waitForTimeout(500);
+info.gazette=(await p.$$eval('#council-gazette li',e=>e.map(x=>x.textContent))).length;
+info.errs=errs;console.log(JSON.stringify(info));
+await b.close();
