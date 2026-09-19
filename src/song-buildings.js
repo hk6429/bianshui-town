@@ -1,3 +1,4 @@
+import {roofTone} from './roof-colors.js';
 import {decorateTier} from './tier-scene.js';
 import {varietyBuilding} from './variety-scene.js';
 import {civicBuilding} from './civic-scene.js';
@@ -12,7 +13,7 @@ function baseBuilding(b,api){
  const design=designFor(b),large=!!b.footprint,size=large?7.6:3.7;
  g.position.set(b.x*4,0,b.z*4);g.rotation.y=b.facing||0;
  const warm=new THREE.MeshStandardMaterial({color:0xc3af82,emissive:0xffb35b,emissiveIntensity:0,roughness:1});g.userData.warm=warm;
- const wood=0x72543a,tile=0x485b60,wall=0xe2d4b3,stone=0xb9b294;
+ const wood=0x72543a,tile=roofTone(b),wall=0xe2d4b3,stone=0xb9b294;
  const slab=(w,d,x=0,z=0)=>box(g,w,.18,d,stone,x,.09,z);
  const hall=(x,z,w,d,h=1.8,y=0,color=tile)=>{
   box(g,w,h,d,wall,x,y+h/2+.18,z);

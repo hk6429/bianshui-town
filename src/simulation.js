@@ -10,6 +10,7 @@ import {createTrade} from './trade.js';
 import {createDemography,tickPopulation} from './city-growth.js';
 import {lockedReason} from './milestones.js';
 import {residentPurchase} from './commerce.js';
+import {SALEABLE} from './supply.js';
 import {assignJobs} from './employment.js';
 import {createCity,charge,buildCost,settleBudget,managed} from './city-finance.js';
 import {validateSave} from './save-schema.js';
@@ -22,7 +23,7 @@ import {onSickLeave} from './employment.js';
 import {tickFire} from './fire-service.js';
 import {tickDisasters} from './disasters.js';
 import {tickSanitation} from './sanitation.js';
-import {createEconomy,importCargo,migrateEconomy,tickProduction,tickCraftCarts,syncCargo} from './production.js';
+import {createEconomy,importCargo,migrateEconomy,tickProduction,tickCraftCarts,syncCargo,at} from './production.js';
 import {createWeather,tickWeather,shelterResident} from './weather.js';
 import {prepareTraffic,applyTraffic} from './traffic.js';
 import {createStories,tickStories,eventAction,remember,rerouteStories} from './stories.js';
@@ -150,7 +151,14 @@ export class Town {
    let target=p.home;
    if(this.building(p.work)?.type==='shop'&&h>=7&&h<19)target=p.work;
    else if(h>=7&&h<17&&!(h>=11.5&&h<13))target=p.work||p.home;
-   else if((h>=11.5&&h<13)||(h>=17&&h<20))target=shops.length?shops[p.id%shops.length].id:p.home;
+   else if((h>=11.5&&h<13)||(h>=17&&h<20)){
+    // 還沒買到日用品的人優先去「有現貨的商鋪」；買足了才去園景走走。
+    const hungry=!((p.needsSatisfiedUntil||0)>this.elapsed);
+    const open=this.buildings.filter(b=>b.type==='shop'&&b.stage>=3);
+    const stocked=open.filter(b=>at(this,`shop:${b.id}`).some(l=>SALEABLE.includes(l.good)));
+    const pool=hungry?(stocked.length?stocked:open.length?open:shops):shops;
+    target=pool.length?pool[p.id%pool.length].id:p.home;
+   }
    if(!p.outside && p.current!==target)this.travel(p,target);
    else if(p.outside && p.destination!==target)this.travel(p,target);
    this.move(p,dt);

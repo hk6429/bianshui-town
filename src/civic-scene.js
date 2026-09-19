@@ -1,10 +1,11 @@
+import {roofTone} from './roof-colors.js';
 import * as THREE from 'three';
 // 官署、學堂、祠廟與水運建築的外觀。造型為遊戲轉譯，不是歷史建築復原。
 export const CIVIC_DESIGNS=['townOffice','taxOffice','wineOffice','postStation','villageSchool','townSchool','earthShrine','cityGodTemple','dock','granary','watermill','inn','pawnshop','countyOffice','countySchool','cityWall','zhengdian'];
 export function civicBuilding(b,api){
  if(!CIVIC_DESIGNS.includes(b.design))return null;
  const {box,cyl,ball,beam,roof,tree}=api,g=new THREE.Group(),large=!!b.footprint,R=large?3.8:1.85;
- const wood=0x7a5233,stone=0xb3ab90,wall=0xe4d8bc,tile=0x4a5f63,red=0x9b4c38,gold=0xb9984b;
+ const wood=0x7a5233,stone=0xb3ab90,wall=0xe4d8bc,tile=roofTone(b),red=0x9b4c38,gold=0xb9984b;
  g.position.set(b.x*4,0,b.z*4);g.rotation.y=b.facing||0;box(g,R*2,.16,R*2,stone,0,.08,0);
  const hall=(x,z,w,d,h=1.8,color=tile)=>{
   box(g,w,h,d,wall,x,h/2+.2,z);

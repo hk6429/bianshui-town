@@ -39,7 +39,8 @@ export function installSprite({getTown,toast}){
   for(const g of report.goals){
    const li=document.createElement('li');
    li.className=`quest-goal${g.ok?' quest-done':''}`;
-   li.innerHTML=`<strong>${g.ok?'已成':'未成'}·${g.name}</strong><span>${g.state}</span><small>${g.hint}</small>`;
+   const todo=(g.todo||[]).map(x=>`<li>${x}</li>`).join('');
+   li.innerHTML=`<strong>${g.ok?'已完成':'還沒完成'}·${g.name}</strong><span>${g.state}</span>${todo?`<ol class="quest-todo">${todo}</ol>`:'<small>已經做到了</small>'}`;
    goalsEl.append(li);
   }
  }

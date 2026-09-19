@@ -104,3 +104,9 @@
 @media(max-width:600px){#quest{padding:20px}.sprite-art{width:40px;height:50px}}
 /* 手機底部有營造列＋工具列，左側堆疊要再往上讓開，破關指南才點得到。 */
 @media(max-width:600px){.hud-left{bottom:250px;max-height:calc(100vh - 330px);overflow-y:auto;overflow-x:hidden}}
+.quest-todo{margin:6px 0 0;padding-left:20px;font-size:0.75rem;line-height:1.9;color:#5d6750}
+.quest-todo li{margin:3px 0}
+.handbook-step{border:1px solid #d3d5be;border-radius:9px;background:#efeee0;padding:14px 16px;margin:10px 0}
+.handbook-step h4{margin:0 0 6px;font:500 1rem 'Noto Serif TC',serif;color:#4f6347}
+.handbook-step ol{margin:0;padding-left:20px;font-size:0.8125rem;line-height:2;color:#5d6750}
+#handbook{width:560px}

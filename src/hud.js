@@ -8,38 +8,43 @@ import {riverOpen} from './calendar.js';
 import {granaryStores} from './civic.js';
 import {GOODS_VALUE} from './city-finance.js';
 
-const SALEABLE=['cloth','ceramics','furniture','legacy'];
+import {SALEABLE,shoppingCapacity,shoppingNeed,shopsNeeded} from './supply.js';
 
 const DEMAND_INTERVAL=800;
 
 export // 下一步提示：只在真的卡住時才指出成因，避免「常態未採買」被誤報成缺商鋪。
 function nextStep(t){
   const ready=t.buildings.filter(b=>b.stage>=3),homes=ready.filter(b=>b.type==='home');
-  if(!t.buildings.length)return {text:'選下方「民居」，在空地點一下，第一間屋就開工。',action:'home',label:'選民居'};
-  if(!homes.length&&!t.buildings.some(b=>b.type==='home'))return {text:'先蓋一間民居，才會有人搬來。',action:'home',label:'選民居'};
+  if(!t.buildings.length)return {text:'開始蓋你的小鎮吧。做法：① 點下面的「民居」② 在綠色草地上點一下 ③ 等一下下，房子就會蓋好。',action:'home',label:'選民居'};
+  if(!homes.length&&!t.buildings.some(b=>b.type==='home'))return {text:'還沒有人住進來，因為鎮上沒有房子。做法：① 點下面的「民居」② 在空地點一下，蓋一間房子。',action:'home',label:'選民居'};
   if(managed(t)){
    const stranded=homes.find(b=>!publicAccess(t,b));
-   if(stranded)return {text:`${stranded.name}還沒接上外路。從門前鋪路到東側河岸引道，居民才會搬來、貨才送得到。`,action:'road',label:'去鋪路'};
+   if(stranded)return {text:`「${stranded.name}」沒有路可以走到外面，所以沒有人搬進來、貨也送不到。做法：① 點「營造與工具」裡的「公共營造」② 選「鋪路」③ 從房子門口一路點到右邊河岸的大路。`,action:'road',label:'去鋪路'};
   }
-  if(!homes.length)return {text:'民居施工中，約十八秒落成，稍候即有住戶。',action:null};
+  if(!homes.length)return {text:'房子正在蓋，大約十八秒就好，等一下就會有人搬進來。',action:null};
   const jobs=ready.filter(b=>jobCapacity(b)).reduce((n,b)=>n+jobCapacity(b),0);
-  if(t.people.length&&jobs===0)return {text:'居民還沒有工作。蓋一處商鋪或作坊，讓他們有活做。',action:'shop',label:'選商鋪'};
+  if(t.people.length&&jobs===0)return {text:'居民沒有工作可以做。做法：① 點下面的「商鋪」或「作坊」② 在空地點一下蓋起來 ③ 居民會自己去上工。',action:'shop',label:'選商鋪'};
   const jobless=t.people.filter(p=>!p.work).length;
-  if(jobless>=2)return {text:`${jobless} 位居民沒有工作，可再蓋商鋪或作坊。`,action:'work',label:'選作坊'};
+  if(jobless>=2)return {text:`有 ${jobless} 位居民找不到工作。做法：① 點下面的「作坊」或「商鋪」② 再蓋一間，位子就夠了。`,action:'work',label:'選作坊'};
   // 居民只在午後與傍晚到店採買，「這一刻沒買到」是常態；只有真的供給斷了才該提醒。
   const shops=ready.filter(b=>b.type==='shop');
-  if(!shops.length)return {text:'鎮上還沒有落成的商鋪，居民買不到日用品。',action:'shop',label:'選商鋪'};
+  if(!shops.length)return {text:'居民買不到日用品，因為鎮上還沒有商鋪。做法：① 點下面的「商鋪」② 在空地上點一下 ③ 等它蓋好就會開門。',action:'shop',label:'選商鋪'};
   if(!shops.some(b=>at(t,`shop:${b.id}`).some(l=>SALEABLE.includes(l.good)))){
-   if(!riverOpen(t)&&!granaryStores(t))return {text:'汴河十月閉口，漕船停航至來年二月，店裡已無貨可賣。公共營造蓋一座義倉，冬天才有存糧放出。',action:'road',label:'公共營造'};
-   if(t.city.trade.funds<GOODS_VALUE.clay)return {text:'商行周轉金見底，買不起原料，商鋪補不到貨。先把現貨賣完、或調高稅率補回周轉金。',action:null};
-   if(!ready.some(b=>b.type==='work'))return {text:'商鋪空著架子：原料要先經作坊加工成陶器、木器或布匹才賣得出去。蓋一處作坊吧。',action:'work',label:'選作坊'};
-   return {text:'商鋪暫時缺貨，貨還在碼頭→作坊→商鋪的路上，稍候即補。',action:null};
+   if(!riverOpen(t)&&!granaryStores(t))return {text:'冬天汴河結凍封河，船不來了，店裡沒有貨。做法：① 點下面的「公設」② 蓋一座「義倉」③ 義倉冬天會放存糧給商鋪。',action:'road',label:'公共營造'};
+   if(t.city.trade.funds<GOODS_VALUE.clay)return {text:'商行的錢用完了，買不起原料。做法：① 先等店裡的貨賣掉換錢 ② 或點右上角「鎮庫」，在裡面把稅率調高一點。',action:null};
+   if(!ready.some(b=>b.type==='work'))return {text:'商鋪架上是空的，因為原料還沒有人加工。貨的路線是：碼頭 → 作坊 → 商鋪。做法：① 點下面的「作坊」② 蓋一間作坊 ③ 作坊會把原料做成陶器、木器、布匹，小車自動送到商鋪。',action:'work',label:'選作坊'};
+   return {text:'商鋪正在等貨。貨的路線是：碼頭 → 作坊 → 商鋪，小車正在送，等一下就會上架。',action:null};
   }
   const unmet=t.people.filter(p=>!(p.needsSatisfiedUntil>t.elapsed)).length;
-  if(unmet>=Math.max(3,Math.ceil(t.people.length*0.7)))return {text:`${unmet} 位居民遲遲買不到日用品。商鋪要有夥計到場才開門，可再加一處商鋪或補足人手。`,action:'shop',label:'選商鋪'};
-  if(managed(t)&&t.city.treasury<300)return {text:'鎮庫將盡。可調稅率、拆除高維護建築，或先停手等稅收。',action:null};
-  if(!t.buildings.some(b=>b.design==='well'))return {text:'新住戶需要水井才會遷入，公共營造可蓋街坊水井。',action:'road',label:'公共營造'};
-  return {text:'小鎮運作順利。可繼續擴建街坊，或看看市井見聞。',action:null};
+  const capacity=shoppingCapacity(t),need=shoppingNeed(t);
+  if(need>capacity&&t.people.length>=4){
+   const more=shopsNeeded(t);
+   const short=shops.filter(b=>t.workers(b).length<jobCapacity(b)).length;
+   return {text:`${unmet} 位居民買不到日用品，因為商鋪來不及賣。現在全鎮每天賣得出 ${capacity} 件，居民每天要買 ${need} 件。做法：① 點下面的「商鋪」，再蓋 ${more} 處商鋪${short?`（或先幫 ${short} 處缺人的商鋪等居民來上工）`:''} ② 商鋪要有夥計上工才會開門 ③ 記得同時加蓋作坊，貨才跟得上。`,action:'shop',label:'選商鋪'};
+  }
+  if(managed(t)&&t.city.treasury<300)return {text:'鎮上的錢快用完了。做法：① 點右上角的「鎮庫」② 把稅率調高一點 ③ 或先暫停蓋新東西，等收稅進帳。',action:null};
+  if(!t.buildings.some(b=>b.design==='well'))return {text:'沒有水井，新的居民不敢搬進來。做法：① 點「營造與工具」裡的「公共營造」② 選「街坊水井」③ 在住家附近蓋一口。',action:'road',label:'公共營造'};
+  return {text:'小鎮現在很順利。可以再蓋房子讓人口變多，或點「破關指南」看看下一個目標。',action:null};
  }
 
 

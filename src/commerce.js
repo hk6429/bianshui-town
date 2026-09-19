@@ -14,7 +14,8 @@ export function sellAtShop(t,shop,good){
 export function residentPurchase(t,p){
  if(!managed(t))return false;
  const hour=t.time%24;if(!((hour>=11.5&&hour<13)||(hour>=17&&hour<20))||p.outside||(p.buyAfter||0)>t.elapsed)return false;
- const shop=t.building(p.current);if(p.work===shop?.id||!shopIsOpen(t,shop))return false;
+ // 夥計也要吃飯：在自己店裡也算買得到，否則商鋪員工永遠處於「買不到日用品」。
+ const shop=t.building(p.current);if(!shopIsOpen(t,shop))return false;
  const lot=at(t,`shop:${shop.id}`).find(l=>['cloth','ceramics','furniture','legacy'].includes(l.good));if(!lot)return false;
  if(!sellAtShop(t,shop,lot.good))return false;
  t.life.dock.sold++;p.buyAfter=t.elapsed+120;p.needsSatisfiedUntil=t.elapsed+180;p.action='已買妥日用品';return true;

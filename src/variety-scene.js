@@ -1,8 +1,9 @@
+import {roofTone} from './roof-colors.js';
 import * as THREE from 'three';
 import {NEW_DESIGNS} from './variety.js';
 export function varietyBuilding(b,api){
  if(!NEW_DESIGNS[b.design])return null;
- const {box,cyl,ball,roof,tree}=api,g=new THREE.Group(),large=!!b.footprint,R=large?3.8:1.85,wood=0x79583d,stone=0xb5ad92,wall=0xe1d4b9,tile=0x4e6561;
+ const {box,cyl,ball,roof,tree}=api,g=new THREE.Group(),large=!!b.footprint,R=large?3.8:1.85,wood=0x79583d,stone=0xb5ad92,wall=0xe1d4b9,tile=roofTone(b);
  g.position.set(b.x*4,0,b.z*4);g.rotation.y=b.facing||0;box(g,R*2,.16,R*2,stone,0,.08,0);
  const hall=(x,z,w,d,h=1.6)=>{box(g,w,h,d,wall,x,h/2+.2,z);box(g,.5,1.1,.06,wood,x,.76,z+d/2+.03);for(const dx of [-w*.3,w*.3]){box(g,.38,.5,.055,0x7b6e50,x+dx,h*.6,z+d/2+.04);for(const n of [-1,0,1])box(g,.022,.5,.02,0xd0be90,x+dx+n*.1,h*.6,z+d/2+.075);}const r=new THREE.Group();r.position.set(x,0,z);g.add(r);roof(r,w+.35,d+.4,.6,h+.25,tile);};
  const shelf=(x,z,w=1.6)=>{for(const y of [.4,.85,1.3]){box(g,w,.08,.35,wood,x,y,z);for(let i=0;i<5;i++)box(g,w/7,.24,.2,[0xa77d5c,0x819a83,0xc2ad75][i%3],x+(i-2)*w/5,y+.15,z);}for(const dx of [-w/2,w/2])box(g,.07,1.4,.4,wood,x+dx,.75,z);};

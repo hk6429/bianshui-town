@@ -10,6 +10,7 @@ import {displayGoods} from './goods-scene.js';
 import {at} from './production.js';
 import {courtyards,courtyardFor,courtyardPosition} from './courtyards.js';
 import {streetPosition} from './traffic.js';
+import {roofTone} from './roof-colors.js';
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
@@ -115,7 +116,7 @@ export class TownScene {
   if(stage===1){for(const x of [-1.6,1.6]){beam(g,[x,.2,-1.4],[x,h+.5,1.4],.045,0xbba274);for(let y=.6;y<h+.7;y+=.45)box(g,.08,.05,3.1,0xac9569,x,y,0);}for(let i=0;i<7;i++)box(g,.55,.035,.12,0xae9263,1.65,.28+i*.25,.6);return batch(g);}
   box(g,2.8,h,2.35,[0xe5d7b5,0xd8cca9,0xded8bc][b.variant],0,h/2+.22,-.15);
   for(const z of [-1.34,1.04]){box(g,2.95,.11,.07,palette.wood,0,.53,z);box(g,2.95,.13,.07,palette.wood,0,h+.15,z);for(const x of [-1.4,1.4])box(g,.13,h,.1,palette.wood,x,h/2+.25,z);}
-  const roofColor=[0x58666a,0x68716b,0x4c5d61][b.variant];roof(g,3.5,3.05,.9,h+.27,roofColor);
+  const roofColor=roofTone(b);roof(g,3.5,3.05,.9,h+.27,roofColor);
   if(stage===2){for(let i=0;i<4;i++)box(g,.5,.04,.12,0xb49a6b,-1.7,.3+i*.45,1.1);return batch(g);}
   box(g,.65,1.3,.06,0x756044,0,.86,1.06);box(g,.07,1.3,.05,0xbca178,0,.86,1.1);ball(g,.04,0xb7a171,.17,.83,1.15);
   const warm=new THREE.MeshStandardMaterial({color:0xc5a77b,emissive:0xffaa46,emissiveIntensity:0,roughness:.85});
