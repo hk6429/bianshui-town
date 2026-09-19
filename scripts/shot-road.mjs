@@ -1,0 +1,16 @@
+import {chromium} from 'playwright';
+const b=await chromium.launch({channel:'chrome'});
+const p=await b.newPage({viewport:{width:1280,height:800}});
+const errs=[];p.on('pageerror',e=>errs.push(String(e)));
+await p.goto('http://127.0.0.1:4173/?storage-test=1');
+await p.waitForTimeout(2500);
+console.log('起手提示:',await p.evaluate(()=>document.getElementById('next-step-text')?.textContent));
+await p.click('#start-btn');await p.waitForTimeout(800);
+const pt=await p.evaluate(()=>window.__townDebug.screenCell(-4,-4));
+await p.mouse.move(pt.x,pt.y);await p.waitForTimeout(300);
+console.log('hover 無路空地:',await p.evaluate(()=>document.getElementById('mode-hint').textContent));
+await p.mouse.click(pt.x,pt.y);await p.waitForTimeout(800);
+console.log('建築數:',await p.evaluate(()=>window.__townDebug.town().buildings.length));
+await p.screenshot({path:'/tmp/road-rule.png'});
+console.log('errs',errs);
+await b.close();

@@ -16,8 +16,9 @@ const DEMAND_INTERVAL=800;
 export // 下一步提示：只在真的卡住時才指出成因，避免「常態未採買」被誤報成缺商鋪。
 function nextStep(t){
   const ready=t.buildings.filter(b=>b.stage>=3),homes=ready.filter(b=>b.type==='home');
-  if(!t.buildings.length)return {text:'開始蓋你的小鎮吧。做法：① 點下面的「民居」② 在綠色草地上點一下 ③ 等一下下，房子就會蓋好。',action:'home',label:'選民居'};
-  if(!homes.length&&!t.buildings.some(b=>b.type==='home'))return {text:'還沒有人住進來，因為鎮上沒有房子。做法：① 點下面的「民居」② 在空地點一下，蓋一間房子。',action:'home',label:'選民居'};
+  // 先有路才有街：一開始要先鋪一條路，房子只能蓋在路邊。
+  if(!t.buildings.length)return {text:'先鋪路，再蓋房子。做法：① 點下面的「營造與工具」②「公共營造」③ 選「青石小路」④ 從右邊河岸的引道，一格一格點出一條路 ⑤ 再點下面的「民居」，把房子點在那條路的旁邊。（房子一定要碰到路，人和小車才走得到）',action:'road',label:'去鋪路'};
+  if(!homes.length&&!t.buildings.some(b=>b.type==='home'))return {text:'還沒有人住進來，因為鎮上沒有房子。做法：① 點下面的「民居」② 在「路旁邊」的空地點一下，蓋一間房子。',action:'home',label:'選民居'};
   if(managed(t)){
    const stranded=homes.find(b=>!publicAccess(t,b));
    if(stranded)return {text:`「${stranded.name}」沒有路可以走到外面，所以沒有人搬進來、貨也送不到。做法：① 點「營造與工具」裡的「公共營造」② 選「鋪路」③ 從房子門口一路點到右邊河岸的大路。`,action:'road',label:'去鋪路'};

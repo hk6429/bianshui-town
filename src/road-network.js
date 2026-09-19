@@ -12,3 +12,10 @@ export function roadReachable(t,origin,goal){
 }
 export const publicAccess=(t,b)=>roadReachable(t,b.entrance,[12,8]);
 export function roadCapacity(t,a){return (t.publicWorks||[]).some(r=>r.type==='avenue'&&Math.abs(a.x-r.x*4)<=2.01&&Math.abs(a.z-r.z*4)<=2.01)?2:1;}
+
+// 一格建地占世界座標 ±2；只要建地邊緣碰得到道路格，就算臨街。
+export function touchesRoad(t,cells){
+ if(!cells?.length)return false;
+ for(const c of cells)for(let a=c.x*4-2;a<=c.x*4+2;a++)for(let b=c.z*4-2;b<=c.z*4+2;b++)if(t.roads.has(key(a,b)))return true;
+ return false;
+}
