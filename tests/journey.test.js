@@ -34,8 +34,8 @@ test('journey data round-trips with strict bounds, old saves get independent def
  for(const bad of [{...createJourney(),claimed:['craft','craft']},{...createJourney(),guide:{stage:5,skipped:false}},{...createJourney(),enabled:'true'},{...createJourney(),vision:'cheat'}])assert.throws(()=>validateSave({...data,journey:bad}));
 });
 test('failed persistence leaves journey and city untouched; success publishes one validated snapshot',()=>{
- const t=new Town(),before=structuredClone(t.toJSON());assert.equal(commitJourney(t,d=>setJourneyMode(d,true),()=>({ok:false})),false);assert.deepEqual(t.toJSON(),before);
- let writes=0;assert(commitJourney(t,d=>setJourneyMode(d,true),data=>{validateSave(data);writes++;return {ok:true};}));assert.equal(writes,1);assert(t.journey.enabled);assert.deepEqual(t.city,before.city);
+ const t=new Town(),before=structuredClone(t.toJSON());assert.equal(commitJourney(t,d=>setJourneyMode(d,false),()=>({ok:false})),false);assert.deepEqual(t.toJSON(),before);
+ let writes=0;assert(commitJourney(t,d=>setJourneyMode(d,false),data=>{validateSave(data);writes++;return {ok:true};}));assert.equal(writes,1);assert.equal(t.journey.enabled,false);assert.deepEqual(t.city,before.city);
 });
 test('an empty real town completes all four guide steps through actual building and simulation',()=>{
  const t=new Town();setJourneyMode(t,true);assert.equal(t.journey.guide.stage,0);

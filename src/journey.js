@@ -1,7 +1,7 @@
 import {DESIGNS,designFor} from './heritage.js';
 export const VISIONS={home:'安居',craft:'工藝',culture:'文風'};
 export const MILESTONE_IDS=['settlement','craft','culture'];
-export const createJourney=()=>({version:1,enabled:false,vision:'home',guide:{stage:0,skipped:false},observedResident:false,claimed:[],shortGoal:'observe'});
+export const createJourney=()=>({version:1,enabled:true,useGate:false,vision:'home',guide:{stage:0,skipped:false},observedResident:false,claimed:[],shortGoal:'observe'});
 export function journeyFacts(t){
  const ready=t.buildings.filter(b=>b.stage>=3&&!b.fireDamage);
  return {homes:ready.filter(b=>b.type==='home').length,people:t.people.length,works:ready.filter(b=>b.type==='work').length,culture:ready.filter(b=>DESIGNS[designFor(b)]?.source).length,made:t.economy.lots.some(l=>l.madeAt!=null)||['ceramics','furniture','cloth'].some(g=>(t.economy.sold[g]||0)>0),written:t.literati.collected.length};
@@ -30,6 +30,7 @@ export function inspectResident(t,id){
  const j=t.journey,before=JSON.stringify(j);refreshGuide(t);j.observedResident=true;if(!j.guide.skipped&&j.guide.stage===1)j.guide.stage=2;refreshGuide(t);return JSON.stringify(j)!==before;
 }
 export function reviewJourney(t){const changed=refreshGuide(t);if(t.journey.enabled&&!t.journey.guide.skipped&&t.journey.guide.stage===3){t.journey.guide.stage=4;return true;}return changed;}
+export function setUseGate(t,on){if(!!t.journey.useGate===!!on)return false;t.journey.useGate=!!on;return true;}
 export function setJourneyMode(t,enabled){if(t.journey.enabled===enabled)return false;t.journey.enabled=enabled;refreshGuide(t);return true;}
 export function chooseVision(t,id){if(!Object.hasOwn(VISIONS,id)||t.journey.vision===id)return false;t.journey.vision=id;return true;}
 export function setGuide(t,action){if(action==='skip'){t.journey.guide.skipped=true;return true;}if(action==='restart'){t.journey.guide={stage:0,skipped:false};refreshGuide(t);return true;}return false;}

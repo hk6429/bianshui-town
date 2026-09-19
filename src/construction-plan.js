@@ -1,6 +1,7 @@
 import {bounds,TYPES} from './grid-rules.js';
 import {DESIGNS,isSquare} from './heritage.js';
 const at=c=>`X ${c.x}、Z ${c.z}`;
+export const AUTO_DESIGNS={home:['bambooHome','terraceHome','plumHome'],shop:['tea','food','textile'],work:['dragonKiln','timberYard','dyeHouse']};
 export function placementIssue(t,cells,{max=4,connected=true,ignore=null,allowRoad=false}={}){
  if(!Array.isArray(cells)||!cells.length)return '請先選擇占地';
  if(cells.length>max)return `本次最多${max}格`;
@@ -17,11 +18,14 @@ export function constructionPlan(type,cells,design,nextId=1){
  const combined=isSquare(cells);
  if(combined&&design)design=({garden:'scholarGarden',residence:'mansion',kiln:'kilnHall',woodshop:'woodshopHall',weavery:'weaveryHall'})[design]||design;
  if(combined&&!design)design=type==='home'?'mansion':type==='work'?'kilnHall':type==='shop'?'wine':null;
+
+ // 未指定圖樣時逐棟輪抽既有外觀，讓快捷列蓋出的民居／商鋪／作坊不再長得一樣。
+ const autoFor=id=>!design&&!combined?AUTO_DESIGNS[type]?.[id%3]??null:null;
  const spec=DESIGNS[design];
  if(design&&(!spec||spec.type!==type))return {reason:'圖樣與營造類型不符'};
  if(spec&&!spec.sizes.includes(combined?4:1))return {reason:`「${spec.name}」${spec.sizes.includes(4)?'須完整2×2四格合建':'僅支援單格或直線多棟，不能四格合建'}`};
  if(type==='garden'&&!spec)return {reason:'園景須先選擇圖樣'};
  const plots=combined?[{x:cells.reduce((s,c)=>s+c.x,0)/4,z:cells.reduce((s,c)=>s+c.z,0)/4,footprint:cells.map(c=>({...c}))}]:cells;
- const buildings=plots.map((c,i)=>{const id=nextId+1+i;return {...c,id,type,design:design||null,name:spec?(combined&&spec.largeName?spec.largeName:spec.name):type==='home'?`${['柳蔭','汴水','杏花'][id%3]}人家 ${id}`:type==='shop'?['春水茶坊','陳記食肆','錦色布莊'][id%3]:['青瓷作坊','木作小院','織雲坊'][id%3]};});
+ const buildings=plots.map((c,i)=>{const id=nextId+1+i;return {...c,id,type,design:design||autoFor(id)||null,name:design&&spec?(combined&&spec.largeName?spec.largeName:spec.name):type==='home'?`${['柳蔭','汴水','杏花'][id%3]}人家 ${id}`:type==='shop'?['春水茶坊','陳記食肆','錦色布莊'][id%3]:['青瓷作坊','木作小院','織雲坊'][id%3]};});
  return {reason:null,design,spec,combined,buildings};
 }

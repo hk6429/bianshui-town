@@ -15,7 +15,8 @@ export function residentBuildingAction(b,p,h){
  return ['燒製陶器','打磨木器','整理織物'][b?.variant||0];
 }
 export function upgradeUse(t,b){
- if(!t.journey?.enabled||!managed(t))return {allowed:true,text:'自由升級：使用條件僅在城市經營＋引導挑戰同時開啟時適用。'};
+ // 引導挑戰預設開啟只提供目標與提示；「升級須實際使用」是另一個可選挑戰（useGate）。
+ if(!t.journey?.enabled||!t.journey?.useGate||!managed(t))return {allowed:true,text:'自由升級：使用條件僅在城市經營＋實際使用挑戰同時開啟時適用。'};
  let value=0,condition='至少一位居民正在園中停留';
  if(b.type==='home'){value=t.people.filter(p=>p.home===b.id).length;condition='至少一位居民已入住';}
  else if(b.type==='work'||b.type==='shop'){value=presentWorkers(t,b).length;condition='至少一位可工作的過賣或工匠實際到場';}
