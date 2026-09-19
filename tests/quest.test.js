@@ -43,3 +43,14 @@ test('all five 功德 met reports 破關',()=>{
  const r=questReport(t,{average:WELLBEING_TARGET});
  assert.equal(r.done,true,JSON.stringify(r.goals.filter(g=>!g.ok)));
 });
+
+test('望縣還缺哪幾類要指名道姓',()=>{
+ const t=town();
+ t.city.rank=4;
+ const put1=(d,x,z)=>{assert(t.place(DESIGNS[d].type,[{x,z}],true,d),`${d} 放不下`);t.buildings[t.buildings.length-1].stage=3;};
+ put1('bambooHome',-4,0);put1('tea',0,0);put1('dragonKiln',1,0);put1('pond',2,0);put1('villageSchool',-3,0);put1('firePost',-2,0);
+ const todo=questReport(t).goals.find(g=>g.key==='rank').todo.join('\n');
+ assert.match(todo,/祠廟/,'缺的分類要寫出名字');
+ assert.match(todo,/水運/);
+ assert.match(todo,/土地廟|城隍廟/,'要舉一個可以蓋的例子');
+});

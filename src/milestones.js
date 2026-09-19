@@ -1,7 +1,7 @@
 import {hasCivic,hasGovernment,hasPost} from './civic.js';
 import {managed} from './city-finance.js';
 import {isSchool,categoryOf,DESIGNS} from './heritage.js';
-import {CATEGORY_ORDER} from './categories.js';
+import {CATEGORY_ORDER,CATEGORIES} from './categories.js';
 
 // 草市→墟集→置鎮→大鎮→奉旨升縣→望縣。等級只升不降，存進 city.rank。
 const done=b=>b.stage>=3;
@@ -24,7 +24,9 @@ export const RANKS=[
    return {ok:people>=60&&hasPost(t)&&temple&&higher>=1,text:`居民 ${people}／60、遞鋪 ${hasPost(t)?'已立':'未立'}、城隍廟 ${temple?'已立':'未立'}、鎮學或書院 ${higher}／1`};}},
  {key:'wangxian',name:'望縣',title:'一方望縣',note:'八類建置俱全，人煙鼎盛。',
   need:t=>{const people=t.people.length,kinds=categories(t);const missing=CATEGORY_ORDER.filter(k=>!kinds.has(k));
-   return {ok:people>=90&&!missing.length,text:`居民 ${people}／90、八類建置 ${CATEGORY_ORDER.length-missing.length}／${CATEGORY_ORDER.length}`};}}
+   const names=missing.map(k=>CATEGORIES[k]).join('、');
+   return {ok:people>=90&&!missing.length,missing,
+    text:`居民 ${people}／90${people>=90?'（已足）':'（還不夠）'}、八類建置 ${CATEGORY_ORDER.length-missing.length}／${CATEGORY_ORDER.length}${names?`，還缺：${names}`:'（已足）'}`};}}
 ];
 export const MAX_RANK=RANKS.length-1;
 export const rankOf=t=>Math.max(0,Math.min(MAX_RANK,Math.trunc(t?.city?.rank||0)));
