@@ -30,9 +30,9 @@ export function setCityPolicy(t,{mode=t.city.mode,taxRate=t.city.taxRate}){if(![
 
 // 買地擴城：每次西擴兩列、南北各一列，最多三次。東側是汴河，不能再往外推。
 export function buyLand(t){
- if(!managed(t)||expansionOf(t)>=MAX_EXPANSION)return false;
- const cost=landCost(t);
- if(!charge(t,cost,'買地擴城'))return false;
+ if(expansionOf(t)>=MAX_EXPANSION)return false;
+ // 自由營造沒有鎮庫，擴地不收費；城市經營才照價付錢。
+ if(managed(t)&&!charge(t,landCost(t),'買地擴城'))return false;
  t.city.expansion=expansionOf(t)+1;t.revision++;
  t.log(`買下鎮西一區土地，可營造範圍擴大到 ${boundsCells(townBounds(t))} 格`);
  return true;

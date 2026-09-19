@@ -6,6 +6,7 @@ import {formatMoney} from './money.js';
 import {at} from './production.js';
 import {riverOpen} from './calendar.js';
 import {granaryStores} from './civic.js';
+import {townBounds,boundsCells,expansionOf,MAX_EXPANSION} from './grid-rules.js';
 import {GOODS_VALUE} from './city-finance.js';
 
 import {SALEABLE,shoppingCapacity,shoppingNeed,shopsNeeded} from './supply.js';
@@ -44,6 +45,8 @@ function nextStep(t){
   }
   if(managed(t)&&t.city.treasury<300)return {text:'鎮上的錢快用完了。做法：① 點右上角的「鎮庫」② 把稅率調高一點 ③ 或先暫停蓋新東西，等收稅進帳。',action:null};
   if(!t.buildings.some(b=>b.design==='well'))return {text:'沒有水井，新的居民不敢搬進來。做法：① 點「營造與工具」裡的「公共營造」② 選「街坊水井」③ 在住家附近蓋一口。',action:'road',label:'公共營造'};
+  const room=boundsCells(townBounds(t))-t.blocks.reduce((n,b)=>n+b.cells.length,0)-t.publicWorks.length;
+  if(room<8&&expansionOf(t)<MAX_EXPANSION)return {text:`空地只剩大約 ${Math.max(0,room)} 格了。做法：① 點右上角顯示錢的那一塊（寫「鎮庫」或「自由」都一樣）② 在跳出來的視窗裡找「買地擴城」③ 按下去，小鎮西邊就會多一整排土地（最多買三次）。`,action:'budget',label:'開鎮庫'};
   return {text:'小鎮現在很順利。可以再蓋房子讓人口變多，或點「破關指南」看看下一個目標。',action:null};
  }
 
@@ -54,7 +57,7 @@ export function installHUD({getTown,openBudget,openPublicWorks,setMode,toast}){
  const floatEl=$('#treasury-float'),rows=[...document.querySelectorAll('[data-demand]')];
  let lastTreasury=null,demandAt=0,demandCache=null,warnedAccess=false,lastStep='';
  $('#hud-treasury').onclick=()=>openBudget();
- $('#next-step-action').onclick=()=>{const action=$('#next-step-action').dataset.action;if(action==='road')openPublicWorks();else if(action)setMode(action);};
+ $('#next-step-action').onclick=()=>{const action=$('#next-step-action').dataset.action;if(action==='road')openPublicWorks();else if(action==='budget')openBudget();else if(action)setMode(action);};
 
  function flash(delta){
   if(!delta)return;
