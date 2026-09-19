@@ -33,6 +33,7 @@ import {publicAccess} from './road-network.js';
 import {residentCondition} from './city-growth.js';
 import {shopStatus} from './commerce.js';
 import {installFinanceUI} from './finance-ui.js';
+import {installSprite} from './sprite.js';
 import {installHUD} from './hud.js';
 import {LAYERS,layerTiles} from './data-layers.js';
 import {formatMoney} from './money.js';
@@ -282,7 +283,7 @@ function renderInspector(){
  }
  const heading=panel.querySelector('h2');if(heading){heading.id||='inspector-title';heading.tabIndex=-1;shell.setAttribute('aria-labelledby',heading.id);}
 }
-function updateUI(day){syncPauseButton();const incident=town.buildings.find(b=>b.fireWarningAt!==undefined)||town.buildings.find(damaged);$('#fire-alert').hidden=!incident;if(incident)$('#fire-alert').textContent=`${incident.fireWarningAt!==undefined?'火警預警':'整修中'}：${incident.name} · 點此查看`;if(following!=null&&!town.people.some(p=>p.id===following)&&!String(following).startsWith('author:'))stopFollowing();financeUI.update();$('#weather-btn').textContent=`${town.weather.raining?'細雨':'晴天'} · ${{auto:'自然',rain:'手動',clear:'手動'}[town.weather.mode]}`;$('#weather-btn').setAttribute('aria-label',`天候：${town.weather.raining?'細雨':'晴天'}，${{auto:'自然',rain:'手動',clear:'手動'}[town.weather.mode]}模式`);const h=town.time%24,hh=Math.floor(h),mm=Math.floor((h-hh)*60);$('#clock').textContent=`第 ${Math.floor(town.time/24)+1} 日　${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;const shichen=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'][Math.floor(((h+1)%24)/2)];$('#period').textContent=`${calendar(town).label} · ${shichen}時${watchOf(town)?` · ${watchOf(town)}`:''} · ${h<6?'萬籟俱寂':h<10?'晨光初醒':h<16?'日光正好':h<19?'炊煙漸起':'燈火可親'}`;$('#sun-icon').textContent=day>.5?'☀':'☾';$('#light-toggle').textContent=day>.5?'☾':'☀';document.body.classList.toggle('night',day<.4);updateDataLayer();updateGateway();$('#town-name-label').textContent=townName(town);$('#town-rank-label').textContent=`${rankName(town)} · 我的城鎮`;$('#population').textContent=town.people.length;$('#building-count').textContent=town.buildings.length;$('#block-count').textContent=town.blocks.length;hud.update();renderInspector();}
+function updateUI(day){syncPauseButton();const incident=town.buildings.find(b=>b.fireWarningAt!==undefined)||town.buildings.find(damaged);$('#fire-alert').hidden=!incident;if(incident)$('#fire-alert').textContent=`${incident.fireWarningAt!==undefined?'火警預警':'整修中'}：${incident.name} · 點此查看`;if(following!=null&&!town.people.some(p=>p.id===following)&&!String(following).startsWith('author:'))stopFollowing();financeUI.update();$('#weather-btn').textContent=`${town.weather.raining?'細雨':'晴天'} · ${{auto:'自然',rain:'手動',clear:'手動'}[town.weather.mode]}`;$('#weather-btn').setAttribute('aria-label',`天候：${town.weather.raining?'細雨':'晴天'}，${{auto:'自然',rain:'手動',clear:'手動'}[town.weather.mode]}模式`);const h=town.time%24,hh=Math.floor(h),mm=Math.floor((h-hh)*60);$('#clock').textContent=`第 ${Math.floor(town.time/24)+1} 日　${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;const shichen=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'][Math.floor(((h+1)%24)/2)];$('#period').textContent=`${calendar(town).label} · ${shichen}時${watchOf(town)?` · ${watchOf(town)}`:''} · ${h<6?'萬籟俱寂':h<10?'晨光初醒':h<16?'日光正好':h<19?'炊煙漸起':'燈火可親'}`;$('#sun-icon').textContent=day>.5?'☀':'☾';$('#light-toggle').textContent=day>.5?'☾':'☀';document.body.classList.toggle('night',day<.4);updateDataLayer();updateGateway();$('#town-name-label').textContent=townName(town);$('#town-rank-label').textContent=`${rankName(town)} · 我的城鎮`;$('#population').textContent=town.people.length;$('#building-count').textContent=town.buildings.length;$('#block-count').textContent=town.blocks.length;hud.update();sprite.update();renderInspector();}
 function boatStatus(){const b=town.life.boat;return b.state==='approach'?(b.mast?'貨船沿汴河駛來':'船家收桅，緩緩穿過虹橋'):({mooring:'船家正在靠岸繫纜',unloading:'腳夫往返船邊卸貨',depart:'卸貨完成，貨船離岸',away:'等候下一艘來船'})[b.state];}
 function updateJournal(){
  const panel=$('#life-panel');$('#life-btn').setAttribute('aria-expanded',String(journalOpen));panel.hidden=!journalOpen;if(!journalOpen)return;const l=town.life;
@@ -404,3 +405,6 @@ function updateDataLayer(){
 }
 const financeUI=installFinanceUI({getTown:()=>town,edit:fn=>{const result=applyUrban(fn);if(result)setMode('explore');return result;}});
 const hud=installHUD({getTown:()=>town,openBudget:()=>$('#budget-btn').click(),openPublicWorks:()=>$('#public-works').showModal(),setMode,toast});
+const sprite=installSprite({getTown:()=>town,toast});
+$('#quest-btn').onclick=()=>sprite.open();
+$('#close-quest').onclick=()=>$('#quest').close();

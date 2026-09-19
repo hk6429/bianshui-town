@@ -84,3 +84,23 @@
 .hud-left>*{position:static;pointer-events:auto}
 @media(max-width:850px){.hud-left{left:20px;bottom:170px}}
 @media(max-width:600px){.hud-left{left:14px;right:14px;bottom:200px;max-width:none}}
+
+/* 舟童阿汴：破關指引。立繪與對話併在「下一步」卡片裡，不另佔版面。 */
+.sprite-head{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+.sprite-art{width:46px;height:58px;flex-shrink:0}
+.sprite-art svg{width:100%;height:100%;display:block}
+.sprite-quest{margin:5px 0 0;font:0.75rem 'Noto Serif TC',serif;color:#6f7a5e;letter-spacing:.5px}
+.next-step-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.quest-link{background:none;font-size:0.75rem;color:#7a6a4a;text-decoration:underline;padding:8px 4px;min-height:36px}
+.next-step.quest-clear{box-shadow:0 0 0 2px #a8975c66,0 8px 40px #38462b12}
+#quest{width:520px}
+.quest-goals{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:10px}
+.quest-goal{display:grid;gap:4px;padding:12px 14px;border:1px solid #d3d5be;border-radius:9px;background:#efeee0}
+.quest-goal strong{font:500 0.9375rem 'Noto Serif TC',serif;color:#6c7258}
+.quest-goal span{font-size:0.75rem;color:#5d6750}
+.quest-goal small{font-size:0.75rem;color:#8b907a;line-height:1.7}
+.quest-done{background:#e2ead4;border-color:#a9bb92}
+.quest-done strong{color:#41643c}
+@media(max-width:600px){#quest{padding:20px}.sprite-art{width:40px;height:50px}}
+/* 手機底部有營造列＋工具列，左側堆疊要再往上讓開，破關指南才點得到。 */
+@media(max-width:600px){.hud-left{bottom:250px;max-height:calc(100vh - 330px);overflow-y:auto;overflow-x:hidden}}
