@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {NoticeHistory} from '../src/notices.js';
 import {constructionProgress,constructionPercent,lotButton} from '../src/content-html.js';
 test('notices retain failure reasons past the toast timeout, in newest-first bounded order',()=>{
- const h=new NoticeHistory(30);h.add('第（3、2）格超出範圍',1000);h.add('金庫不足，需120文',7000);
+ const h=new NoticeHistory(30);h.add('第（3、2）格超出範圍',1000);h.add('鎮庫不足，需120文',7000);
  assert.equal(h.entries[1].text,'第（3、2）格超出範圍');assert.equal(h.entries[1].at,1000);
  for(let n=0;n<40;n++)h.add(`操作${n}`,10000+n);
  assert.equal(h.entries.length,30);assert.equal(h.entries[0].text,'操作39');assert.equal(h.entries[29].text,'操作10');assert.equal(new Set(h.entries.map(e=>e.id)).size,30);

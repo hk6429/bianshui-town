@@ -5,6 +5,6 @@
 <script type="module">
 import {Town} from '/src/simulation.js';import {layRoad,removeRoad} from '/src/urban.js';import {addResident} from '/src/city-growth.js';import {waterStatus,waterReport} from '/src/water-service.js';import {dailyUpkeep} from '/src/city-finance.js';
 const t=new Town({mode:'managed'});t.place('home',[{x:0,z:0}],true);t.place('garden',[{x:-2,z:0}],true,'well');const home=t.buildings[0];for(let i=0;i<2;i++)addResident(t,home);layRoad(t,'lane',[{x:0,z:1},{x:0,z:2},{x:1,z:2}]);
-function render(){document.querySelector('#status').textContent=`${waterStatus(t,home)}\n${waterStatus(t,t.buildings[1])}\n金庫 ${t.city.treasury} 文，每日維護 ${dailyUpkeep(t)} 文。\n${JSON.stringify(waterReport(t).wells)}`;}
+function render(){document.querySelector('#status').textContent=`${waterStatus(t,home)}\n${waterStatus(t,t.buildings[1])}\n鎮庫 ${t.city.treasury} 文，每日維護 ${dailyUpkeep(t)} 文。\n${JSON.stringify(waterReport(t).wells)}`;}
 document.querySelector('#connect').onclick=()=>{layRoad(t,'lane',[{x:-1,z:0}]);render();};document.querySelector('#cut').onclick=()=>{removeRoad(t,[{x:-1,z:0}]);render();};document.querySelector('#save').onclick=()=>{localStorage.setItem('bianshui-town-test-v1',JSON.stringify(t));document.querySelector('#status').textContent+='\n已儲存隔離測試城，正式存檔未變更。';};render();
 </script></html>

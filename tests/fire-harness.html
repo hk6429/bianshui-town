@@ -5,6 +5,6 @@
 <script type="module">
 import {Town} from '/src/simulation.js';import {tickFire,fireStatus} from '/src/fire-service.js';
 const towns=[new Town({mode:'managed'}),new Town({mode:'managed'})];for(const t of towns)t.place('work',[{x:0,z:0}],true,'kiln');towns[1].place('garden',[{x:1,z:0}],true,'firePost');
-function render(){document.querySelector('#status').textContent=towns.map((t,i)=>`${i?'有巡守':'無巡守'}：${fireStatus(t,t.buildings[0])}\n建築 ${t.buildings.length} 處；貨物 ${t.economy.lots.length} 件；金庫 ${t.city.treasury} 文`).join('\n\n');}
+function render(){document.querySelector('#status').textContent=towns.map((t,i)=>`${i?'有巡守':'無巡守'}：${fireStatus(t,t.buildings[0])}\n建築 ${t.buildings.length} 處；貨物 ${t.economy.lots.length} 件；鎮庫 ${t.city.treasury} 文`).join('\n\n');}
 document.querySelector('#warn').onclick=()=>{for(const t of towns){t.time=48;tickFire(t,{draw:()=>0});}render();};document.querySelector('#resolve').onclick=()=>{for(const t of towns){t.elapsed+=30;tickFire(t);}render();};document.querySelector('#repair').onclick=()=>{for(const t of towns){t.elapsed+=120;tickFire(t);}render();};document.querySelector('#save').onclick=()=>{localStorage.setItem('bianshui-town-test-v1',JSON.stringify(towns[0]));document.querySelector('#status').textContent+='\n已儲存隔離測試城，正式小鎮未變更。';};render();
 </script></html>

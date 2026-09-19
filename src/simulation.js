@@ -57,6 +57,17 @@ export function pathfind(nodes,start,goal){
  }
  return [];
 }
+// city.version 2 起改用宋代幣值尺度（1貫＝1000文）；version 1 的舊存檔等比放大，購買力不變。
+export const MONEY_SCALE=150;
+function scaleLegacyMoney(city){
+ const mul=n=>Number.isFinite(n)?Math.round(n*MONEY_SCALE):n;
+ for(const key of ['treasury','taxIncome','spent','maintenancePaid'])city[key]=mul(city[key]);
+ for(const e of city.ledger||[]){e.amount=mul(e.amount);e.balance=mul(e.balance);}
+ const trade=city.trade;
+ if(trade){for(const key of ['funds','importExpense','revenue','taxPaid'])trade[key]=mul(trade[key]);
+  for(const e of trade.ledger||[]){e.unitPrice=mul(e.unitPrice);e.tax=mul(e.tax);e.amount=mul(e.amount);e.balance=mul(e.balance);}}
+ city.version=2;
+}
 export class Town {
  constructor({mode='sandbox'}={}){this.journey=createJourney();this.demography=createDemography();this.city=createCity(mode);this.market={trades:0};this.publicWorks=mode==='managed'?[{...STARTER_ROAD}]:[];this.buildings=[];this.blocks=[];this.people=[];this.carts=[];this.roads=new Set();this.time=8;this.elapsed=0;this.nextId=1;this.revision=0;this.events=[];this.life=createLife();this.stories=createStories();this.weather=createWeather();this.literati=createLiterati();this.economy=createEconomy();importCargo(this);if(this.publicWorks.length)this.rebuildRoads();}
  canPlace(cells){return placementIssue(this,cells)===null;}
@@ -173,11 +184,12 @@ export class Town {
   this.place('shop',[{x:1,z:2},{x:2,z:2}],true);
   this.tick(.01);this.log('一城煙火，等你慢慢看');
  }
- toJSON(){return {version:9,journey:this.journey,demography:this.demography,city:this.city,market:this.market,publicWorks:this.publicWorks,literati:this.literati,economy:this.economy,weather:this.weather,stories:this.stories,life:this.life,time:this.time,elapsed:this.elapsed,nextId:this.nextId,buildings:this.buildings,blocks:this.blocks,people:this.people,carts:this.carts,events:this.events};}
+ toJSON(){return {version:10,journey:this.journey,demography:this.demography,city:this.city,market:this.market,publicWorks:this.publicWorks,literati:this.literati,economy:this.economy,weather:this.weather,stories:this.stories,life:this.life,time:this.time,elapsed:this.elapsed,nextId:this.nextId,buildings:this.buildings,blocks:this.blocks,people:this.people,carts:this.carts,events:this.events};}
  static restore(data){
   data=validateSave(data);
-  if(![1,2,3,4,5,6,7,8,9].includes(data?.version)||!Array.isArray(data.blocks)||!Array.isArray(data.buildings)||!Array.isArray(data.people)||!Array.isArray(data.carts))throw new Error('存檔格式不相容');
+  if(![1,2,3,4,5,6,7,8,9,10].includes(data?.version)||!Array.isArray(data.blocks)||!Array.isArray(data.buildings)||!Array.isArray(data.people)||!Array.isArray(data.carts))throw new Error('存檔格式不相容');
   if(data.buildings.length>143||!Number.isFinite(data.time)||!Number.isFinite(data.elapsed))throw new Error('存檔內容無效');
+  if(data.city&&(data.city.version||1)<2)scaleLegacyMoney(data.city);
   const town=new Town();Object.assign(town,data);town.demography=data.demography||createDemography(town.elapsed);town.city=data.city||createCity('sandbox',town.time);town.city.trade??=createTrade();town.city.logisticsLevel??=1;town.city.sanitationDay??=Math.floor(town.time/24);town.city.fireDay??=Math.floor(town.time/24);town.buildings=town.buildings.map(b=>({...b,tier:tierOf(b)}));town.market=data.version>=8&&data.market?data.market:{trades:0};town.publicWorks=data.version>=7&&Array.isArray(data.publicWorks)?data.publicWorks:[];town.literati=data.version>=6&&data.literati?data.literati:{...createLiterati(),nextAt:town.elapsed+3};town.life=data.version>=2&&data.life?data.life:createLife();town.stories=data.version>=3&&data.stories?data.stories:createStories();town.weather=data.version>=4&&data.weather?data.weather:createWeather();if(data.version<4||!data.economy)migrateEconomy(town);else syncCargo(town);town.rebuildRoads({preserveRoutes:true});town.revision++;return town;
  }
 }

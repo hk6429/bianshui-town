@@ -4,7 +4,7 @@ import {damaged} from './fire-service.js';
 import {at,transfer} from './production.js';
 import {presentWorkers,jobCapacity,onSickLeave} from './employment.js';
 export const shopIsOpen=(t,b)=>!!b&&b.type==='shop'&&b.stage>=3&&!damaged(b)&&t.time%24>=7&&t.time%24<20&&presentWorkers(t,b).length>0;
-export const shopStatus=(t,b)=>`${shopIsOpen(t,b)?'營業中':'暫停營業'} · 到場店員 ${presentWorkers(t,b).length}／${jobCapacity(b)} 人 · 病假 ${t.workers(b).filter(p=>onSickLeave(t,p)).length} 人 · 招工 ${Math.max(0,jobCapacity(b)-t.workers(b).length)} 人${managed(t)?` · 每件交易間隔 ${presentWorkers(t,b).length?(buildingStats(b).saleSeconds/presentWorkers(t,b).length).toFixed(1):'—'} 秒`:""}`;
+export const shopStatus=(t,b)=>`${shopIsOpen(t,b)?'營業中':'暫停營業'} · 到場過賣 ${presentWorkers(t,b).length}／${jobCapacity(b)} 人 · 病假 ${t.workers(b).filter(p=>onSickLeave(t,p)).length} 人 · 招工 ${Math.max(0,jobCapacity(b)-t.workers(b).length)} 人${managed(t)?` · 每件交易間隔 ${presentWorkers(t,b).length?(buildingStats(b).saleSeconds/presentWorkers(t,b).length).toFixed(1):'—'} 秒`:""}`;
 export function sellAtShop(t,shop,good){
  if(!shopIsOpen(t,shop)||managed(t)&&(shop.nextSaleAt||0)>t.elapsed)return 0;
  const n=transfer(t,`shop:${shop.id}`,'sold',1,good);

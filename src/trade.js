@@ -1,5 +1,8 @@
 import {GOODS_VALUE,managed} from './city-finance.js';
-export const createTrade=()=>({funds:600,importExpense:0,revenue:0,taxPaid:0,nextBatch:1,ledger:[]});
+export const TRADE_SEED=90000;
+// city.version 1 存檔的舊周轉金基數，驗證舊檔時使用。
+export const LEGACY_TRADE_SEED=600;
+export const createTrade=()=>({funds:TRADE_SEED,importExpense:0,revenue:0,taxPaid:0,nextBatch:1,ledger:[]});
 function record(t,entry){const a=t.city.trade;a.ledger.push({day:Math.floor(t.time/24),...entry,balance:a.funds});if(a.ledger.length>60)a.ledger.shift();}
 export function purchaseImports(t,goods){
  if(!managed(t))return goods;

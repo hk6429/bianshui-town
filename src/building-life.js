@@ -18,7 +18,7 @@ export function upgradeUse(t,b){
  if(!t.journey?.enabled||!managed(t))return {allowed:true,text:'自由升級：使用條件僅在城市經營＋引導挑戰同時開啟時適用。'};
  let value=0,condition='至少一位居民正在園中停留';
  if(b.type==='home'){value=t.people.filter(p=>p.home===b.id).length;condition='至少一位居民已入住';}
- else if(b.type==='work'||b.type==='shop'){value=presentWorkers(t,b).length;condition='至少一位可工作的店員或工匠實際到場';}
+ else if(b.type==='work'||b.type==='shop'){value=presentWorkers(t,b).length;condition='至少一位可工作的過賣或工匠實際到場';}
  else if(b.design==='well'){value=waterReport(t).wells.find(w=>w.id===b.id)?.used||0;condition='實際供水給至少一位住戶';}
  else if(b.design==='firePost'){value=fireCoverage(t).posts.find(w=>w.id===b.id)?.used||0;condition='實際巡守覆蓋至少一處建築';}
  else if(b.design==='cleaningYard'){value=sanitationReport(t).sites.filter(s=>s.residents>0&&s.reachable.includes(b.id)).length;condition='清運範圍沿路涵蓋至少一處有人居住的住宅';}
@@ -29,7 +29,7 @@ export function upgradeUse(t,b){
 export function blueprintLife(id){
  const d=DESIGNS[id],b={...d,id:-1,design:id},activity=residentBuildingAction(b,{work:null},12);
  const utility={well:'提供沿路住宅供水；不安排居民進井內停留。',cleaningYard:'沿路收集住宅與作坊廢棄物；每日結算清運。',firePost:'沿路巡守周邊建物，降低火災風險。'}[id];
- const behavior=utility||(id==='academy'?`${activity}；城市經營時，沿路住戶可持續累積學力，服務涵蓋不等於本人到場。`:d.type==='home'?`${activity}；早晚歇息，夜間安睡。`:d.type==='work'?`${activity}；須有工匠到場及配方原料，才能生產。`:d.type==='shop'?`${activity}；店員到場會招呼客人，商品交易仍須有庫存。`:`${activity}；居民會在午間或傍晚選擇可達場所，不保證每次選中。`);
+ const behavior=utility||(id==='academy'?`${activity}；城市經營時，沿路住戶可持續累積學力，服務涵蓋不等於本人到場。`:d.type==='home'?`${activity}；早晚歇息，夜間安睡。`:d.type==='work'?`${activity}；須有工匠到場及配方原料，才能生產。`:d.type==='shop'?`${activity}；過賣到場會招呼客人，商品交易仍須有庫存。`:`${activity}；居民會在午間或傍晚選擇可達場所，不保證每次選中。`);
  return {activity:utility?'公共服務':activity,behavior,commission:commissionSolution(b)==='tea'?'可解「茶坊小聚」：住處六格內、沿路可達且落成。':commissionSolution(b)==='garden'?'可解「園中歇腳」：住處六格內、沿路可達且落成。':'目前沒有對應的居民委託。'};
 }
 export const blueprintLifeHTML=id=>{const p=blueprintLife(id);return `<dl class="life-preview"><dt>活動</dt><dd>${esc(p.activity)}</dd><dt>居民行為</dt><dd>${esc(p.behavior)}</dd><dt>相關委託</dt><dd>${esc(p.commission)}</dd></dl>`;};

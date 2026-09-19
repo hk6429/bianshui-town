@@ -32,7 +32,7 @@ function throughput(type){const t=new Town();layRoad(t,type,[{x:-1,z:0},{x:0,z:0
 }
 test('avenues carry more same-route traffic through actual movement, without altering building footprints',()=>{
  const narrow=throughput('lane'),wide=throughput('avenue');assert(wide>narrow,`${wide} vs ${narrow}`);console.log(`同11秒、12位行人：小路通過${narrow}人，大路${wide}人`);
- const t=new Town({mode:'managed'});t.place('home',[{x:0,z:0}],true);layRoad(t,'lane',connector);const buildings=JSON.stringify(t.buildings),funds=t.city.treasury;layRoad(t,'avenue',connector);assert.equal(JSON.stringify(t.buildings),buildings);assert.equal(funds-t.city.treasury,75);
+ const t=new Town({mode:'managed'});t.place('home',[{x:0,z:0}],true);layRoad(t,'lane',connector);const buildings=JSON.stringify(t.buildings),funds=t.city.treasury;layRoad(t,'avenue',connector);assert.equal(JSON.stringify(t.buildings),buildings);assert.equal(funds-t.city.treasury,11250);
 });
 test('stranded authors neither jump to a remote road nor collect a work before reconnecting',()=>{
  const t=new Town({mode:'managed'});t.place('home',[{x:0,z:0}],true);layRoad(t,'lane',connector);const a={id:90001,author:AUTHORS[0].id,kind:'author',x:0,z:4,route:[[0,5]],goal:[0,8],walking:true,visible:true,phase:'walking',speed:.95,visits:0,progress:0,wait:0,venue:'街坊'};t.literati.actors=[a];t.literati.nextAt=1e6;

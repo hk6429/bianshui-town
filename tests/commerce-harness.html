@@ -19,8 +19,8 @@ document.querySelector('#run').onclick=()=>{
   const shop=a.buildings.find(b=>b.type==='shop'),[staff,buyer]=a.people;
   for(const q of a.people){q.work=null;q.outside=true;}staff.work=shop.id;staff.current=shop.id;buyer.current=shop.id;buyer.outside=false;
   a.economy.lots[0].good='cloth';transfer(a,'boat',`shop:${shop.id}`,1,'cloth');
-  check(!residentPurchase(a,buyer)&&shop.stock===1,'無店員：保留庫存、不成交');lines.push(shopStatus(a,shop));
-  staff.outside=false;check(residentPurchase(a,buyer)&&shop.stock===0&&a.economy.sold.cloth===1,'店員到場：居民採買一件、庫存減一');lines.push(shopStatus(a,shop));
+  check(!residentPurchase(a,buyer)&&shop.stock===1,'無過賣：保留庫存、不成交');lines.push(shopStatus(a,shop));
+  staff.outside=false;check(residentPurchase(a,buyer)&&shop.stock===0&&a.economy.sold.cloth===1,'過賣到場：居民採買一件、庫存減一');lines.push(shopStatus(a,shop));
   check(!residentPurchase(a,buyer),'冷卻期間不重複採買');
   const restored=Town.restore(a.toJSON());check(restored.people.find(q=>q.id===buyer.id).needsSatisfiedUntil>restored.elapsed,'讀回後保留日用品需求已滿足狀態');
   document.querySelector('#result').textContent=lines.join('\n');

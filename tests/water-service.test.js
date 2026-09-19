@@ -43,15 +43,15 @@ test('water changes housing demand and actual new arrivals without pretending we
 });
 test('well construction and daily upkeep are real charges, tiers and four-cell capacity remain consistent',()=>{
  const t=new Town({mode:'managed'}),money=t.city.treasury,upkeep=dailyUpkeep(t);const w=place(t,'garden',-4,0,'well',squareCells({x:-4,z:0}));
- assert.equal(t.city.treasury,money-400);assert.equal(dailyUpkeep(t)-upkeep,12);assert.equal(waterReport(t).wells[0].capacity,48);
- const balance=t.city.treasury;t.time=24;settleBudget(t);assert.equal(t.city.treasury,balance-13);
- assert(upgradeBuilding(t,w.id));assert.equal(waterReport(t).wells[0].capacity,96);assert.equal(dailyUpkeep(t),25);
+ assert.equal(t.city.treasury,money-60000);assert.equal(dailyUpkeep(t)-upkeep,1800);assert.equal(waterReport(t).wells[0].capacity,48);
+ const balance=t.city.treasury;t.time=24;settleBudget(t);assert.equal(t.city.treasury,balance-1950);
+ assert(upgradeBuilding(t,w.id));assert.equal(waterReport(t).wells[0].capacity,96);assert.equal(dailyUpkeep(t),3750);
  const saved=t.toJSON();assert.deepEqual(Town.restore(saved).toJSON(),saved);
 });
 test('no double supply: overlapping wells report only actual residents and reserved housing seats',()=>{
  const {t,home}=connected();fill(t,home,2);place(t,'garden',1,0,'well');const r=waterReport(t);
  assert.equal(r.served,2);assert.equal(r.wells.reduce((n,w)=>n+w.used,0),2);assert.equal(r.available,0);assert.equal(r.homes.get(home.id).satisfaction,100);
- const before=t.city.treasury;assert(t.place('garden',[{x:-4,z:-3}],false,'well'));assert.equal(t.city.treasury,before-100);assert.equal(waterReport(t).wells.length,2);
+ const before=t.city.treasury;assert(t.place('garden',[{x:-4,z:-3}],false,'well'));assert.equal(t.city.treasury,before-15000);assert.equal(waterReport(t).wells.length,2);
 });
 test('overlapping coverage reallocates flexible households so a constrained household is not starved',()=>{
  const t=new Town(),a=place(t,'home',-4,0,'mansion',squareCells({x:-4,z:0})),b=place(t,'home',-2,0,'mansion',squareCells({x:-2,z:0})),w=place(t,'garden',0,0,'well'),v=place(t,'garden',1,0,'well');

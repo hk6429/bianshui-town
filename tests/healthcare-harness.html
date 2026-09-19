@@ -1,10 +1,10 @@
 <!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>藥鋪醫療驗收</title>
 <style>body{font:18px/1.7 sans-serif;margin:24px;max-width:850px}button,a{padding:12px;margin:5px;display:inline-block}pre{white-space:pre-wrap}</style>
-<h1>藥鋪醫療驗收</h1><p>隔離城市：健康店員、健康20的工匠、相鄰住宅／藥鋪／窯坊。照護按鈕僅推進正式醫療模組；三維小鎮則執行完整排程。</p>
-<button id="heal">照護30秒</button><button id="off">店員離開</button><button id="on">店員到場</button><button id="border">門檻顯示情境</button><button id="save">儲存隔離場景</button><a href="/?storage-test=1">開啟三維隔離小鎮</a><pre id="status"></pre>
+<h1>藥鋪醫療驗收</h1><p>隔離城市：健康過賣、健康20的工匠、相鄰住宅／藥鋪／窯坊。照護按鈕僅推進正式醫療模組；三維小鎮則執行完整排程。</p>
+<button id="heal">照護30秒</button><button id="off">過賣離開</button><button id="on">過賣到場</button><button id="border">門檻顯示情境</button><button id="save">儲存隔離場景</button><a href="/?storage-test=1">開啟三維隔離小鎮</a><pre id="status"></pre>
 <script type="module">
 import {Town} from '/src/simulation.js';import {addResident} from '/src/city-growth.js';import {tickHealthcare,healthcareReport} from '/src/healthcare.js';import {onSickLeave} from '/src/employment.js';import {transfer} from '/src/production.js';
 const t=new Town({mode:'managed'});t.place('home',[{x:0,z:0}],true,'residence');t.place('shop',[{x:1,z:0}],true,'herbShop');t.place('work',[{x:-1,z:0}],true,'kiln');const [home,shop,work]=t.buildings,doctor=addResident(t,home),patient=addResident(t,home);doctor.work=shop.id;doctor.current=shop.id;patient.work=work.id;patient.health=20;transfer(t,'boat',`input:${work.id}`,1,'clay');
-function render(){const r=healthcareReport(t);document.querySelector('#status').textContent=`店員${doctor.outside?'離開':'到場'}；醫療名額 ${r.clinics[0].capacity} 人；正在照護 ${r.assigned.size} 人\n工匠 ${patient.name}：健康 ${patient.health.toFixed(2)}／100；${onSickLeave(t,patient)?'病假休養':'可以返工'}；工作 ${work.name}`;}
+function render(){const r=healthcareReport(t);document.querySelector('#status').textContent=`過賣${doctor.outside?'離開':'到場'}；醫療名額 ${r.clinics[0].capacity} 人；正在照護 ${r.assigned.size} 人\n工匠 ${patient.name}：健康 ${patient.health.toFixed(2)}／100；${onSickLeave(t,patient)?'病假休養':'可以返工'}；工作 ${work.name}`;}
 document.querySelector('#heal').onclick=()=>{tickHealthcare(t,30);render();};document.querySelector('#off').onclick=()=>{doctor.outside=true;render();};document.querySelector('#on').onclick=()=>{doctor.outside=false;render();};document.querySelector('#border').onclick=()=>{patient.health=39.75;doctor.health=30;render();};document.querySelector('#save').onclick=()=>{localStorage.setItem('bianshui-town-test-v1',JSON.stringify(t));document.querySelector('#status').textContent+='\n已儲存隔離場景，正式小鎮未變更。';};render();
 </script></html>

@@ -24,7 +24,7 @@ test('same injected draw yields lower loss with patrol and never deletes buildin
 });
 test('a patrol built during the warning reduces damage, paid warning intervention cancels the incident',()=>{
  const {t,b}=workTown();warn(t);build(t,'garden',1,0,'firePost');t.elapsed=30;tickFire(t);assert.equal(b.fireDamage,12);
- const c=workTown();warn(c.t);const money=c.t.city.treasury;assert(repairFire(c.t,c.b.id));assert.equal(c.t.city.treasury,money-20);c.t.elapsed=60;tickFire(c.t);assert(!damaged(c.b));assert.equal(c.b.fireWarningAt,undefined);
+ const c=workTown();warn(c.t);const money=c.t.city.treasury;assert(repairFire(c.t,c.b.id));assert.equal(c.t.city.treasury,money-3000);c.t.elapsed=60;tickFire(c.t);assert(!damaged(c.b));assert.equal(c.b.fireWarningAt,undefined);
 });
 test('damage stops actual production and sales; free countdown repair resumes them even with no funds',()=>{
  const {t,b}=workTown(),home=build(t,'home',-1,0,'residence');for(let i=0;i<4;i++){const p=addResident(t,home);p.work=b.id;p.current=b.id;p.outside=false;}

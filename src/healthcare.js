@@ -29,7 +29,7 @@ export function tickHealthcare(t,dt){
 }
 export function healthcareStatus(t,b){
  if(b.design!=='herbShop')return '';
- if(b.stage<3)return '藥鋪落成、營業且有健康店員到場後才能提供醫療。';
+ if(b.stage<3)return '藥鋪落成、營業且有健康過賣到場後才能提供醫療。';
  const r=healthcareReport(t),c=r.clinics.find(c=>c.id===b.id);
- return `${managed(t)?'社區醫療':'自由營造僅顯示覆蓋，不結算健康與病假'}：到場店員 ${c.staff} 人，同時照護 ${c.patients}／${c.capacity} 人；依住家沿路 ${c.range} 步內分配，優先健康較差者。受照護者每30遊戲秒回復8點健康，休業或店員離開立即停止；健康未滿40者請假，回到40後返工。`;
+ return `${managed(t)?'社區醫療':'自由營造僅顯示覆蓋，不結算健康與病假'}：到場過賣 ${c.staff} 人，同時照護 ${c.patients}／${c.capacity} 人；依住家沿路 ${c.range} 步內分配，優先健康較差者。受照護者每30遊戲秒回復8點健康，休業或過賣離開立即停止；健康未滿40者請假，回到40後返工。`;
 }

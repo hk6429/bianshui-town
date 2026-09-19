@@ -10,9 +10,9 @@ export const SOURCES={
 };
 export const DESIGNS={
  ...NEW_DESIGNS,
- firePost:{name:'街坊巡守所',largeName:'四方巡守院',type:'garden',variant:0,mark:'防',sizes:[1,4],source:null,detail:'望火樓、警鐘與水桶架；每級巡守8處（一格）或32處（四格），沿路24步起，每級加4步；降低火警機率與損害。每格100文，維護3文乘級數。'},
- cleaningYard:{name:'街坊清運院',largeName:'四方清運總院',type:'garden',variant:0,mark:'淨',sizes:[1,4],source:null,detail:'清運車、分類桶與堆置棚；每日一格每級處理12份、四格48份，沿路24步起，每級加4步。人口與作坊產出髒污，欠款降低服務。每格建設100文、維護3文乘級數。'},
- well:{name:'街坊水井',largeName:'四方井院',type:'garden',variant:0,mark:'井',sizes:[1,4],source:null,detail:'轆轤、井欄與汲水桶；一格每級供水12人、四格48人，沿路24步內供應住宅，每升一級增加4步。建設每格100文，每日每格3文乘級數。'},
+ firePost:{name:'軍巡鋪',largeName:'四方軍巡總鋪',type:'garden',variant:0,mark:'防',sizes:[1,4],source:null,detail:'望火樓、警鐘與水桶架；每級巡守8處（一格）或32處（四格），沿路24步起，每級加4步；降低火警機率與損害。每格 15 貫，維護 450 文乘級數。'},
+ cleaningYard:{name:'街道司',largeName:'四方街道總司',type:'garden',variant:0,mark:'淨',sizes:[1,4],source:null,detail:'清運車、分類桶與堆置棚；每日一格每級處理12份、四格48份，沿路24步起，每級加4步。人口與作坊產出髒污，欠款降低服務。每格建設 15 貫、維護 450 文乘級數。'},
+ well:{name:'街坊水井',largeName:'四方井院',type:'garden',variant:0,mark:'井',sizes:[1,4],source:null,detail:'轆轤、井欄與汲水桶；一格每級供水12人、四格48人，沿路24步內供應住宅，每升一級增加4步。建設每格 15 貫，每日每格 450 文乘級數。'},
  wazi:{name:'街巷說書棚',largeName:'瓦舍勾欄',type:'garden',variant:0,mark:'說',sizes:[1,4],source:'wazi',detail:'說書臺、篷頂與聽眾長凳；四格成帶圍廊的瓦舍勾欄，定期聚眾聽書。'},
  orchard:{name:'桑柳果圃',largeName:'桑柳田園',type:'garden',variant:0,mark:'圃',sizes:[1,4],source:null,detail:'果樹、竹籬與田間小徑；四格增添水渠與農舍，屬田園意象設計。'},
  scholarGarden:{name:'曲水疊石園',type:'garden',variant:0,mark:'景',sizes:[4],source:null,detail:'四格花園合成曲水、疊石、亭榭與花木的完整園景。'},
@@ -25,7 +25,7 @@ export const DESIGNS={
  kilnHall:{name:'瓷窯大院',type:'work',variant:0,mark:'窯',sizes:[4],source:null,detail:'四格雙窯、晾坯庭與倉房；可容六名工匠，加工速度兩倍。'},
  woodshopHall:{name:'木作營造院',type:'work',variant:1,mark:'木',sizes:[4],source:null,detail:'四格木作大廳、堆料場與鋸架；可容六名工匠，加工速度兩倍。'},
  weaveryHall:{name:'織錦大院',type:'work',variant:2,mark:'錦',sizes:[4],source:null,detail:'四格織機廳、染布架與曬場；可容六名工匠，加工速度兩倍。'},
- garden:{name:'百花公園',type:'garden',variant:0,mark:'園',sizes:[1,4],source:null,detail:'公共花圃、石徑與歇腳長椅；四格為中央花壇大花園。'},
+ garden:{name:'百花園圃',type:'garden',variant:0,mark:'園',sizes:[1,4],source:null,detail:'公共花圃、石徑與歇腳長椅；四格為中央花壇大花園。'},
 
  tea:{name:'臨街茶坊',type:'shop',variant:0,mark:'茶',sizes:[1,4],source:'city',detail:'開敞茶棚、圓桌與矮凳；四格變成環廊茶院。'},
  food:{name:'炊煙食肆',type:'shop',variant:1,mark:'食',sizes:[1,4],source:'city',detail:'高灶煙囪、蒸籠與暖色雨棚；四格擴為前店後廚。'},

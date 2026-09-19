@@ -6,7 +6,7 @@
 <script type="module">
 import {Town} from '/src/simulation.js';import {layRoad,removeRoad} from '/src/urban.js';import {publicAccess} from '/src/road-network.js';import {prepareTraffic} from '/src/traffic.js';
 const t=new Town({mode:'managed'});t.place('home',[{x:0,z:0}],true);const b=t.buildings[0],cells=[{x:0,z:1},{x:0,z:2},{x:1,z:2}];
-function render(){document.querySelector('#status').textContent=`住宅${publicAccess(t,b)?'已接通河岸貨棧':'未接外路，移入暫停'}；金庫 ${t.city.treasury} 文；玩家道路 ${t.publicWorks.length} 格。`;
+function render(){document.querySelector('#status').textContent=`住宅${publicAccess(t,b)?'已接通河岸貨棧':'未接外路，移入暫停'}；鎮庫 ${t.city.treasury} 文；玩家道路 ${t.publicWorks.length} 格。`;
  const svg=document.querySelector('#map');svg.replaceChildren();for(const k of t.roads){const [x,z]=k.split(',').map(Number);if(x<-3||x>17||z<-3||z>11)continue;const q=document.createElementNS('http://www.w3.org/2000/svg','rect');for(const [key,value]of Object.entries({x:(x+3)*30,y:(z+3)*27,width:22,height:20,fill:'#9c9784'}))q.setAttribute(key,value);svg.append(q);}
  const home=document.createElementNS('http://www.w3.org/2000/svg','rect');for(const [key,value]of Object.entries({x:42,y:36,width:105,height:90,fill:publicAccess(t,b)?'#47775b':'#bb664c'}))home.setAttribute(key,value);svg.append(home);}
 document.querySelector('#connect').onclick=()=>{layRoad(t,'lane',cells);render();};document.querySelector('#cut').onclick=()=>{removeRoad(t,[cells[0]]);render();};document.querySelector('#restore').onclick=()=>{layRoad(t,'lane',[cells[0]]);render();};

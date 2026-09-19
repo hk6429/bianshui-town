@@ -4,7 +4,7 @@ export const TIER_NAMES=['初築','添彩','華庭','重簷','盛景'];
 export const TIER_DETAILS=['保留原有建築樣式','增加用途專屬設施','擴充工序或庭院','形成特色附屬建築','完成各類建築的專屬地標'];
 
 // All gameplay tier values live here; legacy level/footprint still determine the base.
-export const BUILDING_UPKEEP={home:2,shop:4,work:6,garden:3};
+export const BUILDING_UPKEEP={home:300,shop:600,work:900,garden:450};
 export const TIER_RULES=Object.freeze(Array.from({length:5},(_,i)=>Object.freeze({
  homeExtra:i,largeHomeExtra:i*2,production:1+i*.25,shopJobs:2+i,
  saleSeconds:12-i*2,retail:4+i*2,largeRetail:12+i*4,serviceFactor:i+1,serviceRange:24+i*4,
@@ -30,7 +30,7 @@ export function buildingAbility(b){
  const s=buildingStats(b);
  if(b.type==='home')return `住宅容量 ${s.housing} 人`;
  if(b.type==='work')return `工匠 ${s.jobs} 席，滿員加工 ${s.production} 倍`;
- if(b.type==='shop')return `店員名額 ${s.jobs} 席，每店員每 ${s.saleSeconds} 秒售一件${b.design==='herbShop'?`，每店員照護 ${s.carePerWorker} 人／${s.range} 步`:''}`;
+ if(b.type==='shop')return `過賣名額 ${s.jobs} 席，每過賣每 ${s.saleSeconds} 秒售一件${b.design==='herbShop'?`，每過賣照護 ${s.carePerWorker} 人／${s.range} 步`:''}`;
  if(b.design==='well')return `供水 ${s.water} 人／${s.range} 步`;
  if(b.design==='cleaningYard')return `每日清運 ${s.cleaning} 份／${s.range} 步`;
  if(b.design==='firePost')return `巡守 ${s.patrol} 處／${s.range} 步`;

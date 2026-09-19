@@ -58,6 +58,6 @@ test('overlapping yards share capacity without leaving avoidable waste in a sing
  a.waste=12;b.waste=12;day(t);assert.equal(a.waste,0);assert.equal(b.waste,0);
 });
 test('settling several days counts only consecutive actual deficit days, not earlier solvent days',()=>{
- const {t}=home(0);t.city.taxRate=0;t.city.treasury=6; // upkeep: home 2 + starter road 1
- t.time+=24*3;settleBudget(t);assert.equal(t.city.treasury,-3);assert.equal(t.city.deficitDays,1);assert.equal(serviceEfficiency(t),.75);
+ const {t}=home(0);t.city.taxRate=0;t.city.treasury=900; // upkeep: home 300 + starter road 150
+ t.time+=24*3;settleBudget(t);assert.equal(t.city.treasury,-450);assert.equal(t.city.deficitDays,1);assert.equal(serviceEfficiency(t),.75);
 });

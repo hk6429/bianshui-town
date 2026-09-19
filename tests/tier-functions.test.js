@@ -6,7 +6,7 @@ import {tickProduction,transfer} from '../src/production.js';import {waterReport
 import {cleaningCapacity} from '../src/sanitation.js';import {patrolCapacity} from '../src/fire-service.js';import {educationCapacity} from '../src/education.js';
 const place=(t,type,x,z,design)=>{assert(t.place(type,[{x,z}],true,design));return t.buildings.at(-1);};
 test('every design and footprint has growing tier ability/upkeep, preview matches applied upgrade, and no sixth tier charges',()=>{
- for(const [design,d]of Object.entries(DESIGNS))for(const size of d.sizes){const t=new Town({mode:'managed'});t.city.treasury=100000;assert(t.place(d.type,size===4?squareCells({x:0,z:0}):[{x:0,z:0}],true,design));const b=t.buildings[0];
+ for(const [design,d]of Object.entries(DESIGNS))for(const size of d.sizes){const t=new Town({mode:'managed'});t.city.treasury=100000000;assert(t.place(d.type,size===4?squareCells({x:0,z:0}):[{x:0,z:0}],true,design));const b=t.buildings[0];
   for(let tier=1;tier<5;tier++){const before=buildingStats(b),preview=upgradePreview(b),balance=t.city.treasury,cost=upgradeCost(b),daily=dailyUpkeep(t);assert(upgradeBuilding(t,b.id));assert.deepEqual(buildingStats(b),buildingStats(preview));assert.equal(buildingAbility(b),buildingAbility(preview));assert.equal(t.city.treasury,balance-cost);assert(dailyUpkeep(t)>daily);const after=buildingStats(b);assert(after.upkeep>before.upkeep);const metric={home:'housing',work:'production',shop:'jobs',garden:'range'}[b.type];assert(after[metric]>before[metric],`${design} tier ${tier+1}`);}
   const saved=JSON.stringify(t.toJSON());assert.equal(upgradePreview(b),null);assert.equal(upgradeBuilding(t,b.id),false);assert.equal(JSON.stringify(t.toJSON()),saved);
  }
