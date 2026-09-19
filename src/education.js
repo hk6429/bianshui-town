@@ -3,13 +3,14 @@ import {buildingStats} from './building-tiers.js';
 import {managed} from './city-finance.js';
 import {serviceEfficiency} from './public-services.js';
 import {damaged} from './fire-service.js';
+import {SCHOOL_FACTOR,isSchool} from './heritage.js';
 
 export const MAX_EDUCATION=100,EDUCATION_PER_DAY=10,GAME_DAY_SECONDS=360;
 export const educationOf=p=>Math.min(MAX_EDUCATION,Math.max(0,p.education??0));
 export const educationRange=b=>buildingStats(b).range;
-export const educationCapacity=(t,b)=>b.design==='academy'&&b.stage>=3&&!damaged(b)?Math.floor(buildingStats(b).education*serviceEfficiency(t)):0;
+export const educationCapacity=(t,b)=>isSchool(b)&&b.stage>=3&&!damaged(b)?Math.floor(buildingStats(b).education*SCHOOL_FACTOR[b.design]*serviceEfficiency(t)):0;
 export function educationReport(t){
- const academies=t.buildings.filter(b=>b.design==='academy'&&b.stage>=3).sort((a,b)=>a.id-b.id);
+ const academies=t.buildings.filter(b=>isSchool(b)&&b.stage>=3).sort((a,b)=>a.id-b.id);
  const capacities=new Map(academies.map(b=>[b.id,educationCapacity(t,b)])),usage=new Map(academies.map(b=>[b.id,[]]));
  const learners=t.people.filter(p=>t.building(p.home)?.stage>=3&&!onSickLeave(t,p)&&educationOf(p)<MAX_EDUCATION).sort((a,b)=>educationOf(a)-educationOf(b)||a.id-b.id);
  const options=new Map(learners.map(p=>[p.id,academies.map(b=>({b,distance:commuteDistance(t,p,b)})).filter(x=>capacities.get(x.b.id)>0&&x.distance<=educationRange(x.b)).sort((a,b)=>a.distance-b.distance||a.b.id-b.b.id).map(x=>x.b)]));
@@ -36,8 +37,8 @@ export function craftEducationMultiplier(t,b){
  return workers.length?1+workers.reduce((sum,p)=>sum+educationOf(p),0)/workers.length/MAX_EDUCATION*.2:1;
 }
 export function educationStatus(t,b){
- if(b.design!=='academy')return '';
+ if(!isSchool(b))return '';
  const c=educationReport(t).academies.find(c=>c.id===b.id);
- if(!c)return '書院落成後，開始為沿路可達的住戶提供教育。';
+ if(!c)return '學堂落成後，開始為沿路可達的住戶提供教育。';
  return `${managed(t)?'街坊教育':'自由營造僅顯示覆蓋，不累積學力'}：受教 ${c.learners}／${c.capacity} 人，住家沿路 ${c.range} 步內可涵蓋；優先學力較低者，病假暫停。持續受教一遊戲日增加10點，最高100點；道路中斷、書院受損或拆除即停止累積，既有學力保留。到場工匠平均學力每10點提高2％產能，上限20％。`;
 }

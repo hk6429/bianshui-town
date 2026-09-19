@@ -1,4 +1,4 @@
-import {bounds,TYPES} from './grid-rules.js';
+import {townBounds,TYPES} from './grid-rules.js';
 import {DESIGNS,isSquare} from './heritage.js';
 const at=c=>`X ${c.x}、Z ${c.z}`;
 export const AUTO_DESIGNS={home:['bambooHome','terraceHome','plumHome'],shop:['tea','food','textile'],work:['dragonKiln','timberYard','dyeHouse']};
@@ -7,8 +7,9 @@ export function placementIssue(t,cells,{max=4,connected=true,ignore=null,allowRo
  if(cells.length>max)return `本次最多${max}格`;
  if(cells.some(c=>!Number.isInteger(c.x)||!Number.isInteger(c.z)))return '占地必須對齊完整格點';
  if(new Set(cells.map(c=>`${c.x},${c.z}`)).size!==cells.length)return '占地含有重複格點';
- const outside=cells.find(c=>c.x<bounds.minX||c.x>bounds.maxX||c.z<bounds.minZ||c.z>bounds.maxZ);
- if(outside)return `${at(outside)} 超出可營造範圍`;
+ const limit=townBounds(t);
+ const outside=cells.find(c=>c.x<limit.minX||c.x>limit.maxX||c.z<limit.minZ||c.z>limit.maxZ);
+ if(outside)return `${at(outside)} 超出目前的鎮界；可在鎮庫視窗買地擴城`;
  if(connected){const seen=new Set([0]);for(let n=0;n<cells.length;n++)for(let i=0;i<cells.length;i++)if([...seen].some(j=>Math.abs(cells[i].x-cells[j].x)+Math.abs(cells[i].z-cells[j].z)===1))seen.add(i);if(seen.size!==cells.length)return '占地須以邊相連，不能只接角或分散';}
  for(const c of cells){const b=t.buildings.find(b=>b.id!==ignore&&(b.footprint||[{x:b.x,z:b.z}]).some(p=>p.x===c.x&&p.z===c.z));if(b)return `${at(c)} 已有「${b.name}」`;if(!allowRoad&&t.publicWorks.some(p=>p.x===c.x&&p.z===c.z))return `${at(c)} 已有道路，請先移除道路`;}
  return null;

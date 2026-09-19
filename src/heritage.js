@@ -10,31 +10,51 @@ export const SOURCES={
 };
 export const DESIGNS={
  ...NEW_DESIGNS,
- firePost:{name:'軍巡鋪',largeName:'四方軍巡總鋪',type:'garden',variant:0,mark:'防',sizes:[1,4],source:null,detail:'望火樓、警鐘與水桶架；每級巡守8處（一格）或32處（四格），沿路24步起，每級加4步；降低火警機率與損害。每格 15 貫，維護 450 文乘級數。'},
- cleaningYard:{name:'街道司',largeName:'四方街道總司',type:'garden',variant:0,mark:'淨',sizes:[1,4],source:null,detail:'清運車、分類桶與堆置棚；每日一格每級處理12份、四格48份，沿路24步起，每級加4步。人口與作坊產出髒污，欠款降低服務。每格建設 15 貫、維護 450 文乘級數。'},
- well:{name:'街坊水井',largeName:'四方井院',type:'garden',variant:0,mark:'井',sizes:[1,4],source:null,detail:'轆轤、井欄與汲水桶；一格每級供水12人、四格48人，沿路24步內供應住宅，每升一級增加4步。建設每格 15 貫，每日每格 450 文乘級數。'},
- wazi:{name:'街巷說書棚',largeName:'瓦舍勾欄',type:'garden',variant:0,mark:'說',sizes:[1,4],source:'wazi',detail:'說書臺、篷頂與聽眾長凳；四格成帶圍廊的瓦舍勾欄，定期聚眾聽書。'},
- orchard:{name:'桑柳果圃',largeName:'桑柳田園',type:'garden',variant:0,mark:'圃',sizes:[1,4],source:null,detail:'果樹、竹籬與田間小徑；四格增添水渠與農舍，屬田園意象設計。'},
- scholarGarden:{name:'曲水疊石園',type:'garden',variant:0,mark:'景',sizes:[4],source:null,detail:'四格花園合成曲水、疊石、亭榭與花木的完整園景。'},
+ // 文教：村塾→鎮學→書院三層，教育名額逐層增加。
+ villageSchool:{cat:'school',name:'村塾',type:'garden',variant:0,mark:'塾',sizes:[1],cost:12000,source:null,detail:'一格村塾：一位塾師、一間講堂與幾張矮案。教育名額為書院的一半，沿路覆蓋較短，是小鎮最早能負擔的文教設施。每格 12 貫。'},
+ townSchool:{cat:'school',name:'鎮學',type:'garden',variant:0,mark:'學',sizes:[1,4],cost:21000,source:null,detail:'鎮學：講堂、齋舍與小庭；教育名額為書院的四分之三，四格再加廊房與射圃。每格 21 貫。'},
+ // 公設：宋代鎮級沒有「市政廳」，只設監鎮官與其屬務。
+ townOffice:{cat:'civic',name:'監鎮廨',type:'garden',variant:0,mark:'監',sizes:[4],cost:22500,source:null,detail:'四格監鎮廨：監鎮官治事的廳事、耳房與影壁。落成後開啟鎮政議事（戶曹、工曹、巡檢、教諭、醫官、里正六位僚屬回報鎮務），並且是「置鎮」里程碑的必要條件。每格 22 貫 500 文。'},
+ taxOffice:{cat:'civic',name:'商稅務',type:'garden',variant:0,mark:'稅',sizes:[1],cost:30000,source:null,detail:'商稅務：宋制過稅二分、住稅三分。落成後每筆成交額外抽二分過稅入鎮庫，是鎮級最穩定的稅源。每格 30 貫。'},
+ wineOffice:{cat:'civic',name:'酒務',type:'garden',variant:0,mark:'酒',sizes:[1],cost:30000,source:null,detail:'酒務：官榷酒麴，按鎮上酒樓與食肆數目每日抽榷酤錢。酒樓、食肆越多，這筆收入越可觀。每格 30 貫。'},
+ postStation:{cat:'civic',name:'遞鋪',type:'garden',variant:0,mark:'遞',sizes:[1],cost:18000,source:null,detail:'遞鋪：遞夫換馬傳送文書。朝廷升格的詔書由遞鋪送到，是「奉旨升縣」里程碑的必要條件。每格 18 貫。'},
+ // 祠廟：不供應服務，但安一方人心，與園景同樣提高宜居。
+ earthShrine:{cat:'shrine',name:'土地廟',type:'garden',variant:0,mark:'社',sizes:[1],cost:12000,source:null,detail:'一格土地廟：小殿、香爐與老樹。街坊四時祭社，提供與園景同樣的宜居加成。每格 12 貫。'},
+ cityGodTemple:{cat:'shrine',name:'城隍廟',type:'garden',variant:0,mark:'城',sizes:[4],cost:18000,source:null,detail:'四格城隍廟：山門、戲臺與正殿。廟會時人聲鼎沸，宜居加成高於一般園景。每格 18 貫。'},
+ // 水運：汴河邊的營生。
+ dock:{cat:'water',name:'河津碼頭',type:'garden',variant:0,mark:'津',sizes:[1,4],cost:24000,source:null,detail:'碼頭棧橋與起卸架：落成後腳夫每趟多搬一件，四格再多一件。汴河冬季閉口期間停用。每格 24 貫。'},
+ granary:{cat:'water',name:'義倉',type:'garden',variant:0,mark:'倉',sizes:[1,4],cost:21000,source:null,detail:'義倉：豐年納穀、凶年賑濟。每處儲糧可抵銷一次災害的損失，汴水漲與時疫都靠它緩衝。每格 21 貫。'},
+ watermill:{cat:'water',name:'水碾磨',type:'garden',variant:0,mark:'碾',sizes:[1],cost:27000,source:null,detail:'臨渠水輪帶動碾磨：沿路範圍內的作坊加工速度提高一成。每格 27 貫。'},
+ firePost:{cat:'civic',name:'軍巡鋪',largeName:'四方軍巡總鋪',type:'garden',variant:0,mark:'防',sizes:[1,4],source:null,detail:'望火樓、警鐘與水桶架；每級巡守8處（一格）或32處（四格），沿路24步起，每級加4步；降低火警機率與損害。每格 15 貫，維護 450 文乘級數。'},
+ cleaningYard:{cat:'civic',name:'街道司',largeName:'四方街道總司',type:'garden',variant:0,mark:'淨',sizes:[1,4],source:null,detail:'清運車、分類桶與堆置棚；每日一格每級處理12份、四格48份，沿路24步起，每級加4步。人口與作坊產出髒污，欠款降低服務。每格建設 15 貫、維護 450 文乘級數。'},
+ well:{cat:'civic',name:'街坊水井',largeName:'四方井院',type:'garden',variant:0,mark:'井',sizes:[1,4],source:null,detail:'轆轤、井欄與汲水桶；一格每級供水12人、四格48人，沿路24步內供應住宅，每升一級增加4步。建設每格 15 貫，每日每格 450 文乘級數。'},
+ wazi:{cat:'shop',name:'街巷說書棚',largeName:'瓦舍勾欄',type:'garden',variant:0,mark:'說',sizes:[1,4],source:'wazi',detail:'說書臺、篷頂與聽眾長凳；四格成帶圍廊的瓦舍勾欄，定期聚眾聽書。'},
+ orchard:{cat:'garden',name:'桑柳果圃',largeName:'桑柳田園',type:'garden',variant:0,mark:'圃',sizes:[1,4],source:null,detail:'果樹、竹籬與田間小徑；四格增添水渠與農舍，屬田園意象設計。'},
+ scholarGarden:{cat:'garden',name:'曲水疊石園',type:'garden',variant:0,mark:'景',sizes:[4],source:null,detail:'四格花園合成曲水、疊石、亭榭與花木的完整園景。'},
 
- residence:{name:'雅居小樓',type:'home',variant:0,mark:'居',sizes:[1],source:null,detail:'雙層民居、木欄與花窗；可住四人。'},
- mansion:{name:'四合雅宅',type:'home',variant:0,mark:'宅',sizes:[4],source:null,detail:'四格特殊民居，正廳與雙翼廂房圍合花木中庭；可住八人。'},
- kiln:{name:'精製窯坊',type:'work',variant:0,mark:'陶',sizes:[1],source:null,detail:'窯爐、煙囪與晾坯架；陶器加工加快。'},
- woodshop:{name:'精製木作坊',type:'work',variant:1,mark:'木',sizes:[1],source:null,detail:'鋸木棚、堆料與長工作檯；木器加工加快。'},
- weavery:{name:'精製織坊',type:'work',variant:2,mark:'織',sizes:[1],source:null,detail:'織機、彩線與曬布架；布匹加工加快。'},
- kilnHall:{name:'瓷窯大院',type:'work',variant:0,mark:'窯',sizes:[4],source:null,detail:'四格雙窯、晾坯庭與倉房；可容六名工匠，加工速度兩倍。'},
- woodshopHall:{name:'木作營造院',type:'work',variant:1,mark:'木',sizes:[4],source:null,detail:'四格木作大廳、堆料場與鋸架；可容六名工匠，加工速度兩倍。'},
- weaveryHall:{name:'織錦大院',type:'work',variant:2,mark:'錦',sizes:[4],source:null,detail:'四格織機廳、染布架與曬場；可容六名工匠，加工速度兩倍。'},
- garden:{name:'百花園圃',type:'garden',variant:0,mark:'園',sizes:[1,4],source:null,detail:'公共花圃、石徑與歇腳長椅；四格為中央花壇大花園。'},
+ residence:{cat:'home',name:'雅居小樓',type:'home',variant:0,mark:'居',sizes:[1],source:null,detail:'雙層民居、木欄與花窗；可住四人。'},
+ mansion:{cat:'home',name:'四合雅宅',type:'home',variant:0,mark:'宅',sizes:[4],source:null,detail:'四格特殊民居，正廳與雙翼廂房圍合花木中庭；可住八人。'},
+ kiln:{cat:'work',name:'精製窯坊',type:'work',variant:0,mark:'陶',sizes:[1],source:null,detail:'窯爐、煙囪與晾坯架；陶器加工加快。'},
+ woodshop:{cat:'work',name:'精製木作坊',type:'work',variant:1,mark:'木',sizes:[1],source:null,detail:'鋸木棚、堆料與長工作檯；木器加工加快。'},
+ weavery:{cat:'work',name:'精製織坊',type:'work',variant:2,mark:'織',sizes:[1],source:null,detail:'織機、彩線與曬布架；布匹加工加快。'},
+ kilnHall:{cat:'work',name:'瓷窯大院',type:'work',variant:0,mark:'窯',sizes:[4],source:null,detail:'四格雙窯、晾坯庭與倉房；可容六名工匠，加工速度兩倍。'},
+ woodshopHall:{cat:'work',name:'木作營造院',type:'work',variant:1,mark:'木',sizes:[4],source:null,detail:'四格木作大廳、堆料場與鋸架；可容六名工匠，加工速度兩倍。'},
+ weaveryHall:{cat:'work',name:'織錦大院',type:'work',variant:2,mark:'錦',sizes:[4],source:null,detail:'四格織機廳、染布架與曬場；可容六名工匠，加工速度兩倍。'},
+ garden:{cat:'garden',name:'百花園圃',type:'garden',variant:0,mark:'園',sizes:[1,4],source:null,detail:'公共花圃、石徑與歇腳長椅；四格為中央花壇大花園。'},
 
- tea:{name:'臨街茶坊',type:'shop',variant:0,mark:'茶',sizes:[1,4],source:'city',detail:'開敞茶棚、圓桌與矮凳；四格變成環廊茶院。'},
- food:{name:'炊煙食肆',type:'shop',variant:1,mark:'食',sizes:[1,4],source:'city',detail:'高灶煙囪、蒸籠與暖色雨棚；四格擴為前店後廚。'},
- textile:{name:'錦色布莊',type:'shop',variant:2,mark:'布',sizes:[1,4],source:'city',detail:'高挑倉閣、彩布垂簾與布架；四格成為雙翼布行。'},
- wine:{name:'夢華酒樓',type:'shop',variant:1,mark:'酒',sizes:[4],source:'city',detail:'四格合院、雙層樓閣、綵樓歡門與酒甕。'},
- academy:{name:'方塘書院',type:'garden',variant:0,mark:'書',sizes:[4],source:'academy',detail:'講堂、兩側廊房、中央方塘；每級提供8個街坊教育名額，學力逐日累積並小幅提升工匠產能。'},
- pavilion:{name:'臨泉亭',type:'garden',variant:0,mark:'亭',sizes:[1,4],source:'pavilion',detail:'開敞六角亭、石徑與泉池；四格增添迴廊與樹蔭。'},
- pond:{name:'小荷池塘',type:'garden',variant:0,mark:'荷',sizes:[1,4],source:'pond',detail:'挖出池床，注水後長出荷葉、荷花；蜻蜓在池面盤旋。'}
+ tea:{cat:'shop',name:'臨街茶坊',type:'shop',variant:0,mark:'茶',sizes:[1,4],source:'city',detail:'開敞茶棚、圓桌與矮凳；四格變成環廊茶院。'},
+ food:{cat:'shop',name:'炊煙食肆',type:'shop',variant:1,mark:'食',sizes:[1,4],source:'city',detail:'高灶煙囪、蒸籠與暖色雨棚；四格擴為前店後廚。'},
+ textile:{cat:'shop',name:'錦色布莊',type:'shop',variant:2,mark:'布',sizes:[1,4],source:'city',detail:'高挑倉閣、彩布垂簾與布架；四格成為雙翼布行。'},
+ wine:{cat:'shop',name:'夢華酒樓',type:'shop',variant:1,mark:'酒',sizes:[4],source:'city',detail:'四格合院、雙層樓閣、綵樓歡門與酒甕。'},
+ academy:{cat:'school',name:'方塘書院',type:'garden',variant:0,mark:'書',sizes:[4],source:'academy',detail:'講堂、兩側廊房、中央方塘；每級提供8個街坊教育名額，學力逐日累積並小幅提升工匠產能。'},
+ pavilion:{cat:'garden',name:'臨泉亭',type:'garden',variant:0,mark:'亭',sizes:[1,4],source:'pavilion',detail:'開敞六角亭、石徑與泉池；四格增添迴廊與樹蔭。'},
+ pond:{cat:'garden',name:'小荷池塘',type:'garden',variant:0,mark:'荷',sizes:[1,4],source:'pond',detail:'挖出池床，注水後長出荷葉、荷花；蜻蜓在池面盤旋。'}
 };
+// 文教三層：名額倍率依村塾→鎮學→書院遞增。
+export const SCHOOL_FACTOR={villageSchool:.5,townSchool:.75,academy:1};
+export const isSchool=b=>!!SCHOOL_FACTOR[b?.design];
+export const categoryOf=b=>DESIGNS[designFor(b)]?.cat||b.type||'garden';
+export const designCategory=id=>DESIGNS[id]?.cat||DESIGNS[id]?.type||'garden';
 export const designFor=b=>b.design|| (b.type==='shop'?['tea','food','textile'][b.variant]:null);
 export function squareCells(c){return [{x:c.x,z:c.z},{x:c.x+1,z:c.z},{x:c.x,z:c.z+1},{x:c.x+1,z:c.z+1}];}
 export function isSquare(cells){return cells.length===4&&new Set(cells.map(c=>`${c.x},${c.z}`)).size===4&&Math.max(...cells.map(c=>c.x))-Math.min(...cells.map(c=>c.x))===1&&Math.max(...cells.map(c=>c.z))-Math.min(...cells.map(c=>c.z))===1;}

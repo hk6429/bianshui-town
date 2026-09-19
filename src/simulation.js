@@ -2,7 +2,7 @@ import {residentBuildingAction} from './building-life.js';
 import {createJourney} from './journey.js';
 import {placementIssue,constructionPlan} from './construction-plan.js';
 import {TYPES} from './grid-rules.js';
-export {bounds,TYPES} from './grid-rules.js';
+export {bounds,TYPES,townBounds,MAX_CELLS} from './grid-rules.js';
 import {tickPollution} from './pollution.js';
 import {tickEducation} from './education.js';
 import {STARTER_ROAD,roadAnchor} from './road-network.js';
@@ -75,7 +75,7 @@ export class Town {
   if(!TYPES[type]||!this.canPlace(cells))return null;
   const plan=constructionPlan(type,cells,design,this.nextId);if(plan.reason)return null;
   const {spec,combined}=plan;design=plan.design;
-  if(!charge(this,buildCost(type,cells),'建設'))return null;
+  if(!charge(this,buildCost(type,cells,plan.design),'建設'))return null;
   const block={id:this.nextId++,type,combined,cells:cells.map(c=>({...c}))};this.blocks.push(block);
   for(const planned of plan.buildings){const id=this.nextId++;this.buildings.push({...planned,id,blockId:block.id,tier:1,level:spec&&['home','work'].includes(type)?2:1,born:ready?this.elapsed-100:this.elapsed,variant:spec?spec.variant:id%3,stage:ready?4:0,entrance:null});}
   const merged=type==='garden'?mergeGardens(this):null;syncCargo(this);this.rebuildRoads();this.revision++;this.log(`一處${combined?'四格合建的':cells.length===1?'新':cells.length+'間相連的'}${TYPES[type]}${ready?'已落成':'開始動工'}`);
@@ -92,7 +92,7 @@ export class Town {
    const queue=[...loop],parent=new Map(queue.map(k=>[k,null]));let hit=null;
    for(let i=0;i<queue.length&&!hit;i++){
     const k=queue[i];if(connected.has(k)){hit=k;break;}const [x,z]=point(k);
-    for(const [dx,dz] of dirs){const nx=x+dx,nz=z+dz,n=key(nx,nz);if(nx<-34||nx>12||nz<-26||nz>26||parent.has(n)||this.isInterior(nx,nz))continue;parent.set(n,k);queue.push(n);}
+    for(const [dx,dz] of dirs){const nx=x+dx,nz=z+dz,n=key(nx,nz);if(nx<-62||nx>12||nz<-42||nz>42||parent.has(n)||this.isInterior(nx,nz))continue;parent.set(n,k);queue.push(n);}
    }
    if(hit)for(let p=hit;p!==null;p=parent.get(p)){this.roads.add(p);connected.add(p);}
    for(const k of loop)connected.add(k);
@@ -188,7 +188,7 @@ export class Town {
  static restore(data){
   data=validateSave(data);
   if(![1,2,3,4,5,6,7,8,9,10].includes(data?.version)||!Array.isArray(data.blocks)||!Array.isArray(data.buildings)||!Array.isArray(data.people)||!Array.isArray(data.carts))throw new Error('存檔格式不相容');
-  if(data.buildings.length>143||!Number.isFinite(data.time)||!Number.isFinite(data.elapsed))throw new Error('存檔內容無效');
+  if(data.buildings.length>323||!Number.isFinite(data.time)||!Number.isFinite(data.elapsed))throw new Error('存檔內容無效');
   if(data.city&&(data.city.version||1)<2)scaleLegacyMoney(data.city);
   const town=new Town();Object.assign(town,data);town.demography=data.demography||createDemography(town.elapsed);town.city=data.city||createCity('sandbox',town.time);town.city.trade??=createTrade();town.city.logisticsLevel??=1;town.city.sanitationDay??=Math.floor(town.time/24);town.city.fireDay??=Math.floor(town.time/24);town.buildings=town.buildings.map(b=>({...b,tier:tierOf(b)}));town.market=data.version>=8&&data.market?data.market:{trades:0};town.publicWorks=data.version>=7&&Array.isArray(data.publicWorks)?data.publicWorks:[];town.literati=data.version>=6&&data.literati?data.literati:{...createLiterati(),nextAt:town.elapsed+3};town.life=data.version>=2&&data.life?data.life:createLife();town.stories=data.version>=3&&data.stories?data.stories:createStories();town.weather=data.version>=4&&data.weather?data.weather:createWeather();if(data.version<4||!data.economy)migrateEconomy(town);else syncCargo(town);town.rebuildRoads({preserveRoutes:true});town.revision++;return town;
  }

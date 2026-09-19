@@ -1,7 +1,9 @@
 import {TYPES} from './grid-rules.js';
+import {categoryOf} from './heritage.js';
+import {CATEGORIES} from './categories.js';
 export function cityEntries(t,{filter='all',query=''}={}){
  const q=query.trim().toLocaleLowerCase();
- return [...t.buildings.map(b=>({kind:'building',id:b.id,name:b.name,type:b.type,detail:`${TYPES[b.type]} · 編號${b.id} · X ${b.x}、Z ${b.z}${b.stage<3?' · 施工中':''}`})),...t.people.map(p=>({kind:'person',id:p.id,name:p.name,type:'person',detail:`居民 · 編號${p.id} · ${p.action||'日常生活'} · 住處${t.building(p.home)?.name||'尚未安排'}`}))].filter(e=>(filter==='all'||filter===e.type)&&(e.name+' '+e.detail+' #'+e.id).toLocaleLowerCase().includes(q));
+ return [...t.buildings.map(b=>({kind:'building',id:b.id,name:b.name,type:categoryOf(b),detail:`${CATEGORIES[categoryOf(b)]||TYPES[b.type]} · 編號${b.id} · X ${b.x}、Z ${b.z}${b.stage<3?' · 施工中':''}`})),...t.people.map(p=>({kind:'person',id:p.id,name:p.name,type:'person',detail:`居民 · 編號${p.id} · ${p.action||'日常生活'} · 住處${t.building(p.home)?.name||'尚未安排'}`}))].filter(e=>(filter==='all'||filter===e.type)&&(e.name+' '+e.detail+' #'+e.id).toLocaleLowerCase().includes(q));
 }
 export function installCityDirectory({getTown,select}){
  const $=s=>document.querySelector(s),dialog=$('#city-directory');

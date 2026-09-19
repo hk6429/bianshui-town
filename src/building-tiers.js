@@ -1,3 +1,4 @@
+import {SCHOOL_FACTOR} from './heritage.js';
 export const MAX_TIER=5;
 export const tierOf=b=>Math.max(1,Math.min(MAX_TIER,Number.isInteger(b.tier)?b.tier:1));
 export const TIER_NAMES=['初築','添彩','華庭','重簷','盛景'];
@@ -34,6 +35,6 @@ export function buildingAbility(b){
  if(b.design==='well')return `供水 ${s.water} 人／${s.range} 步`;
  if(b.design==='cleaningYard')return `每日清運 ${s.cleaning} 份／${s.range} 步`;
  if(b.design==='firePost')return `巡守 ${s.patrol} 處／${s.range} 步`;
- if(b.design==='academy')return `教育 ${s.education} 席／${s.range} 步，園景基礎 ${s.garden} 點`;
+ if(SCHOOL_FACTOR[b.design])return `教育 ${Math.floor(s.education*SCHOOL_FACTOR[b.design])} 席／${s.range} 步，園景基礎 ${s.garden} 點`;
  return `園景基礎 ${s.garden} 點／${s.range} 步`;
 }

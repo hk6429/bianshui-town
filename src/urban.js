@@ -3,13 +3,14 @@ import {roadAnchor} from './road-network.js';
 import {charge,roadCost,moveCost,upgradeCost,refundBuilding} from './city-finance.js';
 import {NEW_DESIGNS} from './variety.js';
 import {tierOf,MAX_TIER} from './building-tiers.js';
-import {bounds,key,point,CELL} from './simulation.js';
+import {key,point,CELL} from './simulation.js';
+import {townBounds} from './grid-rules.js';
 import {DESIGNS,squareCells,gardenMergeGroups} from './heritage.js';
 import {transfer,syncCargo} from './production.js';
 import {send} from './life.js';
 export const ROAD_TYPES={lane:'青石小路',avenue:'寬闊大路'};
 export const footprint=b=>b.footprint||[{x:b.x,z:b.z}];
-export function freeCells(t,cells,ignore=null){return cells.every(c=>Number.isInteger(c.x)&&Number.isInteger(c.z)&&c.x>=bounds.minX&&c.x<=bounds.maxX&&c.z>=bounds.minZ&&c.z<=bounds.maxZ&&!t.buildings.some(b=>b.id!==ignore&&footprint(b).some(p=>p.x===c.x&&p.z===c.z))&&!t.publicWorks.some(p=>p.x===c.x&&p.z===c.z));}
+export function freeCells(t,cells,ignore=null){const limit=townBounds(t);return cells.every(c=>Number.isInteger(c.x)&&Number.isInteger(c.z)&&c.x>=limit.minX&&c.x<=limit.maxX&&c.z>=limit.minZ&&c.z<=limit.maxZ&&!t.buildings.some(b=>b.id!==ignore&&footprint(b).some(p=>p.x===c.x&&p.z===c.z))&&!t.publicWorks.some(p=>p.x===c.x&&p.z===c.z));}
 export function streetCells(start,end){if(Math.abs(end.x-start.x)===1&&Math.abs(end.z-start.z)===1)return squareCells({x:Math.min(start.x,end.x),z:Math.min(start.z,end.z)});const out=[{...start}];let {x,z}=start;while(out.length<24&&(x!==end.x||z!==end.z)){if(x!==end.x)x+=Math.sign(end.x-x);else z+=Math.sign(end.z-z);out.push({x,z});}return out;}
 export function layRoad(t,type,cells){if(!ROAD_TYPES[type]||!cells.length||cells.length>24||!freeCells({...t,publicWorks:[]},cells))return false;if(!charge(t,roadCost(t,type,cells),'鋪設道路'))return false;for(const c of cells){const existing=t.publicWorks.find(p=>p.x===c.x&&p.z===c.z);if(existing)existing.type=type;else t.publicWorks.push({...c,type});}refresh(t);t.log(`鋪設${cells.length}格${ROAD_TYPES[type]}`);return true;}
 export function removeRoad(t,cells){const before=t.publicWorks.length;t.publicWorks=t.publicWorks.filter(p=>!cells.some(c=>c.x===p.x&&c.z===p.z));if(before===t.publicWorks.length)return false;refresh(t);return true;}

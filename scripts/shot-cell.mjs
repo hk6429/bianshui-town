@@ -1,0 +1,37 @@
+import {chromium} from '@playwright/test';
+const [,,out]=process.argv;
+const b=await chromium.launch({channel:'chrome'});
+const p=await b.newPage({viewport:{width:1280,height:800}});
+const errs=[];p.on('pageerror',e=>errs.push(String(e)));p.on('console',m=>{if(m.type()==='error')errs.push(m.text());});
+await p.goto('http://127.0.0.1:4173/?storage-test=1',{waitUntil:'networkidle'});await p.waitForTimeout(2200);
+await p.click('#demo-btn');await p.waitForTimeout(2000);
+const world=await p.$('#world'),r=await world.boundingBox();
+async function build(design,size,x,z){
+ await p.click('#close-inspector').catch(()=>{});await p.waitForTimeout(200);
+ await p.click('#tools-toggle').catch(()=>{});await p.waitForTimeout(200);
+ await p.click('#blueprints-btn');await p.waitForTimeout(400);
+ if(size===4)await p.click('[data-size="4"]');else await p.click('[data-size="1"]');
+ await p.waitForTimeout(200);
+ await p.click(`[data-plan="${design}"]`);await p.waitForTimeout(500);
+ const pt=await p.evaluate(([x,z])=>window.__townDebug.screenCell(x,z),[x,z]);
+ await p.mouse.click(pt.x,pt.y);await p.waitForTimeout(900);
+ return await p.textContent('#mode-hint');
+}
+const log={};
+log.school=await build('villageSchool',1,-7,-5);
+log.shrine=await build('earthShrine',1,-6,-5);
+log.taxOffice=await build('taxOffice',1,-7,-4);
+log.wineOffice=await build('wineOffice',1,-6,-4);
+log.dock=await build('dock',1,-7,5);
+log.granary=await build('granary',1,-6,5);
+log.mill=await build('watermill',1,-5,5);
+log.post=await build('postStation',1,-7,-6);
+log.office=await build('townOffice',4,-4,-6);
+log.temple=await build('cityGodTemple',4,-2,5);
+await p.waitForTimeout(22000);
+await p.evaluate(()=>{window.__townDebug&&0;});
+await p.screenshot({path:`${out}/20-civic-town.png`});
+log.designs=await p.evaluate(()=>window.__townDebug.snapshot().buildings.map(b=>b.design).filter(Boolean));
+log.errors=errs;
+console.log(JSON.stringify(log,null,1));
+await b.close();
