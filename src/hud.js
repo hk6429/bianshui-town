@@ -3,8 +3,45 @@ import {dailyUpkeep,householdTax,managed} from './city-finance.js';
 import {publicAccess} from './road-network.js';
 import {jobCapacity} from './employment.js';
 import {formatMoney} from './money.js';
+import {at} from './production.js';
+import {riverOpen} from './calendar.js';
+import {granaryStores} from './civic.js';
+import {GOODS_VALUE} from './city-finance.js';
+
+const SALEABLE=['cloth','ceramics','furniture','legacy'];
 
 const DEMAND_INTERVAL=800;
+
+export // 下一步提示：只在真的卡住時才指出成因，避免「常態未採買」被誤報成缺商鋪。
+function nextStep(t){
+  const ready=t.buildings.filter(b=>b.stage>=3),homes=ready.filter(b=>b.type==='home');
+  if(!t.buildings.length)return {text:'選下方「民居」，在空地點一下，第一間屋就開工。',action:'home',label:'選民居'};
+  if(!homes.length&&!t.buildings.some(b=>b.type==='home'))return {text:'先蓋一間民居，才會有人搬來。',action:'home',label:'選民居'};
+  if(managed(t)){
+   const stranded=homes.find(b=>!publicAccess(t,b));
+   if(stranded)return {text:`${stranded.name}還沒接上外路。從門前鋪路到東側河岸引道，居民才會搬來、貨才送得到。`,action:'road',label:'去鋪路'};
+  }
+  if(!homes.length)return {text:'民居施工中，約十八秒落成，稍候即有住戶。',action:null};
+  const jobs=ready.filter(b=>jobCapacity(b)).reduce((n,b)=>n+jobCapacity(b),0);
+  if(t.people.length&&jobs===0)return {text:'居民還沒有工作。蓋一處商鋪或作坊，讓他們有活做。',action:'shop',label:'選商鋪'};
+  const jobless=t.people.filter(p=>!p.work).length;
+  if(jobless>=2)return {text:`${jobless} 位居民沒有工作，可再蓋商鋪或作坊。`,action:'work',label:'選作坊'};
+  // 居民只在午後與傍晚到店採買，「這一刻沒買到」是常態；只有真的供給斷了才該提醒。
+  const shops=ready.filter(b=>b.type==='shop');
+  if(!shops.length)return {text:'鎮上還沒有落成的商鋪，居民買不到日用品。',action:'shop',label:'選商鋪'};
+  if(!shops.some(b=>at(t,`shop:${b.id}`).some(l=>SALEABLE.includes(l.good)))){
+   if(!riverOpen(t)&&!granaryStores(t))return {text:'汴河十月閉口，漕船停航至來年二月，店裡已無貨可賣。公共營造蓋一座義倉，冬天才有存糧放出。',action:'road',label:'公共營造'};
+   if(t.city.trade.funds<GOODS_VALUE.clay)return {text:'商行周轉金見底，買不起原料，商鋪補不到貨。先把現貨賣完、或調高稅率補回周轉金。',action:null};
+   if(!ready.some(b=>b.type==='work'))return {text:'商鋪空著架子：原料要先經作坊加工成陶器、木器或布匹才賣得出去。蓋一處作坊吧。',action:'work',label:'選作坊'};
+   return {text:'商鋪暫時缺貨，貨還在碼頭→作坊→商鋪的路上，稍候即補。',action:null};
+  }
+  const unmet=t.people.filter(p=>!(p.needsSatisfiedUntil>t.elapsed)).length;
+  if(unmet>=Math.max(3,Math.ceil(t.people.length*0.7)))return {text:`${unmet} 位居民遲遲買不到日用品。商鋪要有夥計到場才開門，可再加一處商鋪或補足人手。`,action:'shop',label:'選商鋪'};
+  if(managed(t)&&t.city.treasury<300)return {text:'鎮庫將盡。可調稅率、拆除高維護建築，或先停手等稅收。',action:null};
+  if(!t.buildings.some(b=>b.design==='well'))return {text:'新住戶需要水井才會遷入，公共營造可蓋街坊水井。',action:'road',label:'公共營造'};
+  return {text:'小鎮運作順利。可繼續擴建街坊，或看看市井見聞。',action:null};
+ }
+
 
 // Always-on treasury, demand and next-step readouts; the budget dialog keeps the detail.
 export function installHUD({getTown,openBudget,openPublicWorks,setMode,toast}){
@@ -19,26 +56,6 @@ export function installHUD({getTown,openBudget,openPublicWorks,setMode,toast}){
   floatEl.textContent=`${delta>0?'+':'−'}${formatMoney(Math.abs(delta))}`;
   floatEl.classList.toggle('gain',delta>0);
   floatEl.classList.remove('show');void floatEl.offsetWidth;floatEl.classList.add('show');
- }
-
- function nextStep(t){
-  const ready=t.buildings.filter(b=>b.stage>=3),homes=ready.filter(b=>b.type==='home');
-  if(!t.buildings.length)return {text:'選下方「民居」，在空地點一下，第一間屋就開工。',action:'home',label:'選民居'};
-  if(!homes.length&&!t.buildings.some(b=>b.type==='home'))return {text:'先蓋一間民居，才會有人搬來。',action:'home',label:'選民居'};
-  if(managed(t)){
-   const stranded=homes.find(b=>!publicAccess(t,b));
-   if(stranded)return {text:`${stranded.name}還沒接上外路。從門前鋪路到東側河岸引道，居民才會搬來、貨才送得到。`,action:'road',label:'去鋪路'};
-  }
-  if(!homes.length)return {text:'民居施工中，約十八秒落成，稍候即有住戶。',action:null};
-  const jobs=ready.filter(b=>jobCapacity(b)).reduce((n,b)=>n+jobCapacity(b),0);
-  if(t.people.length&&jobs===0)return {text:'居民還沒有工作。蓋一處商鋪或作坊，讓他們有活做。',action:'shop',label:'選商鋪'};
-  const jobless=t.people.filter(p=>!p.work).length;
-  if(jobless>=2)return {text:`${jobless} 位居民沒有工作，可再蓋商鋪或作坊。`,action:'work',label:'選作坊'};
-  const unmet=t.people.filter(p=>!(p.needsSatisfiedUntil>t.elapsed)).length;
-  if(unmet>=2)return {text:`${unmet} 位居民買不到日用品，商鋪需要補貨或增設。`,action:'shop',label:'選商鋪'};
-  if(managed(t)&&t.city.treasury<300)return {text:'鎮庫將盡。可調稅率、拆除高維護建築，或先停手等稅收。',action:null};
-  if(!t.buildings.some(b=>b.design==='well'))return {text:'新住戶需要水井才會遷入，公共營造可蓋街坊水井。',action:'road',label:'公共營造'};
-  return {text:'小鎮運作順利。可繼續擴建街坊，或看看市井見聞。',action:null};
  }
 
  return {update(){

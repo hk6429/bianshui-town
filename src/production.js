@@ -27,14 +27,14 @@ export function importCargo(t){
 // 冬季閉口時，義倉與城垣的存糧每日放出，讓街市不致斷貨。
 export function releaseGranary(t){
  if(riverOpen(t))return 0;
+ // 沒有義倉時仍有陸路小車勉強接濟，街市不會整個冬天完全斷貨，只是量少。
  const stores=granaryStores(t);
- if(!stores)return 0;
  const capacity=MAX_UNPROCESSED_LOTS-t.economy.lots.filter(l=>l.at!=='sold').length;
- const count=Math.min(stores*2,capacity);
+ const count=Math.min(stores?stores*2:1,capacity);
  if(count<=0)return 0;
  const goods=purchaseImports(t,Array.from({length:count},(_,i)=>RECIPES[i%3].input));
  if(!goods.length)return 0;
- for(const good of goods)add(t,good,'dock','義倉冬儲');
+ for(const good of goods)add(t,good,'dock',stores?'義倉冬儲':'陸路小車');
  syncCargo(t);return goods.length;
 }
 function recordTrail(l,entry){

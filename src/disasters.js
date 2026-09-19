@@ -37,7 +37,7 @@ export function tickDisasters(t,{draw=disasterDraw}={}){
  if(c.half===0&&c.month===10)t.log('汴河閉口：漕船停航至來年二月，義倉存糧開始放出。');
  if(c.half===0&&c.month===2)t.log('汴河開漕：漕船復航，原料重新上岸。');
  const winterStock=releaseGranary(t);
- if(winterStock)t.log(`義倉冬儲放出 ${winterStock} 份原料，接濟坊市。`);
+ if(winterStock)t.log(granaryStores(t)?`義倉冬儲放出 ${winterStock} 份原料，接濟坊市。`:`陸路小車運來 ${winterStock} 份原料，勉強接濟坊市；蓋座義倉冬天才夠用。`);
  const festival=festivalOf(t);
  if(festival)t.log(festivalNote(t));
  if(!managed(t))return null;

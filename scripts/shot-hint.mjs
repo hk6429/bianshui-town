@@ -1,0 +1,18 @@
+import {chromium} from 'playwright';
+const b=await chromium.launch({channel:'chrome'});
+const p=await b.newPage({viewport:{width:1280,height:800}});
+const errs=[];p.on('pageerror',e=>errs.push(String(e)));
+await p.goto('http://127.0.0.1:4173/?storage-test=1');
+await p.waitForTimeout(2000);
+const s=await p.$('#welcome button');if(s)await s.click();
+await p.waitForTimeout(1500);
+await p.evaluate(()=>{const t=window.__townDebug.town();
+ t.city.treasury=1e8;
+ t.place('home',[{x:0,z:0}],true,'bambooHome');
+ t.place('shop',[{x:1,z:0}],true,'tea');
+ for(const bl of t.buildings)bl.stage=3;
+});
+await p.waitForTimeout(4000);
+console.log(await p.evaluate(()=>document.getElementById('next-step-text').textContent),errs);
+await p.screenshot({path:'/tmp/hint-live.png'});
+await b.close();

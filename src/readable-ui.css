@@ -175,11 +175,11 @@ body:has(.inspector:not([hidden]),.life-panel:not([hidden])) .scene-label{visibi
 .blueprint-card.is-built{box-shadow:inset 3px 0 0 #7d9a6d;}
 
 /* 資料圖層面板：靠左，疊在需求列上方，避開右側城鎮概況與視角控制 */
-.data-layers{position:absolute;left:36px;bottom:452px;width:200px;padding:.55rem .75rem;border-radius:12px;display:flex;flex-direction:column;gap:.35rem;z-index:4;}
+.data-layers{width:200px;padding:.55rem .75rem;border-radius:12px;display:flex;flex-direction:column;gap:.35rem;z-index:4;}
 .data-layers>#layer-toggle{font-size:.78rem;letter-spacing:2px;color:#9a7552;text-align:left;padding:0;}
 .data-layers #layer-buttons{display:flex;flex-wrap:wrap;gap:.25rem;}
 .data-layers #layer-buttons button{font-size:.72rem;padding:.25rem .5rem;border:1px solid #c7ccb1;border-radius:.4rem;}
 .data-layers #layer-buttons button[aria-pressed="true"]{background:#5f7453;color:#fff7e4;}
 .data-layers #layer-note{margin:0;font-size:.7rem;line-height:1.5;color:#6f7560;}
-@media(max-width:850px){.data-layers{left:20px;bottom:470px;width:180px;}}
-@media(max-width:600px){.data-layers{left:14px;bottom:500px;width:150px;}}
+@media(max-width:850px){.data-layers{width:180px;}}
+@media(max-width:600px){.data-layers{width:150px;}}
