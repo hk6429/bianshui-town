@@ -8,8 +8,10 @@ import {fireCoverage,damaged} from './fire-service.js';
 import {pollutionAt} from './pollution.js';
 import {gardenBenefit} from './garden-services.js';
 import {LOW_WELLBEING} from './wellbeing-rules.js';
+import {festivalMood,festivalOf} from './festivals.js';
 const clamp=n=>Math.max(0,Math.min(100,n));
 export function wellbeingReport(t){
+ const mood=festivalMood(t),festival=festivalOf(t);
  const water=waterReport(t),care=healthcareReport(t),education=educationReport(t),fire=fireCoverage(t),residents=new Map();
  for(const p of t.people){
   const home=t.building(p.home),job=t.building(p.work),housed=home?.type==='home'&&home.stage>=3;
@@ -29,8 +31,8 @@ export function wellbeingReport(t){
    {key:'services',name:'公共服務',score:clamp(services),weight:25,reason:`供水 ${Math.round(supplied*100)}％、衛生 ${hygiene.toFixed(0)}、健康 ${health.toFixed(0)}；醫療 ${health>=100?'無需照護':medical?'受照護':'待照護'}、教育 ${learning?'具備':'不足'}、巡守 ${home&&fire.covered.has(home.id)?'涵蓋':'未涵蓋'}`},
    {key:'environment',name:'環境',score:environment,weight:25,reason:`基礎80－污染 ${pollution.toFixed(1)}×0.8＋園景 ${garden.toFixed(1)}，限制0至100`}
   ];
-  const score=parts.reduce((n,x)=>n+x.score*x.weight/100,0);residents.set(p.id,{id:p.id,score,parts});
+  const score=clamp(parts.reduce((n,x)=>n+x.score*x.weight/100,0)+mood);residents.set(p.id,{id:p.id,score,parts,festival:mood});
  }
  const average=residents.size?[...residents.values()].reduce((n,r)=>n+r.score,0)/residents.size:LOW_WELLBEING;
- return {residents,average,demandModifier:managed(t)?Math.round((average-LOW_WELLBEING)*.6):0,low:[...residents.values()].filter(r=>r.score<LOW_WELLBEING).length};
+ return {residents,average,festival:festival?{name:festival.name,mood}:null,demandModifier:managed(t)?Math.round((average-LOW_WELLBEING)*.6):0,low:[...residents.values()].filter(r=>r.score<LOW_WELLBEING).length};
 }

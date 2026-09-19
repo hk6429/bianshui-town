@@ -7,6 +7,8 @@ import {roadReachable,roadAnchor} from './road-network.js';
 import {purchaseImports,recordSale} from './trade.js';
 import {staffingRatio,jobCapacity,presentWorkers} from './employment.js';
 import {saleTax,managed} from './city-finance.js';
+import {riverOpen} from './calendar.js';
+import {granaryStores} from './civic.js';
 export const MAX_LOT_TRAIL=32,MAX_UNPROCESSED_LOTS=96;
 export const GOODS={clay:'泥料',timber:'木材',fiber:'纖維',ceramics:'陶器',furniture:'木器',cloth:'布匹',legacy:'日用雜貨'};
 export const RECIPES=[{input:'clay',output:'ceramics',seconds:14,action:'拉坯、入窯燒製'},{input:'timber',output:'furniture',seconds:12,action:'鋸切、打磨木器'},{input:'fiber',output:'cloth',seconds:16,action:'紡線、上機織布'}];
@@ -17,9 +19,23 @@ export function importCargo(t){
  // Bound the unprocessed stock so an unattended town cannot grow its save forever.
  const capacity=MAX_UNPROCESSED_LOTS-t.economy.lots.filter(l=>l.at!=='sold').length;
  if(capacity<=0)return false;
+ if(!riverOpen(t))return false;   // 十月閉口至來年二月開漕，漕船不上
  const goods=purchaseImports(t,Array.from({length:Math.min(12,capacity)},(_,i)=>RECIPES[i%3].input));if(!goods.length)return false;
  for(const good of goods)add(t,good,'boat',`汴河第 ${t.life.boat.trips+1} 航次`);
  syncCargo(t);return true;
+}
+// 冬季閉口時，義倉與城垣的存糧每日放出，讓街市不致斷貨。
+export function releaseGranary(t){
+ if(riverOpen(t))return 0;
+ const stores=granaryStores(t);
+ if(!stores)return 0;
+ const capacity=MAX_UNPROCESSED_LOTS-t.economy.lots.filter(l=>l.at!=='sold').length;
+ const count=Math.min(stores*2,capacity);
+ if(count<=0)return 0;
+ const goods=purchaseImports(t,Array.from({length:count},(_,i)=>RECIPES[i%3].input));
+ if(!goods.length)return 0;
+ for(const good of goods)add(t,good,'dock','義倉冬儲');
+ syncCargo(t);return goods.length;
 }
 function recordTrail(l,entry){
  l.trail.push(entry);

@@ -3,6 +3,9 @@ import {logistics} from './logistics.js';
 import {shopIsOpen,sellAtShop} from './commerce.js';
 import {marketStalls,marketOpen} from './market.js';
 import {at,transfer,deliveryPlan,importCargo,GOODS,goodsBalance} from './production.js';
+import {marketHours} from './market.js';
+import {innGuests} from './civic.js';
+import {festivalVisitors} from './festivals.js';
 import {applyTraffic} from './traffic.js';
 import {key,point,pathfind} from './simulation.js';
 export const DOCK=[12,8], BERTH=[16,8], GATE=[33,-16], MARKET=[26,-8];
@@ -85,8 +88,10 @@ function tickOxen(t,dt){
  }
 }
 function tickVisitors(t,dt){
- const l=t.life,h=t.time%24,day=h>=6&&h<20;
- if(!l.visitors.length)for(let i=0;i<10;i++)l.visitors.push({...actor(2000+i,i%3===0?'peddler':i%3===1?'traveler':'shopper',...GATE),wait:i*3,phase:'choose',visible:false});
+ const l=t.life,h=t.time%24,hours=marketHours(t),day=h>=hours.open-1&&h<hours.close-1;
+ // 邸店留宿的客商與節慶人潮讓趕集的人更多；名額只增不減，離場的仍沿用同一批。
+ const wanted=Math.min(24,10+innGuests(t)+festivalVisitors(t));
+ while(l.visitors.length<wanted){const i=l.visitors.length;l.visitors.push({...actor(2000+i,i%3===0?'peddler':i%3===1?'traveler':'shopper',...GATE),wait:i*3,phase:'choose',visible:false});}
  const shops=t.buildings.filter(b=>b.type==='shop'&&b.stage>=3);
  for(const a of l.visitors){
   if(!day&&a.phase!=='night'&&a.phase!=='home'){send(t,a,GATE,'沿虹橋返回城門');a.phase='home';}

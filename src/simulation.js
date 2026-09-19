@@ -20,6 +20,7 @@ import {isUtility} from './public-services.js';
 import {tickHealthcare} from './healthcare.js';
 import {onSickLeave} from './employment.js';
 import {tickFire} from './fire-service.js';
+import {tickDisasters} from './disasters.js';
 import {tickSanitation} from './sanitation.js';
 import {createEconomy,importCargo,migrateEconomy,tickProduction,tickCraftCarts,syncCargo} from './production.js';
 import {createWeather,tickWeather,shelterResident} from './weather.js';
@@ -161,7 +162,7 @@ export class Town {
   }
   for(const p of this.people)residentPurchase(this,p);
   tickPollution(this,dt);tickProduction(this,dt);tickCraftCarts(this,dt);
-  tickLife(this,dt);tickLiterati(this,dt);settleBudget(this);tickSanitation(this);tickFire(this);tickHealthcare(this,dt);tickEducation(this,dt);
+  tickLife(this,dt);tickLiterati(this,dt);settleBudget(this);tickSanitation(this);tickFire(this);tickDisasters(this);tickHealthcare(this,dt);tickEducation(this,dt);
   for(const p of this.people){if(this.weather.raining&&p.outside&&!p.shelter&&!p.action.startsWith('撐傘'))p.action='撐傘 · '+p.action;remember(this,p,p.action);}
  }
  move(p,dt){

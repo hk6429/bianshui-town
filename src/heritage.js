@@ -15,6 +15,9 @@ export const DESIGNS={
  countySchool:{cat:'school',name:'縣學',type:'garden',variant:0,mark:'庠',sizes:[4],cost:27000,rank:4,source:null,detail:'四格縣學：大成殿、明倫堂與齋舍。教育名額為書院的一又四分之一，是全鎮最高學府。升縣後解鎖，每格 27 貫。'},
  cityWall:{cat:'civic',name:'城垣',type:'garden',variant:0,mark:'城',sizes:[1,4],cost:21000,rank:4,source:null,detail:'夯土包磚的城垣與馬面：每段可抵擋一次災害，與義倉相加計算。升縣後解鎖，每格 21 貫。'},
  zhengdian:{cat:'shop',name:'正店',type:'shop',variant:1,mark:'正',sizes:[4],cost:36000,rank:4,source:null,detail:'四格正店：綵樓歡門、樓閣雅座，自釀自沽。零售量與酒樓同級，並計入酒務榷酤。升縣後解鎖，每格 36 貫。'},
+ // 商鋪中的兩種行當：邸店留宿客商，質庫收質放貸。
+ inn:{cat:'shop',name:'邸店',type:'shop',variant:1,mark:'邸',sizes:[1,4],cost:24000,source:null,detail:'邸店：前店後棧，留宿往來客商並寄放貨物。每座各為小鎮多帶來一批客人，四格加倍。每格 24 貫。'},
+ pawnshop:{cat:'shop',name:'質庫',type:'shop',variant:1,mark:'質',sizes:[1],cost:27000,source:null,detail:'質庫：收質放貸，月息三分。落成後每日為鎮庫帶來一筆息錢，欠款時效率同樣打折。每格 27 貫。'},
  villageSchool:{cat:'school',name:'村塾',type:'garden',variant:0,mark:'塾',sizes:[1],cost:12000,source:null,detail:'一格村塾：一位塾師、一間講堂與幾張矮案。教育名額為書院的一半，沿路覆蓋較短，是小鎮最早能負擔的文教設施。每格 12 貫。'},
  townSchool:{cat:'school',name:'鎮學',type:'garden',variant:0,mark:'學',sizes:[1,4],cost:21000,source:null,detail:'鎮學：講堂、齋舍與小庭；教育名額為書院的四分之三，四格再加廊房與射圃。每格 21 貫。'},
  // 公設：宋代鎮級沒有「市政廳」，只設監鎮官與其屬務。

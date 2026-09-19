@@ -30,5 +30,12 @@ export function millMultiplier(t,b){
 // 義倉：每處儲糧可抵銷一次災害，四格算兩次。
 export const granaryStores=t=>[...civicBuildings(t,'granary'),...civicBuildings(t,'cityWall')].reduce((n,b)=>n+(b.footprint?2:1),0);
 
+// 邸店：每座多留宿一批客商，四格加倍，最多八位。
+export const innGuests=t=>Math.min(8,civicBuildings(t,'inn').reduce((n,b)=>n+(b.footprint?2:1),0)*2);
+
+// 質庫：月息三分，折成每日息錢；欠款時與其他公共服務同樣打折。
+export const PAWN_INTEREST=1500;
+export const pawnInterest=t=>Math.floor(civicBuildings(t,'pawnshop').length*PAWN_INTEREST*serviceEfficiency(t));
+
 export const hasGovernment=t=>hasCivic(t,'townOffice')||hasCivic(t,'countyOffice');
 export const hasPost=t=>hasCivic(t,'postStation');

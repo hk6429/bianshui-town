@@ -1,0 +1,32 @@
+import {chromium} from '@playwright/test';
+const [,,out]=process.argv;
+const b=await chromium.launch({channel:'chrome'});
+const p=await b.newPage({viewport:{width:1280,height:900}});
+const errs=[];p.on('pageerror',e=>errs.push(String(e)));p.on('console',m=>{if(m.type()==='error')errs.push(m.text());});
+await p.goto('http://127.0.0.1:4173/?storage-test=1',{waitUntil:'networkidle'});
+await p.waitForTimeout(2200);
+await p.click('#demo-btn');await p.waitForTimeout(2500);
+const info={period:await p.textContent('#period')};
+const speeds=[];for(let i=0;i<4;i++){await p.click('#speed-btn');speeds.push(await p.textContent('#speed-btn'));}
+info.speeds=speeds;
+await p.click('#hud-treasury');await p.waitForTimeout(400);
+await p.click('#tab-council');await p.waitForTimeout(400);
+info.gazette=await p.$$eval('#council-gazette li',e=>e.map(x=>x.textContent));
+await p.screenshot({path:`${out}/30-gazette.png`});
+await p.click('[data-close="city-budget"]');await p.waitForTimeout(300);
+await p.click('#tools-toggle');await p.waitForTimeout(300);
+await p.click('#blueprints-btn');await p.waitForTimeout(500);
+await p.click('[data-design-filter="shop"]');await p.waitForTimeout(300);
+info.shopCards=await p.$$eval('#blueprint-grid h3',e=>e.map(x=>x.textContent.trim()));
+await p.screenshot({path:`${out}/31-shop-catalog.png`});
+// winter: jump the clock and confirm the gazette follows
+await p.evaluate(()=>{window.__townDebug.town().time=16*24+8;});
+await p.waitForTimeout(600);
+await p.click('[data-close="blueprints"]');await p.waitForTimeout(300);
+await p.click('#hud-treasury');await p.waitForTimeout(400);
+await p.click('#tab-council');await p.waitForTimeout(400);
+info.winter=await p.$$eval('#council-gazette li',e=>e.map(x=>x.textContent));
+info.period2=await p.textContent('#period');
+await p.screenshot({path:`${out}/32-winter.png`});
+info.errs=errs;console.log(JSON.stringify(info,null,1));
+await b.close();

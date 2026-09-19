@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 // 官署、學堂、祠廟與水運建築的外觀。造型為遊戲轉譯，不是歷史建築復原。
-export const CIVIC_DESIGNS=['townOffice','taxOffice','wineOffice','postStation','villageSchool','townSchool','earthShrine','cityGodTemple','dock','granary','watermill','countyOffice','countySchool','cityWall','zhengdian'];
+export const CIVIC_DESIGNS=['townOffice','taxOffice','wineOffice','postStation','villageSchool','townSchool','earthShrine','cityGodTemple','dock','granary','watermill','inn','pawnshop','countyOffice','countySchool','cityWall','zhengdian'];
 export function civicBuilding(b,api){
  if(!CIVIC_DESIGNS.includes(b.design))return null;
  const {box,cyl,ball,beam,roof,tree}=api,g=new THREE.Group(),large=!!b.footprint,R=large?3.8:1.85;
@@ -92,6 +92,23 @@ export function civicBuilding(b,api){
   for(let i=0;i<8;i++){const a=i*Math.PI/4;box(g,.14,.5,.34,0x6b5030,1.15+Math.cos(a)*.85,.95+Math.sin(a)*.85,1.25);}
   cyl(g,.13,.13,1.9,wood,.35,.95,1.25,8).rotation.z=Math.PI/2;
   cyl(g,.62,.62,.22,stone,-.45,.85,.55,14);                   // 石碾
+ }else if(b.design==='inn'){
+  // 前店後棧：臨街店面、庭院與客房，簷下掛燈。
+  hall(0,-R*.35,large?4.2:2.4,large?2.2:1.6,large?2.6:2);
+  box(g,large?3.4:1.9,1.4,large?1.4:.9,0x8a6b45,0,.9,R*.5);
+  for(const x of [-(large?1.6:.85),large?1.6:.85])box(g,.14,2.4,.14,wood,x,1.4,R*.75);
+  beam(g,[-(large?1.6:.85),2.6,R*.75],[large?1.6:.85,2.6,R*.75],.1,wood);
+  for(const x of [-(large?1:.5),large?1:.5])cyl(g,.22,.22,.36,0xd8a24e,x,2.3,R*.75,10);
+  pole(R-.6,-.4,large?3.4:2.6,0x9b6a3c);
+ }else if(b.design==='pawnshop'){
+  // 高櫃深屋：厚牆、小窗與質庫招牌，庭中庫房。
+  box(g,2.5,2.6,2,0xcfc3a4,0,1.5,-.35);
+  const top=new THREE.Group();top.position.set(0,0,-.35);g.add(top);roof(top,3.1,2.6,.7,2.8,tile);
+  box(g,1.9,1,.5,0x6f5a41,0,.75,.75);
+  box(g,.9,.62,.06,gold,0,1.9,.72);
+  for(const x of [-.75,.75])box(g,.3,.5,.05,0x4a3c2a,x,1.75,.68);
+  box(g,1.2,1.2,1.2,0x9b876d,R-1,.75,1.1);
+  for(const x of [-1.5,1.5])box(g,.13,1.8,.13,wood,x,1.1,1.05);
  }else if(b.design==='countyOffice'){
   // 儀門、大堂與東西六房，堂前戒石與鳴冤鼓。
   box(g,4.8,1.9,.26,wall,0,1.15,R-.3);
