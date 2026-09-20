@@ -10,7 +10,7 @@ export function validateReport(r){
  for(const q of Object.values(r.learning.quests))for(const row of [...q.attempts,...q.reviews,...q.revisions,...(q.prediction?[q.prediction]:[])])if(row.at>r.exportedAt)throw Error('紀錄晚於匯出時間');return r;
 }
 export function parseReport(text){if(typeof text!=='string'||new TextEncoder().encode(text).length>MAX)throw Error('學習紀錄超過750 KB');return validateReport(JSON.parse(text));}
-export function createReport(t,student,at=Date.now()){return validateReport({format:'bianshui-learning-v1',student,exportedAt:at,learning:structuredClone(learningState(t))});}
+export function createReport(t,student,at=Date.now()){const learning=structuredClone(learningState(t));const latest=Math.max(at,...Object.values(learning.quests).flatMap(q=>[q.firstLearnedAt||0,...q.attempts.map(r=>r.at),...q.reviews.map(r=>r.at),...q.revisions.map(r=>r.at),q.prediction?.at||0]));return validateReport({format:'bianshui-learning-v1',student,exportedAt:latest,learning});}
 export function mergeReports(current,incoming){const next=new Map(current.map(r=>[r.student.id,r]));for(const r of incoming){validateReport(r);const old=next.get(r.student.id);if(!old||r.exportedAt>old.exportedAt)next.set(r.student.id,r);}if(next.size>40)throw Error('本機看板一次最多40位學生，請另存班級紀錄後再整理');return [...next.values()];}
 export function reportSummary(r,quest){return learningSummary({journey:{learning:r.learning}},quest);}
 export function commonDifficulties(reports,quest){const counts=[0,0,0];for(const r of reports){const rows=r.learning.quests[quest]?.attempts||[];for(let i=0;i<3;i++)if(rows.some(a=>a.step===i&&(!a.correct||!a.evidenceMatch||a.hints>0)))counts[i]++;}return counts.map((count,i)=>({step:i,title:LITERARY_QUESTS[quest].steps[i].title,students:count}));}

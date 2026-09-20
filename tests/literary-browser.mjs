@@ -1,3 +1,5 @@
+import {answerReadingUI} from './learning-reading-fixture.js';
+import {solveActivitiesUI} from './literary-activity-fixture.js';
 import {chromium} from '@playwright/test';
 import {mkdir,writeFile} from 'node:fs/promises';
 import assert from 'node:assert/strict';
@@ -6,15 +8,15 @@ const browser=await chromium.launch({headless:true,executablePath:process.env.TE
 const page=await browser.newPage({viewport:{width:1280,height:900}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
 await page.goto('http://127.0.0.1:5183');await page.waitForFunction(()=>window.__townDebug);
 await page.evaluate(()=>{document.querySelectorAll('dialog[open]').forEach(d=>d.close());document.querySelector('#literary-quests-btn').click();});
-await page.locator('[data-answer="0"]').click();assert.match(await page.locator('#literary-status').textContent(),/再讀/);
-for(const a of [1,2,0])await page.locator(`[data-answer="${a}"]`).click();
+await answerReadingUI(page,'yueyang',0,0);assert.match(await page.locator('#literary-status').textContent(),/這次想法/);
+for(let i=0;i<3;i++)await answerReadingUI(page,'yueyang',i);await solveActivitiesUI(page,'yueyang');
 await page.locator('[data-unlock]').click();assert.match(await page.locator('#literary-status').textContent(),/尚缺/);
 await page.locator('#literary-note').fill('先天下之憂：先安置居民。');await page.locator('[data-note]').click();
 await page.reload();await page.waitForFunction(()=>window.__townDebug);await page.evaluate(()=>{document.querySelectorAll('dialog[open]').forEach(d=>d.close());document.querySelector('#literary-quests-btn').click();});
 assert.equal(await page.locator('#literary-note').inputValue(),'先天下之憂：先安置居民。');
 await page.evaluate(()=>{const t=window.__townDebug.town();t.city.mode='sandbox';t.place('home',[{x:-6,z:-4}],true);t.place('work',[{x:-4,z:-4}],true);t.place('shop',[{x:-2,z:-4}],true);t.place('garden',[{x:0,z:-4}],true,'granary');t.place('garden',[{x:2,z:-4}],true,'villageSchool');});
 await page.locator('[data-unlock]').click();assert.match(await page.locator('#literary-status').textContent(),/已儲存/);
-for(const [id,answers] of [['kaifeng',[1,2,0]],['printing',[0,1,2]]]){await page.locator(`[data-quest="${id}"]`).click();for(const a of answers)await page.locator(`[data-answer="${a}"]`).click();await page.locator('[data-unlock]').click();assert.match(await page.locator('#literary-status').textContent(),/已儲存/);}
+for(const [id,answers] of [['kaifeng',[1,2,0]],['printing',[0,1,2]]]){await page.locator(`[data-quest="${id}"]`).click();for(let i=0;i<answers.length;i++)await answerReadingUI(page,id,i);await solveActivitiesUI(page,id);await page.locator('[data-unlock]').click();assert.match(await page.locator('#literary-status').textContent(),/已儲存/);}
 await page.screenshot({path:out+'/desktop.png'});
 await page.setViewportSize({width:390,height:844});await page.screenshot({path:out+'/mobile.png'});assert(await page.locator('#literary-quests').evaluate(d=>d.scrollWidth<=d.clientWidth));
 await page.locator('[data-build]').click();assert.equal(await page.evaluate(()=>window.__townDebug.mode()),'garden');

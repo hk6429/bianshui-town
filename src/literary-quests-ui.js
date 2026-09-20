@@ -2,7 +2,7 @@ import {createLearningUI} from './learning-ui.js';
 import {journalPrompt,journalIllustration,journalSaved} from './literary-journal.js';
 import {activityHTML} from './literary-activity-ui.js';
 import {activityState,currentActivity,activityCheck,activityAction,activitiesDone} from './literary-activities.js';
-import {LITERARY_QUESTS,LANDMARK_QUEST,questEntry,requirements,answerQuest,saveQuestNote,unlockQuest} from './literary-quests.js';
+import {LITERARY_QUESTS,LANDMARK_QUEST,questEntry,requirements,saveQuestNote,unlockQuest} from './literary-quests.js';
 import {escapeHTML as esc} from './content-html.js';
 export function installLiteraryQuestsUI({getTown,change,build}){
  const dialog=document.createElement('dialog');dialog.id='literary-quests';dialog.setAttribute('aria-labelledby','literary-title');document.body.append(dialog);
@@ -41,8 +41,7 @@ export function installLiteraryQuestsUI({getTown,change,build}){
    const ok=practice?activityAction(practice,current,action,value):change(t=>activityAction(t,current,action,value));
    if(ok)left=null;render(ok?(check?.message||'操作進度已記錄。'):'操作未完成：請確認相鄰路格、物資餘額或存檔通知。');return;
   }
-  if(b.hasAttribute('data-answer')){const s=Number(b.dataset.step),a=Number(b.dataset.answer),q=LITERARY_QUESTS[current];if(q.steps[s]?.answer!==a){document.querySelector('#literary-status').textContent=`再讀一次：${q.steps[s].hint} 不扣錢，可重試。`;return;}const ok=change(t=>answerQuest(t,current,s,a));render(ok?q.steps[s].result:'進度未儲存，請檢查存檔通知。');}
-  else if(b.hasAttribute('data-unlock')){const ok=change(t=>unlockQuest(t,current));render(ok?'圖樣已儲存並解鎖。':'尚缺營造前置，或存檔未成功；完成後可再試。');}
+  if(b.hasAttribute('data-unlock')){const ok=change(t=>unlockQuest(t,current));render(ok?'圖樣已儲存並解鎖。':'尚缺營造前置，或存檔未成功；完成後可再試。');}
   else if(b.hasAttribute('data-note')){const note=dialog.querySelector('textarea').value,ok=change(t=>saveQuestNote(t,current,note));if(ok){delete drafts[current];dialog.querySelector('#note-draft-status').textContent='';}render(ok?'短箋已儲存。':'內容未變更或存檔未成功。');}
   else if(b.hasAttribute('data-build')){dialog.close();build(Object.keys(LANDMARK_QUEST).find(id=>LANDMARK_QUEST[id]===current));}
  });

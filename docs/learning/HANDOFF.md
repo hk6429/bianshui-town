@@ -43,3 +43,7 @@
 先做上列缺口，最後才全套release。瀏覽器圖片在evidence/learning可view_image檢視。
 
 工作區：/Users/naichengchen/projects/bianshui-town，main，無子代理。目標不可在這個里程碑標complete。
+
+## 第三波整合接續
+
+故事示意圖、段落脈絡、原文回憶與作品 SVG 卡已實作。十關瀏覽器與學生瀏覽器通過；目前補作品卡下載、報告時鐘倒退處理並做最終整合。尚未部署。下一步：全套單元測試、教師操作、雙站部署及正式讀回。

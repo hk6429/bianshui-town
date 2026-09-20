@@ -1,3 +1,4 @@
+import {recordLearningAnswer,saveLearningRevision,recordTransfer} from '../src/learning.js';
 import {test} from 'node:test';import assert from 'node:assert/strict';import {createClient} from '@libsql/client';import {readFile} from 'node:fs/promises';
 import {createCloudHandler} from '../server/cloud-api.js';import {Town} from '../src/simulation.js';
 const origin='https://bianshui-town.pages.dev',env={GOOGLE_CLIENT_ID:'test-google-client',TURSO_DATABASE_URL:'libsql://unused',TURSO_AUTH_TOKEN:'test',SESSION_SECRET:'unit-test-secret-of-at-least-32-characters'};
@@ -8,7 +9,7 @@ test('Cloudflare + SQLite: Google nonce, owner-isolated saves, revision conflict
  try{
   assert.equal((await api(req('/config'),{})).status,200);assert.deepEqual(await (await api(req('/config'),{})).json(),{configured:false});
   async function login(uid){const config=await api(req('/config'),env),nonce=(await config.json()).nonce,cookie=config.headers.get('set-cookie').split(';')[0];const response=await api(req('/auth/google',{cookie,data:{credential:JSON.stringify({sub:uid,name:uid,nonce})}}),env);assert.equal(response.status,200);assert.match(response.headers.get('set-cookie'),/HttpOnly; Secure; SameSite=Strict/);return response.headers.get('set-cookie').split(';')[0];}
-  const alice=await login('alice'),bob=await login('bob'),data=new Town().toJSON();
+  const alice=await login('alice'),bob=await login('bob'),town=new Town();recordLearningAnswer(town,'kaifeng',{step:0,answer:1,evidence:0,reason:'當事人與傳聞都要查證',at:1});saveLearningRevision(town,'kaifeng',{text:'我先查證再判斷',at:2});recordTransfer(town,'kaifeng',{kind:'recall',variant:0,answer:1,reason:'街坊說只聽人說',at:3});const data=town.toJSON();
   assert.equal((await api(req('/save?user=alice'),env)).status,401);
   let result=await api(req('/save',{cookie:alice,data:{userId:'alice',revision:0,data}}),env);assert.equal(result.status,200);assert.equal((await result.json()).revision,1);
   assert.equal((await api(req('/save?user=alice',{cookie:bob}),env)).status,409);assert.deepEqual(await (await api(req('/save?user=bob',{cookie:bob}),env)).json(),{revision:0,data:null});
@@ -17,7 +18,7 @@ test('Cloudflare + SQLite: Google nonce, owner-isolated saves, revision conflict
   assert.equal((await api(req('/save',{cookie:alice,data:{userId:'alice',revision:1,data:{bad:true}}}),env)).status,400);
   assert.equal((await api(req('/save',{cookie:alice,from:'https://evil.example',data:{userId:'alice',revision:1,data}}),env)).status,403);
   assert.equal((await api(req('/save',{cookie:alice,data:{userId:'alice',revision:1,data}}),env)).status,200);
-  assert.equal((await (await api(req('/save?user=alice',{cookie:alice}),env)).json()).revision,2);
+  const saved=await(await api(req('/save?user=alice',{cookie:alice}),env)).json();assert.equal(saved.revision,2);assert.deepEqual(saved.data.journey.learning,data.journey.learning);
   assert.equal((await api(req('/auth/google',{data:{credential:JSON.stringify({sub:'evil',nonce:'wrong'})}}),env)).status,401);
   assert.match((await api(req('/auth/logout',{cookie:alice,data:{}}),env)).headers.get('set-cookie'),/Max-Age=0/);
   const nonceResponse=await api(req('/config'),env),nonceCookie=nonceResponse.headers.get('set-cookie').split(';')[0];const real=createCloudHandler({database:()=>db});assert.equal((await real(req('/auth/google',{cookie:nonceCookie,data:{credential:'forged'}}),env)).status,401);

@@ -6,6 +6,9 @@
   "evidenceAndReasonProgression": true,
   "revisions": 2,
   "transfer": true,
+  "originalRecall": true,
+  "storyDiagram": true,
+  "workCardDownload": true,
   "reload": true,
   "mobileWidth": 390,
   "errors": []

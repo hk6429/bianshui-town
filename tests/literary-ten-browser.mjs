@@ -1,15 +1,17 @@
+import {answerReadingUI} from './learning-reading-fixture.js';
 import {solveActivitiesUI} from './literary-activity-fixture.js';
 import {chromium} from '@playwright/test';
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {LITERARY_QUESTS,LANDMARK_QUEST} from '../src/literary-quests.js';
-const out='evidence/literary-ten';await mkdir(out,{recursive:true});
+const out='evidence/learning/ten';await mkdir(out,{recursive:true});
 const browser=await chromium.launch({headless:true,executablePath:process.env.TEST_CHROMIUM_PATH});
 const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+page.setDefaultTimeout(15000);
 await page.goto(process.env.TEST_URL||'http://127.0.0.1:5183');await page.waitForFunction(()=>window.__townDebug);
 await page.evaluate(()=>{document.querySelectorAll('dialog[open]').forEach(d=>d.close());const t=window.__townDebug.town();t.city.mode='sandbox';t.city.expansion=3;for(const [i,type] of ['home','work','shop','shop','shop'].entries())t.place(type,[{x:-12+i*2,z:-8}],true);for(const [i,design] of ['granary','villageSchool','pavilion','garden','pond','dock','postStation'].entries())t.place('garden',[{x:-12+i*2,z:-6}],true,design);document.querySelector('#literary-quests-btn').click();});
 for(const [id,q] of Object.entries(LITERARY_QUESTS)){
- await page.locator(`[data-quest="${id}"]`).click();for(const s of q.steps)await page.locator(`[data-answer="${s.answer}"]`).click();
+ await page.locator(`[data-quest="${id}"]`).click();for(let i=0;i<q.steps.length;i++)await answerReadingUI(page,id,i);
  await solveActivitiesUI(page,id);await page.locator('[data-unlock]').click();assert.match(await page.locator('#literary-status').textContent(),/已儲存/);
  await page.locator('#literary-note').fill(`${q.name}：引用與解釋`);await page.locator('[data-note]').click();
 }

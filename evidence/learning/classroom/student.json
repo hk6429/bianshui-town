@@ -1,16 +1,17 @@
 {
   "format": "bianshui-learning-v1",
   "student": {
-    "id": "65ef61a8-4fbb-4982-9b6e-e4df395c746d",
+    "id": "143f2ba8-4969-4675-bae0-71757ccbaca2",
     "name": "801-05"
   },
-  "exportedAt": 1789917865692,
+  "exportedAt": 1789918487310,
   "learning": {
     "version": 1,
     "level": "story",
     "zhuyin": true,
     "quests": {
       "kaifeng": {
+        "firstLearnedAt": 0,
         "attempts": [],
         "hints": [
           0,
@@ -22,7 +23,7 @@
             "text": "我想先聽雙方說法，再查證。",
             "feedback": "",
             "changes": "",
-            "at": 1789917865192
+            "at": 1789918486910
           }
         ],
         "reviews": [],
