@@ -1,49 +1,29 @@
-# 學習優化：第二波交接（2026-09-20）
+# 學習優化完成交接（2026-09-20）
 
-## 目標
+## 已完成與部署
 
-依完整八項學習提案完成並部署。目標仍 active；正式網站尚未更新。PLAN.md 定義完整範圍。
+完整八項學習設計已實作；實作提交 3949da0（含先前 fea6b60），已推送 origin/main。
 
-## 已完成
+- Cloudflare：https://bianshui-town.pages.dev/ ，部署 b538b7b1。
+- Netlify：https://bianshui-town.netlify.app/ ，部署 6aaffd652d703b1a2ff78642。
+- 同一份 dist 發布；正式 HTML 與所有入口 JS/CSS 的 SHA-256 比對一致，兩站 /api/config configured=true。
 
-第一波：learning-content.js（十關內容）、learning.js（資料）、learning-ui.js（學生）、save-schema.js optional學習資料、stage-select目標。
-第二波：
-- classroom.js：十關指定課堂場景、前置設施/道路、sandbox，key `bianshui-classroom-v1:<quest>` 與原城完全分開。URL `?classroom=kaifeng&support=story`，main啟動自動開該關，banner回原城。各关單元測試確認需求、道路與存檔有效。
-- learning-reports.js：有界且嚴格的學生報告/教師回饋schema、同id只保留更新報告、最多40人、卡點按學生非按次數統計；回饋匹配學生ID+版本時間+原文字。
-- learning-reports-ui.js：獨立dialog按鈕，學生稱呼/JSON匯出；教師指定關卡支援/連結、批次匯入、班級備份匯出匯入、原文與理由查看、對最新作品人工判讀及回饋匯出。明示本機彙整、非即時同步、非防作弊成績。
-- 匯入回饋保存在本機（最多30份），學生作品介面會顯示並帶入回饋欄，後續修改稿保留回饋與修改原因。
-- class模式的選關「Google」按鈕改為學習紀錄入口，避免誤顯登入未設定；main禁用課堂雲端存城以保護正式帳號城市。
+## 功能
 
-## 驗證
+十關目標、三種閱讀支援、故事示意圖、關鍵詞注音、朗讀、段落選讀脈絡、證據句與理由、提示／錯答紀錄、岳陽樓預測反思、原文回憶／遷移、隔日練習、作品版本與 SVG 卡、獨立課堂場景、教師指定任務與檔案往返判讀。
 
-- 修正第一波瀏覽器腳本reload入口，`tests/learning-browser.mjs` 已通過（support、注音、錯答、提示保草稿、前進、兩版作品、遷移、reload、390px）。evidence/learning/student。
-- `tests/classroom-reports-browser.mjs`已通過：assignment、課堂、原城存檔不被課堂寫入、JSON作業匯出、教師匯入、回饋匯出、學生讀取、回到作品回饋自動帶入、390px。evidence/learning/classroom；已看mobile截圖。
-- `node --test tests/learning.test.js tests/learning-reports.test.js tests/classroom.test.js tests/literary-quests.test.js tests/save-schema.test.js` 59/59。
-- `git diff --check`通過。
-- browser最近成功後又小改了classroom選關帳號入口（改到report），此小項尚待下波整合檢查。
+## 驗證證據
 
-## 尚未完成／下一波必須處理
+- 全套405／405；最後僅調整學習摘要的遷移分類，受影響的13項再測通過。
+- build 與 Functions bundle 成功。
+- 本機學生、教師與十關瀏覽器均通過（含390px與原城市隔離）。
+- 正式兩站教師檔案往返通過；Cloudflare學生流程、SVG作品卡下載、課堂選關到學習紀錄入口通過。
+- evidence/learning/production-readback、production-cloudflare、production-netlify、production-student、production-stage。
+- 新學習資料經 SQLite API 測試保存並原樣讀回；本次沒有重做真人Google登入或跨實體裝置登入。
 
-1. 低年級目前主題符號＋文字，須增加真正場景圖像支援。
-2. 國中完整段落脈絡：現在沿用原有節錄；可补作品脈絡導讀/段落連結，保留官方全文來源；不能宣稱已提供全文。
-3. 隔次已有兩題不同生活遷移題，仍須增加原文回憶不同題目，把記得課文與能應用分開。
-4. 時間處理與學習記錄delayed語意驗證加強；clock backwards記錄不能變成無法存檔。
-5. 教師人為評語輸入有機制，但無中央教師認證；UI已說明來源由提供者填寫。不能稱自動雲端全班追蹤。
-6. 舊`tests/literary-ten-browser.mjs`及`tests/literary-browser.mjs`的`data-answer`要改到新證據/理由契約，不能繞過新功能。十關操作/五級不能回歸。
-7. UI `learning-transfer`提交後variant按reviews.length自動切下一題（可能讓最新回饋與新題混在一起），須調整保留当前variant並明確區分回饋。
-8. 舊直接data-answer分支已無按鈕，可移除orphan import/handler（確認沒有其他入口依賴）。
-9. 新增學習記錄實際cloud API roundtrip（本機/隔離測試）與學習schema防偽欄位、檔案過大/原紀錄保留等。
-10. 更新README過時「Google待設定」，最終測試/build/雙站部署/readback；可沿用現有Cloudflare/Turso與OAuth，不用Firebase，不要另建服務。
-11. 學習成果測試尚未涉及真正國小/國中學生，不可宣稱提升學力。跨實體裝置也仍待使用者實測。
+## 使用與限制
 
-## 下一波起手
-
-`pwd` + git status +本handoff。Vite5192原session31932仍可用（本波GET200確認），不要重啟除非確實停止。
-留意最新main changes TDZ：stageUI callback用後宣告的const learningReports，在使用者點擊時才執行所以可行；初始classroom只開literaryUI，不觸發該callback。
-先做上列缺口，最後才全套release。瀏覽器圖片在evidence/learning可view_image檢視。
-
-工作區：/Users/naichengchen/projects/bianshui-town，main，無子代理。目標不可在這個里程碑標complete。
-
-## 第三波整合接續
-
-故事示意圖、段落脈絡、原文回憶與作品 SVG 卡已實作。十關瀏覽器與學生瀏覽器通過；目前補作品卡下載、報告時鐘倒退處理並做最終整合。尚未部署。下一步：全套單元測試、教師操作、雙站部署及正式讀回。
+教師入口：營造與工具 → 學習紀錄與教師看板 → 選關／閱讀支援 → 建立課堂連結。
+學生先讀、選證據、寫理由，再做活動／修改作品；教師以檔案匯入彙整與回傳評語。
+教師資料是本機彙整、非即時全班雲端；開放文字需人工判讀。15–20分鐘與學力提升均未經真實學生研究，不可宣稱已證實。
+未要求額外新功能；正式發布工作完成。

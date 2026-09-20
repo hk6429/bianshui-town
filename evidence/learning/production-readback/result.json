@@ -1,0 +1,59 @@
+{
+  "at": "2026-09-20T15:36:49.950Z",
+  "results": [
+    {
+      "site": "https://bianshui-town.pages.dev",
+      "status": 200,
+      "configured": true,
+      "assets": [
+        {
+          "asset": "/assets/index-D0xoRegW.js",
+          "sha256": "fe7bcc59cbf97d33c2c0e5ae296349bc4fe2a598b801f0d9e6617520258fd390"
+        },
+        {
+          "asset": "/assets/three-core-Bnqzv-5T.js",
+          "sha256": "1b56bb52a8f188aeaa407076b545c57fa3195f1150850a18ac02e26bdebb5cd2"
+        },
+        {
+          "asset": "/assets/three-XM3pYBh7.js",
+          "sha256": "fd2eab870666246217181bb72a86119666b8218b3c25e41b126adda04ae61c41"
+        },
+        {
+          "asset": "/assets/three-addons-BnCZHRVg.js",
+          "sha256": "ee939d6137280c28ea8211d1e9d7a97ec1afb619db1dcb58b1b21a0e7f13e3b6"
+        },
+        {
+          "asset": "/assets/index-DJX-_sEl.css",
+          "sha256": "c62ef841a3eaba30e2c398586b191726127f90cbf2d76f8e16a947bda42dd356"
+        }
+      ]
+    },
+    {
+      "site": "https://bianshui-town.netlify.app",
+      "status": 200,
+      "configured": true,
+      "assets": [
+        {
+          "asset": "/assets/index-D0xoRegW.js",
+          "sha256": "fe7bcc59cbf97d33c2c0e5ae296349bc4fe2a598b801f0d9e6617520258fd390"
+        },
+        {
+          "asset": "/assets/three-core-Bnqzv-5T.js",
+          "sha256": "1b56bb52a8f188aeaa407076b545c57fa3195f1150850a18ac02e26bdebb5cd2"
+        },
+        {
+          "asset": "/assets/three-XM3pYBh7.js",
+          "sha256": "fd2eab870666246217181bb72a86119666b8218b3c25e41b126adda04ae61c41"
+        },
+        {
+          "asset": "/assets/three-addons-BnCZHRVg.js",
+          "sha256": "ee939d6137280c28ea8211d1e9d7a97ec1afb619db1dcb58b1b21a0e7f13e3b6"
+        },
+        {
+          "asset": "/assets/index-DJX-_sEl.css",
+          "sha256": "c62ef841a3eaba30e2c398586b191726127f90cbf2d76f8e16a947bda42dd356"
+        }
+      ]
+    }
+  ]
+}
