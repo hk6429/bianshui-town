@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "errors": [],
+  "checks": [
+    "wrong answer retry",
+    "prerequisites",
+    "reload persistence",
+    "all three unlocks",
+    "mobile overflow",
+    "build action",
+    "three models at levels 1 and 5"
+  ]
+}

@@ -9,6 +9,9 @@ export const SOURCES={
  academy:{author:'朱熹',title:'〈觀書有感〉其一',era:'南宋 · 讀書的譬喻',quote:'半畝方塘一鑑開，天光雲影共徘徊。',url:'https://zh.wikisource.org/zh-hant/觀書有感',note:'以方塘與活水比喻讀書所得。遊戲把書齋與方塘組成書院，並非詩中建築的考據復原。'}
 };
 export const DESIGNS={
+ yueyangTower:{cat:'garden',name:'岳陽樓',type:'garden',variant:0,mark:'岳',sizes:[4],cost:18000,source:null,detail:'宋韻任務解鎖。三層樓閣與登臨平臺；宋代文學意象模型，非歷史精確復原。'},
+ kaifengCourt:{cat:'civic',name:'開封府',type:'garden',variant:0,mark:'府',sizes:[4],cost:18000,source:null,detail:'宋韻任務解鎖。府門、公堂與廊院；後世包公戲曲的教學場景，非宋代案件實錄。'},
+ movableTypeHall:{cat:'school',name:'活字印書坊',type:'garden',variant:0,mark:'印',sizes:[4],cost:15000,source:null,detail:'宋韻任務解鎖。字櫃、排字臺、泥字窯與晾紙架；提供學習名額，書籍商品交易尚未加入。'},
  ...NEW_DESIGNS,
  // 文教：村塾→鎮學→書院三層，教育名額逐層增加。 // 升縣後才解鎖的縣級建置。
  countyOffice:{cat:'civic',name:'縣衙',type:'garden',variant:0,mark:'縣',sizes:[4],cost:30000,rank:4,source:null,detail:'四格縣衙：儀門、大堂與六房。奉旨升縣後才能營造；與監鎮廨同樣開啟鎮政議事，規制更高。每格 30 貫。'},
@@ -58,7 +61,7 @@ export const DESIGNS={
  pond:{cat:'garden',name:'小荷池塘',type:'garden',variant:0,mark:'荷',sizes:[1,4],source:'pond',detail:'挖出池床，注水後長出荷葉、荷花；蜻蜓在池面盤旋。'}
 };
 // 文教三層：名額倍率依村塾→鎮學→書院遞增。
-export const SCHOOL_FACTOR={villageSchool:.5,townSchool:.75,academy:1,countySchool:1.25};
+export const SCHOOL_FACTOR={movableTypeHall:1,villageSchool:.5,townSchool:.75,academy:1,countySchool:1.25};
 export const isSchool=b=>!!SCHOOL_FACTOR[b?.design];
 export const categoryOf=b=>DESIGNS[designFor(b)]?.cat||b.type||'garden';
 export const designCategory=id=>DESIGNS[id]?.cat||DESIGNS[id]?.type||'garden';

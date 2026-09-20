@@ -1,3 +1,4 @@
+import {literaryLock} from './literary-quests.js';
 import {hasCivic,hasGovernment,hasPost} from './civic.js';
 import {managed} from './city-finance.js';
 import {isSchool,categoryOf,DESIGNS} from './heritage.js';
@@ -49,6 +50,7 @@ export function reviewRank(t){
 
 // 縣級建置要等升縣；未達等級的圖樣直接擋在營造之前。
 export function lockedReason(t,design){
+ const literature= literaryLock(t,design);if(literature)return literature;
  const spec=DESIGNS[design];
  if(!spec?.rank||rankOf(t)>=spec.rank)return null;
  return `「${spec.name}」須${RANKS[spec.rank].name}之後才能營造`;

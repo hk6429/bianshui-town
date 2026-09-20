@@ -2,7 +2,7 @@ import {test} from 'node:test';import assert from 'node:assert/strict';
 import {Town} from '../src/simulation.js';import {DESIGNS,squareCells} from '../src/heritage.js';
 import {previewPlan} from '../src/plan-preview.js';import {layRoad} from '../src/urban.js';import {MAX_RANK} from '../src/milestones.js';
 const at=(x=0,z=0)=>[{x,z}];
-const ranked=(o)=>{const t=new Town(o);t.city.rank=MAX_RANK;layRoad(t,'lane',[{x:-1,z:0}]);return t;};   // 先有路才能蓋
+const ranked=(o)=>{const t=new Town(o);t.city.rank=MAX_RANK;t.journey.literary=Object.fromEntries(['yueyang','kaifeng','printing'].map(id=>[id,{step:4,note:''}]));layRoad(t,'lane',[{x:-1,z:0}]);return t;};   // 先有路才能蓋
 test('preview names and counts match actual placement for every design and supported footprint',()=>{
  for(const [design,d] of Object.entries(DESIGNS))for(const size of d.sizes){const t=ranked(),cells=size===4?squareCells({x:0,z:0}):at(),before=JSON.stringify(t),r=previewPlan(t,{mode:d.type,design},cells);assert(r.valid,`${design}: ${r.reason}`);assert.equal(JSON.stringify(t),before,'preview has no side effects');assert(t.place(d.type,cells,true,design));for(const b of t.buildings)assert(r.result.includes(b.name),`${design}: ${r.result} != ${b.name}`);assert.equal(t.buildings.length,1);}
 });

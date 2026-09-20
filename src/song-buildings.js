@@ -1,3 +1,4 @@
+import {literaryLandmark} from './literary-landmarks.js';
 import {roofTone} from './roof-colors.js';
 import {decorateTier} from './tier-scene.js';
 import {varietyBuilding} from './variety-scene.js';
@@ -5,7 +6,7 @@ import {civicBuilding} from './civic-scene.js';
 import * as THREE from 'three';
 import {designFor} from './heritage.js';
 // The shared primitives also serve the original village; each plan has its own silhouette.
-export function songBuilding(b,api){return decorateTier(baseBuilding(b,api),b,api);}
+export function songBuilding(b,api){const landmark=literaryLandmark(b,api);if(landmark)return landmark;return decorateTier(baseBuilding(b,api),b,api);}
 function baseBuilding(b,api){
  const civic=civicBuilding(b,api);if(civic)return civic;
  const varied=varietyBuilding(b,api);if(varied)return varied;

@@ -1,0 +1,26 @@
+import {chromium} from '@playwright/test';
+import {mkdir,writeFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const out='evidence/literary-quests';await mkdir(out,{recursive:true});
+const browser=await chromium.launch({headless:true,executablePath:process.env.TEST_CHROMIUM_PATH});
+const page=await browser.newPage({viewport:{width:1280,height:900}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+await page.goto('http://127.0.0.1:5183');await page.waitForFunction(()=>window.__townDebug);
+await page.evaluate(()=>{document.querySelectorAll('dialog[open]').forEach(d=>d.close());document.querySelector('#literary-quests-btn').click();});
+await page.locator('[data-answer="0"]').click();assert.match(await page.locator('#literary-status').textContent(),/再讀/);
+for(const a of [1,2,0])await page.locator(`[data-answer="${a}"]`).click();
+await page.locator('[data-unlock]').click();assert.match(await page.locator('#literary-status').textContent(),/尚缺/);
+await page.locator('#literary-note').fill('先天下之憂：先安置居民。');await page.locator('[data-note]').click();
+await page.reload();await page.waitForFunction(()=>window.__townDebug);await page.evaluate(()=>{document.querySelectorAll('dialog[open]').forEach(d=>d.close());document.querySelector('#literary-quests-btn').click();});
+assert.equal(await page.locator('#literary-note').inputValue(),'先天下之憂：先安置居民。');
+await page.evaluate(()=>{const t=window.__townDebug.town();t.city.mode='sandbox';t.place('home',[{x:-6,z:-4}],true);t.place('work',[{x:-4,z:-4}],true);t.place('shop',[{x:-2,z:-4}],true);t.place('garden',[{x:0,z:-4}],true,'granary');t.place('garden',[{x:2,z:-4}],true,'villageSchool');});
+await page.locator('[data-unlock]').click();assert.match(await page.locator('#literary-status').textContent(),/已儲存/);
+for(const [id,answers] of [['kaifeng',[1,2,0]],['printing',[0,1,2]]]){await page.locator(`[data-quest="${id}"]`).click();for(const a of answers)await page.locator(`[data-answer="${a}"]`).click();await page.locator('[data-unlock]').click();assert.match(await page.locator('#literary-status').textContent(),/已儲存/);}
+await page.screenshot({path:out+'/desktop.png'});
+await page.setViewportSize({width:390,height:844});await page.screenshot({path:out+'/mobile.png'});assert(await page.locator('#literary-quests').evaluate(d=>d.scrollWidth<=d.clientWidth));
+await page.locator('[data-build]').click();assert.equal(await page.evaluate(()=>window.__townDebug.mode()),'garden');
+await page.setViewportSize({width:1280,height:900});
+await page.evaluate(()=>{const t=window.__townDebug.town();for(const [i,d] of ['yueyangTower','kaifengCourt','movableTypeHall'].entries()){const x=-6+i*3,z=0;if(!t.place('garden',[{x,z},{x:x+1,z},{x,z:z+1},{x:x+1,z:z+1}],true,d))throw Error('cannot place '+d);}document.querySelector('#pause-btn').click();});
+await page.waitForTimeout(600);await page.screenshot({path:out+'/landmarks.png'});
+await page.evaluate(()=>{const t=window.__townDebug.town();for(const b of t.buildings)if(['yueyangTower','kaifengCourt','movableTypeHall'].includes(b.design))b.tier=5;t.revision++;});
+await page.waitForTimeout(500);await page.screenshot({path:out+'/level5.png'});
+assert.deepEqual(errors,[]);await writeFile(out+'/result.json',JSON.stringify({passed:true,errors,checks:['wrong answer retry','prerequisites','reload persistence','all three unlocks','mobile overflow','build action','three models at levels 1 and 5']},null,2));await browser.close();console.log('Literary browser checks passed');

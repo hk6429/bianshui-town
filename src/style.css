@@ -110,3 +110,5 @@
 .handbook-step h4{margin:0 0 6px;font:500 1rem 'Noto Serif TC',serif;color:#4f6347}
 .handbook-step ol{margin:0;padding-left:20px;font-size:0.8125rem;line-height:2;color:#5d6750}
 #handbook{width:560px}
+
+#literary-quests{width:min(660px,92vw);max-height:85dvh;overflow:auto}#literary-quests header{display:flex;justify-content:space-between;align-items:center}#literary-quests nav,.literary-choices{display:flex;gap:8px;flex-wrap:wrap}.literary-choices{flex-direction:column}#literary-quests button{white-space:normal;text-align:left}#literary-quests textarea{display:block;width:100%;box-sizing:border-box;margin:8px 0}#literary-quests blockquote{margin:12px 0;padding:12px;background:#e4e7d5}#literary-status{min-height:1.5em} .literary-history{font-size:.9em}
