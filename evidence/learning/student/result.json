@@ -1,0 +1,12 @@
+{
+  "readingSupport": true,
+  "zhuyin": true,
+  "wrongAnswerRetained": true,
+  "hintPreservesDraft": true,
+  "evidenceAndReasonProgression": true,
+  "revisions": 2,
+  "transfer": true,
+  "reload": true,
+  "mobileWidth": 390,
+  "errors": []
+}

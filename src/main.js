@@ -1,3 +1,5 @@
+import {installLearningReports} from './learning-reports-ui.js';
+import {classroomAssignment,classroomKey,createClassroomTown} from './classroom.js';
 import {installCloudSave} from './cloud-save-ui.js';
 import {installStageSelect} from './stage-select.js';
 import {landmarkLifeHTML,handleLandmarkAction,captureLandmarkDraft,resetLandmarkDrafts} from './landmark-life-ui.js';
@@ -78,15 +80,17 @@ const icons={explore:'<circle cx="16" cy="16" r="10"/><path d="m20 12-3 7-5 2 3-
 for(const el of document.querySelectorAll('[data-icon]'))el.innerHTML=`<svg viewBox="0 0 32 32" aria-hidden="true">${icons[el.dataset.icon]}</svg>`;
 const pointerGesture=new PointerGesture();let pendingPlan=null;
 let keyboardCursor={x:0,z:0},keyboardActive=false;
-let town=new Town({mode:'managed'}),scene,mode='explore',speed=1,paused=false,drag=null,down=null,pinned=null,hovered=null,lastUi=0,lastSave=0,toastTimer,following=null,selectedLot=null;
+const classroom=classroomAssignment(location.search);
+let town=classroom?createClassroomTown(classroom):new Town({mode:'managed'}),scene,mode='explore',speed=1,paused=false,drag=null,down=null,pinned=null,hovered=null,lastUi=0,lastSave=0,toastTimer,following=null,selectedLot=null;
 const fixtureName=new URLSearchParams(location.search).get('fixture');const fixtureMode=import.meta.env.DEV&&['v4','v5','v6','v7','v8'].includes(fixtureName);
 const owner=crypto.randomUUID();
 const storage={getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value),key:i=>localStorage.key(i),get length(){return localStorage.length;}};
 const storageTest=import.meta.env.DEV&&new URLSearchParams(location.search).has('storage-test');
-const saveStore=new SaveStore({storage,validate:validateSave,owner,key:storageTest?'bianshui-town-test-v1':SAVE_KEY});let saveUI,recovery,cloudUI;
+const saveStore=new SaveStore({storage,validate:validateSave,owner,key:classroom?classroomKey(classroom.quest):storageTest?'bianshui-town-test-v1':SAVE_KEY});let saveUI,recovery,cloudUI;
 try{if(fixtureMode)town=Town.restore(await(await fetch(`/tests/fixtures/${fixtureName}-town.json`)).json());else{const loaded=saveStore.load();if(loaded.data)town=Town.restore(loaded.data);if(loaded.status==='recovery')paused=true;}}catch(error){saveStore.blocked='recovery';saveStore.error=error.message;paused=true;$('#save-status').textContent='存檔無法讀取 · 原檔保留，請開啟存檔管理';}
 
 try{scene=new TownScene(canvas);}catch(error){$('#welcome').innerHTML='<h2>目前無法開啟 3D 場景</h2><p>請使用支援 WebGL 2 的瀏覽器，並開啟硬體加速後重新整理。</p>';console.error(error);throw error;}
+if(classroom){town.city.mode='sandbox';document.body.classList.add('classroom-mode');const banner=document.createElement('aside');banner.id='classroom-banner';banner.innerHTML='<strong>課堂小鎮</strong> <span>設施已備妥，使用獨立本機存檔；閱讀時暫停。學習紀錄可匯出交給老師。</span> <a href="'+location.pathname+'">回到我的小鎮</a>';document.body.append(banner);$('#cloud-save-btn').hidden=true;$('#budget-btn').hidden=true;}
 if(town.buildings.length)$('#welcome').hidden=true;
 const viewPreferences=readViewPreferences(storage),motionQuery=matchMedia('(prefers-reduced-motion: reduce)'),buildingLabels=new BuildingLabels($('#building-use-labels'));
 function applyViewPreferences(){
@@ -422,6 +426,10 @@ $('#close-quest').onclick=()=>$('#quest').close();
 
 document.addEventListener('input',captureLandmarkDraft);
 
-cloudUI=installCloudSave({getTown:()=>town.toJSON(),validate:validateSave,enabled:!fixtureMode,preview:data=>saveUI?.previewData(data)});
-const stageUI=installStageSelect({getTown:()=>town,openQuest:id=>literaryUI.open(id),openAccount:()=>cloudUI.open()});
+cloudUI=installCloudSave({getTown:()=>town.toJSON(),validate:validateSave,enabled:!fixtureMode&&!classroom,preview:data=>saveUI?.previewData(data)});
+const stageUI=installStageSelect({getTown:()=>town,openQuest:id=>literaryUI.open(id),openAccount:()=>classroom?learningReports.open():cloudUI.open(),accountLabel:classroom?'學習紀錄與交作業':'Google 登入與雲端存檔'});
 if(!fixtureMode&&!town.buildings.length&&!saveStore.blocked&&!document.querySelector('dialog[open]'))stageUI.open();
+
+if(classroom&&!saveStore.blocked)literaryUI.open(classroom.quest);
+
+const learningReports=installLearningReports({getTown:()=>town,openQuest:id=>literaryUI.open(id)});
