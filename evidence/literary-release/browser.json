@@ -1,0 +1,25 @@
+{
+  "scope": "isolated automated production browsers; no real user save modified",
+  "results": [
+    {
+      "name": "cloudflare",
+      "url": "https://bianshui-town.pages.dev/",
+      "tenQuests": true,
+      "illustratedJournal": true,
+      "importedTier5": true,
+      "comparison": true,
+      "mobileWidth": 390,
+      "errors": []
+    },
+    {
+      "name": "netlify",
+      "url": "https://bianshui-town.netlify.app/",
+      "tenQuests": true,
+      "illustratedJournal": true,
+      "importedTier5": true,
+      "comparison": true,
+      "mobileWidth": 390,
+      "errors": []
+    }
+  ]
+}

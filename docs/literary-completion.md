@@ -36,4 +36,6 @@
 
 ## 部署狀態
 
-本機驗證完成，待本輪正式部署／讀回記錄落盤後更新此段。部署目標：Cloudflare Pages bianshui-town main、Netlify bianshui-town。先驗證帳號、推送GitHub，再部署同一份dist，逐一比對正式站JS/CSS的SHA256與首頁入口；不將資源讀回稱為真人驗收。
+2026-09-20已完成：程式提交848f7f1推送GitHub；同一份dist部署至Cloudflare Pages（6302c38e）及Netlify（6aafc29a4dae120b33ae07c2）。兩個正式首頁及各5個JS/CSS的SHA256全部相符。兩站獨立自動瀏覽器驗證十任務入口、圖文回憶、城市檔案匯入、五級地標與390px資訊卡，零pageerror；截圖已讀取。
+
+證據：`evidence/literary-release/release.json`、`browser.json`與兩站手機截圖。正式站：https://bianshui-town.pages.dev/；備援：https://bianshui-town.netlify.app/。本次是自動操作與程式驗證，不宣稱真人長期遊玩或史學鑑定。

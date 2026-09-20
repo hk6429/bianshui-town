@@ -1,0 +1,80 @@
+{
+  "builtCommit": "848f7f1",
+  "checkedAt": "2026-09-20T11:26:06.933223+00:00",
+  "localTests": {
+    "passed": 388,
+    "failed": 0
+  },
+  "build": "passed",
+  "deployments": {
+    "cloudflare": "https://6302c38e.bianshui-town.pages.dev",
+    "netlify": "https://6aafc29a4dae120b33ae07c2--bianshui-town.netlify.app"
+  },
+  "readback": [
+    {
+      "provider": "cloudflare",
+      "url": "https://bianshui-town.pages.dev",
+      "homepage": true,
+      "assets": [
+        {
+          "path": "/assets/index-9jQGxLzI.css",
+          "sha256": "9307b725cb940edda9fa13748925a4b039fe06c9298cb8608e6270a3e2f5495f",
+          "matches": true
+        },
+        {
+          "path": "/assets/index-BjVLicA9.js",
+          "sha256": "b5ad252ecafcd153041424e35dc3a67406a8447130734fbc81ac5c164e7c90f3",
+          "matches": true
+        },
+        {
+          "path": "/assets/three-XM3pYBh7.js",
+          "sha256": "fd2eab870666246217181bb72a86119666b8218b3c25e41b126adda04ae61c41",
+          "matches": true
+        },
+        {
+          "path": "/assets/three-addons-BnCZHRVg.js",
+          "sha256": "ee939d6137280c28ea8211d1e9d7a97ec1afb619db1dcb58b1b21a0e7f13e3b6",
+          "matches": true
+        },
+        {
+          "path": "/assets/three-core-Bnqzv-5T.js",
+          "sha256": "1b56bb52a8f188aeaa407076b545c57fa3195f1150850a18ac02e26bdebb5cd2",
+          "matches": true
+        }
+      ]
+    },
+    {
+      "provider": "netlify",
+      "url": "https://bianshui-town.netlify.app",
+      "homepage": true,
+      "assets": [
+        {
+          "path": "/assets/index-9jQGxLzI.css",
+          "sha256": "9307b725cb940edda9fa13748925a4b039fe06c9298cb8608e6270a3e2f5495f",
+          "matches": true
+        },
+        {
+          "path": "/assets/index-BjVLicA9.js",
+          "sha256": "b5ad252ecafcd153041424e35dc3a67406a8447130734fbc81ac5c164e7c90f3",
+          "matches": true
+        },
+        {
+          "path": "/assets/three-XM3pYBh7.js",
+          "sha256": "fd2eab870666246217181bb72a86119666b8218b3c25e41b126adda04ae61c41",
+          "matches": true
+        },
+        {
+          "path": "/assets/three-addons-BnCZHRVg.js",
+          "sha256": "ee939d6137280c28ea8211d1e9d7a97ec1afb619db1dcb58b1b21a0e7f13e3b6",
+          "matches": true
+        },
+        {
+          "path": "/assets/three-core-Bnqzv-5T.js",
+          "sha256": "1b56bb52a8f188aeaa407076b545c57fa3195f1150850a18ac02e26bdebb5cd2",
+          "matches": true
+        }
+      ]
+    }
+  ],
+  "scope": "HTTP asset SHA256 verification; interactive automated checks separately in browser.json"
+}
