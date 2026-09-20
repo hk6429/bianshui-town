@@ -1,0 +1,18 @@
+{
+  "commit": "73c4dfe",
+  "checkedAt": "2026-09-20T22:40:21.660Z",
+  "sites": [
+    {
+      "base": "https://bianshui-town.pages.dev",
+      "assetsMatched": 5,
+      "unauthenticatedTeamList": 401,
+      "configured": true
+    },
+    {
+      "base": "https://bianshui-town.netlify.app",
+      "assetsMatched": 5,
+      "unauthenticatedTeamList": 401,
+      "configured": true
+    }
+  ]
+}
