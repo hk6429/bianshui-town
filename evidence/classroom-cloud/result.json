@@ -1,0 +1,15 @@
+{
+  "environment": "isolated SQLite and real Cloudflare request handler; Google identity verification stubbed only in test",
+  "teacherCreate": true,
+  "studentJoin": true,
+  "assignmentScene": true,
+  "studentEvidence": true,
+  "submission": true,
+  "teacherPolling": true,
+  "feedback": true,
+  "revision2": true,
+  "previousVersion": true,
+  "mobile390": true,
+  "printable": true,
+  "errors": []
+}

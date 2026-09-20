@@ -1,0 +1,30 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createClient} from '@libsql/client';import {readFile} from 'node:fs/promises';
+import {createCloudHandler} from '../server/cloud-api.js';import {createReport} from '../src/learning-reports.js';import {saveLearningRevision,recordLearningAnswer} from '../src/learning.js';import {createClassroomTown,classroomKey,classroomAssignment} from '../src/classroom.js';import {learningChecklist} from '../src/learning-guide.js';
+const origin='https://bianshui-town.pages.dev',env={GOOGLE_CLIENT_ID:'test',TURSO_DATABASE_URL:'unused',TURSO_AUTH_TOKEN:'test',SESSION_SECRET:'test-secret-with-at-least-32-characters'};
+const request=(path,cookie='',data,from=origin)=>new Request(origin+'/api/'+path,{method:data===undefined?'GET':'POST',headers:{Cookie:cookie,...(data===undefined?{}:{Origin:from,'Content-Type':'application/json'})},...(data===undefined?{}:{body:JSON.stringify(data)})});
+test('authenticated class lifecycle isolates owners and pupils, protects versions and feedback',async()=>{
+ const db=createClient({url:'file::memory:'});await db.executeMultiple(await readFile('migrations/002_classrooms.sql','utf8'));const api=createCloudHandler({database:()=>db,googleVerify:async x=>JSON.parse(x)});
+ const call=async(path,cookie,data,status=200)=>{const response=await api(request(path,cookie,data),env);const result=await response.json();assert.equal(response.status,status,JSON.stringify(result));return result;};
+ const login=async uid=>{const r=await api(request('config'),env),config=await r.json();const auth=await api(request('auth/google',r.headers.get('set-cookie').split(';')[0],{credential:JSON.stringify({sub:uid,name:uid,nonce:config.nonce})}),env);return auth.headers.get('set-cookie').split(';')[0];};
+ try{const teacher=await login('teacher-01'),other=await login('teacher-02'),alice=await login('student-alice'),bob=await login('student-bob');
+ await call('classroom/list','',undefined,401);const c=await call('classroom/create',teacher,{name:'801國文'});assert.match(c.code,/^[A-F0-9]{16}$/);
+ await call('classroom/class?id='+c.id,other,undefined,403);await call('classroom/assign',other,{classId:c.id,quest:'kaifeng',support:'story',title:'越權'},403);
+ await call('classroom/join',alice,{code:c.code,alias:'05號'});await call('classroom/join',bob,{code:c.code,alias:'06號'});
+ const studentRoom=await call('classroom/class?id='+c.id,alice);assert.equal(studentRoom.teacher,false);assert.equal(studentRoom.code,undefined);assert.deepEqual(studentRoom.members,[]);
+ await call('classroom/class-open',teacher,{classId:c.id,open:false});await call('classroom/join',other,{code:c.code,alias:'07號'},404);
+ const a=await call('classroom/assign',teacher,{classId:c.id,quest:'kaifeng',support:'story',title:'第一週查證'});
+ const t=createClassroomTown({quest:'kaifeng',level:'story'});recordLearningAnswer(t,'kaifeng',{step:0,answer:1,evidence:0,reason:'街坊只是聽說',at:1});saveLearningRevision(t,'kaifeng',{text:'先聽雙方陳述，再找線索。',at:2});const report=createReport(t,{id:'anonymous-123',name:'本機名稱'},3);
+ await call('classroom/submit',other,{assignmentId:a.id,expectedVersion:0,report},403);
+ const responses=await Promise.all([0,1].map(()=>api(request('classroom/submit',alice,{assignmentId:a.id,expectedVersion:0,report}),env)));assert.deepEqual(responses.map(r=>r.status).sort(),[200,409]);
+ const own=await call('classroom/work?id='+a.id,alice),peer=await call('classroom/work?id='+a.id,bob);assert.equal(own.submissions.length,1);assert.equal(own.submissions[0].payload,undefined);assert.equal(own.difficulties,undefined);assert.equal((await call('classroom/work?id='+a.id,teacher)).difficulties.length,3);assert.equal(peer.submissions.length,0);
+ await call(`classroom/submission?id=${a.id}&student=student-alice&version=1`,bob,undefined,403);
+ const saved=await call(`classroom/submission?id=${a.id}&student=student-alice&version=1`,teacher);assert.equal(saved.report.student.name,'05號');assert.equal(saved.report.student.id,'student-alice');assert(!JSON.stringify(saved).includes('buildings'));
+ const f={assignmentId:a.id,student:'student-alice',version:1,comment:'補上證據的來源',judgement:'supported'};await call('classroom/feedback',bob,f,403);const feedback=await call('classroom/feedback',teacher,f);assert.equal(feedback.feedback.sourceText,'先聽雙方陳述，再找線索。');await call('classroom/feedback',teacher,f,409);
+ saveLearningRevision(t,'kaifeng',{text:'街坊只聽人說，所以我要再查來源。',feedback:'補上證據的來源',changes:'加入具體線索',at:4});const revised=createReport(t,{id:'anonymous-123',name:'本機名稱'},5);await call('classroom/submit',alice,{assignmentId:a.id,expectedVersion:1,report:revised});assert.equal((await call('classroom/work?id='+a.id,teacher)).submissions[0].version,2);assert.equal((await call(`classroom/submission?id=${a.id}&student=student-alice&version=1`,alice)).feedback.comment,f.comment);
+ await call('classroom/assignment-open',teacher,{assignmentId:a.id,open:false});await call('classroom/submit',alice,{assignmentId:a.id,expectedVersion:2,report:revised},409);
+ await call('classroom/assignment-open',teacher,{assignmentId:a.id,open:true});const bad=structuredClone(revised);bad.learning.quests.lotus=bad.learning.quests.kaifeng;await call('classroom/submit',alice,{assignmentId:a.id,expectedVersion:2,report:bad},400);
+ const evil=await api(request('classroom/create',teacher,{name:'CSRF'},'https://evil.example'),env);assert.equal(evil.status,403);
+ const oversized=await api(request('classroom/submit',alice,{x:'x'.repeat(760001)}),env);assert.equal(oversized.status,400);
+ }finally{db.close();}
+});
+test('each cloud assignment has a separate classroom save and next-step checklist',()=>{const assignmentId='a1234567-1234-1234-1234-123456789abc',a=classroomAssignment('?classroom=kaifeng&assignment='+assignmentId);assert.equal(a.assignmentId,assignmentId);assert.notEqual(classroomKey('kaifeng',assignmentId),classroomKey('kaifeng'));const t=createClassroomTown({quest:'kaifeng',level:'story'});assert.equal(learningChecklist(t,'kaifeng')[0].done,false);saveLearningRevision(t,'kaifeng',{text:'先找證據'});assert.equal(learningChecklist(t,'kaifeng')[2].done,true);});

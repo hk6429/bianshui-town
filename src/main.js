@@ -1,3 +1,4 @@
+import {installClassroomCloud} from './classroom-cloud-ui.js';
 import {installLearningReports} from './learning-reports-ui.js';
 import {classroomAssignment,classroomKey,createClassroomTown} from './classroom.js';
 import {installCloudSave} from './cloud-save-ui.js';
@@ -86,7 +87,7 @@ const fixtureName=new URLSearchParams(location.search).get('fixture');const fixt
 const owner=crypto.randomUUID();
 const storage={getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value),key:i=>localStorage.key(i),get length(){return localStorage.length;}};
 const storageTest=import.meta.env.DEV&&new URLSearchParams(location.search).has('storage-test');
-const saveStore=new SaveStore({storage,validate:validateSave,owner,key:classroom?classroomKey(classroom.quest):storageTest?'bianshui-town-test-v1':SAVE_KEY});let saveUI,recovery,cloudUI;
+const saveStore=new SaveStore({storage,validate:validateSave,owner,key:classroom?classroomKey(classroom.quest,classroom.assignmentId):storageTest?'bianshui-town-test-v1':SAVE_KEY});let saveUI,recovery,cloudUI;
 try{if(fixtureMode)town=Town.restore(await(await fetch(`/tests/fixtures/${fixtureName}-town.json`)).json());else{const loaded=saveStore.load();if(loaded.data)town=Town.restore(loaded.data);if(loaded.status==='recovery')paused=true;}}catch(error){saveStore.blocked='recovery';saveStore.error=error.message;paused=true;$('#save-status').textContent='存檔無法讀取 · 原檔保留，請開啟存檔管理';}
 
 try{scene=new TownScene(canvas);}catch(error){$('#welcome').innerHTML='<h2>目前無法開啟 3D 場景</h2><p>請使用支援 WebGL 2 的瀏覽器，並開啟硬體加速後重新整理。</p>';console.error(error);throw error;}
@@ -432,4 +433,5 @@ if(!fixtureMode&&!town.buildings.length&&!saveStore.blocked&&!document.querySele
 
 if(classroom&&!saveStore.blocked)literaryUI.open(classroom.quest);
 
-const learningReports=installLearningReports({getTown:()=>town,openQuest:id=>literaryUI.open(id)});
+const classroomCloud=installClassroomCloud({getTown:()=>town,openQuest:id=>literaryUI.open(id),assignmentId:classroom?.assignmentId});
+const learningReports=installLearningReports({openCloud:()=>classroomCloud.open(),getTown:()=>town,openQuest:id=>literaryUI.open(id)});

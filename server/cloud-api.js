@@ -1,3 +1,4 @@
+import {classroomRequest} from './classroom-api.js';
 import {createClient} from '@libsql/client/web';
 import {createRemoteJWKSet,jwtVerify,SignJWT} from 'jose';
 import {validateSave,MAX_SAVE_BYTES} from '../src/save-schema.js';
@@ -32,6 +33,7 @@ export function createCloudHandler({database=env=>createClient({url:env.TURSO_DA
    if(path==='/api/auth/logout'&&method==='POST')return json({ok:true},200,{'Set-Cookie':cookie(SESSION,'',0)});
    let session;try{session=await verify(env,cookies(request)[SESSION],'session');if(typeof session.sub!=='string'||!session.sub)throw Error('uid');}catch{return json({error:'請先登入 Google。'},401);}
    if(path==='/api/auth/session'&&method==='GET')return json({user:{uid:session.sub,displayName:session.name}});
+   if(path.startsWith('/api/classroom/')){let input;if(method==='POST'){try{input=await body(request,760000);}catch{return json({error:'班級資料無效或過大'},400);}}try{return json(await classroomRequest(database(env),session.sub,new URL(request.url),method,input));}catch(e){if(e.status)return json({error:e.message},e.status);throw e;}}
    if(path==='/api/save'&&method==='GET'){if(new URL(request.url).searchParams.get('user')!==session.sub)return json({error:'登入帳號已變更，請重新開啟雲端存檔。'},409);const save=await readSave(database(env),session.sub);if(save.data)validateSave(save.data);return json(save);}
    if(path==='/api/save'&&method==='POST'){
     let input,payload;try{input=await body(request,MAX_SAVE_BYTES+1024);if(input.userId!==session.sub)return json({error:'登入帳號已變更，請重新開啟雲端存檔。'},409);if(!Number.isSafeInteger(input.revision)||input.revision<0)throw Error('revision');validateSave(input.data);payload=JSON.stringify(input.data);if(new TextEncoder().encode(payload).length>MAX_SAVE_BYTES)throw Error('large');}catch{return json({error:'城市檔案無效或超過 2 MB；本機進度仍保留。'},400);}
