@@ -1,0 +1,13 @@
+{
+  "testGoogleIdentity": true,
+  "realSQLiteAndAPI": true,
+  "teacherFormation": true,
+  "distinctRoles": true,
+  "eachOwnEvidence": true,
+  "peerReply": true,
+  "refreshPreservesDraft": true,
+  "jointConclusion": true,
+  "teacherReview": true,
+  "mobile390": true,
+  "errors": []
+}

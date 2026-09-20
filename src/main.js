@@ -68,6 +68,7 @@ import {setWeather} from './weather.js';
 import {GOODS,RECIPES,isWorkshop,recipeFor,at,placeName,locateLot} from './production.js';
 import {courtyards} from './courtyards.js';
 import './style.css';
+import './adventure.css';
 import './readable-ui.css';
 import * as THREE from 'three';
 import {TownScene} from './scene.js';

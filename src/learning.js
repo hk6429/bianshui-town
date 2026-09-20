@@ -16,7 +16,7 @@ export function useLearningHint(t,id,step){if(!ids.includes(id)||!Number.isInteg
 export function recordLearningAnswer(t,id,{step,answer,evidence,reason,at=Date.now()}){
  const q=LITERARY_QUESTS[id],entry=t.journey?.literary?.[id];if(!q||!q.steps[step]||(entry?.step||0)!==step||!Number.isInteger(answer)||answer<0||answer>=q.steps[step].choices.length||!Number.isInteger(evidence)||!evidenceLines(id)[evidence]||typeof reason!=='string'||!reason.trim()||reason.length>400||!timestamp(at))return false;
  const state=ensure(t,id);at=orderedAt(state,at);const correct=answer===q.steps[step].answer,evidenceMatch=evidenceLines(id)[evidence].step===step;
- state.attempts.push({step,answer,evidence,reason:reason.trim(),correct,evidenceMatch,hints:state.hints[step],level:learningState(t).level,at});state.attempts=state.attempts.slice(-90);
+ state.attempts.push({step,answer,evidence,reason:reason.trim(),correct,evidenceMatch,hints:state.hints[step],level:learningState(t).level,at});while(state.attempts.length>90){const oldWrong=state.attempts.findIndex(a=>!a.correct||!a.evidenceMatch);state.attempts.splice(Math.max(0,oldWrong),1);}
  // The reason is preserved for human review. A matching excerpt is not a quality score.
  if(correct&&evidenceMatch){state.firstLearnedAt ||=state.attempts.find(a=>a.correct&&a.evidenceMatch)?.at||at;answerQuest(t,id,step,answer);}
  return true;

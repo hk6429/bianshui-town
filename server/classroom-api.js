@@ -1,3 +1,4 @@
+import {teamRequest} from './classroom-team.js';
 import {validateReport,createFeedback,REVIEW_JUDGEMENTS,commonDifficulties} from '../src/learning-reports.js';
 import {LITERARY_QUESTS} from '../src/literary-quests.js';
 import {READING_LEVELS} from '../src/learning-content.js';
@@ -13,6 +14,7 @@ async function member(db,classId,uid){const c=await first(db,'SELECT alias FROM 
 async function assignment(db,assignmentId){const a=await first(db,'SELECT * FROM learning_assignments WHERE id=?',[id(assignmentId)]);if(!a)error('找不到任務',404);return a;}
 export async function classroomRequest(db,uid,url,method,input){
  const path=url.pathname.replace('/api/classroom/','');
+ if(path.startsWith('team-'))return teamRequest(db,uid,url,method,input);
  if(method==='GET'&&path==='list')return {owned:await rows(db,'SELECT id,name,code,open FROM learning_classes WHERE owner=? ORDER BY created_at DESC',[uid]),joined:await rows(db,'SELECT c.id,c.name,m.alias FROM learning_classes c JOIN learning_members m ON c.id=m.class_id WHERE m.student=? ORDER BY m.joined_at DESC',[uid])};
  if(method==='POST'&&path==='create'){
   exact(input,['name']);const name=label(input.name),classId=crypto.randomUUID(),code=crypto.randomUUID().replaceAll('-','').slice(0,16).toUpperCase();

@@ -448,3 +448,7 @@ Pages 專案 `bianshui-town`，正式分支 `main`，目前手動發布。執行
 「我的班級與作業」提供 Google 登入、班級碼、派課、指定關卡交作業、教師版本回饋及每15秒更新的提交摘要。原有教師看板仍可使用本機JSON交換。新手任務清單、手機橫向選關列與可列印試玩包同步提供。
 
 操作、同步限制與驗證方式見 [課堂功能說明](docs/classroom/README.md)。資料庫新增 `migrations/002_classrooms.sql`，不更動原城市存檔表。
+
+### 文學冒險與合作小隊
+
+十關新增居民線索、演練資源取捨、後續守護及紀念收藏；班級任務可安排2–4人互補探究小隊，保留各自證據、回應與共同結論版本。詳見[操作與驗證界線](docs/gamification/README.md)及[獨立設計初評](docs/gamification/INDEPENDENT-REVIEW.md)。
