@@ -17,7 +17,13 @@
 - tests/learning-browser.mjs學生原有流程迴歸通過。
 - 建置與Functions bundle通過。Turso已執行002遷移，讀回確認四張learning資料表存在。
 
-## 待完成
+## 已部署與正式讀回
 
-commit／push，雙站部署，正式readback驗證HTML／assets／試玩包／未登入班級API保護，記錄部署ID並更新文件。
-不需重新測已通過的全套流程。教育成效、真實師生Google帳號、跨實體裝置尚未測。
+- 實作提交：96edc3e，已推送 GitHub main。
+- Cloudflare：8782dab9；https://bianshui-town.pages.dev/
+- Netlify：6ab00a1352c77d2e4bf1f3c0；https://bianshui-town.netlify.app/
+- 兩站入口JS／CSS與CSV逐檔SHA-256相符。試玩包正文相符；Netlify另外附加既有HUD工具列腳本，已逐字確認差異。
+- 正式390px新手引導、下一步、班級登入入口與試玩包通過；未登入GET班級列表／POST建立班級均401，Google config configured=true。
+- 證據：evidence/classroom-cloud/production/result.json、screenshots；可重現腳本tests/classroom-production.mjs。
+
+三項功能實作及部署完成。真實師生Google帳號、跨實體裝置與學生學習成效仍未實測；不要把隔離身分的自動測試稱為真人驗收。

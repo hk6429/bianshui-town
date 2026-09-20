@@ -1,0 +1,30 @@
+{
+  "at": "2026-09-20T16:32:55.714Z",
+  "results": [
+    {
+      "site": "https://bianshui-town.pages.dev",
+      "assetsMatch": true,
+      "teachingPackMatch": true,
+      "knownNetlifyHudAppended": false,
+      "configured": true,
+      "anonymousList": 401,
+      "anonymousCreate": 401,
+      "mobileGuide": true,
+      "loginGate": true,
+      "errors": []
+    },
+    {
+      "site": "https://bianshui-town.netlify.app",
+      "assetsMatch": true,
+      "teachingPackMatch": true,
+      "knownNetlifyHudAppended": true,
+      "configured": true,
+      "anonymousList": 401,
+      "anonymousCreate": 401,
+      "mobileGuide": true,
+      "loginGate": true,
+      "errors": []
+    }
+  ],
+  "realTeacherStudentLogin": false
+}
