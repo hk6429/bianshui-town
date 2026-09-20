@@ -1,0 +1,42 @@
+{
+  "base": "https://bianshui-town.pages.dev",
+  "checkedAt": "2026-09-20T23:28:50.468Z",
+  "paths": [
+    {
+      "primary": "aid",
+      "followup": "repair",
+      "draftRetained": true,
+      "keyboardSave": true,
+      "savedAfterReload": true,
+      "mobile390": true,
+      "errors": []
+    },
+    {
+      "primary": "aid",
+      "followup": "reserve",
+      "draftRetained": true,
+      "keyboardSave": true,
+      "savedAfterReload": true,
+      "mobile390": true,
+      "errors": []
+    },
+    {
+      "primary": "time",
+      "followup": "repair",
+      "draftRetained": true,
+      "keyboardSave": true,
+      "savedAfterReload": true,
+      "mobile390": true,
+      "errors": []
+    },
+    {
+      "primary": "time",
+      "followup": "reserve",
+      "draftRetained": true,
+      "keyboardSave": true,
+      "savedAfterReload": true,
+      "mobile390": true,
+      "errors": []
+    }
+  ]
+}

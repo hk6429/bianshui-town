@@ -1,0 +1,16 @@
+{
+  "commit": "7bead88",
+  "checkedAt": "2026-09-20T23:28:49.200Z",
+  "sites": [
+    {
+      "base": "https://bianshui-town.pages.dev",
+      "assetsMatched": 5,
+      "configured": true
+    },
+    {
+      "base": "https://bianshui-town.netlify.app",
+      "assetsMatched": 5,
+      "configured": true
+    }
+  ]
+}

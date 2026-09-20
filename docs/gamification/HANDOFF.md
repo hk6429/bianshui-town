@@ -35,4 +35,4 @@
 
 ### 第二里程碑驗證
 
-模型與介面完成；strict optional reflection、reset明示清除、Town restore測試完成。聚焦27/27（含cloud API）、build成功；390px四分支、一般訪查不丟草稿、reload保留修正實測通過。獨立CONTINUITY-REVIEW判定PASS限本波，追加20輪裁剪來源有效性。待push部署及正式站讀回。尚未重評八角分數，不宣稱9分。
+模型與介面完成；strict optional reflection、reset明示清除、Town restore測試完成。聚焦27/27（含cloud API）、build成功；390px四分支、一般訪查不丟草稿、reload保留修正實測通過。獨立CONTINUITY-REVIEW判定PASS限本波，追加20輪裁剪來源有效性。已push程式7bead88，雙站部署完成（Cloudflare4b7b5e90、Netlify6ab06c0dcf22df9a6a64b7d8）。雙站5個資產SHA讀回一致，config configured=true；正式Cloudflare隔離Chrome390px四路徑、鍵盤保存、訪查草稿保留與reload全部通過。證據continuity-production。尚未重評八角分數，不宣稱9分。
