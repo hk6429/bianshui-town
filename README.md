@@ -1,5 +1,9 @@
 # 汴水小鎮
 
+## 選關與帳號存檔
+
+「選關畫面」提供十條文學關卡的目標、前置設施與完成進度；每關共用目前小鎮，換關不清除進度。Google登入採Turso＋Cloudflare，後端與資料庫已備妥，仍待Google OAuth Client ID設定後啟用；未啟用時本機存檔與匯出照常使用。[設定與驗證](docs/cloud-save-setup.md)。
+
 ## 宋韻文學營造
 
 2026-09-20更新已部署至[正式站](https://bianshui-town.pages.dev/)與[備援站](https://bianshui-town.netlify.app/)。

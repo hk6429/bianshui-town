@@ -15,7 +15,8 @@ export function installLiteraryQuestsUI({getTown,change,build}){
    dialog.scrollTop=scroll;
  }
  dialog.addEventListener('input',event=>{if(event.target.id==='literary-note'){drafts[current]=event.target.value;dialog.querySelector('#note-draft-status').textContent='尚未儲存；切換任務仍保留，重新整理前請儲存。';}});
- document.querySelector('#literary-quests-btn').onclick=()=>{if(draftTown!==getTown()){draftTown=getTown();drafts={};practice=null;}render();dialog.showModal();};
+ const open=(id)=>{if(id&&Object.hasOwn(LITERARY_QUESTS,id)){current=id;left=null;practice=null;}if(draftTown!==getTown()){draftTown=getTown();drafts={};practice=null;}render();if(!dialog.open)dialog.showModal();};
+ document.querySelector('#literary-quests-btn').onclick=()=>open();
  dialog.addEventListener('click',event=>{
   const b=event.target.closest('button');if(!b)return;
   if(b.hasAttribute('data-close'))return dialog.close();
@@ -39,4 +40,5 @@ export function installLiteraryQuestsUI({getTown,change,build}){
   else if(b.hasAttribute('data-note')){const note=dialog.querySelector('textarea').value,ok=change(t=>saveQuestNote(t,current,note));if(ok){delete drafts[current];dialog.querySelector('#note-draft-status').textContent='';}render(ok?'短箋已儲存。':'內容未變更或存檔未成功。');}
   else if(b.hasAttribute('data-build')){dialog.close();build(Object.keys(LANDMARK_QUEST).find(id=>LANDMARK_QUEST[id]===current));}
  });
+ return {open};
 }

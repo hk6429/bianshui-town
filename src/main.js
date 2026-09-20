@@ -1,3 +1,5 @@
+import {installCloudSave} from './cloud-save-ui.js';
+import {installStageSelect} from './stage-select.js';
 import {landmarkLifeHTML,handleLandmarkAction,captureLandmarkDraft,resetLandmarkDrafts} from './landmark-life-ui.js';
 import {lockedReason} from './milestones.js';
 import {installLiteraryQuestsUI} from './literary-quests-ui.js';
@@ -81,7 +83,7 @@ const fixtureName=new URLSearchParams(location.search).get('fixture');const fixt
 const owner=crypto.randomUUID();
 const storage={getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value),key:i=>localStorage.key(i),get length(){return localStorage.length;}};
 const storageTest=import.meta.env.DEV&&new URLSearchParams(location.search).has('storage-test');
-const saveStore=new SaveStore({storage,validate:validateSave,owner,key:storageTest?'bianshui-town-test-v1':SAVE_KEY});let saveUI,recovery;
+const saveStore=new SaveStore({storage,validate:validateSave,owner,key:storageTest?'bianshui-town-test-v1':SAVE_KEY});let saveUI,recovery,cloudUI;
 try{if(fixtureMode)town=Town.restore(await(await fetch(`/tests/fixtures/${fixtureName}-town.json`)).json());else{const loaded=saveStore.load();if(loaded.data)town=Town.restore(loaded.data);if(loaded.status==='recovery')paused=true;}}catch(error){saveStore.blocked='recovery';saveStore.error=error.message;paused=true;$('#save-status').textContent='存檔無法讀取 · 原檔保留，請開啟存檔管理';}
 
 try{scene=new TownScene(canvas);}catch(error){$('#welcome').innerHTML='<h2>目前無法開啟 3D 場景</h2><p>請使用支援 WebGL 2 的瀏覽器，並開啟硬體加速後重新整理。</p>';console.error(error);throw error;}
@@ -102,7 +104,7 @@ function changeJourney(action){
  try{return commitJourney(town,action,data=>{validateSave(data);const result=fixtureMode?{ok:true}:saveStore.save(data);if(!result.ok)toast('旅程進度未儲存，請先處理存檔管理中的問題');return result;});}catch(error){toast(`旅程操作未完成：${error.message}`);return false;}
 }
 const identityUI=installPlaceIdentityUI({getTown:()=>town,change:changeJourney,edit:fn=>applyUrban(fn,{record:false}),focus:b=>{stopFollowing();setMode('explore');pinned={kind:'building',id:b.id};hovered=null;scene.focusAt([b.x*CELL,b.z*CELL],2.3);focusInspector();}});
-installLiteraryQuestsUI({getTown:()=>town,change:changeJourney,build:id=>{designFilter='all';plotSize=4;renderBlueprints();$('#blueprints').showModal();$('#blueprints').querySelector(`[data-plan="${id}"]`).click();}});
+const literaryUI=installLiteraryQuestsUI({getTown:()=>town,change:changeJourney,build:id=>{designFilter='all';plotSize=4;renderBlueprints();$('#blueprints').showModal();$('#blueprints').querySelector(`[data-plan="${id}"]`).click();}});
 const readingUI=installReadingCollectionUI({getTown:()=>town,change:changeJourney,openWork:id=>{const w=WORKS[id];if(w.authorId)showAuthorWork(w.authorId);else showLiterature(w.source);}});
 installResidentRelationshipsUI({getTown:()=>town,change:changeJourney,focus:(p,follow)=>{stopFollowing();setMode('explore');pinned={kind:'person',id:p.id};hovered=null;const b=town.building(p.current)||town.building(p.home);scene.focusAt(!p.outside&&b?[b.x*CELL,b.z*CELL]:[p.x,p.z],2.3);if(follow){following=p.id;scene.follow(p.id);$('#following-name').textContent=`跟著${p.name}過一天`;$('#follow-status').hidden=false;}focusInspector();}});
 const storyHistoryUI=installStoryHistoryUI({getTown:()=>town,visit:e=>{stopFollowing();pinned=hovered=null;setMode('explore');scene.focusAt(e.center);toast(`${e.title} · ${e.venue}（已散場，此處為歷史地點）`);}});
@@ -148,7 +150,7 @@ $('#life-panel').onclick=e=>{
 $('#gallery-entry').onclick=$('#concepts-btn').onclick=()=>$('#gallery').showModal();$('#help-btn').onclick=()=>$('#help').showModal();
 for(const b of document.querySelectorAll('[data-close]'))b.onclick=()=>document.getElementById(b.dataset.close).close();
 $('#new-town').onclick=$('#reset-town').onclick=()=>$('#confirm-reset').showModal();
-$('#confirm-new').onclick=()=>{const nextTown=new Town({mode:'managed'});if(!fixtureMode&&saveStore.blocked!=='recovery'){const result=saveStore.checkpoint(town.toJSON());if(!result.ok){toast('無法保留重置復原點，請先匯出小鎮');return;}}if(!fixtureMode){const result=saveStore.replace(nextTown.toJSON());if(!result.ok){toast('重置未完成，原小鎮仍保留；請先匯出進度');return;}}stopFollowing();undoTown=JSON.parse(JSON.stringify(town));town=nextTown;journeyUI.resetSession();resetLandmarkDrafts();runtime.reset();recovery=new RecoveryPoint({read:()=>town.toJSON(),validate:validateSave});$('#undo-urban').hidden=false;paused=false;speed=1;$('#speed-btn').textContent='1×';$('#pause-btn').textContent='Ⅱ';$('#pause-btn').classList.remove('paused');$('#pause-btn').setAttribute('aria-label','暫停');down=drag=selectedLot=pendingDelete=null;scene.reset();scene.resetView();pinned=hovered=null;journalOpen=false;updateJournal();$('#inspector').hidden=true;$('#welcome').hidden=false;$('#confirm-reset').close();$('#help').close();setMode('explore');save();toast('小鎮已重置；存檔管理保留重置前小鎮');};
+$('#confirm-new').onclick=()=>{const nextTown=new Town({mode:'managed'});if(!fixtureMode&&saveStore.blocked!=='recovery'){const result=saveStore.checkpoint(town.toJSON());if(!result.ok){toast('無法保留重置復原點，請先匯出小鎮');return;}}if(!fixtureMode){const result=saveStore.replace(nextTown.toJSON());if(!result.ok){toast('重置未完成，原小鎮仍保留；請先匯出進度');return;}}stopFollowing();undoTown=JSON.parse(JSON.stringify(town));town=nextTown;journeyUI.resetSession();resetLandmarkDrafts();cloudUI?.localReplaced();runtime.reset();recovery=new RecoveryPoint({read:()=>town.toJSON(),validate:validateSave});$('#undo-urban').hidden=false;paused=false;speed=1;$('#speed-btn').textContent='1×';$('#pause-btn').textContent='Ⅱ';$('#pause-btn').classList.remove('paused');$('#pause-btn').setAttribute('aria-label','暫停');down=drag=selectedLot=pendingDelete=null;scene.reset();scene.resetView();pinned=hovered=null;journalOpen=false;updateJournal();$('#inspector').hidden=true;$('#welcome').hidden=false;$('#confirm-reset').close();$('#help').close();setMode('explore');save();toast('小鎮已重置；存檔管理保留重置前小鎮');};
 function cellAt(e){const p=scene.atScreen(e.clientX,e.clientY);return p?{x:Math.round(p.x/CELL),z:Math.round(p.z/CELL)}:null;}
 canvas.addEventListener('contextmenu',e=>e.preventDefault());
 function discardPointerDraft(){pointerGesture.cancel();$('#scene-instructions').hidden=false;pendingPlan=null;drag=down=null;$('#touch-plan').hidden=true;if(scene)scene.clearGroup(scene.preview);}
@@ -387,7 +389,7 @@ $('#undo-confirm').onclick=()=>{if(!undoTown)return;const target=undoTown;if(!ap
 $('#stalls-btn').onclick=()=>{const stalls=marketStalls(town);$('#stalls-list').innerHTML=stalls.length?stalls.map(stallListItem).join(''):'<p>先讓商鋪或說書棚落成，或將道路鋪成 2 × 2 市心，攤販便會出現。</p>';$('#public-works').close();$('#stalls').showModal();};
 $('#stalls').onclick=e=>{const b=e.target.closest('[data-stall-focus]');if(!b)return;const s=marketStalls(town).find(s=>s.id===b.dataset.stallFocus);if(!s)return;$('#stalls').close();stopFollowing();setMode('explore');pinned={kind:'stall',id:s.id};hovered=null;scene.focusAt([s.x,s.z],2.8);renderInspector();};
 
-if(!fixtureMode)saveUI=installSaveUI({store:saveStore,getTown:()=>town.toJSON(),prepareTown:data=>Town.restore(data),pause:()=>{if(!paused)$('#pause-btn').click();},replaceTown:restored=>{stopFollowing();town=restored;journeyUI.resetSession();resetLandmarkDrafts();runtime.reset();recovery=new RecoveryPoint({read:()=>town.toJSON(),validate:validateSave});undoTown=null;pinned=hovered=null;selectedLot=null;scene.reset();scene.resetView();setMode('explore');$('#undo-urban').hidden=true;$('#welcome').hidden=!!town.buildings.length;$('#inspector').hidden=true;toast('已讀取選定版本，小鎮暫停中');save();}});else $('#save-manager-btn').onclick=()=>toast('預覽場景不寫入存檔；請使用一般小鎮的存檔管理');
+if(!fixtureMode)saveUI=installSaveUI({store:saveStore,getTown:()=>town.toJSON(),prepareTown:data=>Town.restore(data),pause:()=>{if(!paused)$('#pause-btn').click();},replaceTown:restored=>{stopFollowing();town=restored;journeyUI.resetSession();resetLandmarkDrafts();cloudUI?.localReplaced();runtime.reset();recovery=new RecoveryPoint({read:()=>town.toJSON(),validate:validateSave});undoTown=null;pinned=hovered=null;selectedLot=null;scene.reset();scene.resetView();setMode('explore');$('#undo-urban').hidden=true;$('#welcome').hidden=!!town.buildings.length;$('#inspector').hidden=true;toast('已讀取選定版本，小鎮暫停中');save();}});else $('#save-manager-btn').onclick=()=>toast('預覽場景不寫入存檔；請使用一般小鎮的存檔管理');
 
 let dataLayer=null,layerAt=0;
 $('#layer-buttons').innerHTML=Object.entries(LAYERS).map(([key,l])=>`<button data-layer="${key}" aria-pressed="false">${l.name}</button>`).join('');
@@ -419,3 +421,7 @@ $('#close-handbook').onclick=()=>$('#handbook').close();
 $('#close-quest').onclick=()=>$('#quest').close();
 
 document.addEventListener('input',captureLandmarkDraft);
+
+cloudUI=installCloudSave({getTown:()=>town.toJSON(),validate:validateSave,enabled:!fixtureMode,preview:data=>saveUI?.previewData(data)});
+const stageUI=installStageSelect({getTown:()=>town,openQuest:id=>literaryUI.open(id),openAccount:()=>cloudUI.open()});
+if(!fixtureMode&&!town.buildings.length&&!saveStore.blocked&&!document.querySelector('dialog[open]'))stageUI.open();

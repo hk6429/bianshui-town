@@ -14,5 +14,5 @@ export function installSaveUI({store,getTown,prepareTown,replaceTown,pause}){
  $('#save-apply').onclick=()=>{if(!pending)return;try{const prepared=prepareTown(pending);if(!store.blocked){const backup=store.checkpoint(getTown());if(!backup.ok)throw Error('無法保留復原點：'+backup.message);}const result=store.replace(pending);if(!result.ok)throw Error(result.message||'儲存失敗');replaceTown(prepared);dialog.close();pending=null;}catch(error){say('未取代小鎮：'+error.message);}};
  $('#save-new').onclick=()=>{dialog.close();$('#confirm-reset').showModal();};
  window.addEventListener('storage',e=>{if(e.key===store.key&&store.externalChange())open('另一分頁已儲存較新的小鎮。本頁已暫停自動覆寫；請先匯出本頁或選擇要使用的版本。');});
- if(store.blocked)open();return {open,refresh};
+ if(store.blocked)open();return {open,refresh,previewData(data){open();preview(store.validate(data),'雲端小鎮預覽');say('驗證通過，確認後才會取代目前小鎮；原小鎮會保留復原點。');}};
 }

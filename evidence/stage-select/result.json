@@ -1,0 +1,8 @@
+{
+  "cards": 10,
+  "correctQuestRouting": true,
+  "filters": true,
+  "mobileWidth": 390,
+  "unconfiguredLoginDisabled": true,
+  "errors": []
+}
