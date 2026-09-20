@@ -1,0 +1,38 @@
+{
+  "base": "http://127.0.0.1:5193",
+  "checkedAt": "2026-09-20T23:27:10.878Z",
+  "paths": [
+    {
+      "primary": "aid",
+      "followup": "repair",
+      "draftRetained": true,
+      "savedAfterReload": true,
+      "mobile390": true,
+      "errors": []
+    },
+    {
+      "primary": "aid",
+      "followup": "reserve",
+      "draftRetained": true,
+      "savedAfterReload": true,
+      "mobile390": true,
+      "errors": []
+    },
+    {
+      "primary": "time",
+      "followup": "repair",
+      "draftRetained": true,
+      "savedAfterReload": true,
+      "mobile390": true,
+      "errors": []
+    },
+    {
+      "primary": "time",
+      "followup": "reserve",
+      "draftRetained": true,
+      "savedAfterReload": true,
+      "mobile390": true,
+      "errors": []
+    }
+  ]
+}

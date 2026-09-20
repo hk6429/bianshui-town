@@ -1,3 +1,4 @@
+import {validateContinuityReflection} from './adventure-continuity.js';
 import {ADVENTURE_CONTENT} from './adventure-content.js';
 import {LITERARY_QUESTS} from './literary-quests.js';
 import {evidenceLines,learningQuest} from './learning.js';
@@ -28,7 +29,7 @@ export function adventureView(t,id){if(!valid(id))return null;const c=ADVENTURE_
 export function visitAdventure(t,id,clueId){if(!valid(id))return false;const s=structuredClone(state(t,id));if(s.decision||s.visited.includes(clueId)||!ADVENTURE_CONTENT[id].roles.some(r=>r.id===clueId)||resources(s).time<1)return false;s.visited.push(clueId);return write(t,id,s);}
 export function decideAdventure(t,id,input){if(!valid(id)||!input||typeof (input.reason??'')!=='string'||(input.reason??'').length>400)return false;const s=structuredClone(state(t,id)),choice=ADVENTURE_CONTENT[id].choices.find(c=>c.id===input.choiceId),r=resources(s);if(!choice||s.decision||s.visited.length!==3||r.time<choice.cost.time||r.aid<choice.cost.aid)return false;s.decision={choiceId:choice.id,reason:(input.reason??'').trim()};s.history=[...s.history,{round:s.round,...s.decision,followup:null}].slice(-12);return write(t,id,s);}
 export function resolveAdventure(t,id,input){if(!valid(id)||!input||!['repair','reserve'].includes(input.choiceId))return false;const s=structuredClone(state(t,id));if(!s.decision||s.followup)return false;const choice=followupView(id,s).followupChoices.find(c=>c.id===input.choiceId),r=resources(s);if(r.time<choice.cost.time||r.aid<choice.cost.aid)return false;s.followup={choiceId:choice.id};s.history.at(-1).followup={...s.followup};return write(t,id,s);}
-export function resetAdventure(t,id){if(!valid(id))return false;const s=structuredClone(state(t,id));if(!s.visited.length&&!s.decision||s.round>=1000000)return false;s.round++;s.visited=[];s.decision=null;s.followup=null;return write(t,id,s);}
+export function resetAdventure(t,id){if(!valid(id))return false;const s=structuredClone(state(t,id));if(!s.visited.length&&!s.decision||s.round>=1000000)return false;s.round++;s.visited=[];s.decision=null;s.followup=null;delete s.reflection;return write(t,id,s);}
 export function claimAdventure(t,id){const v=adventureView(t,id);if(!v?.canClaim)return false;const s=structuredClone(state(t,id));s.collections=[ADVENTURE_CONTENT[id].collection];return write(t,id,s);}
 export function validateAdventure(input){
  const fail=()=>{throw Error('journey.adventure: 演練紀錄格式、資源或收藏無效');};
@@ -38,13 +39,14 @@ export function validateAdventure(input){
  const decision=d=>{obj(d,['choiceId','reason']);if(!['aid','time'].includes(d.choiceId)||typeof d.reason!=='string'||d.reason.length>400)fail();};
  obj(input,['version','quests']);if(input.version!==1||!input.quests||typeof input.quests!=='object'||Array.isArray(input.quests))fail();
  for(const [id,s]of Object.entries(input.quests)){
-  if(!valid(id))fail();obj(s,['round','visited','decision','followup','history','collections']);
+  if(!valid(id))fail();obj(s,['round','visited','decision','followup','history','collections',...(owns(s,'reflection')?['reflection']:[])]);
   if(!int(s.round,1000000)||!Array.isArray(s.visited)||s.visited.length>3||new Set(s.visited).size!==s.visited.length||s.visited.some(r=>!ADVENTURE_CONTENT[id].roles.some(x=>x.id===r))||!Array.isArray(s.history)||s.history.length>12||!Array.isArray(s.collections)||s.collections.length>1||s.collections.some(c=>c!==ADVENTURE_CONTENT[id].collection))fail();
   for(let i=0;i<s.history.length;i++){const h=s.history[i];obj(h,['round','choiceId','reason','followup']);followup(h.followup);decision({choiceId:h.choiceId,reason:h.reason});if(!int(h.round,s.round)||i&&h.round<=s.history[i-1].round)fail();}
   followup(s.followup);if(s.followup&&!s.decision)fail();
   if(s.decision!==null){decision(s.decision);const h=s.history.at(-1);if(s.visited.length!==3||!h||h.round!==s.round||h.choiceId!==s.decision.choiceId||h.reason!==s.decision.reason||h.followup?.choiceId!==s.followup?.choiceId)fail();}
   else if(s.history.at(-1)?.round===s.round)fail();
   if(s.collections.length&&!s.history.length)fail();
+  if(owns(s,'reflection'))validateContinuityReflection(s.reflection,s,id);
  }
  return input;
 }

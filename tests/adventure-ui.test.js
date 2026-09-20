@@ -2,13 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createAdventureUI} from '../src/adventure-ui.js';
 import {ADVENTURE_CONTENT} from '../src/adventure-content.js';
+import {continuityView,CONTINUITY_RESIDENTS} from '../src/adventure-continuity.js';
 import {adventureView} from '../src/adventure.js';
 
 function harness(){
  let town={},fail=false,message='';
  const ui=createAdventureUI({getTown:()=>town,change:fn=>fail?false:fn(town),rerender:m=>{message=m;}});
  const click=(name,extra={},id='yueyang')=>ui.click({target:{closest:()=>({dataset:{adventureAction:name,adventureId:id,...extra},closest:()=>null})}});
- const input=(text,id='yueyang')=>ui.input({target:{dataset:{adventureField:'reason',adventureId:id},value:text,closest:()=>null}});
+ const input=(text,id='yueyang',field='reason')=>ui.input({target:{dataset:{adventureField:field,adventureId:id},value:text,closest:()=>null}});
  return {ui,click,input,town:()=>town,replace:()=>{town={};},fail:()=>{fail=true;},message:()=>message};
 }
 test('ten adventures begin with a mission and resident encounters, progressively reveal decisions',()=>{
@@ -65,4 +66,42 @@ test('failed follow-up persistence leaves its choices available',()=>{
  const h=harness();for(const r of ADVENTURE_CONTENT.yueyang.roles)h.click('visit',{adventureRole:r.id});
  h.click('decide',{adventureChoice:'aid'});h.fail();h.click('resolve',{adventureChoice:'repair'});
  assert.equal(adventureView(h.town(),'yueyang').followup,null);assert(h.ui.render('yueyang').includes('data-adventure-action="resolve"'));assert(h.message().includes('尚未儲存'));
+});
+
+function replay(h){
+ for(const r of ADVENTURE_CONTENT.yueyang.roles)h.click('visit',{adventureRole:r.id});
+ h.click('decide',{adventureChoice:'aid'});h.click('resolve',{adventureChoice:'repair'});h.click('reset');
+}
+test('Yueyang named residents recur with a visible new clue and optional reflection disclosure',()=>{
+ const h=harness(),first=h.ui.render('yueyang');
+ for(const resident of CONTINUITY_RESIDENTS)assert(first.includes(resident.name));
+ assert(!first.includes('data-adventure-action="reflect"'));
+ replay(h);const view=continuityView(h.town(),'yueyang'),html=h.ui.render('yueyang');
+ assert(html.includes('本輪新線索'));assert(html.includes(view.title));assert(html.includes(view.clue));
+ for(const resident of view.residents)assert(html.includes(resident.memory));
+ assert(html.includes('maxlength="600"'));assert(html.includes('不自動評定理解或理由對錯'));
+ assert(html.includes('重新演練會清除'));assert(!h.ui.render('lotus').includes('adventure-continuity'));
+});
+test('reflection evidence and escaped draft survive visits and chapter switches, then save and update',()=>{
+ const h=harness();replay(h);const evidence=continuityView(h.town(),'yueyang').evidenceOptions[0].id;
+ h.input(evidence,'yueyang','evidence');h.input('<img src=x onerror=alert(1)>重新思考','yueyang','reflection');
+ h.click('visit',{adventureRole:ADVENTURE_CONTENT.yueyang.roles[0].id});h.ui.render('lotus');
+ let html=h.ui.render('yueyang');assert(html.includes('&lt;img'));assert(!html.includes('<img'));
+ assert(html.includes(`value="${evidence}" selected`));h.click('reflect');
+ assert.equal(continuityView(h.town(),'yueyang').record.reason,'<img src=x onerror=alert(1)>重新思考');
+ h.input('補充理由','yueyang','reflection');h.click('reflect');
+ assert.equal(continuityView(h.town(),'yueyang').record.reason,'補充理由');
+ assert(h.ui.render('yueyang').includes('最近一份修正已儲存'));
+});
+test('failed reflection keeps both fields, clamps draft length and changing town isolates drafts',()=>{
+ const h=harness();replay(h);const evidence=continuityView(h.town(),'yueyang').evidenceOptions[0].id;
+ h.input(evidence,'yueyang','evidence');h.input('甲'.repeat(610),'yueyang','reflection');h.fail();h.click('reflect');
+ assert.equal(continuityView(h.town(),'yueyang').record,null);
+ let html=h.ui.render('yueyang');assert(html.includes('甲'.repeat(600)));assert(!html.includes('甲'.repeat(601)));
+ assert(html.includes(`value="${evidence}" selected`));assert(h.message().includes('尚未儲存'));
+ h.replace();assert(!h.ui.render('yueyang').includes('甲'));
+});
+test('reflection drafts do not leak into the next round',()=>{
+ const h=harness();replay(h);h.input('上一輪草稿','yueyang','reflection');
+ replay(h);assert(!h.ui.render('yueyang').includes('上一輪草稿'));
 });

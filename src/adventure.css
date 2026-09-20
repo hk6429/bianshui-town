@@ -11,7 +11,7 @@
 .adventure-roles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .adventure-panel button{min-width:44px;min-height:48px;height:auto;white-space:normal;padding:10px 12px;line-height:1.65;border:1px solid #687b60;border-radius:10px;background:#fffdf5;color:#273c32;cursor:pointer}
 .adventure-panel button:hover:not(:disabled){background:#e7ecda}
-.adventure-panel :is(button,summary,textarea):focus-visible{outline:3px solid #76541f;outline-offset:3px}
+.adventure-panel :is(button,summary,textarea,select):focus-visible{outline:3px solid #76541f;outline-offset:3px}
 .adventure-panel button:disabled{opacity:1;color:#4d5c48;background:#e8e9de;cursor:default;border-style:dashed}
 .adventure-role button{width:100%;text-align:left}
 .adventure-role button small{display:block;font-size:.8rem}
@@ -38,3 +38,9 @@
 .adventure-history li{padding-bottom:8px}
 .adventure-panel .adventure-note{font-size:.8rem;margin:12px 0 0;color:#58614e;line-height:1.7}
 @media(max-width:600px){.adventure-panel{padding:14px 12px;border-radius:12px}.adventure-roles,.adventure-choices{grid-template-columns:1fr}.adventure-role button{display:flex;align-items:center;flex-wrap:wrap;gap:6px}.adventure-role button small{margin-left:auto}.adventure-links button{width:100%}.adventure-panel h4{font-size:1.15rem}}
+
+.adventure-continuity{margin:14px 0;padding:10px 14px;border:2px solid #8a713c;border-radius:10px;background:#fff8e3;min-width:0}
+.adventure-panel .adventure-new-clue{margin:6px 0;line-height:1.7;color:#614919}
+.adventure-continuity ul{padding-left:20px}.adventure-continuity li p{margin:4px 0 12px}
+.adventure-continuity label{display:block;margin:12px 0 6px;line-height:1.7}
+.adventure-continuity select{display:block;width:100%;max-width:100%;min-width:0;min-height:48px;padding:8px;border:1px solid #687b60;border-radius:8px;background:#fffdf8;color:#273c32;font:inherit}
