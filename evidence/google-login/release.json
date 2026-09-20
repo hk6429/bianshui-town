@@ -1,0 +1,93 @@
+{
+  "at": "2026-09-20T14:42:08.212Z",
+  "cloudflareDeployment": "https://32d11d8a.bianshui-town.pages.dev",
+  "sites": [
+    {
+      "url": "https://bianshui-town.pages.dev",
+      "status": 200,
+      "configured": true,
+      "correctClient": true,
+      "assets": [
+        {
+          "path": "/assets/index-C0sElzaW.js",
+          "match": true
+        },
+        {
+          "path": "/assets/three-core-Bnqzv-5T.js",
+          "match": true
+        },
+        {
+          "path": "/assets/three-XM3pYBh7.js",
+          "match": true
+        },
+        {
+          "path": "/assets/three-addons-BnCZHRVg.js",
+          "match": true
+        },
+        {
+          "path": "/assets/index-CYhkrti4.css",
+          "match": true
+        }
+      ]
+    },
+    {
+      "url": "https://bianshui-town.netlify.app",
+      "status": 200,
+      "configured": true,
+      "correctClient": true,
+      "assets": [
+        {
+          "path": "/assets/index-C0sElzaW.js",
+          "match": true
+        },
+        {
+          "path": "/assets/three-core-Bnqzv-5T.js",
+          "match": true
+        },
+        {
+          "path": "/assets/three-XM3pYBh7.js",
+          "match": true
+        },
+        {
+          "path": "/assets/three-addons-BnCZHRVg.js",
+          "match": true
+        },
+        {
+          "path": "/assets/index-CYhkrti4.css",
+          "match": true
+        }
+      ]
+    }
+  ],
+  "browserVerification": {
+    "method": "CUA actions in existing Chrome, Google account chooser and live UI state",
+    "googleLogin": [
+      "Cloudflare",
+      "Netlify"
+    ],
+    "cloudflareUpload": {
+      "revision": 1,
+      "buildings": 68
+    },
+    "cloudflareReadback": {
+      "revision": 1,
+      "buildings": 68
+    },
+    "netlifyReadback": {
+      "revision": 1,
+      "buildings": 68
+    },
+    "netlifyLoad": {
+      "beforeBuildings": 0,
+      "afterBuildings": 68,
+      "residents": 110,
+      "day": 18
+    },
+    "automaticBackupEnabled": false,
+    "physicalSecondDeviceTested": false
+  },
+  "focusedTests": {
+    "pass": 2,
+    "fail": 0
+  }
+}

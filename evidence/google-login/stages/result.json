@@ -1,0 +1,10 @@
+{
+  "url": "https://bianshui-town.pages.dev",
+  "cards": 10,
+  "correctQuestRouting": true,
+  "filters": true,
+  "mobileWidth": 390,
+  "googleConfigured": true,
+  "unconfiguredLoginDisabled": false,
+  "errors": []
+}

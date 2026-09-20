@@ -9,19 +9,16 @@
 - UI登入後先讀取雲端資訊；上傳需確認；下載沿用既有「預覽→確認→保留復原點→取代」流程。手動成功存一次後可開啟每2分鐘自動備份；登出、讀取其他存檔、備份失敗會停止自動備份。
 - 不使用Firebase；Turso token與session密鑰僅存在Cloudflare秘密綁定及git忽略的本機`.dev.vars`。
 
-## 尚缺：真正 Google 登入設定
+## Google 登入設定（已啟用）
 
-Google OAuth網頁用戶端ID尚未提供，因此 `/api/config` 明確回傳 `configured:false`，登入按鈕停用。本輪**不能稱Google登入或跨裝置真人登入已驗收**。
+沿用 Google Cloud 專案 `cap-exam-hub-20260816`，獨立網頁用戶端 `Bianshui Town Web`；不共用題庫或書齋的用戶端 ID。已核對 JavaScript 來源：
 
-1. 在既有／新Google Cloud專案建立OAuth「網頁應用程式」用戶端，設定應用程式名稱與聯絡信箱。
-2. Authorized JavaScript origins至少包含：
-   - `https://bianshui-town.pages.dev`
-   - `https://bianshui-town.netlify.app`（備援站若也啟用登入）
-   - 本機測試可另列 `http://localhost:8789`；正式允許Origin清單不預設納入本機。
-3. 把公開的OAuth Client ID設定為Cloudflare Pages秘密綁定 `GOOGLE_CLIENT_ID`。本方案採Google Identity Services按鈕＋ID token，不需要把Google Client Secret放進前端，也不使用Firebase。
-4. 確認測試／正式發布範圍與OAuth consent screen後重新部署，登入一次，再跨兩個瀏覽器實測上傳、讀取與版本衝突。這是最後尚待完成的外部接線。
+- `https://bianshui-town.pages.dev`
+- `https://bianshui-town.netlify.app`
 
-已設定Cloudflare生產綁定：`TURSO_DATABASE_URL`、`TURSO_AUTH_TOKEN`、`SESSION_SECRET`。`.env.example`列出名稱；不要把值改成VITE_變數。Netlify以`netlify.toml`將同源`/api/*`代理至Cloudflare，不另建資料庫。
+Cloudflare 生產綁定已設定 `GOOGLE_CLIENT_ID`、`TURSO_DATABASE_URL`、`TURSO_AUTH_TOKEN`、`SESSION_SECRET`。Google Identity Services 僅使用基本登入身分；不需要 Google Client Secret。秘密值保留於 Cloudflare 及 git 忽略的 `.dev.vars`，不可改成 VITE_ 變數。
+
+Netlify 透過 `netlify.toml` 將同源 `/api/*` 代理至 Cloudflare，兩站共用同一份 Turso 雲端存檔，各自保留本機進度與登入 Cookie。
 
 ## 驗證與證據
 
@@ -29,10 +26,21 @@ Google OAuth網頁用戶端ID尚未提供，因此 `/api/config` 明確回傳 `c
 - `npm run build`成功；`wrangler pages functions build`成功。
 - Turso遠端測試資料實際寫入、讀回、拒絕過期版本，測試列已刪除。
 - 選關桌面／390px、正確進入指定篇章、篩選、未設定登入停用：`evidence/stage-select/`。
-- 真正Google帳號登入仍待Client ID設定，測試用注入Google verifier不代表已完成Google OAuth實測。
+- 2026-09-20 已用真實 Google 帳號在兩站完成瀏覽器登入；Cloudflare 儲存版本 1、重新讀回、雲端預覽，以及 Netlify 從空城確認載入 68 處建築／110 位居民皆成功。這是同一台電腦的兩個網站來源測試，未宣稱另一台實體裝置已驗證。
 
 官方設定依據：[Google用戶端設定](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid)、[伺服器驗證Google ID token](https://developers.google.com/identity/gsi/web/guides/verify-google-id-token)、[Cloudflare Pages Functions](https://developers.cloudflare.com/pages/functions/)。
 
 ## 2026-09-20上線狀態
 
 選關與API已部署：Cloudflare `e148da4c`；Netlify `6aafc8282630daa64f6f46fa`。兩站各5個JS/CSS SHA256與dist相符，兩站 `/api/config` 均明確回傳 `configured:false`。正式Cloudflare站桌面／390px選關、指定篇章跳轉、篩選及未設定登入停用皆通過。證據：`evidence/stage-select/release.json`、`production/result.json`與截圖。Google登入尚待Client ID，不是完整登入完成宣告。
+
+
+## 2026-09-20 Google 登入啟用
+
+Cloudflare 部署 `32d11d8a` 已啟用 OAuth。兩站 `/api/config` 回傳 `configured:true`，使用專用用戶端 ID。既有靜態檔未修改，Netlify 透過既有 API 代理立即生效。
+
+- 主站實際登入、上傳、遠端重新讀取成功（版本 1）。
+- 備援站實際登入、讀到同一份版本 1，從 0 處建築載入為 68 處建築、110 位居民。
+- 主站現有本機城市未被雲端覆蓋；自動備份未擅自開啟。
+- 聚焦測試：`node --test tests/cloud-api.test.js tests/stage-select.test.js`，2/2 通過。
+- 部署及瀏覽器操作摘要：`evidence/google-login/release.json`。
