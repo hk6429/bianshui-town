@@ -12,3 +12,5 @@ test-results/
 
 .dev.vars*
 *-debug.log
+
+.wrangler/

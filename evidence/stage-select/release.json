@@ -1,0 +1,66 @@
+{
+  "date": "2026-09-20T11:49:35.772312+00:00",
+  "commit": "1fb0474",
+  "cloudflare": "https://e148da4c.bianshui-town.pages.dev",
+  "netlify": "https://6aafc8282630daa64f6f46fa--bianshui-town.netlify.app",
+  "tests": 390,
+  "googleLogin": "not enabled: awaiting GOOGLE_CLIENT_ID",
+  "sites": [
+    {
+      "url": "https://bianshui-town.pages.dev",
+      "assets": [
+        {
+          "path": "/assets/index-C0sElzaW.js",
+          "sha256": "929f3c16ad6dca84e87a70c3f89076512f2237b30281818fd5eb4eb07b0dae76"
+        },
+        {
+          "path": "/assets/index-CYhkrti4.css",
+          "sha256": "6819a435ab6f239da2b25d153dd87fb00cde4d5243c7d9086311770a0d9c8731"
+        },
+        {
+          "path": "/assets/three-XM3pYBh7.js",
+          "sha256": "fd2eab870666246217181bb72a86119666b8218b3c25e41b126adda04ae61c41"
+        },
+        {
+          "path": "/assets/three-addons-BnCZHRVg.js",
+          "sha256": "ee939d6137280c28ea8211d1e9d7a97ec1afb619db1dcb58b1b21a0e7f13e3b6"
+        },
+        {
+          "path": "/assets/three-core-Bnqzv-5T.js",
+          "sha256": "1b56bb52a8f188aeaa407076b545c57fa3195f1150850a18ac02e26bdebb5cd2"
+        }
+      ],
+      "api": {
+        "configured": false
+      }
+    },
+    {
+      "url": "https://bianshui-town.netlify.app",
+      "assets": [
+        {
+          "path": "/assets/index-C0sElzaW.js",
+          "sha256": "929f3c16ad6dca84e87a70c3f89076512f2237b30281818fd5eb4eb07b0dae76"
+        },
+        {
+          "path": "/assets/index-CYhkrti4.css",
+          "sha256": "6819a435ab6f239da2b25d153dd87fb00cde4d5243c7d9086311770a0d9c8731"
+        },
+        {
+          "path": "/assets/three-XM3pYBh7.js",
+          "sha256": "fd2eab870666246217181bb72a86119666b8218b3c25e41b126adda04ae61c41"
+        },
+        {
+          "path": "/assets/three-addons-BnCZHRVg.js",
+          "sha256": "ee939d6137280c28ea8211d1e9d7a97ec1afb619db1dcb58b1b21a0e7f13e3b6"
+        },
+        {
+          "path": "/assets/three-core-Bnqzv-5T.js",
+          "sha256": "1b56bb52a8f188aeaa407076b545c57fa3195f1150850a18ac02e26bdebb5cd2"
+        }
+      ],
+      "api": {
+        "configured": false
+      }
+    }
+  ]
+}

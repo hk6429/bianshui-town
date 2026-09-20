@@ -32,3 +32,7 @@ Google OAuth網頁用戶端ID尚未提供，因此 `/api/config` 明確回傳 `c
 - 真正Google帳號登入仍待Client ID設定，測試用注入Google verifier不代表已完成Google OAuth實測。
 
 官方設定依據：[Google用戶端設定](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid)、[伺服器驗證Google ID token](https://developers.google.com/identity/gsi/web/guides/verify-google-id-token)、[Cloudflare Pages Functions](https://developers.cloudflare.com/pages/functions/)。
+
+## 2026-09-20上線狀態
+
+選關與API已部署：Cloudflare `e148da4c`；Netlify `6aafc8282630daa64f6f46fa`。兩站各5個JS/CSS SHA256與dist相符，兩站 `/api/config` 均明確回傳 `configured:false`。正式Cloudflare站桌面／390px選關、指定篇章跳轉、篩選及未設定登入停用皆通過。證據：`evidence/stage-select/release.json`、`production/result.json`與截圖。Google登入尚待Client ID，不是完整登入完成宣告。
