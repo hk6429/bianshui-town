@@ -1,5 +1,7 @@
+import {MORE_LITERARY_QUESTS} from './literary-quest-data.js';
 // Mission scenes are adaptations; progress is committed through the journey transaction.
 export const LITERARY_QUESTS={
+ ...MORE_LITERARY_QUESTS,
  yueyang:{name:'岳陽樓',title:'先天下之憂',author:'范仲淹〈岳陽樓記〉',note:'宋代文學地景意象；此模型不是宋樓精確復原，亦不是現存清代樓的測繪模型。',source:'https://www.yueyang.gov.cn/ml/content_51560.html',requirement:'完成一座民居、一座作坊及一座義倉',steps:[
  {title:'滕子京來信：先安百姓',text:'政通人和，百廢具興。乃重修岳陽樓，增其舊制。',prompt:'洪水退後，鎮庫只夠先辦一件事。如何安排？',choices:['先辦登樓盛宴','先安置居民、恢復糧食供應','先停止一切公共事務'],answer:1,hint:'注意文章先寫政通人和、百廢具興，再寫重修。',result:'修樓計畫先列入居民安置與糧食保障。這是依文意改編的治理情境。'},
  {title:'登臨：陰雨與晴日',text:'陰風怒號，濁浪排空。\n春和景明，波瀾不驚。\n去國懷鄉，憂讒畏譏。\n心曠神怡，寵辱偕忘。',prompt:'替兩幅登臨畫面選擇合適的情感配對。',choices:['雨景—喜悅；晴景—憂懼','兩種景色都只表達思鄉','雨景—憂懼；晴景—喜悅'],answer:2,hint:'遷客騷人的感受隨景物改變；留意陰風與春和的差別。',result:'雨景與晴景兩幅遊記完成。'},
@@ -13,26 +15,28 @@ export const LITERARY_QUESTS={
  {title:'訂單取捨',text:'若止印三二本，未為簡易；若印數十百千本，則極為神速。',prompt:'哪一張訂單最能發揮文中活板的優勢？',choices:['只印一本，每次都重新製字','大量印製同一篇作品','不排版直接壓紙'],answer:1,hint:'比較前期排版準備與大量重複印刷。',result:'接下小鎮文學選本的批次印製委託。'},
  {title:'兩版交替',text:'一板印刷，一板已自布字。此印者才畢，則第二板已具，更互用之。',prompt:'甲板正在印刷，乙板應安排什麼？',choices:['空等甲板印完','拆掉甲板正在使用的字','同時排好下一版，完成後交替'],answer:2,hint:'「更互」是交替使用，減少下一批的等待。',result:'文學選本試印完成，取得活字工序讀訪印記。'}]}
 };
-export const LANDMARK_QUEST={yueyangTower:'yueyang',kaifengCourt:'kaifeng',movableTypeHall:'printing'};
+export const LANDMARK_QUEST={yueyangTower:'yueyang',kaifengCourt:'kaifeng',movableTypeHall:'printing',zuiwengPavilion:'zuiweng',virtueLotus:'lotus',redcliffBoat:'redcliff',oilSchool:'oil',creekLotus:'creek',lanternMarket:'lantern',moonTerrace:'moon'};
 export function questEntry(t,id){return t.journey?.literary?.[id]||{step:0,note:''};}
 export function requirements(t,id){
  const built=t.buildings.filter(b=>b.stage>=3),has=f=>built.some(f);
  const rules={yueyang:[['民居',b=>b.type==='home'],['作坊',b=>b.type==='work'],['義倉',b=>b.design==='granary']],kaifeng:[['民居',b=>b.type==='home'],['商鋪',b=>b.type==='shop']],printing:[['作坊',b=>b.type==='work'],['學堂',b=>['villageSchool','townSchool','academy','countySchool'].includes(b.design)]]};
+ const home=['民居',b=>b.type==='home'],garden=['園圃',b=>['garden','scholarGarden','orchard'].includes(b.design)],pond=['池塘',b=>b.design==='pond'],pavilion=['臨泉亭',b=>b.design==='pavilion'];
+ Object.assign(rules,{zuiweng:[home,pavilion,garden],lotus:[pond,garden],redcliff:[['河津碼頭',b=>b.design==='dock'],pond],oil:[['商鋪',b=>b.type==='shop'],['作坊',b=>b.type==='work']],creek:[pond,pavilion],lantern:[['三處商鋪',()=>built.filter(b=>b.type==='shop').length>=3],garden],moon:[home,['遞鋪',b=>b.design==='postStation'],garden]});
  return (rules[id]||[]).map(([name,f])=>({name,ok:has(f)}));
 }
 export function answerQuest(t,id,step,answer){
  const q=LITERARY_QUESTS[id],entry=questEntry(t,id);
- if(!q||!Number.isInteger(step)||entry.step!==step||!q.steps[step]||q.steps[step].answer!==answer)return false;
+ if(!Object.hasOwn(LITERARY_QUESTS,id)||!Number.isInteger(step)||entry.step!==step||!q.steps[step]||q.steps[step].answer!==answer)return false;
  t.journey.literary??={};t.journey.literary[id]={...entry,step:step+1};return true;
 }
 export function saveQuestNote(t,id,note){
- if(!LITERARY_QUESTS[id]||typeof note!=='string'||note.length>400)return false;
+ if(!Object.hasOwn(LITERARY_QUESTS,id)||typeof note!=='string'||note.length>400)return false;
  const e=questEntry(t,id);if(e.note===note)return false;
  t.journey.literary??={};t.journey.literary[id]={...e,note};return true;
 }
 export function unlockQuest(t,id){
  const q=LITERARY_QUESTS[id],e=questEntry(t,id);
- if(!q||e.step!==q.steps.length||requirements(t,id).some(r=>!r.ok))return false;
+ if(!Object.hasOwn(LITERARY_QUESTS,id)||e.step!==q.steps.length||requirements(t,id).some(r=>!r.ok))return false;
  t.journey.literary[id]={...e,step:q.steps.length+1};return true;
 }
 export function literaryLock(t,design){const id=LANDMARK_QUEST[design];return id&&questEntry(t,id).step!==LITERARY_QUESTS[id].steps.length+1?`請先完成「宋韻任務・${LITERARY_QUESTS[id].title}」解鎖圖樣`:null;}

@@ -1,3 +1,4 @@
+import {addLiteraryGarden} from './literary-gardens.js';
 import * as THREE from 'three';
 import {LANDMARK_QUEST} from './literary-quests.js';
 export function literaryLandmark(b,api){
@@ -8,6 +9,7 @@ export function literaryLandmark(b,api){
  box(g,7.6,.24,7.6,stone,0,.12,0);
  const hall=(x,z,w,d,h=1.8,y=0,color=tile)=>{const a=new THREE.Group();a.position.set(x,y,z);g.add(a);box(a,w,h,d,wall,0,h/2+.25,0);box(a,w*.3,h*.75,.08,wood,0,h*.375+.25,d/2+.05);for(const dx of [-w*.43,w*.43])box(a,.16,h,.16,wood,dx,h/2+.25,d/2);roof(a,w+.6,d+.6,.7,h+.3,color);return a;};
  if(b.stage<3){for(const x of [-2.6,2.6])for(const z of [-2.6,2.6])box(g,.16,.5+b.stage,.16,wood,x,(.5+b.stage)/2+.24,z);return g;}
+ if(addLiteraryGarden(g,b,api))return g;
  if(b.design==='yueyangTower'){
   for(let level=0;level<3;level++){const w=4.6-level*.6,y=level*2.05;hall(0,-.5,w,3.2-level*.35,1.6,y);box(g,w+.6,.15,1,wood,0,y+.3,1.4);for(let i=-3;i<=3;i++)box(g,.07,.55,.07,wood,i*w/7,y+.65,1.85);box(g,w+.4,.08,.1,gold,0,y+.94,1.85);}
   for(let i=0;i<4;i++)box(g,2.5-i*.15,.12,1-i*.15,stone,0,.2+i*.12,2.9-i*.2);

@@ -6,8 +6,8 @@ import {validateSave} from '../src/save-schema.js';
 import {commitJourney} from '../src/journey.js';
 import {LITERARY_QUESTS,LANDMARK_QUEST,questEntry,answerQuest,unlockQuest,saveQuestNote,literaryLock} from '../src/literary-quests.js';
 const solve=(t,id)=>LITERARY_QUESTS[id].steps.forEach((s,i)=>assert(answerQuest(t,id,i,s.answer)));
-function fixture(){const t=new Town();t.place('home',[{x:-6,z:-4}],true);t.place('work',[{x:-4,z:-4}],true);t.place('shop',[{x:-2,z:-4}],true);t.place('garden',[{x:0,z:-4}],true,'granary');t.place('garden',[{x:2,z:-4}],true,'villageSchool');return t;}
-test('all three quests lock construction, reject skip/wrong answers, persist and unlock four-cell landmarks',()=>{
+function fixture(){const t=new Town();t.place('home',[{x:-6,z:-4}],true);t.place('work',[{x:-4,z:-4}],true);t.place('shop',[{x:-2,z:-4}],true);t.place('garden',[{x:0,z:-4}],true,'granary');t.place('garden',[{x:2,z:-4}],true,'villageSchool');for(const [i,d] of ['pavilion','garden','pond','dock','postStation'].entries())t.place('garden',[{x:-6+i*2,z:-2}],true,d);t.place('shop',[{x:0,z:2}],true);t.place('shop',[{x:2,z:2}],true);return t;}
+test('all ten quests lock construction, reject skip/wrong answers, persist and unlock four-cell landmarks',()=>{
  for(const [design,id] of Object.entries(LANDMARK_QUEST)){
   const t=fixture(),cells=squareCells({x:-6,z:0});assert(literaryLock(t,design));assert.equal(t.place('garden',cells,true,design),null);
   assert.equal(answerQuest(t,id,1,0),false);assert.equal(answerQuest(t,id,0,(LITERARY_QUESTS[id].steps[0].answer+1)%3),false);assert.equal(unlockQuest(t,id),false);
