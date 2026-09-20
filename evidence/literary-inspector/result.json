@@ -1,0 +1,42 @@
+{
+  "scope": "full main inspector; pre-unlocked fixture, actual UI upgrades/events/import/export, controlled real Town.tick",
+  "passed": true,
+  "tiers": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "checks": [
+    "blocked upgrade",
+    "actual resident visits",
+    "reflection",
+    "two-day service",
+    "two quotes and draft preserved",
+    "390px comparison and tier5",
+    "file import/export",
+    "reload scheduled event",
+    "illustrated creek journal"
+  ],
+  "visits": {
+    "yueyangTower": {
+      "count": 2,
+      "lastAt": 57,
+      "days": [
+        0,
+        1
+      ],
+      "served": 8
+    },
+    "moonTerrace": {
+      "count": 1,
+      "lastAt": 103,
+      "days": [
+        1
+      ],
+      "served": 0
+    }
+  },
+  "errors": []
+}

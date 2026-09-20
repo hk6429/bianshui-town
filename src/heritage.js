@@ -17,9 +17,9 @@ export const DESIGNS={
  lanternMarket:{"cat": "shop", "name": "元夕燈市", "type": "garden", "variant": 0, "mark": "燈", "sizes": [4], "cost": 18000, "source": null, "detail": "宋韻任務解鎖。燈架、攤棚、樂臺與燈火稀疏的角落；文學造景，非史蹟精確復原。"},
  moonTerrace:{"cat": "garden", "name": "東坡望月臺", "type": "garden", "variant": 0, "mark": "月", "sizes": [4], "cost": 15000, "source": null, "detail": "宋韻任務解鎖。開闊石臺、月門、桂樹與共享席位；文學造景，非史蹟精確復原。"},
 
- yueyangTower:{cat:'garden',name:'岳陽樓',type:'garden',variant:0,mark:'岳',sizes:[4],cost:18000,source:null,detail:'宋韻任務解鎖。三層樓閣與登臨平臺；宋代文學意象模型，非歷史精確復原。'},
+ yueyangTower:{cat:'garden',name:'岳陽樓',type:'garden',variant:0,mark:'岳',sizes:[4],cost:18000,source:null,detail:'宋韻任務解鎖。黃瓦三層、盔頂飛簷、二樓環廊與登臨平臺；參照現存清代形制，非宋樓原貌或測繪級復原。'},
  kaifengCourt:{cat:'civic',name:'開封府',type:'garden',variant:0,mark:'府',sizes:[4],cost:18000,source:null,detail:'宋韻任務解鎖。府門、公堂與廊院；後世包公戲曲的教學場景，非宋代案件實錄。'},
- movableTypeHall:{cat:'school',name:'活字印書坊',type:'garden',variant:0,mark:'印',sizes:[4],cost:15000,source:null,detail:'宋韻任務解鎖。字櫃、排字臺、泥字窯與晾紙架；提供學習名額，書籍商品交易尚未加入。'},
+ movableTypeHall:{cat:'school',name:'活字印書坊',type:'garden',variant:0,mark:'印',sizes:[4],cost:15000,source:null,detail:'宋韻任務解鎖。字櫃、排字臺、泥字窯與晾紙架；提供學習名額，工匠用紙墨印書，由推車送往書肆販售。'},
  ...NEW_DESIGNS,
  // 文教：村塾→鎮學→書院三層，教育名額逐層增加。 // 升縣後才解鎖的縣級建置。
  countyOffice:{cat:'civic',name:'縣衙',type:'garden',variant:0,mark:'縣',sizes:[4],cost:30000,rank:4,source:null,detail:'四格縣衙：儀門、大堂與六房。奉旨升縣後才能營造；與監鎮廨同樣開啟鎮政議事，規制更高。每格 30 貫。'},

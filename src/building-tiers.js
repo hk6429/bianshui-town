@@ -1,3 +1,4 @@
+import {isWorkshop} from './workshop-rules.js';
 import {SCHOOL_FACTOR} from './heritage.js';
 export const MAX_TIER=5;
 export const tierOf=b=>Math.max(1,Math.min(MAX_TIER,Number.isInteger(b.tier)?b.tier:1));
@@ -16,8 +17,8 @@ export function buildingStats(b){
  const r=tierRule(b),large=!!b.footprint;
  return {
   housing:b.type==='home'?(large?8+r.largeHomeExtra:(b.level>=2?4:2)+r.homeExtra):0,
-  jobs:b.type==='work'?(large?6:4):b.type==='shop'?r.shopJobs:0,
-  production:b.type==='work'?(large?2:b.level>=2?1.5:1)*r.production:0,
+  jobs:isWorkshop(b)?(large?6:4):b.type==='shop'?r.shopJobs:0,
+  production:isWorkshop(b)?(large?2:b.level>=2?1.5:1)*r.production:0,
   saleSeconds:r.saleSeconds,
   retail:b.type==='shop'?(large?r.largeRetail:r.retail):0,
   water:(large?48:12)*r.serviceFactor,cleaning:(large?48:12)*r.serviceFactor,
@@ -30,7 +31,7 @@ export function upgradePreview(b){return tierOf(b)<MAX_TIER?{...b,tier:tierOf(b)
 export function buildingAbility(b){
  const s=buildingStats(b);
  if(b.type==='home')return `住宅容量 ${s.housing} 人`;
- if(b.type==='work')return `工匠 ${s.jobs} 席，滿員加工 ${s.production} 倍`;
+ if(isWorkshop(b))return `工匠 ${s.jobs} 席，滿員加工 ${s.production} 倍${b.design==='movableTypeHall'?`，教育 ${Math.floor(s.education*SCHOOL_FACTOR[b.design])} 席`:''}`;
  if(b.type==='shop')return `過賣名額 ${s.jobs} 席，每過賣每 ${s.saleSeconds} 秒售一件${b.design==='herbShop'?`，每過賣照護 ${s.carePerWorker} 人／${s.range} 步`:''}`;
  if(b.design==='well')return `供水 ${s.water} 人／${s.range} 步`;
  if(b.design==='cleaningYard')return `每日清運 ${s.cleaning} 份／${s.range} 步`;

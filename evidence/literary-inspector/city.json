@@ -1,0 +1,1653 @@
+{
+  "format": "bianshui-save",
+  "revision": 1,
+  "owner": "1e2250a4-8897-420d-a73b-10456b0b9975",
+  "savedAt": 1789903352718,
+  "data": {
+    "version": 10,
+    "journey": {
+      "version": 1,
+      "enabled": true,
+      "useGate": false,
+      "vision": "home",
+      "guide": {
+        "stage": 0,
+        "skipped": false
+      },
+      "observedResident": false,
+      "claimed": [],
+      "shortGoal": "observe",
+      "literary": {
+        "yueyang": {
+          "step": 4,
+          "note": "",
+          "activity": {
+            "stage": 3,
+            "selection": [],
+            "visited": []
+          }
+        },
+        "kaifeng": {
+          "step": 4,
+          "note": "",
+          "activity": {
+            "stage": 3,
+            "selection": [],
+            "visited": []
+          }
+        },
+        "zuiweng": {
+          "step": 4,
+          "note": "",
+          "activity": {
+            "stage": 3,
+            "selection": [],
+            "visited": []
+          }
+        },
+        "lotus": {
+          "step": 4,
+          "note": "",
+          "activity": {
+            "stage": 3,
+            "selection": [],
+            "visited": []
+          }
+        },
+        "redcliff": {
+          "step": 4,
+          "note": "",
+          "activity": {
+            "stage": 3,
+            "selection": [],
+            "visited": []
+          }
+        },
+        "printing": {
+          "step": 4,
+          "note": "",
+          "activity": {
+            "stage": 3,
+            "selection": [],
+            "visited": []
+          }
+        },
+        "oil": {
+          "step": 4,
+          "note": "",
+          "activity": {
+            "stage": 3,
+            "selection": [],
+            "visited": []
+          }
+        },
+        "creek": {
+          "step": 4,
+          "note": "",
+          "activity": {
+            "stage": 3,
+            "selection": [],
+            "visited": []
+          }
+        },
+        "lantern": {
+          "step": 4,
+          "note": "",
+          "activity": {
+            "stage": 3,
+            "selection": [],
+            "visited": []
+          }
+        },
+        "moon": {
+          "step": 4,
+          "note": "",
+          "activity": {
+            "stage": 3,
+            "selection": [],
+            "visited": []
+          }
+        }
+      },
+      "landmarks": {
+        "sequence": 3,
+        "active": null,
+        "visits": {
+          "yueyangTower": {
+            "count": 2,
+            "lastAt": 57,
+            "days": [
+              0,
+              1
+            ],
+            "served": 8
+          },
+          "moonTerrace": {
+            "count": 1,
+            "lastAt": 103,
+            "days": [
+              1
+            ],
+            "served": 0
+          }
+        },
+        "history": [
+          {
+            "id": 3,
+            "design": "moonTerrace",
+            "building": 14,
+            "at": 103,
+            "success": true,
+            "participants": [
+              3,
+              4,
+              5,
+              6
+            ],
+            "summary": "賞月並讀給遠方親友的書信；4位居民完成18秒共讀"
+          },
+          {
+            "id": 2,
+            "design": "yueyangTower",
+            "building": 10,
+            "at": 57,
+            "success": true,
+            "participants": [
+              3,
+              4,
+              5,
+              6
+            ],
+            "summary": "登樓對讀晴雨遊記，討論先憂後樂；4位居民完成18秒共讀"
+          },
+          {
+            "id": 1,
+            "design": "yueyangTower",
+            "building": 10,
+            "at": 35,
+            "success": true,
+            "participants": [
+              3,
+              4,
+              5,
+              6
+            ],
+            "summary": "登樓對讀晴雨遊記，討論先憂後樂；4位居民完成18秒共讀"
+          }
+        ],
+        "benefitDay": 1,
+        "beneficiaries": [
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "construction": {
+        "targets": [
+          10
+        ],
+        "at": 103,
+        "label": "岳陽樓",
+        "before": {
+          "buildings": 1,
+          "users": 0,
+          "activities": []
+        }
+      },
+      "landmarkReflections": {
+        "yueyangTower": true
+      },
+      "landmarkConnections": {
+        "yueyangTower": {
+          "other": "moonTerrace",
+          "quote": "不以物喜，不以己悲。",
+          "otherQuote": "但願人長久，千里共嬋娟。",
+          "note": "岳陽樓由自身憂樂轉向天下百姓，望月臺從離別思念走向共同祝福，兩篇都超越眼前處境，但關懷對象不同。"
+        }
+      }
+    },
+    "demography": {
+      "lastAt": 103,
+      "credit": 0,
+      "arrived": 0,
+      "departed": 0
+    },
+    "city": {
+      "version": 2,
+      "mode": "sandbox",
+      "logisticsLevel": 1,
+      "trade": {
+        "funds": 90000,
+        "importExpense": 0,
+        "revenue": 0,
+        "taxPaid": 0,
+        "nextBatch": 1,
+        "ledger": []
+      },
+      "treasury": 10000000,
+      "expansion": 3,
+      "rank": 5,
+      "taxRate": 10,
+      "day": 1,
+      "sanitationDay": 1,
+      "fireDay": 1,
+      "ledger": [],
+      "taxIncome": 0,
+      "spent": 0,
+      "maintenancePaid": 0,
+      "deficitDays": 0,
+      "almanac": {
+        "day": 1,
+        "floodDay": -1,
+        "plagueDay": -1,
+        "stores": 0,
+        "notice": ""
+      }
+    },
+    "market": {
+      "trades": 0
+    },
+    "publicWorks": [],
+    "literati": {
+      "actors": [
+        {
+          "id": 90001,
+          "author": "su",
+          "kind": "author",
+          "x": 12,
+          "z": -16,
+          "route": [],
+          "walking": false,
+          "visible": true,
+          "phase": "writing",
+          "speed": 0.95,
+          "visits": 2,
+          "progress": 5,
+          "wait": 0,
+          "venue": "虹橋街口",
+          "goal": [
+            12,
+            -16
+          ],
+          "action": "",
+          "traffic": "橋上人多，放慢腳步",
+          "laneOffset": 0.23,
+          "angle": 3.141592653589793
+        },
+        {
+          "id": 90002,
+          "author": "li",
+          "kind": "author",
+          "x": 11,
+          "z": -16,
+          "route": [],
+          "walking": false,
+          "visible": true,
+          "phase": "reading",
+          "speed": 0.95,
+          "visits": 2,
+          "progress": 12,
+          "wait": 12,
+          "venue": "虹橋街口",
+          "goal": [
+            11,
+            -16
+          ],
+          "action": "",
+          "traffic": "",
+          "laneOffset": 0.23,
+          "angle": -1.5707963267948966
+        },
+        {
+          "id": 90003,
+          "author": "xin",
+          "kind": "author",
+          "x": 12,
+          "z": -15,
+          "route": [],
+          "walking": false,
+          "visible": true,
+          "phase": "writing",
+          "speed": 0.95,
+          "visits": 2,
+          "progress": 1,
+          "wait": 0,
+          "venue": "虹橋街口",
+          "goal": [
+            12,
+            -15
+          ],
+          "action": "",
+          "traffic": "",
+          "laneOffset": 0.23,
+          "angle": 3.141592653589793
+        },
+        {
+          "id": 90004,
+          "author": "fan",
+          "kind": "author",
+          "x": 12.119999999999996,
+          "z": -16,
+          "route": [
+            [
+              12,
+              -16
+            ],
+            [
+              13,
+              -16
+            ]
+          ],
+          "walking": true,
+          "visible": true,
+          "phase": "walking",
+          "speed": 0.95,
+          "visits": 2,
+          "progress": 0,
+          "wait": 0,
+          "venue": "虹橋街口",
+          "goal": [
+            13,
+            -16
+          ],
+          "action": "",
+          "traffic": "橋上人多，放慢腳步",
+          "laneOffset": 0.23,
+          "angle": 1.5707963267948966
+        },
+        {
+          "id": 90005,
+          "author": "ouyang",
+          "kind": "author",
+          "x": -2.4999999999999982,
+          "z": 2,
+          "route": [
+            [
+              -2,
+              2
+            ],
+            [
+              -2,
+              1
+            ],
+            [
+              -2,
+              0
+            ],
+            [
+              -2,
+              -1
+            ],
+            [
+              -2,
+              -2
+            ],
+            [
+              -1,
+              -2
+            ],
+            [
+              0,
+              -2
+            ],
+            [
+              1,
+              -2
+            ],
+            [
+              2,
+              -2
+            ],
+            [
+              3,
+              -2
+            ],
+            [
+              4,
+              -2
+            ],
+            [
+              5,
+              -2
+            ],
+            [
+              6,
+              -2
+            ],
+            [
+              7,
+              -2
+            ],
+            [
+              8,
+              -2
+            ],
+            [
+              9,
+              -2
+            ],
+            [
+              10,
+              -2
+            ],
+            [
+              11,
+              -2
+            ],
+            [
+              12,
+              -2
+            ],
+            [
+              12,
+              -3
+            ],
+            [
+              12,
+              -4
+            ],
+            [
+              12,
+              -5
+            ],
+            [
+              12,
+              -6
+            ],
+            [
+              12,
+              -7
+            ],
+            [
+              12,
+              -8
+            ],
+            [
+              12,
+              -9
+            ],
+            [
+              12,
+              -10
+            ],
+            [
+              12,
+              -11
+            ],
+            [
+              12,
+              -12
+            ],
+            [
+              12,
+              -13
+            ],
+            [
+              12,
+              -14
+            ],
+            [
+              12,
+              -15
+            ],
+            [
+              12,
+              -16
+            ],
+            [
+              11,
+              -16
+            ],
+            [
+              10,
+              -16
+            ]
+          ],
+          "walking": true,
+          "visible": true,
+          "phase": "walking",
+          "speed": 0.95,
+          "visits": 2,
+          "progress": 0,
+          "wait": 0,
+          "venue": "虹橋街口",
+          "goal": [
+            10,
+            -16
+          ],
+          "action": "",
+          "traffic": "",
+          "laneOffset": 0.23,
+          "angle": 1.5707963267948966
+        }
+      ],
+      "collected": [
+        {
+          "author": "li",
+          "time": 36.73333333333337,
+          "venue": "小荷池塘"
+        },
+        {
+          "author": "su",
+          "time": 36.86666666666671,
+          "venue": "雅居小樓"
+        },
+        {
+          "author": "xin",
+          "time": 37.40000000000007,
+          "venue": "岳陽樓"
+        },
+        {
+          "author": "fan",
+          "time": 43.13333333333334,
+          "venue": "小荷池塘"
+        },
+        {
+          "author": "ouyang",
+          "time": 44.46666666666674,
+          "venue": "東坡望月臺"
+        }
+      ],
+      "nextAt": 43
+    },
+    "economy": {
+      "version": 1,
+      "nextId": 13,
+      "imported": 12,
+      "archived": 0,
+      "sold": {},
+      "lots": [
+        {
+          "id": 1,
+          "good": "clay",
+          "at": "dock",
+          "origin": "汴河第 1 航次",
+          "trail": [
+            {
+              "at": "boat",
+              "time": 8
+            },
+            {
+              "at": "porter:3001",
+              "time": 37.46666666666674
+            },
+            {
+              "at": "dock",
+              "time": 43.33333333333335
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "good": "timber",
+          "at": "dock",
+          "origin": "汴河第 1 航次",
+          "trail": [
+            {
+              "at": "boat",
+              "time": 8
+            },
+            {
+              "at": "porter:3002",
+              "time": 37.46666666666674
+            },
+            {
+              "at": "dock",
+              "time": 43.33333333333335
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "good": "fiber",
+          "at": "dock",
+          "origin": "汴河第 1 航次",
+          "trail": [
+            {
+              "at": "boat",
+              "time": 8
+            },
+            {
+              "at": "porter:3001",
+              "time": 43.80000000000004
+            },
+            {
+              "at": "dock",
+              "time": 44.13333333333339
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "good": "clay",
+          "at": "dock",
+          "origin": "汴河第 1 航次",
+          "trail": [
+            {
+              "at": "boat",
+              "time": 8
+            },
+            {
+              "at": "porter:3002",
+              "time": 43.80000000000004
+            },
+            {
+              "at": "dock",
+              "time": 44.13333333333339
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "good": "timber",
+          "at": "dock",
+          "origin": "汴河第 1 航次",
+          "trail": [
+            {
+              "at": "boat",
+              "time": 8
+            },
+            {
+              "at": "porter:3001",
+              "time": 44.60000000000008
+            },
+            {
+              "at": "dock",
+              "time": 44.93333333333343
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "good": "fiber",
+          "at": "dock",
+          "origin": "汴河第 1 航次",
+          "trail": [
+            {
+              "at": "boat",
+              "time": 8
+            },
+            {
+              "at": "porter:3002",
+              "time": 44.60000000000008
+            },
+            {
+              "at": "dock",
+              "time": 44.93333333333343
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "good": "clay",
+          "at": "dock",
+          "origin": "汴河第 1 航次",
+          "trail": [
+            {
+              "at": "boat",
+              "time": 8
+            },
+            {
+              "at": "porter:3001",
+              "time": 45.40000000000012
+            },
+            {
+              "at": "dock",
+              "time": 45.73333333333347
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "good": "timber",
+          "at": "dock",
+          "origin": "汴河第 1 航次",
+          "trail": [
+            {
+              "at": "boat",
+              "time": 8
+            },
+            {
+              "at": "porter:3002",
+              "time": 45.40000000000012
+            },
+            {
+              "at": "dock",
+              "time": 45.73333333333347
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "good": "fiber",
+          "at": "boat",
+          "origin": "汴河第 1 航次",
+          "trail": [
+            {
+              "at": "boat",
+              "time": 8
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "good": "clay",
+          "at": "boat",
+          "origin": "汴河第 1 航次",
+          "trail": [
+            {
+              "at": "boat",
+              "time": 8
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "good": "timber",
+          "at": "boat",
+          "origin": "汴河第 1 航次",
+          "trail": [
+            {
+              "at": "boat",
+              "time": 8
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "good": "fiber",
+          "at": "boat",
+          "origin": "汴河第 1 航次",
+          "trail": [
+            {
+              "at": "boat",
+              "time": 8
+            }
+          ]
+        }
+      ]
+    },
+    "weather": {
+      "mode": "auto",
+      "raining": false,
+      "nextAt": 180
+    },
+    "stories": {
+      "nextAt": 123,
+      "sequence": 0,
+      "completed": 0,
+      "active": null
+    },
+    "life": {
+      "version": 1,
+      "visitors": [
+        {
+          "id": 2000,
+          "kind": "peddler",
+          "x": 33,
+          "z": -16,
+          "angle": 1.5707963267948966,
+          "route": [],
+          "walking": false,
+          "visible": false,
+          "wait": -15,
+          "phase": "night",
+          "speed": 0.95,
+          "name": "顧行舟",
+          "action": "沿虹橋返回城門",
+          "carrying": 0,
+          "target": null,
+          "goal": [
+            33,
+            -16
+          ],
+          "traffic": "",
+          "laneOffset": 0.23
+        },
+        {
+          "id": 2001,
+          "kind": "traveler",
+          "x": 33,
+          "z": -16,
+          "angle": 1.5707963267948966,
+          "route": [],
+          "walking": false,
+          "visible": false,
+          "wait": -16,
+          "phase": "night",
+          "speed": 0.95,
+          "name": "杜望春",
+          "action": "逛完市集，往城門歸去",
+          "carrying": 0,
+          "traffic": "",
+          "target": null,
+          "goal": [
+            33,
+            -16
+          ],
+          "laneOffset": 0.23
+        },
+        {
+          "id": 2002,
+          "kind": "shopper",
+          "x": 33,
+          "z": -16,
+          "angle": 1.5707963267948966,
+          "route": [],
+          "walking": false,
+          "visible": false,
+          "wait": -13,
+          "phase": "night",
+          "speed": 0.95,
+          "name": "孟青山",
+          "action": "逛完市集，往城門歸去",
+          "carrying": 0,
+          "traffic": "",
+          "target": null,
+          "goal": [
+            33,
+            -16
+          ],
+          "laneOffset": 0.23
+        },
+        {
+          "id": 2003,
+          "kind": "peddler",
+          "x": 33,
+          "z": -16,
+          "angle": 1.5707963267948966,
+          "route": [],
+          "walking": false,
+          "visible": false,
+          "wait": -11,
+          "phase": "night",
+          "speed": 0.95,
+          "name": "姚阿蘭",
+          "action": "逛完市集，往城門歸去",
+          "carrying": 0,
+          "traffic": "",
+          "target": null,
+          "goal": [
+            33,
+            -16
+          ],
+          "laneOffset": 0.23
+        },
+        {
+          "id": 2004,
+          "kind": "traveler",
+          "x": 33,
+          "z": -16,
+          "angle": 1.5707963267948966,
+          "route": [],
+          "walking": false,
+          "visible": false,
+          "wait": -1,
+          "phase": "night",
+          "speed": 0.95,
+          "name": "許長安",
+          "action": "逛完市集，往城門歸去",
+          "carrying": 0,
+          "traffic": "",
+          "target": null,
+          "goal": [
+            33,
+            -16
+          ],
+          "laneOffset": 0.23
+        },
+        {
+          "id": 2005,
+          "kind": "shopper",
+          "x": 33,
+          "z": -16,
+          "angle": 1.5707963267948966,
+          "route": [],
+          "walking": false,
+          "visible": false,
+          "wait": -10,
+          "phase": "night",
+          "speed": 0.95,
+          "name": "江雲",
+          "action": "逛完市集，往城門歸去",
+          "carrying": 0,
+          "traffic": "",
+          "target": null,
+          "goal": [
+            33,
+            -16
+          ],
+          "laneOffset": 0.23
+        },
+        {
+          "id": 2006,
+          "kind": "peddler",
+          "x": 33,
+          "z": -16,
+          "angle": 1.5707963267948966,
+          "route": [],
+          "walking": false,
+          "visible": false,
+          "wait": -8,
+          "phase": "night",
+          "speed": 0.95,
+          "name": "丁禾",
+          "action": "逛完市集，往城門歸去",
+          "carrying": 0,
+          "traffic": "",
+          "target": null,
+          "goal": [
+            33,
+            -16
+          ],
+          "laneOffset": 0.23
+        },
+        {
+          "id": 2007,
+          "kind": "traveler",
+          "x": 33,
+          "z": -16,
+          "angle": 1.5707963267948966,
+          "route": [],
+          "walking": false,
+          "visible": false,
+          "wait": 6,
+          "phase": "night",
+          "speed": 0.95,
+          "name": "彭小橋",
+          "action": "沿虹橋返回城門",
+          "carrying": 0,
+          "traffic": "",
+          "target": null,
+          "goal": [
+            33,
+            -16
+          ],
+          "laneOffset": 0.23
+        },
+        {
+          "id": 2008,
+          "kind": "shopper",
+          "x": 33,
+          "z": -16,
+          "angle": 1.5707963267948966,
+          "route": [],
+          "walking": false,
+          "visible": false,
+          "wait": 8,
+          "phase": "night",
+          "speed": 0.95,
+          "name": "朱常順",
+          "action": "沿虹橋返回城門",
+          "carrying": 0,
+          "traffic": "",
+          "target": null,
+          "goal": [
+            33,
+            -16
+          ],
+          "laneOffset": 0.23
+        },
+        {
+          "id": 2009,
+          "kind": "peddler",
+          "x": 33,
+          "z": -16,
+          "angle": 1.5707963267948966,
+          "route": [],
+          "walking": false,
+          "visible": false,
+          "wait": 9,
+          "phase": "night",
+          "speed": 0.95,
+          "name": "余小溪",
+          "action": "沿虹橋返回城門",
+          "carrying": 0,
+          "traffic": "",
+          "target": null,
+          "goal": [
+            33,
+            -16
+          ],
+          "laneOffset": 0.23
+        }
+      ],
+      "porters": [
+        {
+          "id": 3001,
+          "kind": "porter",
+          "x": 15,
+          "z": 8,
+          "angle": 1.5707963267948966,
+          "route": [
+            [
+              16,
+              8
+            ]
+          ],
+          "walking": true,
+          "visible": true,
+          "wait": 0,
+          "phase": "load",
+          "speed": 0.95,
+          "name": "杜望春",
+          "action": "走向船邊接貨",
+          "carrying": 0,
+          "traffic": "",
+          "goal": [
+            16,
+            8
+          ],
+          "laneOffset": 0.85
+        },
+        {
+          "id": 3002,
+          "kind": "porter",
+          "x": 15,
+          "z": 8,
+          "angle": 1.5707963267948966,
+          "route": [
+            [
+              16,
+              8
+            ]
+          ],
+          "walking": true,
+          "visible": true,
+          "wait": 0,
+          "phase": "load",
+          "speed": 0.95,
+          "name": "孟青山",
+          "action": "走向船邊接貨",
+          "carrying": 0,
+          "traffic": "",
+          "goal": [
+            16,
+            8
+          ],
+          "laneOffset": 0.85
+        }
+      ],
+      "oxen": [
+        {
+          "id": 4001,
+          "kind": "ox",
+          "x": 12,
+          "z": 8,
+          "angle": 0,
+          "route": [],
+          "walking": false,
+          "visible": true,
+          "wait": -103,
+          "phase": "load",
+          "speed": 0.68,
+          "name": "牛車腳行",
+          "action": "牛車等候原料與作坊接貨",
+          "carrying": 0
+        }
+      ],
+      "dock": {
+        "stock": 8,
+        "received": 8,
+        "delivered": 0,
+        "sold": 0
+      },
+      "boat": {
+        "x": 17.1,
+        "z": 8,
+        "state": "unloading",
+        "cargo": 4,
+        "imported": 12,
+        "mast": 1,
+        "trips": 0,
+        "wait": 0,
+        "announced": true
+      },
+      "socialCount": 2,
+      "bridgePasses": 1
+    },
+    "time": 46.06666666666682,
+    "elapsed": 103,
+    "nextId": 15,
+    "buildings": [
+      {
+        "x": -1,
+        "z": 0,
+        "id": 2,
+        "type": "home",
+        "design": "residence",
+        "name": "雅居小樓",
+        "blockId": 1,
+        "tier": 1,
+        "level": 2,
+        "born": -100,
+        "variant": 0,
+        "stage": 4,
+        "entrance": [
+          -4,
+          2
+        ],
+        "facing": 0
+      },
+      {
+        "x": 0,
+        "z": -1,
+        "id": 8,
+        "type": "garden",
+        "design": "pond",
+        "name": "小荷池塘",
+        "blockId": 7,
+        "tier": 1,
+        "level": 1,
+        "born": -100,
+        "variant": 0,
+        "stage": 4,
+        "entrance": [
+          0,
+          -2
+        ],
+        "facing": 0
+      },
+      {
+        "x": 0.5,
+        "z": 0.5,
+        "footprint": [
+          {
+            "x": 0,
+            "z": 0
+          },
+          {
+            "x": 1,
+            "z": 0
+          },
+          {
+            "x": 0,
+            "z": 1
+          },
+          {
+            "x": 1,
+            "z": 1
+          }
+        ],
+        "id": 10,
+        "type": "garden",
+        "design": "yueyangTower",
+        "name": "岳陽樓",
+        "blockId": 9,
+        "tier": 5,
+        "level": 1,
+        "born": -100,
+        "variant": 0,
+        "stage": 4,
+        "entrance": [
+          2,
+          6
+        ],
+        "facing": 0
+      },
+      {
+        "x": 2,
+        "z": 0,
+        "id": 12,
+        "type": "garden",
+        "design": "granary",
+        "name": "義倉",
+        "blockId": 11,
+        "tier": 1,
+        "level": 1,
+        "born": -100,
+        "variant": 0,
+        "stage": 4,
+        "entrance": [
+          8,
+          2
+        ],
+        "facing": 0
+      },
+      {
+        "x": -2.5,
+        "z": 0.5,
+        "footprint": [
+          {
+            "x": -3,
+            "z": 0
+          },
+          {
+            "x": -2,
+            "z": 0
+          },
+          {
+            "x": -3,
+            "z": 1
+          },
+          {
+            "x": -2,
+            "z": 1
+          }
+        ],
+        "id": 14,
+        "type": "garden",
+        "design": "moonTerrace",
+        "name": "東坡望月臺",
+        "blockId": 13,
+        "tier": 1,
+        "level": 1,
+        "born": -100,
+        "variant": 0,
+        "stage": 4,
+        "entrance": [
+          -10,
+          6
+        ],
+        "facing": 0
+      }
+    ],
+    "blocks": [
+      {
+        "id": 1,
+        "type": "home",
+        "combined": false,
+        "cells": [
+          {
+            "x": -1,
+            "z": 0
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "type": "garden",
+        "combined": false,
+        "cells": [
+          {
+            "x": 0,
+            "z": -1
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "type": "garden",
+        "combined": true,
+        "cells": [
+          {
+            "x": 0,
+            "z": 0
+          },
+          {
+            "x": 1,
+            "z": 0
+          },
+          {
+            "x": 0,
+            "z": 1
+          },
+          {
+            "x": 1,
+            "z": 1
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "type": "garden",
+        "combined": false,
+        "cells": [
+          {
+            "x": 2,
+            "z": 0
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "type": "garden",
+        "combined": true,
+        "cells": [
+          {
+            "x": -3,
+            "z": 0
+          },
+          {
+            "x": -2,
+            "z": 0
+          },
+          {
+            "x": -3,
+            "z": 1
+          },
+          {
+            "x": -2,
+            "z": 1
+          }
+        ]
+      }
+    ],
+    "people": [
+      {
+        "id": 3,
+        "name": "陳安",
+        "home": 2,
+        "work": null,
+        "current": null,
+        "destination": null,
+        "x": -9,
+        "z": 6,
+        "outside": true,
+        "route": [],
+        "action": "前往雅居小樓",
+        "speed": 1.1600000000000001,
+        "traffic": "",
+        "socialUntil": 0,
+        "laneOffset": 0.23,
+        "angle": 1.5707963267948966,
+        "diary": [
+          {
+            "time": 46.06666666666682,
+            "text": "前往雅居小樓"
+          },
+          {
+            "time": 44.86666666666676,
+            "text": "賞月並讀給遠方親友的書信"
+          },
+          {
+            "time": 44.13333333333339,
+            "text": "已到場，等街坊集合"
+          },
+          {
+            "time": 43.06666666666667,
+            "text": "沿路前往賞月書信"
+          },
+          {
+            "time": 37.46666666666674,
+            "text": "前往雅居小樓"
+          },
+          {
+            "time": 36.26666666666668,
+            "text": "登樓對讀晴雨遊記，討論先憂後樂"
+          },
+          {
+            "time": 36.06666666666667,
+            "text": "已到場，等街坊集合"
+          }
+        ],
+        "diaryDay": 1,
+        "education": 4,
+        "shelter": null,
+        "chatCooldown": 105,
+        "chatPartner": 4,
+        "streetEvent": null
+      },
+      {
+        "id": 4,
+        "name": "柳安",
+        "home": 2,
+        "work": null,
+        "current": null,
+        "destination": null,
+        "x": -9,
+        "z": 6,
+        "outside": true,
+        "route": [],
+        "action": "前往雅居小樓",
+        "speed": 0.8,
+        "traffic": "",
+        "socialUntil": 0,
+        "laneOffset": 0.23,
+        "angle": 1.5707963267948966,
+        "diary": [
+          {
+            "time": 46.06666666666682,
+            "text": "前往雅居小樓"
+          },
+          {
+            "time": 44.86666666666676,
+            "text": "賞月並讀給遠方親友的書信"
+          },
+          {
+            "time": 44.80000000000009,
+            "text": "已到場，等街坊集合"
+          },
+          {
+            "time": 43.06666666666667,
+            "text": "沿路前往賞月書信"
+          },
+          {
+            "time": 37.46666666666674,
+            "text": "前往雅居小樓"
+          },
+          {
+            "time": 36.26666666666668,
+            "text": "登樓對讀晴雨遊記，討論先憂後樂"
+          },
+          {
+            "time": 36.20000000000001,
+            "text": "已到場，等街坊集合"
+          },
+          {
+            "time": 36.06666666666667,
+            "text": "沿路前往登樓議事"
+          }
+        ],
+        "diaryDay": 1,
+        "education": 4,
+        "shelter": null,
+        "chatCooldown": 105,
+        "chatPartner": 3,
+        "streetEvent": null
+      },
+      {
+        "id": 5,
+        "name": "王安",
+        "home": 2,
+        "work": null,
+        "current": null,
+        "destination": null,
+        "x": -9,
+        "z": 6,
+        "outside": true,
+        "route": [],
+        "action": "前往雅居小樓",
+        "speed": 0.92,
+        "traffic": "",
+        "socialUntil": 0,
+        "laneOffset": 0.23,
+        "angle": 1.5707963267948966,
+        "diary": [
+          {
+            "time": 46.06666666666682,
+            "text": "前往雅居小樓"
+          },
+          {
+            "time": 44.86666666666676,
+            "text": "賞月並讀給遠方親友的書信"
+          },
+          {
+            "time": 44.53333333333341,
+            "text": "已到場，等街坊集合"
+          },
+          {
+            "time": 43.06666666666667,
+            "text": "沿路前往賞月書信"
+          },
+          {
+            "time": 37.46666666666674,
+            "text": "前往雅居小樓"
+          },
+          {
+            "time": 36.26666666666668,
+            "text": "登樓對讀晴雨遊記，討論先憂後樂"
+          },
+          {
+            "time": 36.13333333333334,
+            "text": "已到場，等街坊集合"
+          },
+          {
+            "time": 36.06666666666667,
+            "text": "沿路前往登樓議事"
+          }
+        ],
+        "diaryDay": 1,
+        "education": 4,
+        "shelter": null,
+        "chatCooldown": 105,
+        "chatPartner": 6,
+        "streetEvent": null
+      },
+      {
+        "id": 6,
+        "name": "趙安",
+        "home": 2,
+        "work": null,
+        "current": null,
+        "destination": null,
+        "x": -9,
+        "z": 6,
+        "outside": true,
+        "route": [],
+        "action": "前往雅居小樓",
+        "speed": 1.04,
+        "traffic": "",
+        "socialUntil": 0,
+        "laneOffset": 0.23,
+        "angle": 1.5707963267948966,
+        "diary": [
+          {
+            "time": 46.06666666666682,
+            "text": "前往雅居小樓"
+          },
+          {
+            "time": 44.86666666666676,
+            "text": "賞月並讀給遠方親友的書信"
+          },
+          {
+            "time": 44.3333333333334,
+            "text": "已到場，等街坊集合"
+          },
+          {
+            "time": 43.06666666666667,
+            "text": "沿路前往賞月書信"
+          },
+          {
+            "time": 37.46666666666674,
+            "text": "前往雅居小樓"
+          },
+          {
+            "time": 36.26666666666668,
+            "text": "登樓對讀晴雨遊記，討論先憂後樂"
+          },
+          {
+            "time": 36.06666666666667,
+            "text": "已到場，等街坊集合"
+          }
+        ],
+        "diaryDay": 1,
+        "education": 4,
+        "shelter": null,
+        "chatCooldown": 105,
+        "chatPartner": 5,
+        "streetEvent": null
+      }
+    ],
+    "carts": [],
+    "events": [
+      {
+        "text": "岳陽樓升至 5 級完成",
+        "time": 46.06666666666682
+      },
+      {
+        "text": "賞月書信：賞月並讀給遠方親友的書信；4位居民完成18秒共讀",
+        "time": 46.06666666666682
+      },
+      {
+        "text": "歐陽修停筆展卷，〈醉翁亭記〉收入汴水文集",
+        "time": 44.46666666666674
+      },
+      {
+        "text": "范仲淹停筆展卷，〈岳陽樓記〉收入汴水文集",
+        "time": 43.13333333333334
+      },
+      {
+        "text": "岳陽樓升至 4 級完成",
+        "time": 37.46666666666674
+      },
+      {
+        "text": "登樓議事：登樓對讀晴雨遊記，討論先憂後樂；4位居民完成18秒共讀",
+        "time": 37.46666666666674
+      },
+      {
+        "text": "辛棄疾停筆展卷，〈青玉案・元夕〉收入汴水文集",
+        "time": 37.40000000000007
+      },
+      {
+        "text": "貨船靠岸，腳夫開始把貨物搬上碼頭",
+        "time": 37.13333333333339
+      },
+      {
+        "text": "蘇軾停筆展卷，〈水調歌頭・明月幾時有〉收入汴水文集",
+        "time": 36.86666666666671
+      },
+      {
+        "text": "李清照停筆展卷，〈聲聲慢・尋尋覓覓〉收入汴水文集",
+        "time": 36.73333333333337
+      },
+      {
+        "text": "岳陽樓升至 3 級完成",
+        "time": 14.333333333333325
+      },
+      {
+        "text": "岳陽樓升至 2 級完成",
+        "time": 14.333333333333325
+      },
+      {
+        "text": "歐陽修來到汴水，沿街尋景",
+        "time": 14.333333333333325
+      },
+      {
+        "text": "王安與趙安在巷口停步寒暄",
+        "time": 14.333333333333325
+      },
+      {
+        "text": "陳安與柳安在巷口停步寒暄",
+        "time": 14.333333333333325
+      },
+      {
+        "text": "登樓議事：登樓對讀晴雨遊記，討論先憂後樂；4位居民完成18秒共讀",
+        "time": 14.333333333333325
+      },
+      {
+        "text": "范仲淹來到汴水，沿街尋景",
+        "time": 13.799999999999994
+      },
+      {
+        "text": "辛棄疾來到汴水，沿街尋景",
+        "time": 13.266666666666662
+      },
+      {
+        "text": "李清照來到汴水，沿街尋景",
+        "time": 12.73333333333333
+      },
+      {
+        "text": "漕船收桅過虹橋，橋頭來客駐足觀看",
+        "time": 12.666666666666664
+      },
+      {
+        "text": "蘇軾來到汴水，沿街尋景",
+        "time": 12.2
+      },
+      {
+        "text": "一處四格合建的園景已落成",
+        "time": 8
+      },
+      {
+        "text": "一處新園景已落成",
+        "time": 8
+      },
+      {
+        "text": "一處四格合建的園景已落成",
+        "time": 8
+      }
+    ]
+  }
+}

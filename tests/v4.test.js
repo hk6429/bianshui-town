@@ -1,3 +1,6 @@
+import {squareCells} from '../src/heritage.js';
+import {LITERARY_QUESTS,answerQuest,unlockQuest} from '../src/literary-quests.js';
+import {solveActivities} from './literary-activity-fixture.js';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {Town} from '../src/simulation.js';
@@ -15,7 +18,16 @@ test('two and three connected cells have private courtyards, without internal ro
  assert.equal(courtyards({cells:[{x:0,z:0}]}).length,0);
 });
 test('all raw materials are physically processed, delivered and sold with provenance and conservation',()=>{
- const t=new Town();t.demo();setWeather(t,'clear');run(t,2200);
+ const t=new Town();t.demo();
+ // 擴充原有 demo，讓新增的紙墨配方也具備真實場所與人力。
+ assert(t.place('garden',[{x:0,z:-6}],true,'villageSchool'));
+ for(const [i,step] of LITERARY_QUESTS.printing.steps.entries())assert(answerQuest(t,'printing',i,step.answer));
+ solveActivities(t,'printing');assert(unlockQuest(t,'printing'));
+ assert(t.place('garden',squareCells({x:-2,z:-6}),true,'movableTypeHall'));
+ assert(t.place('shop',[{x:2,z:0}],true,'bookshop'));
+ assert(t.place('home',squareCells({x:-4,z:-6}),true));
+ assert(t.place('home',squareCells({x:0,z:-5}),true));
+ setWeather(t,'clear');run(t,2200);
  for(const r of RECIPES){assert((t.economy.sold[r.output]||0)>0,`${r.output} was not sold`);}
  const balance=goodsBalance(t);assert.equal(balance.imported,balance.accounted);
  const made=t.economy.lots.find(l=>l.madeAt);assert(made);assert(made.trail.some(x=>x.at.startsWith('input:')));assert(made.trail.some(x=>x.at.startsWith('output:')));assert(made.origin.includes('航次'));

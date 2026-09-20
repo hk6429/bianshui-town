@@ -1,0 +1,29 @@
+{
+  "scope": "isolated UI module with real Town.tick and schema-backed persistence; not full main inspector",
+  "mobile": 390,
+  "realVisits": {
+    "yueyangTower": {
+      "count": 1,
+      "lastAt": 85,
+      "days": [
+        0
+      ],
+      "served": 4
+    },
+    "moonTerrace": {
+      "count": 1,
+      "lastAt": 174,
+      "days": [
+        0
+      ],
+      "served": 0
+    }
+  },
+  "comparison": {
+    "other": "moonTerrace",
+    "quote": "不以物喜，不以己悲。",
+    "otherQuote": "但願人長久，千里共嬋娟。",
+    "note": "岳陽樓寫超越個人的憂樂，望月臺由個人思念轉為對遠人的祝福，兩者關懷對象有別。"
+  },
+  "errors": []
+}

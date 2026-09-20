@@ -1,3 +1,4 @@
+import {yueyangModel} from './yueyang-model.js';
 import {addLiteraryGarden} from './literary-gardens.js';
 import * as THREE from 'three';
 import {LANDMARK_QUEST} from './literary-quests.js';
@@ -10,13 +11,7 @@ export function literaryLandmark(b,api){
  const hall=(x,z,w,d,h=1.8,y=0,color=tile)=>{const a=new THREE.Group();a.position.set(x,y,z);g.add(a);box(a,w,h,d,wall,0,h/2+.25,0);box(a,w*.3,h*.75,.08,wood,0,h*.375+.25,d/2+.05);for(const dx of [-w*.43,w*.43])box(a,.16,h,.16,wood,dx,h/2+.25,d/2);roof(a,w+.6,d+.6,.7,h+.3,color);return a;};
  if(b.stage<3){for(const x of [-2.6,2.6])for(const z of [-2.6,2.6])box(g,.16,.5+b.stage,.16,wood,x,(.5+b.stage)/2+.24,z);return g;}
  if(addLiteraryGarden(g,b,api))return g;
- if(b.design==='yueyangTower'){
-  for(let level=0;level<3;level++){const w=4.6-level*.6,y=level*2.05;hall(0,-.5,w,3.2-level*.35,1.6,y);box(g,w+.6,.15,1,wood,0,y+.3,1.4);for(let i=-3;i<=3;i++)box(g,.07,.55,.07,wood,i*w/7,y+.65,1.85);box(g,w+.4,.08,.1,gold,0,y+.94,1.85);}
-  for(let i=0;i<4;i++)box(g,2.5-i*.15,.12,1-i*.15,stone,0,.2+i*.12,2.9-i*.2);
-  if(tier>=2)for(const x of [-3.2,3.2]){box(g,.12,2.2,.12,wood,x,1.3,2.6);cyl(g,.26,.26,.45,0xc5944b,x,2.15,2.6,8);}
-  if(tier>=3)for(const x of [-3.1,3.1])hall(x,-.5,.65,3.5,1.2);
-  if(tier>=4)for(const x of [-2.6,2.6])tree(g,x,-2.8,.55);
-  if(tier>=5)for(let i=-3;i<=3;i++)box(g,.45,.6,.15,gold,i,.6,3.4);
+ if(b.design==='yueyangTower'){yueyangModel(g,tier,api);return g;
  }else if(b.design==='kaifengCourt'){
   hall(0,-2.1,4.8,2.1,2.7);hall(0,2.65,3.2,1.1,1.8);box(g,1.5,.5,.12,0x36534f,0,1.8,3.28);
   for(const x of [-3,3])hall(x,0,1,3.5,1.5);box(g,1.7,.7,.7,wood,0,.6,-.5);

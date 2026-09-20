@@ -2,7 +2,7 @@ import {roadAnchor} from './road-network.js';
 import {logistics} from './logistics.js';
 import {shopIsOpen,sellAtShop} from './commerce.js';
 import {marketStalls,marketOpen} from './market.js';
-import {at,transfer,deliveryPlan,importCargo,GOODS,goodsBalance} from './production.js';
+import {at,shopRoom,transfer,deliveryPlan,importCargo,GOODS,goodsBalance} from './production.js';
 import {marketHours} from './market.js';
 import {innGuests} from './civic.js';
 import {festivalVisitors} from './festivals.js';
@@ -81,9 +81,9 @@ function tickOxen(t,dt){
   if(a.phase==='load'){
    if(Math.hypot(a.x-DOCK[0],a.z-DOCK[1])>.02){send(t,a,DOCK,'返回貨棧取貨');continue;}
    const plan=deliveryPlan(t);
-   if(plan&&send(t,a,plan.building.entrance,`運送${GOODS[plan.good]}前往${plan.building.name}`)){transfer(t,'dock',`ox:${a.id}`,capacity.oxLoad,plan.good);a.target=plan.building.id;a.deliveryAt=plan.to;a.phase='deliver';}else a.action='牛車等候原料與作坊接貨';
+   if(plan&&send(t,a,plan.building.entrance,`運送${GOODS[plan.good]}前往${plan.building.name}`)){transfer(t,'dock',`ox:${a.id}`,Math.min(capacity.oxLoad,plan.count??capacity.oxLoad),plan.good);a.target=plan.building.id;a.deliveryAt=plan.to;a.phase='deliver';}else a.action='牛車等候原料與作坊接貨';
   }else if(a.phase==='deliver'){
-   const target=t.building(a.target);if(target&&Math.hypot(a.x-target.entrance[0],a.z-target.entrance[1])>.02){send(t,a,target.entrance,'等待道路連通後送貨');continue;}if(target){const lots=at(t,`ox:${a.id}`),label=GOODS[lots[0]?.good]||'貨物';const n=transfer(t,`ox:${a.id}`,a.deliveryAt||`shop:${target.id}`,Infinity);if(target.type==='shop')l.dock.delivered+=n;else target.lastSupply=t.elapsed;t.log(`牛車送抵${target.name}，補入 ${n} 件${label}`);}a.phase='return';a.wait=5;a.action='卸貨，讓牛歇歇腳';
+   const target=t.building(a.target);if(target&&Math.hypot(a.x-target.entrance[0],a.z-target.entrance[1])>.02){send(t,a,target.entrance,'等待道路連通後送貨');continue;}if(target){const lots=at(t,`ox:${a.id}`),label=GOODS[lots[0]?.good]||'貨物';const to=a.deliveryAt||`shop:${target.id}`,room=target.type==='shop'?shopRoom(t,target,lots[0]?.good):target.design==='movableTypeHall'?Math.max(0,3-at(t,to,lots[0]?.good).length):Infinity;const n=transfer(t,`ox:${a.id}`,to,room);if(target.type==='shop')l.dock.delivered+=n;else if(n)target.lastSupply=t.elapsed;if(at(t,`ox:${a.id}`).length){a.wait=3;a.action='貨倉已滿，載貨等候卸貨';continue;}t.log(`牛車送抵${target.name}，補入 ${n} 件${label}`);}a.phase='return';a.wait=5;a.action='卸貨，讓牛歇歇腳';
   }else if(send(t,a,DOCK,'空車返回碼頭'))a.phase='load';
  }
 }

@@ -1,3 +1,4 @@
+import {solveActivitiesUI} from './literary-activity-fixture.js';
 import {chromium} from '@playwright/test';
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
@@ -9,12 +10,12 @@ await page.goto(process.env.TEST_URL||'http://127.0.0.1:5183');await page.waitFo
 await page.evaluate(()=>{document.querySelectorAll('dialog[open]').forEach(d=>d.close());const t=window.__townDebug.town();t.city.mode='sandbox';t.city.expansion=3;for(const [i,type] of ['home','work','shop','shop','shop'].entries())t.place(type,[{x:-12+i*2,z:-8}],true);for(const [i,design] of ['granary','villageSchool','pavilion','garden','pond','dock','postStation'].entries())t.place('garden',[{x:-12+i*2,z:-6}],true,design);document.querySelector('#literary-quests-btn').click();});
 for(const [id,q] of Object.entries(LITERARY_QUESTS)){
  await page.locator(`[data-quest="${id}"]`).click();for(const s of q.steps)await page.locator(`[data-answer="${s.answer}"]`).click();
- await page.locator('[data-unlock]').click();assert.match(await page.locator('#literary-status').textContent(),/已儲存/);
+ await solveActivitiesUI(page,id);await page.locator('[data-unlock]').click();assert.match(await page.locator('#literary-status').textContent(),/已儲存/);
  await page.locator('#literary-note').fill(`${q.name}：引用與解釋`);await page.locator('[data-note]').click();
 }
 await page.screenshot({path:out+'/ten-desktop.png'});
 await page.setViewportSize({width:390,height:844});await page.locator('[data-quest="lotus"]').click();await page.screenshot({path:out+'/ten-mobile.png'});assert(await page.locator('#literary-quests').evaluate(d=>d.scrollWidth<=d.clientWidth));
-await page.reload();await page.waitForFunction(()=>window.__townDebug);const saved=await page.evaluate(()=>window.__townDebug.town().journey.literary);for(const [id,q] of Object.entries(LITERARY_QUESTS)){assert.equal(saved[id].step,4);assert.equal(saved[id].note,`${q.name}：引用與解釋`);}
+await page.reload();await page.waitForFunction(()=>window.__townDebug);const saved=await page.evaluate(()=>window.__townDebug.town().journey.literary);for(const [id,q] of Object.entries(LITERARY_QUESTS)){assert.equal(saved[id].step,4);assert.equal(saved[id].activity.stage,3);assert.equal(saved[id].note,`${q.name}：引用與解釋`);}
 await page.setViewportSize({width:1440,height:1000});
 await page.evaluate(async()=>{
  document.querySelectorAll('dialog[open]').forEach(d=>d.close());
@@ -31,4 +32,4 @@ await page.evaluate(async()=>{
  window.drawLiteraryGallery(1);
 });
 await page.screenshot({path:out+'/models-level1.png'});await page.evaluate(()=>window.drawLiteraryGallery(5));await page.screenshot({path:out+'/models-level5.png'});
-assert.deepEqual(errors,[]);await writeFile(out+'/result.json',JSON.stringify({quests:Object.keys(LITERARY_QUESTS),passed:true,errors,checks:['10 quest UI reading and unlock paths','10 notes persist after reload','390px overflow','actual game models in level1 and level5 gallery']},null,2));await browser.close();console.log('Ten quest browser checks passed');
+assert.deepEqual(errors,[]);await writeFile(out+'/result.json',JSON.stringify({quests:Object.keys(LITERARY_QUESTS),passed:true,errors,checks:['10 quest UI reading, 30 scene activities and unlock paths','10 notes persist after reload','390px overflow','actual game models in level1 and level5 gallery']},null,2));await browser.close();console.log('Ten quest browser checks passed');

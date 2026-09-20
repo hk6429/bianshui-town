@@ -1,3 +1,4 @@
+import {solveActivities} from './literary-activity-fixture.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {Town} from '../src/simulation.js';
@@ -5,11 +6,11 @@ import {squareCells} from '../src/heritage.js';
 import {validateSave} from '../src/save-schema.js';
 import {commitJourney} from '../src/journey.js';
 import {LITERARY_QUESTS,LANDMARK_QUEST,questEntry,answerQuest,unlockQuest,saveQuestNote,literaryLock} from '../src/literary-quests.js';
-const solve=(t,id)=>LITERARY_QUESTS[id].steps.forEach((s,i)=>assert(answerQuest(t,id,i,s.answer)));
+const solve=(t,id)=>{LITERARY_QUESTS[id].steps.forEach((s,i)=>assert(answerQuest(t,id,i,s.answer)));solveActivities(t,id);};
 function fixture(){const t=new Town();t.place('home',[{x:-6,z:-4}],true);t.place('work',[{x:-4,z:-4}],true);t.place('shop',[{x:-2,z:-4}],true);t.place('garden',[{x:0,z:-4}],true,'granary');t.place('garden',[{x:2,z:-4}],true,'villageSchool');for(const [i,d] of ['pavilion','garden','pond','dock','postStation'].entries())t.place('garden',[{x:-6+i*2,z:-2}],true,d);t.place('shop',[{x:0,z:2}],true);t.place('shop',[{x:2,z:2}],true);return t;}
 test('all ten quests lock construction, reject skip/wrong answers, persist and unlock four-cell landmarks',()=>{
  for(const [design,id] of Object.entries(LANDMARK_QUEST)){
-  const t=fixture(),cells=squareCells({x:-6,z:0});assert(literaryLock(t,design));assert.equal(t.place('garden',cells,true,design),null);
+  const t=fixture(),cells=squareCells({x:design==='yueyangTower'?1:-6,z:0});assert(literaryLock(t,design));assert.equal(t.place('garden',cells,true,design),null);
   assert.equal(answerQuest(t,id,1,0),false);assert.equal(answerQuest(t,id,0,(LITERARY_QUESTS[id].steps[0].answer+1)%3),false);assert.equal(unlockQuest(t,id),false);
   solve(t,id);assert(unlockQuest(t,id));assert.equal(unlockQuest(t,id),false);assert(saveQuestNote(t,id,'引用原文，說明我的理由。'));assert(t.place('garden',cells,true,design));
   const restored=Town.restore(t.toJSON());assert.equal(literaryLock(restored,design),null);assert.equal(questEntry(restored,id).note,'引用原文，說明我的理由。');assert.equal(restored.buildings.find(b=>b.design===design).footprint.length,4);

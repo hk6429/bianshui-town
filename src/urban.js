@@ -1,3 +1,4 @@
+import {landmarkPlacementIssue} from './landmark-placement.js';
 import {upgradeUse} from './building-life.js';
 import {roadAnchor} from './road-network.js';
 import {charge,roadCost,moveCost,upgradeCost,refundBuilding} from './city-finance.js';
@@ -17,7 +18,7 @@ export function removeRoad(t,cells){const before=t.publicWorks.length;t.publicWo
 export function roadNodes(t){const nodes=new Set();for(const q of publicSquares(t))for(let x=q.x*4-2;x<=q.x*4+6;x++)for(let z=q.z*4-2;z<=q.z*4+6;z++)nodes.add(key(x,z));for(const c of t.publicWorks)for(let i=-2;i<=2;i++){nodes.add(key(c.x*CELL+i,c.z*CELL));nodes.add(key(c.x*CELL,c.z*CELL+i));}return nodes;}
 function detach(t,b){const block=t.blocks.find(g=>g.id===b.blockId),cells=footprint(b);block.cells=block.cells.filter(c=>!cells.some(p=>p.x===c.x&&p.z===c.z));t.blocks=t.blocks.filter(g=>g.cells.length);}
 function attach(t,b,cells){const block={id:t.nextId++,type:b.type,combined:cells.length===4,cells:cells.map(c=>({...c}))};t.blocks.push(block);b.blockId=block.id;b.x=cells.reduce((s,c)=>s+c.x,0)/cells.length;b.z=cells.reduce((s,c)=>s+c.z,0)/cells.length;if(cells.length===4)b.footprint=cells.map(c=>({...c}));else delete b.footprint;}
-export function moveBuilding(t,id,anchor){const b=t.building(id);if(!b||b.stage<3)return false;const cells=b.footprint?squareCells(anchor):[anchor];if(!freeCells(t,cells,id)||!charge(t,moveCost(b),'搬移建築'))return false;detach(t,b);attach(t,b,cells);refresh(t);t.log(`${b.name}已搬移，住戶與貨物保留`);return true;}
+export function moveBuilding(t,id,anchor){const b=t.building(id);if(!b||b.stage<3)return false;const cells=b.footprint?squareCells(anchor):[anchor];if(!freeCells(t,cells,id)||landmarkPlacementIssue(t,b.design,cells)||!charge(t,moveCost(b),'搬移建築'))return false;detach(t,b);attach(t,b,cells);refresh(t);t.log(`${b.name}已搬移，住戶與貨物保留`);return true;}
 export function upgradeBuilding(t,id,expand=false){
  const b=t.building(id);if(!b||b.stage<3||!upgradeUse(t,b).allowed)return false;
  if(expand){if(!['home','work'].includes(b.type)||b.footprint)return false;const cells=squareCells({x:b.x,z:b.z});if(!freeCells(t,cells,id)||!charge(t,upgradeCost(b,true),'四格擴建'))return false;detach(t,b);attach(t,b,cells);}

@@ -1,7 +1,8 @@
+import {qualifyLandmark} from './landmark-tier-fixture.js';
 import {LITERARY_QUESTS} from '../src/literary-quests.js';
 import {test} from 'node:test';import assert from 'node:assert/strict';
 import {Town} from '../src/simulation.js';import {DESIGNS,squareCells} from '../src/heritage.js';import {buildingStats,buildingAbility,upgradePreview} from '../src/building-tiers.js';
-import {upgradeBuilding} from '../src/urban.js';import {upgradeCost,dailyUpkeep} from '../src/city-finance.js';
+import {upgradeBuilding,layRoad} from '../src/urban.js';import {upgradeCost,dailyUpkeep} from '../src/city-finance.js';
 import {homeCapacity,addResident,tickPopulation} from '../src/city-growth.js';import {assignJobs,jobCapacity} from '../src/employment.js';
 import {tickProduction,transfer} from '../src/production.js';import {waterReport,waterCapacity,waterRange} from '../src/water-service.js';
 import {cleaningCapacity} from '../src/sanitation.js';import {patrolCapacity} from '../src/fire-service.js';import {educationCapacity} from '../src/education.js';
@@ -9,7 +10,7 @@ import {MAX_RANK} from '../src/milestones.js';
 const ranked=(o)=>{const t=new Town(o);t.city.rank=MAX_RANK;t.journey.literary=Object.fromEntries(Object.keys(LITERARY_QUESTS).map(id=>[id,{step:4,note:''}]));return t;};
 const place=(t,type,x,z,design)=>{assert(t.place(type,[{x,z}],true,design));return t.buildings.at(-1);};
 test('every design and footprint has growing tier ability/upkeep, preview matches applied upgrade, and no sixth tier charges',()=>{
- for(const [design,d]of Object.entries(DESIGNS))for(const size of d.sizes){const t=ranked({mode:'managed'});t.city.treasury=100000000;assert(t.place(d.type,size===4?squareCells({x:0,z:0}):[{x:0,z:0}],true,design));const b=t.buildings[0];
+ for(const [design,d]of Object.entries(DESIGNS))for(const size of d.sizes){const t=ranked({mode:'managed'});t.city.treasury=100000000;assert(layRoad(t,'lane',[{x:0,z:-1}]));assert(t.place(d.type,size===4?squareCells({x:design==='yueyangTower'?1:0,z:0}):[{x:0,z:0}],true,design));const b=t.buildings[0];qualifyLandmark(t,b);
   for(let tier=1;tier<5;tier++){const before=buildingStats(b),preview=upgradePreview(b),balance=t.city.treasury,cost=upgradeCost(b),daily=dailyUpkeep(t);assert(upgradeBuilding(t,b.id));assert.deepEqual(buildingStats(b),buildingStats(preview));assert.equal(buildingAbility(b),buildingAbility(preview));assert.equal(t.city.treasury,balance-cost);assert(dailyUpkeep(t)>daily);const after=buildingStats(b);assert(after.upkeep>before.upkeep);const metric={home:'housing',work:'production',shop:'jobs',garden:'range'}[b.type];assert(after[metric]>before[metric],`${design} tier ${tier+1}`);}
   const saved=JSON.stringify(t.toJSON());assert.equal(upgradePreview(b),null);assert.equal(upgradeBuilding(t,b.id),false);assert.equal(JSON.stringify(t.toJSON()),saved);
  }

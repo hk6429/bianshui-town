@@ -1,3 +1,6 @@
+import {landmarkPlacementIssue} from './landmark-placement.js';
+import {tickLandmarkLife,landmarkResidentAction} from './landmark-life.js';
+import {isWorkshop} from './workshop-rules.js';
 import {residentBuildingAction} from './building-life.js';
 import {createJourney} from './journey.js';
 import {placementIssue,constructionPlan} from './construction-plan.js';
@@ -78,7 +81,7 @@ export class Town {
   if(!TYPES[type]||!this.canPlace(cells))return null;
   const plan=constructionPlan(type,cells,design,this.nextId);if(plan.reason)return null;
   const {spec,combined}=plan;design=plan.design;
-  if(lockedReason(this,design))return null;
+  if(lockedReason(this,design)||landmarkPlacementIssue(this,design,cells))return null;
   if(!charge(this,buildCost(type,cells,plan.design),'建設'))return null;
   const block={id:this.nextId++,type,combined,cells:cells.map(c=>({...c}))};this.blocks.push(block);
   for(const planned of plan.buildings){const id=this.nextId++;this.buildings.push({...planned,id,blockId:block.id,tier:1,level:spec&&['home','work'].includes(type)?2:1,born:ready?this.elapsed-100:this.elapsed,variant:spec?spec.variant:id%3,stage:ready?4:0,entrance:null});}
@@ -140,11 +143,12 @@ export class Town {
   for(const b of this.buildings){const age=this.elapsed-b.born,stage=age<5?0:age<11?1:age<18?2:age<85?3:4;if(stage!==b.stage){b.stage=stage;this.revision++;if(stage===3)this.log(`${b.name}已落成`);}}
   tickPopulation(this);
   for(const a of [...this.people,...this.life.visitors,...this.life.porters])a.traffic='';
-  tickWeather(this);tickStories(this);prepareTraffic(this);
+  tickWeather(this);tickLandmarkLife(this);tickStories(this);prepareTraffic(this);
   assignJobs(this);
   for(const p of this.people){
    if(!p.home&&!p.work){p.outside=true;p.action='在街口等候新居';continue;}
    if(onSickLeave(this,p)){p.streetEvent=null;p.socialUntil=0;p.shelter=null;if(p.home&&(p.destination!==p.home||!p.outside&&p.current!==p.home||p.outside&&!p.route.length))this.travel(p,p.home);this.move(p,dt);p.action=p.outside?'身體不適，返家休養':'身體不適，在家休養（病假）';continue;}
+   if(landmarkResidentAction(this,p)){this.move(p,dt);landmarkResidentAction(this,p);continue;}
    if(shelterResident(this,p,dt))continue;
    if(eventAction(this,p)){this.move(p,dt);eventAction(this,p);continue;}
    const h=this.time%24;if((p.socialUntil||0)>this.elapsed&&h>=6&&h<20)continue;const shops=this.buildings.filter(b=>(b.type==='shop'||b.type==='garden'&&!isUtility(b))&&b.stage>=3);
@@ -165,7 +169,7 @@ export class Town {
    if(!p.outside){const b=this.building(p.current);p.action=residentBuildingAction(b,p,h);}
   }
   const shops=this.buildings.filter(b=>b.type==='shop'&&b.stage>=3);
-  for(const b of this.buildings.filter(b=>b.type==='work'&&b.stage>=3)){
+  for(const b of this.buildings.filter(b=>isWorkshop(b)&&b.stage>=3)){
    if(shops.length&&!this.carts.some(c=>c.home===b.id))this.carts.push({id:this.nextId++,home:b.id,current:b.id,destination:b.id,x:b.entrance[0],z:b.entrance[1],outside:false,route:[],speed:.7,wait:0,carrying:0,action:'整理貨物'});
   }
   for(const p of this.people)residentPurchase(this,p);

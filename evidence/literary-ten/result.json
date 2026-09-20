@@ -14,7 +14,7 @@
   "passed": true,
   "errors": [],
   "checks": [
-    "10 quest UI reading and unlock paths",
+    "10 quest UI reading, 30 scene activities and unlock paths",
     "10 notes persist after reload",
     "390px overflow",
     "actual game models in level1 and level5 gallery"

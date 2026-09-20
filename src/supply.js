@@ -1,8 +1,8 @@
 import {buildingStats} from './building-tiers.js';
 import {at} from './production.js';
 
-// 商鋪賣的四種日用品；原料要先經作坊加工才會變成這些。
-export const SALEABLE=['cloth','ceramics','furniture','legacy'];
+// 商鋪可販售的日用品與書籍；原料要先經作坊加工才會變成這些。
+export const SALEABLE=['cloth','ceramics','furniture','legacy','books'];
 // 模擬時鐘：每秒走 1/15 遊戲時，所以一天 24 時＝360 秒。
 export const DAY_SECONDS=360;
 // 居民每買一次可撐 180 秒，等於每人每天要買兩次。
